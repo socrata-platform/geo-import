@@ -1,0 +1,29 @@
+{
+  "name": "carto-style-renderer",
+  "version": "0.1.1-SNAPSHOT",
+  "private": true,
+  "dependencies": {
+    "JSONStream": "latest",
+    "proj4": "latest",
+    "event-stream": "latest",
+    "underscore": "latest",
+    "stream-reduce": "latest",
+    "uuid": "latest",
+    "ldjson-stream": "latest",
+    "bunyan": "latest",
+    "express": "latest",
+    "body-parser": "latest",
+    "request": "latest",
+    "async":"latest",
+    "node-zookeeper-client": "latest"
+  },
+  "devDependencies": {
+    "mocha-traceur": "latest",
+    "chai": "*",
+    "mocha": "*",
+    "jsonfile": "*",
+    "prompt": "*",
+    "babel": "~5.8.29",
+    "should": "latest"
+  }
+}
