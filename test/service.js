@@ -28,19 +28,14 @@ describe('service level', function() {
   var url = `http://localhost:${port}`;
 
   beforeEach(function(onDone) {
-
-    mockZk = new MockZKClient();
-    mockZk.connect();
-    mockZk.on('connected', function() {
+    service({
+      port: port,
+      zkClient: MockZKClient
+    }, (a, zk) => {
+      mockZk = zk;
+      app = a;
       mockCore = new CoreMock(mockZk.corePort);
-
-      service({
-        port: port,
-        zkClient: MockZKClient
-      }, (a) => {
-        app = a;
-        onDone();
-      });
+      onDone();
     });
   });
 
@@ -126,7 +121,6 @@ describe('service level', function() {
       });
   });
 
-
   it('can post geojson and it will upsert to core', function(onDone) {
     bufferJs(fixture('simple_points.json')
       .pipe(request.post({
@@ -140,11 +134,47 @@ describe('service level', function() {
       })), (resp, buffered) => {
         var [upsert] = mockCore.history.slice(6);
         expect(resp.statusCode).to.equal(202);
+        expect(buffered).to.eql([{
+          'uid': 'qs32-qpt7',
+          'created': 2
+        }])
 
-        expect(buffered).to.eql([
-          {'uid': 'qs32-qpt7', 'created': 2}
-        ])
+        onDone();
+      });
+  });
 
+  it('will return a 503 when zk is dead', function(onDone) {
+    mockZk.enableErrors();
+
+    bufferJs(fixture('simple_points.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        expect(resp.statusCode).to.equal(503);
+        onDone();
+      });
+  });
+
+  it('will return a 503 when core is dead', function(onDone) {
+    mockCore.close();
+
+    bufferJs(fixture('simple_points.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        expect(resp.statusCode).to.equal(503);
         onDone();
       });
   });

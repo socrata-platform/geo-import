@@ -6,12 +6,28 @@ class MockZKClient extends EventEmitter {
     super();
   }
 
+  enableErrors() {
+    this._broken = true;
+  }
+
+  disableErrors(){
+    this._broken = false;
+  }
+
   get corePort() {
     return 6668
   }
 
+  _err(message) {
+    return {
+      statusCode: 503,
+      body: message
+    }
+  }
+
   getCore(cb) {
-    if(!this._isConnected) return cb("zk core called before connected");
+    if(!this._isConnected) return cb("zk not yet connected");
+    if(this._broken) return cb(this._err("zk connection is dead"));
     return cb(false, `http://localhost:${this.corePort}`);
   }
 

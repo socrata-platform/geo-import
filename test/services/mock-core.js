@@ -114,8 +114,14 @@ class CoreMock {
   }
 
   close() {
-    return this._app.close();
+    try {
+      return this._app.close();
+    } catch(e) {
+      //already closed...heh
+    }
   }
+
+
 }
 
 
