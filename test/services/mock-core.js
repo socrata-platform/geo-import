@@ -1,19 +1,25 @@
 var express = require('express');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 
 class CoreMock {
   constructor(port) {
+    this._history = [];
     this._colCounter = 0;
 
     var app = express();
     app.use(bodyParser.urlencoded({
       extended: true
     }));
-    app.use('/views', bodyParser.json())
-    app.use('/views/:fourfour/columns', bodyParser.json())
+
+    //this is super hacky....express binds middleware to the
+    //base route, which overrides more specific routes, ugh
+    app.use('/views/:fourfour/rows', bodyParser.raw());
+    app.use(/\/views$/, bodyParser.json());
+    app.use(/.*columns$/, bodyParser.json());
 
     app.post('/views', function(req, res) {
+      this._history.push(req);
       var hs = req.headers;
       if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
         return res.status(400).send(JSON.stringify({error: 'headers'}));
@@ -57,41 +63,49 @@ class CoreMock {
           "flags": ["admin"]
         },
         "flags": ["default"]
-      }
+      };
 
       res.status(200).send(JSON.stringify(view));
-    });
+    }.bind(this));
 
     app.post('/views/:fourfour/columns', function(req, res) {
+      this._history.push(req);
       var hs = req.headers;
-      if (!hs.authorization || !hs['x-app-token'] || !hs['host']) {
+      if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
         return res.status(400).send('headers');
       }
 
-
-      if(!req.body.name || req.body.dataTypeName || req.body.fieldName) {
-        throw res.status(400).send('body');
+      if(!req.body.name || !req.body.dataTypeName || !req.body.fieldName) {
+        return res.status(400).send('body');
       }
 
 
+      var i = this.colCounter;
       var view = {
-        "id": 3415,
+        "id": 3415 + i,
         "name": req.body.name,
         "dataTypeName": req.body.dataTypeName,
         "fieldName": req.body.fieldName,
-        "position": this.colCounter(),
-        "renderTypeName": "point",
-        "tableColumnId": 3415,
+        "position": i,
+        "renderTypeName": req.body.dataTypeName,
+        "tableColumnId": 3415 + i,
         "format": {}
-      }
+      };
 
 
       res.status(200).send(JSON.stringify(view));
-    });
+    }.bind(this));
 
-
+    app.put('/views/:fourfour/rows', function(req, res) {
+      this._history.push(req);
+      res.status(200).send("{}");
+    }.bind(this));
 
     this._app = app.listen(port);
+  }
+
+  get history() {
+    return this._history;
   }
 
   get colCounter() {
@@ -100,7 +114,7 @@ class CoreMock {
   }
 
   close() {
-    return this._app.close()
+    return this._app.close();
   }
 }
 

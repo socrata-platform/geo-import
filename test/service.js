@@ -1,8 +1,9 @@
+import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
 import {
-  fixture
+  fixture, bufferJs
 }
 from './fixture';
 import request from 'request';
@@ -25,7 +26,8 @@ describe('service level', function() {
   var mockCore;
   var port = config().port;
   var url = `http://localhost:${port}`;
-  before(function(onDone) {
+
+  beforeEach(function(onDone) {
 
     mockZk = new MockZKClient();
     mockZk.connect();
@@ -42,7 +44,7 @@ describe('service level', function() {
     });
   });
 
-  after(function() {
+  afterEach(function() {
     mockCore.close();
     app.close();
   });
@@ -57,37 +59,95 @@ describe('service level', function() {
       });
   });
 
-  it('passes headers through to core', function(onDone) {
+  it('can post geojson and it will make a create dataset request to core', function(onDone) {
     fixture('simple_points.json')
       .pipe(request.post({
-        url : url + '/spatial',
-        headers : {
-          'Authorization': 'test-auth',
-          'X-App-Token': 'app-token',
-          'Content-Type': 'application/json'
-        }
-      }))
-      .on('response', function(err, response) {
-        expect(err.statusCode).to.equal(400);
-        onDone();
-      });
-  });
-
-
-  it('can post geojson and it will upsert to core', function(onDone) {
-    fixture('simple_points.json')
-      .pipe(request.post({
-        url : url + '/spatial',
-        headers : {
+        url: url + '/spatial',
+        headers: {
           'Authorization': 'test-auth',
           'X-App-Token': 'app-token',
           'X-Socrata-Host': 'localhost:6668',
           'Content-Type': 'application/json'
         }
       }))
-      .on('response', function(err, response) {
-        console.log('resp', err.statusCode);
+      .on('response', function(response) {
+        var createRequest = _.first(mockCore.history);
+        expect(createRequest.body).to.eql({
+          name: 'layer_0'
+        });
         onDone();
       });
   });
+
+  it('can post geojson and it will make a create columns request to core', function(onDone) {
+    bufferJs(fixture('simple_points.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+
+        var [geom, aString, aNum, aFloat, aBool] = mockCore.history.slice(1, 6);
+
+        expect(geom.body).to.eql({
+          fieldName: "the_geom",
+          name: "the_geom",
+          dataTypeName: "SoQLPoint"
+        });
+
+        expect(aString.body).to.eql({
+          fieldName: "a_string",
+          name: "a_string",
+          dataTypeName: "SoQLText"
+        });
+
+        expect(aNum.body).to.eql({
+          fieldName: "a_num",
+          name: "a_num",
+          dataTypeName: "SoQLNumber"
+        });
+
+        expect(aFloat.body).to.eql({
+          fieldName: "a_float",
+          name: "a_float",
+          dataTypeName: "SoQLNumber"
+        });
+
+        expect(aBool.body).to.eql({
+          fieldName: "a_bool",
+          name: "a_bool",
+          dataTypeName: "SoQLBoolean"
+        });
+        onDone();
+      });
+  });
+
+
+  it('can post geojson and it will upsert to core', function(onDone) {
+    bufferJs(fixture('simple_points.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        var [upsert] = mockCore.history.slice(6);
+        expect(resp.statusCode).to.equal(202);
+
+        expect(buffered).to.eql([
+          {'uid': 'qs32-qpt7', 'created': 2}
+        ])
+
+        onDone();
+      });
+  });
+
+
 });

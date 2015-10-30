@@ -7,10 +7,6 @@ import CoreService from './services/mock-core';
 import MockZKClient from './services/mock-zk';
 import config from '../lib/config';
 import {
-  bufferJs
-}
-from './fixture'
-import {
   CoreAuth, Core
 }
 from '../lib/upstream/core';
@@ -48,6 +44,24 @@ describe('core client', function() {
     expect(auth.host).to.eql('test-host');
     expect(auth.appToken).to.eql('test-token');
     expect(auth.authToken).to.eql('test-auth');
+  });
+
+
+  it('passes headers through to core', function(onDone) {
+    var request = {
+      headers: {
+        'x-app-token': 'test-token',
+        'x-socrata-host': 'test-host',
+      }
+    }
+    var auth = new CoreAuth(request);
+    var core = new Core(auth, mockZk)
+
+    core.create('my_layer', (err, res) => {
+      expect(err.statusCode).to.equal(400);
+      onDone()
+    });
+
   });
 
 
