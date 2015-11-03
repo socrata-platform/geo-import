@@ -1,3 +1,9 @@
+/**
+ * this test suite is not for geojson in particular, geojson is just a
+ * nice format for the fixtures. this test suite deals with the merger.
+ * for geojson-->soql conversion tests, look at the tests/geojson.js suite
+ */
+
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
@@ -5,26 +11,26 @@ import {
   fixture
 }
 from './fixture';
+
+import GeoJSON from '../lib/decoders/geojson';
+import merger from '../lib/decoders/merger';
+
+import SoQLPoint from '../lib/soql/point';
+import SoQLLine from '../lib/soql/line';
+import SoQLPolygon from '../lib/soql/polygon';
+import SoQLMultiPoint from '../lib/soql/multipoint';
+import SoQLMultiLine from '../lib/soql/multiline';
+import SoQLMultiPolygon from '../lib/soql/multipolygon';
+import SoQLText from '../lib/soql/text';
+import SoQLBoolean from '../lib/soql/boolean';
+import SoQLNumber from '../lib/soql/number';
+import SoQLArray from '../lib/soql/array';
+import SoQLObject from '../lib/soql/object';
+
+
 var expect = chai.expect;
 
 
-var SoQLPoint = require('../lib/soql/point'),
-  SoQLLine = require('../lib/soql/line'),
-  SoQLPolygon = require('../lib/soql/polygon'),
-  SoQLMultiPoint = require('../lib/soql/multipoint'),
-  SoQLMultiLine = require('../lib/soql/multiline'),
-  SoQLMultiPolygon = require('../lib/soql/multipolygon');
-
-var SoQLText = require('../lib/soql/text'),
-  SoQLBoolean = require('../lib/soql/boolean'),
-  SoQLNumber = require('../lib/soql/number'),
-  SoQLArray = require('../lib/soql/array'),
-  SoQLObject = require('../lib/soql/object');
-
-
-
-var GeoJSON = require('../lib/decoders/geojson');
-var merger = require('../lib/decoders/merger');
 
 describe('unit :: merging feature streams to layers, reprojecting from scratch file', function() {
 
@@ -425,7 +431,7 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
   });
 
 
-  it('soql mapping :: homogenous multilines, heterogenous crs', function(onDone) {
+  it('soql mapping :: homogenous multipolygons, heterogenous crs', function(onDone) {
     var geoJson = new GeoJSON();
     merger.toLayers(geoJson.toFeatures(fixture('simple_multipolygons.json')), function(err, layers) {
 
