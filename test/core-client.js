@@ -11,7 +11,7 @@ import {
 }
 from '../lib/upstream/core';
 
-describe('core client', function() {
+describe('unit :: core client', function() {
   var mockCore;
   var mockZk;
   var port = 6668;

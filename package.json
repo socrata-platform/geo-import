@@ -15,6 +15,7 @@
     "body-parser": "latest",
     "request": "latest",
     "async":"latest",
+    "babel": "~5.8.29",
     "node-zookeeper-client": "latest"
   },
   "devDependencies": {
@@ -23,7 +24,9 @@
     "mocha": "*",
     "jsonfile": "*",
     "prompt": "*",
-    "babel": "~5.8.29",
     "should": "latest"
+  },
+  "scripts": {
+    "test": "GEO_IMPORT_ENV=test ./node_modules/.bin/mocha --grep 'unit' --compilers js:babel/register"
   }
 }

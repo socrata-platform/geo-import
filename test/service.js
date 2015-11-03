@@ -13,14 +13,12 @@ import {
   EventEmitter
 }
 from 'events';
+import config from '../lib/config';
+import service from '../lib/service';
 
 var expect = chai.expect;
 
-var config = require('../lib/config');
-
-var service = require('../lib/service');
-
-describe('service level', function() {
+describe('unit :: service level', function() {
   var app;
   var mockZk;
   var mockCore;
@@ -29,7 +27,6 @@ describe('service level', function() {
 
   beforeEach(function(onDone) {
     service({
-      port: port,
       zkClient: MockZKClient
     }, (a, zk) => {
       mockZk = zk;
@@ -91,31 +88,31 @@ describe('service level', function() {
         expect(geom.body).to.eql({
           fieldName: "the_geom",
           name: "the_geom",
-          dataTypeName: "SoQLPoint"
+          dataTypeName: "point"
         });
 
         expect(aString.body).to.eql({
           fieldName: "a_string",
           name: "a_string",
-          dataTypeName: "SoQLText"
+          dataTypeName: "text"
         });
 
         expect(aNum.body).to.eql({
           fieldName: "a_num",
           name: "a_num",
-          dataTypeName: "SoQLNumber"
+          dataTypeName: "number"
         });
 
         expect(aFloat.body).to.eql({
           fieldName: "a_float",
           name: "a_float",
-          dataTypeName: "SoQLNumber"
+          dataTypeName: "number"
         });
 
         expect(aBool.body).to.eql({
           fieldName: "a_bool",
           name: "a_bool",
-          dataTypeName: "SoQLBoolean"
+          dataTypeName: "checkbox"
         });
         onDone();
       });
@@ -137,8 +134,29 @@ describe('service level', function() {
         expect(buffered).to.eql([{
           'uid': 'qs32-qpt7',
           'created': 2
-        }])
+        }]);
 
+        expect(JSON.parse(upsert.bufferedRows)).to.eql(
+          [{
+            "the_geom": {
+              "coordinates": [102, 0.5],
+              "type": "Point"
+            },
+            "a_string": "first value",
+            "a_num": 2,
+            "a_float": 2.2,
+            "a_bool": false
+          }, {
+            "the_geom": {
+              "coordinates": [103, 1.5],
+              "type": "Point"
+            },
+            "a_string": "second value",
+            "a_num": 2,
+            "a_float": 2.2,
+            "a_bool": true
+          }]
+        );
         onDone();
       });
   });

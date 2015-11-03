@@ -11,11 +11,14 @@ function bufferJs(source, cb) {
       buffer += chunk.toString('utf-8');
     })
     r.on('end', function() {
+
+      var result;
       try {
-        cb(r, JSON.parse(buffer))
+        result = JSON.parse(buffer)
       } catch(e) {
-        cb(r, buffer);
+        result = buffer
       }
+      cb(r, result)
     })
   })
 }

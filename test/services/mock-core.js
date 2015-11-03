@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-
+import es from 'event-stream' ;
 
 class CoreMock {
   constructor(port) {
@@ -96,9 +96,14 @@ class CoreMock {
       res.status(200).send(JSON.stringify(view));
     }.bind(this));
 
-    app.put('/views/:fourfour/rows', function(req, res) {
+    app.post('/id/:fourfour', function(req, res) {
       this._history.push(req);
-      res.status(200).send("{}");
+
+      req.bufferedRows = '';
+      req.pipe(es.map((thing, cb) => {
+        req.bufferedRows += thing.toString('utf-8');
+      }))
+      res.status(200).send('{}');
     }.bind(this));
 
     this._app = app.listen(port);

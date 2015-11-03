@@ -5,14 +5,14 @@ import {fixture} from './fixture';
 import GeoJSON from '../lib/decoders/geojson';
 var expect = chai.expect;
 
-describe('geojson decoder turns things into SoQLTypes', function() {
+describe('unit :: geojson decoder turns things into SoQLTypes', function() {
   it('can turn simple points to SoQLPoint', function(onDone) {
     var geoJson = new GeoJSON()
 
     geoJson.toFeatures(fixture('simple_points.json'))
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
-      expect(columns.map((c) => c.typeName)).to.eql([
+      expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLPoint',
         'SoQLText',
         'SoQLNumber',
@@ -29,7 +29,7 @@ describe('geojson decoder turns things into SoQLTypes', function() {
     geoJson.toFeatures(fixture('simple_lines.json'))
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
-      expect(columns.map((c) => c.typeName)).to.eql([
+      expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLLine',
         'SoQLText'
       ])
@@ -43,7 +43,7 @@ describe('geojson decoder turns things into SoQLTypes', function() {
     geoJson.toFeatures(fixture('simple_polygons.json'))
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
-      expect(columns.map((c) => c.typeName)).to.eql([
+      expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLPolygon',
         'SoQLText'
       ])
@@ -57,7 +57,7 @@ describe('geojson decoder turns things into SoQLTypes', function() {
     geoJson.toFeatures(fixture('simple_multipoints.json'))
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
-      expect(columns.map((c) => c.typeName)).to.eql([
+      expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiPoint',
         'SoQLText'
       ])
@@ -71,7 +71,7 @@ describe('geojson decoder turns things into SoQLTypes', function() {
     geoJson.toFeatures(fixture('simple_multilines.json'))
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
-      expect(columns.map((c) => c.typeName)).to.eql([
+      expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiLine',
         'SoQLText'
       ])
@@ -85,7 +85,7 @@ describe('geojson decoder turns things into SoQLTypes', function() {
     geoJson.toFeatures(fixture('simple_multipolygons.json'))
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
-      expect(columns.map((c) => c.typeName)).to.eql([
+      expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiPolygon',
         'SoQLText'
       ])
