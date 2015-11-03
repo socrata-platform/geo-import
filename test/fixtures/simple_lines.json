@@ -18,6 +18,12 @@
       "type": "Feature",
       "properties": {
         "a_string": "first value"
+      },
+      "crs": {
+        "type": "name",
+        "properties": {
+          "name": "urn:ogc:def:crs:EPSG::26915"
+        }
       }
     },
     {
