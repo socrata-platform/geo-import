@@ -18,7 +18,7 @@ import service from '../lib/service';
 
 var expect = chai.expect;
 
-describe('unit :: service level', function() {
+describe('unit :: spatial service', function() {
   var app;
   var mockZk;
   var mockCore;
@@ -41,15 +41,6 @@ describe('unit :: service level', function() {
     app.close();
   });
 
-  it('can get the version of the service', function(onDone) {
-    request
-      .get(`${url}/version`, function(err, res) {
-        expect(JSON.parse(res.body)).to.eql({
-          version: 0
-        });
-        onDone();
-      });
-  });
 
   it('can post geojson and it will make a create dataset request to core', function(onDone) {
     fixture('simple_points.json')

@@ -1,0 +1,40 @@
+{
+  "type": "FeatureCollection",
+  "features": [{
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          100.0,
+          0.0
+        ],
+        [
+          101.0,
+          1.0
+        ]
+      ]
+    },
+    "type": "Feature",
+    "properties": {
+      "a_string": "first value"
+    }
+  }, {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        101.0,
+        0.0
+      ]
+    },
+    "type": "Feature",
+    "properties": {
+      "a_string": "second value"
+    }
+  }],
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::26915"
+    }
+  }
+}
