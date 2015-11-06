@@ -63,7 +63,7 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
   });
 
   it('can turn simple lines to SoQLLine', function(onDone) {
-    var kml = new KML()
+    var kml = new KML();
     var count = 0;
 
     var expectedValues = [
@@ -97,7 +97,7 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         },
         "second value"
       ]
-    ]
+    ];
 
 
     kml.toFeatures(fixture('simple_lines.kml'))
@@ -106,7 +106,7 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLLine',
           'SoQLText'
-        ])
+        ]);
 
         // console.log(columns.map((c) => c.value), expectedValues[count])
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
@@ -114,10 +114,9 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         count++;
       })).on('end', () => {
         expect(count).to.equal(2);
-        onDone()
-      })
+        onDone();
+      });
   });
-
 
   it('can turn simple polys to SoQLPolygon', function(onDone) {
     var expectedValues = [
@@ -139,7 +138,7 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
       },
       "second value"
       ]
-    ]
+    ];
 
 
     var kml = new KML();
@@ -150,13 +149,12 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPolygon',
           'SoQLText'
-        ])
+        ]);
 
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', onDone)
+      })).on('end', onDone);
   });
-
 
   it('can turn simple points to SoQLMultiPoint', function(onDone) {
     var expectedValues = [
@@ -172,9 +170,9 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
       },
       "second value"
       ]
-    ]
+    ];
 
-    var kml = new KML()
+    var kml = new KML();
     var count = 0;
     kml.toFeatures(fixture('simple_multipoints.kml'))
       .pipe(es.mapSync(function(thing) {
@@ -182,13 +180,12 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPoint',
           'SoQLText'
-        ])
+        ]);
 
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', onDone)
+      })).on('end', onDone);
   });
-
 
   it('can turn simple points to SoQLMultiLine', function(onDone) {
     var expectedValues = [
@@ -210,9 +207,9 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
       },
       "second value"
       ]
-    ]
+    ];
 
-    var kml = new KML()
+    var kml = new KML();
     var count = 0;
     kml.toFeatures(fixture('simple_multilines.kml'))
       .pipe(es.mapSync(function(thing) {
@@ -220,14 +217,14 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiLine',
           'SoQLText'
-        ])
+        ]);
 
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', onDone)
+      })).on('end', onDone);
   });
 
-  it('can turn simple points ugh to SoQLMultiPolygon', function(onDone) {
+  it('can turn simple points to SoQLMultiPolygon', function(onDone) {
     var expectedValues = [
       [{
         "type": "MultiPolygon",
@@ -249,9 +246,9 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
       },
       "second value"
       ]
-    ]
+    ];
 
-    var kml = new KML()
+    var kml = new KML();
     var count = 0;
     kml.toFeatures(fixture('simple_multipolygons.kml'))
       .pipe(es.mapSync(function(thing) {
@@ -259,11 +256,11 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPolygon',
           'SoQLText'
-        ])
+        ]);
 
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
 
-      })).on('end', onDone)
+      })).on('end', onDone);
   });
 });
