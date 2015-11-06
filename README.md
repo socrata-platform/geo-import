@@ -9,19 +9,13 @@ into soda-fountain
 
 ## setup
 
-install some deps
+install dependencies
 ```
   npm install
 ```
 
-install the special snowflake
-```
-cd ../ && git clone https://github.com/mapbox/node-srs
-cd node-srs
-npm install --build-from-source
-cd ../geo-import
-cp -r ../node-srs node_modules
-```
+this also runs a postinstall script to install mapbox/node-srs,
+which is built from source in a sibling repo and symlinked here
 
 ## developing
 
