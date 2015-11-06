@@ -18,7 +18,8 @@
     "babel": "~5.8.29",
     "node-zookeeper-client": "latest",
     "node-expat" : "latest",
-    "through":"latest"
+    "through":"latest",
+    "yauzl": "latest"
   },
   "devDependencies": {
     "mocha-traceur": "latest",

@@ -6,10 +6,11 @@ import GeoJSON from '../lib/decoders/geojson';
 var expect = chai.expect;
 
 describe('unit :: geojson decoder turns things into SoQLTypes', function() {
+
   it('can turn simple points to SoQLPoint', function(onDone) {
-    var geoJson = new GeoJSON()
     var count = 0;
-    geoJson.toFeatures(fixture('simple_points.json'))
+    fixture('simple_points.json')
+    .pipe(new GeoJSON())
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -27,10 +28,10 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
     })
 
   });
-  it('can turn simple points to SoQLLine', function(onDone) {
-    var geoJson = new GeoJSON()
 
-    geoJson.toFeatures(fixture('simple_lines.json'))
+  it('can turn simple points to SoQLLine', function(onDone) {
+    fixture('simple_lines.json')
+    .pipe(new GeoJSON())
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -39,12 +40,11 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       ])
 
     })).on('end', onDone)
-
   });
-  it('can turn simple points to SoQLPolygon', function(onDone) {
-    var geoJson = new GeoJSON()
 
-    geoJson.toFeatures(fixture('simple_polygons.json'))
+  it('can turn simple points to SoQLPolygon', function(onDone) {
+    fixture('simple_polygons.json')
+    .pipe(new GeoJSON())
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -53,12 +53,13 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       ])
 
     })).on('end', onDone)
-
   });
-  it('can turn simple points to SoQLMultiPoint', function(onDone) {
-    var geoJson = new GeoJSON()
 
-    geoJson.toFeatures(fixture('simple_multipoints.json'))
+  it('can turn simple points to SoQLMultiPoint', function(onDone) {
+    var geoJson =
+
+    fixture('simple_multipoints.json')
+    .pipe(new GeoJSON())
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -67,12 +68,11 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       ])
 
     })).on('end', onDone)
-
   });
-  it('can turn simple points to SoQLMultiLine', function(onDone) {
-    var geoJson = new GeoJSON()
 
-    geoJson.toFeatures(fixture('simple_multilines.json'))
+  it('can turn simple points to SoQLMultiLine', function(onDone) {
+    fixture('simple_multilines.json')
+    .pipe(new GeoJSON())
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -81,20 +81,18 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       ])
 
     })).on('end', onDone)
-
   });
-  it('can turn simple points to SoQLMultiPolygon', function(onDone) {
-    var geoJson = new GeoJSON()
 
-    geoJson.toFeatures(fixture('simple_multipolygons.json'))
+  it('can turn simple points to SoQLMultiPolygon', function(onDone) {
+    fixture('simple_multipolygons.json')
+    .pipe(new GeoJSON())
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiPolygon',
         'SoQLText'
       ])
-
     })).on('end', onDone)
-
   });
+
 });

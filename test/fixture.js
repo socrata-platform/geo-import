@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 function fixture(name) {
-  return fs.createReadStream(__dirname + '/fixtures/' + name, {encoding: 'utf8'});
+  return fs.createReadStream(__dirname + '/fixtures/' + name, {encoding: 'binary'});
 }
 
 function bufferJs(source, cb) {
