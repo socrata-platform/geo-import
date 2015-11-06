@@ -121,11 +121,13 @@ describe('unit :: spatial service', function() {
         }
       })), (resp, buffered) => {
         var [upsert] = mockCore.history.slice(6);
-        expect(resp.statusCode).to.equal(202);
-        expect(buffered).to.eql([{
-          'uid': 'qs32-qpt7',
-          'created': 2
-        }]);
+        expect(resp.statusCode).to.equal(200);
+        expect(buffered).to.eql({
+          'layers': [{
+            'uid': 'qs32-qpt7',
+            'created': 2
+          }]
+        });
 
         expect(JSON.parse(upsert.bufferedRows)).to.eql(
           [{

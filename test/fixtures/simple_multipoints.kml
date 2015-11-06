@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>OGRGeoJSON</name>
+<Schema name="OGRGeoJSON" id="OGRGeoJSON">
+	<SimpleField name="Name" type="string"></SimpleField>
+	<SimpleField name="Description" type="string"></SimpleField>
+	<SimpleField name="a_string" type="string"></SimpleField>
+</Schema>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="a_string">first value</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Point><coordinates>100,0</coordinates></Point><Point><coordinates>101,1</coordinates></Point></MultiGeometry>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#OGRGeoJSON">
+		<SimpleData name="a_string">second value</SimpleData>
+	</SchemaData></ExtendedData>
+      <MultiGeometry><Point><coordinates>101,0</coordinates></Point><Point><coordinates>101,1</coordinates></Point></MultiGeometry>
+  </Placemark>
+</Folder></Document></kml>

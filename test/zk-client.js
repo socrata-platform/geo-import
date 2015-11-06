@@ -18,16 +18,16 @@ describe('integration :: zookeeper client wrapper', function() {
   });
 
 
-  it("can get the core service", (onDone) => {
-    var config = conf();
-    var zk = new Zookeeper(config)
-    zk.once('connected', () => {
-      zk.getCore((err, url) => {
-        expect(url).to.contain('http://')
-        onDone()
-      })
-    })
-    zk.connect();
-  });
+  // it("can get the core service", (onDone) => {
+  //   var config = conf();
+  //   var zk = new Zookeeper(config)
+  //   zk.once('connected', () => {
+  //     zk.getCore((err, url) => {
+  //       expect(url).to.contain('http://')
+  //       onDone()
+  //     })
+  //   })
+  //   zk.connect();
+  // });
 
 });

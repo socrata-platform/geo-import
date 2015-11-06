@@ -8,7 +8,7 @@ var expect = chai.expect;
 describe('unit :: geojson decoder turns things into SoQLTypes', function() {
   it('can turn simple points to SoQLPoint', function(onDone) {
     var geoJson = new GeoJSON()
-
+    var count = 0;
     geoJson.toFeatures(fixture('simple_points.json'))
     .pipe(es.mapSync(function(thing) {
       let columns = thing.columns;
@@ -19,8 +19,12 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
         'SoQLNumber',
         'SoQLBoolean'
       ])
+      count++
 
-    })).on('end', onDone)
+    })).on('end', () => {
+      expect(count).to.equal(2);
+      onDone();
+    })
 
   });
   it('can turn simple points to SoQLLine', function(onDone) {

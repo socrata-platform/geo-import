@@ -47,9 +47,9 @@ describe('unit :: summary service', () => {
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
         expect(res.headers['content-type']).to.contain('application/json');
-        var [layer] = buffered
+        var [layer] = buffered.layers
         expect(layer.features).to.equal(2);
-        expect(layer.projection).to.equal( 'GEOGCS["WGS 84",\n    DATUM["WGS_1984",\n        SPHEROID["WGS 84",6378137,298.257223563,\n            AUTHORITY["EPSG","7030"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY["EPSG","6326"]],\n    PRIMEM["Greenwich",0,\n        AUTHORITY["EPSG","8901"]],\n    UNIT["degree",0.0174532925199433,\n        AUTHORITY["EPSG","9108"]],\n    AUTHORITY["EPSG","4326"]]');
+        expect(layer.projection).to.equal('GEOGCS["WGS 84",\n    DATUM["WGS_1984",\n        SPHEROID["WGS 84",6378137,298.257223563,\n            AUTHORITY["EPSG","7030"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY["EPSG","6326"]],\n    PRIMEM["Greenwich",0,\n        AUTHORITY["EPSG","8901"]],\n    UNIT["degree",0.0174532925199433,\n        AUTHORITY["EPSG","9108"]],\n    AUTHORITY["EPSG","4326"]]');
         expect(layer.name).to.equal('layer_0');
         onDone();
       })
@@ -68,7 +68,7 @@ describe('unit :: summary service', () => {
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
         expect(res.headers['content-type']).to.contain('application/json');
-        var [l0, l1] = buffered
+        var [l0, l1] = buffered.layers
         expect(l0.features).to.equal(1);
         expect(l0.projection).to.contain('26915');
         expect(l0.name).to.equal('layer_0');
