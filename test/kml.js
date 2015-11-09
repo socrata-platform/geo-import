@@ -10,9 +10,18 @@ var expect = chai.expect;
 
 
 describe('unit :: kml decoder turns things into SoQLTypes', function() {
+
+  it('will emit an error for unparsable kml', function(onDone) {
+    var count = 0;
+    fixture('malformed_kml.kml')
+      .pipe(new KML())
+      .on('error', (err) => {
+        expect(err.toString()).to.contain("mismatched tag");
+        onDone();
+      });
+  });
+
   it('can turn simple points to SoQLPoint', function(onDone) {
-
-
     var expectedValues = [
       [{
           "type": "Point",

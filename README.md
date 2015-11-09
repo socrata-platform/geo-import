@@ -3,6 +3,9 @@
 ## what
 import
 * geojson
+* kmz
+* kml
+
 
 into soda-fountain
 

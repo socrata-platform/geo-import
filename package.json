@@ -19,7 +19,8 @@
     "node-zookeeper-client": "latest",
     "node-expat" : "latest",
     "through":"latest",
-    "yauzl": "latest"
+    "yauzl": "latest",
+    "shapefile": "latest"
   },
   "devDependencies": {
     "mocha-traceur": "latest",

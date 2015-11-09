@@ -5,34 +5,37 @@ import {
   fixture
 }
 from './fixture';
-import KMZ from '../lib/decoders/kmz';
+import Shapefile from '../lib/decoders/shapefile';
+import srs from 'node-srs';
 var expect = chai.expect;
 
+describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
 
-describe('unit :: kmz decoder turns things into SoQLTypes', function() {
+
+
   it('will emit an error for a corrupt shapefile', function(onDone) {
     var count = 0;
-    fixture('corrupt_kmz.kmz')
-      .pipe(new KMZ())
+    fixture('corrupt_shapefile.zip')
+      .pipe(new Shapefile())
       .on('error', (err) => {
-        expect(err.toString()).to.contain("invalid central directory");
+        expect(err.toString()).to.contain("Failed to read feature");
         onDone();
       });
   });
 
-  it('will emit an error for unparsable kml within the kmz', function(onDone) {
-    var count = 0;
-    fixture('malformed_kmz.kmz')
-      .pipe(new KMZ())
-      .on('error', (err) => {
-        expect(err.toString()).to.contain("mismatched tag");
+  it('correctly reads .prj file for non epsg4326 features and populates the geojson feature with it', function(onDone) {
+    fixture('simple_points_epsg_2834.zip')
+      .pipe(new Shapefile())
+      .pipe(es.mapSync(function(feature) {
+        var parsedCrs = srs.parse(feature.crs)
+        expect(parsedCrs.valid).to.equal(true);
+        expect(parsedCrs.proj4).to.equal("+proj=lcc +lat_1=41.7 +lat_2=40.43333333333333 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +units=m +no_defs")
+      })).on('end', () => {
         onDone();
       });
   });
 
   it('can turn simple points to SoQLPoint', function(onDone) {
-    var count = 0;
-
     var expectedValues = [
       [{
           "type": "Point",
@@ -44,7 +47,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
         "first value",
         2,
         2.2,
-        false
+        0
       ],
       [{
           "type": "Point",
@@ -57,23 +60,22 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
         "second value",
         2,
         2.2,
-        true
+        1
       ]
     ];
 
-    fixture('simple_points.kmz')
-      .pipe(new KMZ())
+    var count = 0;
+    fixture('simple_points.zip')
+      .pipe(new Shapefile())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
-
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPoint',
           'SoQLText',
           'SoQLNumber',
           'SoQLNumber',
-          'SoQLBoolean'
+          'SoQLNumber'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
       })).on('end', () => {
@@ -82,8 +84,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       });
   });
 
-  it('can turn simple lines to SoQLLine', function(onDone) {
-
+  it('can turn simple points to SoQLLine', function(onDone) {
     var expectedValues = [
       [{
           "type": "LineString",
@@ -116,39 +117,31 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
     var count = 0;
-
-    fixture('simple_lines.kmz')
-      .pipe(new KMZ())
+    fixture('simple_lines.zip')
+      .pipe(new Shapefile())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLLine',
           'SoQLText'
         ]);
-
-        // console.log(columns.map((c) => c.value), expectedValues[count])
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
-
         count++;
-      })).on('end', () => {
-        expect(count).to.equal(2);
-        onDone();
-      });
+      })).on('end', onDone);
   });
 
-  it('can turn simple polys to SoQLPolygon', function(onDone) {
+  it('can turn simple points to SoQLPolygon', function(onDone) {
     var expectedValues = [
       [{
           "type": "Polygon",
           "coordinates": [
             [
-              [100.0, 0.0],
-              [101.0, 0.0],
-              [101.0, 1.0],
-              [100.0, 1.0],
-              [100.0, 0.0]
+              [100, 0],
+              [100, 1],
+              [101, 1],
+              [101, 0],
+              [100, 0]
             ],
             [
               [100.2, 0.2],
@@ -165,11 +158,11 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
           "type": "Polygon",
           "coordinates": [
             [
-              [100.0, 0.0],
-              [101.0, 0.0],
-              [101.0, 1.0],
-              [100.0, 1.0],
-              [100.0, 0.0]
+              [100, 0],
+              [100, 1],
+              [101, 1],
+              [101, 0],
+              [100, 0]
             ],
             [
               [100.2, 0.2],
@@ -183,18 +176,16 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
-
     var count = 0;
-    fixture('simple_polygons.kmz')
-      .pipe(new KMZ())
+
+    fixture('simple_polygons.zip')
+      .pipe(new Shapefile())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPolygon',
           'SoQLText'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
       })).on('end', onDone);
@@ -221,17 +212,16 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
     var count = 0;
-    fixture('simple_multipoints.kmz')
-      .pipe(new KMZ())
+
+    fixture('simple_multipoints.zip')
+      .pipe(new Shapefile())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPoint',
           'SoQLText'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
       })).on('end', onDone);
@@ -270,19 +260,19 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
     var count = 0;
-    fixture('simple_multilines.kmz')
-      .pipe(new KMZ())
+
+    fixture('simple_multilines.zip')
+      .pipe(new Shapefile())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiLine',
           'SoQLText'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
+
       })).on('end', onDone);
   });
 
@@ -293,20 +283,20 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
           "coordinates": [
             [
               [
-                [102.0, 2.0],
-                [103.0, 2.0],
-                [103.0, 3.0],
-                [102.0, 3.0],
-                [102.0, 2.0]
+                [102, 2],
+                [102, 3],
+                [103, 3],
+                [103, 2],
+                [102, 2]
               ]
             ],
             [
               [
-                [100.0, 0.0],
-                [101.0, 0.0],
-                [101.0, 1.0],
-                [100.0, 1.0],
-                [100.0, 0.0]
+                [100, 0],
+                [100, 1],
+                [101, 1],
+                [101, 0],
+                [100, 0]
               ],
               [
                 [100.2, 0.2],
@@ -325,20 +315,20 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
           "coordinates": [
             [
               [
-                [103.0, 2.0],
-                [102.0, 2.0],
-                [103.0, 3.0],
-                [102.0, 3.0],
-                [103.0, 2.0]
+                [103, 2],
+                [102, 2],
+                [103, 3],
+                [102, 3],
+                [103, 2]
               ]
             ],
             [
               [
-                [100.0, 0.0],
-                [101.0, 0.0],
-                [101.0, 1.0],
-                [100.0, 1.0],
-                [100.0, 0.0]
+                [100, 0],
+                [100, 1],
+                [101, 1],
+                [101, 0],
+                [100, 0]
               ],
               [
                 [100.2, 0.2],
@@ -353,20 +343,17 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
     var count = 0;
-    fixture('simple_multipolygons.kmz')
-      .pipe(new KMZ())
+    fixture('simple_multipolygons.zip')
+      .pipe(new Shapefile())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPolygon',
           'SoQLText'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-
       })).on('end', onDone);
   });
 });
