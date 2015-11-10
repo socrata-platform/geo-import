@@ -62,6 +62,52 @@ describe('unit :: spatial service', function() {
       });
   });
 
+  it('can post kml and it will do an upsert to core', function(onDone) {
+    bufferJs(fixture('simple_points.kml')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/vnd.google-earth.kml+xml'
+        }
+      })), (resp, buffered) => {
+        expect(resp.statusCode).to.equal(200);
+        expect(buffered.layers.length).to.equal(1);
+        expect(buffered.layers[0].created).to.equal(2);
+        onDone();
+      });
+  });
+
+
+  //;_;
+  //So the request library doesn't work in a reasonable way and keeps posting
+  //data as non-binary, despite the fact that the stream is opened as binary?
+  //so this results in a corrupt file on the other end.
+  //this works via curl, so the problem is on the test side with the posting
+  //of the fixture, rather than in express. GAH
+  // it('can post kmz points and it will do an upsert to core', function(onDone) {
+  //   bufferJs(fixture('simple_points.kmz')
+  //     .pipe(request.post({
+  //       url: url + '/spatial',
+  //       encoding: null,
+  //       binary: true,
+  //       headers: {
+  //         'Authorization': 'test-auth',
+  //         'X-App-Token': 'app-token',
+  //         'X-Socrata-Host': 'localhost:6668',
+  //         'Content-Type': 'application/vnd.google-earth.kmz',
+  //       }
+  //     })), (resp, buffered) => {
+  //       expect(resp.statusCode).to.equal(200);
+  //       expect(buffered.layers.length).to.equal(1);
+  //       expect(buffered.layers[0].created).to.equal(2);
+  //       onDone();
+  //     });
+  // });
+
+
   it('can post geojson and it will make a create columns request to core', function(onDone) {
     bufferJs(fixture('simple_points.json')
       .pipe(request.post({
@@ -191,4 +237,20 @@ describe('unit :: spatial service', function() {
   });
 
 
+  it('will return a 400 for a corrupt shapefile', function(onDone) {
+    fixture('corrupt_shapefile.zip')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      }))
+      .on('response', function(response) {
+        expect(response.statusCode).to.equal(400);
+        onDone();
+      });
+  });
 });
