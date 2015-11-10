@@ -7,6 +7,17 @@ var expect = chai.expect;
 
 describe('unit :: geojson decoder turns things into SoQLTypes', function() {
 
+  it('will emit an error for malformed json', function(onDone) {
+    var count = 0;
+    fixture('malformed_geojson.json')
+    .pipe(new GeoJSON())
+    .once('error', (err) => {
+      console.log(err);
+      onDone();
+    })
+  });
+
+
   it('can turn simple points to SoQLPoint', function(onDone) {
     var count = 0;
     fixture('simple_points.json')
@@ -26,7 +37,6 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       expect(count).to.equal(2);
       onDone();
     })
-
   });
 
   it('can turn simple points to SoQLLine', function(onDone) {
