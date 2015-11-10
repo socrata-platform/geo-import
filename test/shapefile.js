@@ -7,30 +7,45 @@ import {
 from './fixture';
 import Shapefile from '../lib/decoders/shapefile';
 import srs from 'node-srs';
+import Disk from '../lib/decoders/disk';
+import {
+  EventEmitter
+}
+from 'events';
 var expect = chai.expect;
+
+
+function shpDecoder() {
+  var res = new EventEmitter()
+  return [new Shapefile(new Disk(res)), res]
+}
+
+
 
 describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
 
-
-
   it('will emit an error for a corrupt shapefile', function(onDone) {
     var count = 0;
+    var [decoder, res] = shpDecoder();
     fixture('corrupt_shapefile.zip')
-      .pipe(new Shapefile())
+      .pipe(decoder)
       .on('error', (err) => {
+        res.emit('finish')
         expect(err.toString()).to.contain("Failed to read feature");
         onDone();
       });
   });
 
   it('correctly reads .prj file for non epsg4326 features and populates the geojson feature with it', function(onDone) {
+    var [decoder, res] = shpDecoder();
     fixture('simple_points_epsg_2834.zip')
-      .pipe(new Shapefile())
+      .pipe(decoder)
       .pipe(es.mapSync(function(feature) {
         var parsedCrs = srs.parse(feature.crs)
         expect(parsedCrs.valid).to.equal(true);
         expect(parsedCrs.proj4).to.equal("+proj=lcc +lat_1=41.7 +lat_2=40.43333333333333 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +units=m +no_defs")
       })).on('end', () => {
+        res.emit('finish')
         onDone();
       });
   });
@@ -65,8 +80,9 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
     ];
 
     var count = 0;
+    var [decoder, res] = shpDecoder();
     fixture('simple_points.zip')
-      .pipe(new Shapefile())
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -79,6 +95,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
       })).on('end', () => {
+        res.emit('finish')
         expect(count).to.equal(2);
         onDone();
       });
@@ -118,9 +135,11 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
       ]
     ];
     var count = 0;
+    var [decoder, res] = shpDecoder();
     fixture('simple_lines.zip')
-      .pipe(new Shapefile())
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
+
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLLine',
@@ -128,7 +147,10 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', onDone);
+      })).on('end', () => {
+        res.emit('finish')
+        onDone()
+      });
   });
 
   it('can turn simple points to SoQLPolygon', function(onDone) {
@@ -178,8 +200,9 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
     ];
     var count = 0;
 
+    var [decoder, res] = shpDecoder();
     fixture('simple_polygons.zip')
-      .pipe(new Shapefile())
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -188,7 +211,10 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', onDone);
+      })).on('end', () => {
+        res.emit('finish');
+        onDone();
+      });
   });
 
   it('can turn simple points to SoQLMultiPoint', function(onDone) {
@@ -214,8 +240,9 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
     ];
     var count = 0;
 
+    var [decoder, res] = shpDecoder();
     fixture('simple_multipoints.zip')
-      .pipe(new Shapefile())
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -224,7 +251,10 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', onDone);
+      })).on('end', () => {
+        res.emit('finish')
+        onDone();
+      });
   });
 
   it('can turn simple points to SoQLMultiLine', function(onDone) {
@@ -262,8 +292,9 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
     ];
     var count = 0;
 
+    var [decoder, res] = shpDecoder();
     fixture('simple_multilines.zip')
-      .pipe(new Shapefile())
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -273,7 +304,10 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
 
-      })).on('end', onDone);
+      })).on('end', () => {
+        res.emit('finish')
+        onDone();
+      });
   });
 
   it('can turn simple points to SoQLMultiPolygon', function(onDone) {
@@ -344,8 +378,9 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
       ]
     ];
     var count = 0;
+    var [decoder, res] = shpDecoder();
     fixture('simple_multipolygons.zip')
-      .pipe(new Shapefile())
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -354,6 +389,9 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', onDone);
+      })).on('end', () => {
+        res.emit('finish')
+        onDone();
+      });
   });
 });

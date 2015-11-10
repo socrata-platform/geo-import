@@ -8,12 +8,18 @@ import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
 import {
+  EventEmitter
+}
+from 'events';
+import {
   fixture
 }
 from './fixture';
 
 import GeoJSON from '../lib/decoders/geojson';
 import Merger from '../lib/decoders/merger';
+import Disk from '../lib/decoders/disk';
+
 
 import SoQLPoint from '../lib/soql/point';
 import SoQLLine from '../lib/soql/line';
@@ -30,20 +36,22 @@ import SoQLObject from '../lib/soql/object';
 
 var expect = chai.expect;
 
+function makeMerger() {
+  var res = new EventEmitter()
+  return [new Merger(new Disk(res)), res];
+}
 
 
 describe('unit :: merging feature streams to layers, reprojecting from scratch file', function() {
 
 
   it('soql mapping :: homogenous points, default crs', function(onDone) {
+    var [merger, response] = makeMerger();
     fixture('simple_points.json')
       .pipe(new GeoJSON())
-      .pipe(new Merger())
-      .on('error', (err) => {
-        console.log("ERROR", err)
-      })
+      .pipe(merger)
       .on('end', (layers) => {
-
+        response.emit('finish')
         expect(layers.length).to.equal(1);
 
         var [layer] = layers;
@@ -90,9 +98,10 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
 
 
   it('soql mapping :: homogenous points, heterogenous non wgs84 crs', function(onDone) {
+    var [merger, response] = makeMerger();
     fixture('multi_non_wgs84.json')
       .pipe(new GeoJSON())
-      .pipe(new Merger())
+      .pipe(merger)
       .on('end', (layers) => {
 
         expect(layers.length).to.equal(1);
@@ -144,10 +153,11 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
 
 
   it('soql mapping :: homogenous points, heterogenous crs', function(onDone) {
-    var geoJson = new GeoJSON();
+    var [merger, response] = makeMerger();
+
     fixture('multi_crs.json')
       .pipe(new GeoJSON())
-      .pipe(new Merger())
+      .pipe(merger)
       .on('end', (layers) => {
 
         expect(layers.length).to.equal(1);
@@ -198,11 +208,13 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
 
 
   it('soql mapping :: homogenous lines, heterogenous crs', function(onDone) {
+    var [merger, response] = makeMerger();
+
     fixture('simple_lines.json')
       .pipe(new GeoJSON())
-      .pipe(new Merger())
+      .pipe(merger)
       .on('end', (layers) => {
-
+        response.emit('finish');
         expect(layers.length).to.equal(1);
 
         var [layer] = layers;
@@ -255,12 +267,12 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
 
 
   it('soql mapping :: homogenous polygons, heterogenous crs', function(onDone) {
-    var geoJson = new GeoJSON();
+    var [merger, response] = makeMerger();
     fixture('simple_polygons.json')
       .pipe(new GeoJSON())
-      .pipe(new Merger())
+      .pipe(merger)
       .on('end', (layers) => {
-
+        response.emit('finish');
         expect(layers.length).to.equal(1);
 
         var [layer] = layers;
@@ -329,11 +341,13 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
 
 
   it('soql mapping :: homogenous multipoints, heterogenous crs', function(onDone) {
+    var [merger, response] = makeMerger();
+
     fixture('simple_multipoints.json')
       .pipe(new GeoJSON())
-      .pipe(new Merger())
+      .pipe(merger)
       .on('end', (layers) => {
-
+        response.emit('finish');
         expect(layers.length).to.equal(1);
 
         var [layer] = layers;
@@ -380,11 +394,13 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
 
 
   it('soql mapping :: homogenous multilines, heterogenous crs', function(onDone) {
+    var [merger, response] = makeMerger();
+
     fixture('simple_multilines.json')
       .pipe(new GeoJSON())
-      .pipe(new Merger())
+      .pipe(merger)
       .on('end', (layers) => {
-
+        response.emit('finish');
         expect(layers.length).to.equal(1);
 
         var [layer] = layers;
@@ -447,11 +463,13 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
 
 
   it('soql mapping :: homogenous multipolygons, heterogenous crs', function(onDone) {
+    var [merger, response] = makeMerger();
+
     fixture('simple_multipolygons.json')
       .pipe(new GeoJSON())
-      .pipe(new Merger())
+      .pipe(merger)
       .on('end', (layers) => {
-
+        response.emit('finish');
         expect(layers.length).to.equal(1);
 
         var [layer] = layers;

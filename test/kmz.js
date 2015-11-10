@@ -1,19 +1,32 @@
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
+import es from 'event-stream';
 import {
   fixture
 }
 from './fixture';
+import {
+  EventEmitter
+}
+from 'events';
+
 import KMZ from '../lib/decoders/kmz';
+import Disk from '../lib/decoders/disk';
 var expect = chai.expect;
+
+
+
+function kmzDecoder() {
+  var res = new EventEmitter()
+  return new KMZ(new Disk(res));
+}
 
 
 describe('unit :: kmz decoder turns things into SoQLTypes', function() {
   it('will emit an error for a corrupt shapefile', function(onDone) {
     var count = 0;
     fixture('corrupt_kmz.kmz')
-      .pipe(new KMZ())
+      .pipe(kmzDecoder())
       .on('error', (err) => {
         expect(err.toString()).to.contain("invalid central directory");
         onDone();
@@ -23,14 +36,14 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
   it('will emit an error for unparsable kml within the kmz', function(onDone) {
     var count = 0;
     fixture('malformed_kmz.kmz')
-      .pipe(new KMZ())
+      .pipe(kmzDecoder())
       .on('error', (err) => {
         expect(err.toString()).to.contain("mismatched tag");
         onDone();
       });
   });
 
-  it('can turn simple points to SoQLPoint', function(onDone) {
+  it('can turn simple kmz points to SoQLPoint', function(onDone) {
     var count = 0;
 
     var expectedValues = [
@@ -62,7 +75,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
     ];
 
     fixture('simple_points.kmz')
-      .pipe(new KMZ())
+      .pipe(kmzDecoder())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
 
@@ -120,7 +133,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
     var count = 0;
 
     fixture('simple_lines.kmz')
-      .pipe(new KMZ())
+      .pipe(kmzDecoder())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -187,7 +200,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
 
     var count = 0;
     fixture('simple_polygons.kmz')
-      .pipe(new KMZ())
+      .pipe(kmzDecoder())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -224,7 +237,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
 
     var count = 0;
     fixture('simple_multipoints.kmz')
-      .pipe(new KMZ())
+      .pipe(kmzDecoder())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -273,7 +286,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
 
     var count = 0;
     fixture('simple_multilines.kmz')
-      .pipe(new KMZ())
+      .pipe(kmzDecoder())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -356,7 +369,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
 
     var count = 0;
     fixture('simple_multipolygons.kmz')
-      .pipe(new KMZ())
+      .pipe(kmzDecoder())
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
