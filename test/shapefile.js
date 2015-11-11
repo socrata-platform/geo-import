@@ -101,7 +101,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
       });
   });
 
-  it('can turn simple points to SoQLLine', function(onDone) {
+  it('can turn simple lines to SoQLLine', function(onDone) {
     var expectedValues = [
       [{
           "type": "LineString",
@@ -153,7 +153,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
       });
   });
 
-  it('can turn simple points to SoQLPolygon', function(onDone) {
+  it('can turn simple polys to SoQLPolygon', function(onDone) {
     var expectedValues = [
       [{
           "type": "Polygon",
@@ -217,7 +217,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
       });
   });
 
-  it('can turn simple points to SoQLMultiPoint', function(onDone) {
+  it('can turn simple multipoints to SoQLMultiPoint', function(onDone) {
     var expectedValues = [
       [{
           "type": "MultiPoint",
@@ -257,7 +257,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
       });
   });
 
-  it('can turn simple points to SoQLMultiLine', function(onDone) {
+  it('can turn simple multilines to SoQLMultiLine', function(onDone) {
     var expectedValues = [
       [{
           "type": "MultiLineString",
@@ -310,7 +310,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
       });
   });
 
-  it('can turn simple points to SoQLMultiPolygon', function(onDone) {
+  it('can turn simple multipolygons to SoQLMultiPolygon', function(onDone) {
     var expectedValues = [
       [{
           "type": "MultiPolygon",

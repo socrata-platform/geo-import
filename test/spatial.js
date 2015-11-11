@@ -75,7 +75,7 @@ describe('unit :: spatial service', function() {
       })), (resp, buffered) => {
         expect(resp.statusCode).to.equal(200);
         expect(buffered.layers.length).to.equal(1);
-        expect(buffered.layers[0].created).to.equal(2);
+        expect(buffered.layers[0].layer.count).to.equal(2);
         onDone();
       });
   });
@@ -171,7 +171,18 @@ describe('unit :: spatial service', function() {
         expect(buffered).to.eql({
           'layers': [{
             'uid': 'qs32-qpt7',
-            'created': 2
+            'layer': {
+              "count": 2,
+              "geometry": "point",
+              "name": "layer_0",
+              "bbox": {
+                "maxx": 103.0,
+                "maxy": 1.5,
+                "minx": 102.0,
+                "miny": 0.5
+              },
+              "projection": "GEOGCS[\"WGS 84\",\n    DATUM[\"WGS_1984\",\n        SPHEROID[\"WGS 84\",6378137,298.257223563,\n            AUTHORITY[\"EPSG\",\"7030\"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY[\"EPSG\",\"6326\"]],\n    PRIMEM[\"Greenwich\",0,\n        AUTHORITY[\"EPSG\",\"8901\"]],\n    UNIT[\"degree\",0.0174532925199433,\n        AUTHORITY[\"EPSG\",\"9108\"]],\n    AUTHORITY[\"EPSG\",\"4326\"]]"
+            }
           }]
         });
 
