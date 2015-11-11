@@ -168,7 +168,14 @@ describe('unit :: spatial service', function() {
       })), (resp, buffered) => {
         var [upsert] = mockCore.history.slice(6);
         expect(resp.statusCode).to.equal(200);
+
         expect(buffered).to.eql({
+          'bbox': {
+            "maxx": 103.0,
+            "maxy": 1.5,
+            "minx": 102.0,
+            "miny": 0.5
+          },
           'layers': [{
             'uid': 'qs32-qpt7',
             'layer': {
@@ -186,6 +193,7 @@ describe('unit :: spatial service', function() {
           }]
         });
 
+        //check the request body that was actuall sent to core
         expect(JSON.parse(upsert.bufferedRows)).to.eql(
           [{
             "the_geom": {
