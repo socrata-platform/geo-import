@@ -38,7 +38,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
     fixture('malformed_kmz.kmz')
       .pipe(kmzDecoder())
       .on('error', (err) => {
-        expect(err.toString()).to.contain("mismatched tag");
+        expect(err.toString()).to.contain("XML Parse error");
         onDone();
       });
   });
