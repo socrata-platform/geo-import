@@ -12,9 +12,8 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
     fixture('malformed_geojson.json')
     .pipe(new GeoJSON())
     .once('error', (err) => {
-      console.log(err);
       onDone();
-    })
+    });
   });
 
 
@@ -30,13 +29,13 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
         'SoQLNumber',
         'SoQLNumber',
         'SoQLBoolean'
-      ])
-      count++
+      ]);
+      count++;
 
     })).on('end', () => {
       expect(count).to.equal(2);
       onDone();
-    })
+    });
   });
 
   it('can turn simple points to SoQLLine', function(onDone) {
@@ -47,9 +46,9 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLLine',
         'SoQLText'
-      ])
+      ]);
 
-    })).on('end', onDone)
+    })).on('end', onDone);
   });
 
   it('can turn simple points to SoQLPolygon', function(onDone) {
@@ -60,9 +59,9 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLPolygon',
         'SoQLText'
-      ])
+      ]);
 
-    })).on('end', onDone)
+    })).on('end', onDone);
   });
 
   it('can turn simple points to SoQLMultiPoint', function(onDone) {
@@ -75,9 +74,9 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiPoint',
         'SoQLText'
-      ])
+      ]);
 
-    })).on('end', onDone)
+    })).on('end', onDone);
   });
 
   it('can turn simple points to SoQLMultiLine', function(onDone) {
@@ -88,9 +87,9 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiLine',
         'SoQLText'
-      ])
+      ]);
 
-    })).on('end', onDone)
+    })).on('end', onDone);
   });
 
   it('can turn simple points to SoQLMultiPolygon', function(onDone) {
@@ -101,8 +100,8 @@ describe('unit :: geojson decoder turns things into SoQLTypes', function() {
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiPolygon',
         'SoQLText'
-      ])
-    })).on('end', onDone)
+      ]);
+    })).on('end', onDone);
   });
 
 });

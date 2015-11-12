@@ -20,7 +20,8 @@
     "node-expat" : "latest",
     "through":"latest",
     "yauzl": "latest",
-    "shapefile": "latest"
+    "shapefile": "latest",
+    "bunyan": "latest"
   },
   "devDependencies": {
     "mocha-traceur": "latest",
@@ -31,7 +32,6 @@
     "should": "latest"
   },
   "scripts": {
-    "postinstall": "./postinstall.sh",
     "test": "GEO_IMPORT_ENV=test ./node_modules/.bin/mocha --grep 'unit' --compilers js:babel/register"
   }
 }
