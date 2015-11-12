@@ -405,4 +405,44 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         onDone();
       });
   });
+
+
+  it('can turn kml multi geometry heterogenous shapes into SoQL', function(onDone) {
+
+    var kml = new KML();
+    var things = [];
+
+    var pointExpected = [{
+        "type": "MultiPoint",
+        "coordinates": [[
+          102.0,
+          0.5
+        ]]
+      },
+      "first value"
+    ]
+
+
+    var lineExpected = [{
+        "type": "MultiLineString",
+        "coordinates": [[
+          [101.0, 0.0],
+          [101.0, 1.0]
+        ]]
+      },
+      "first value"
+    ]
+
+    fixture('points_and_lines_multigeom_sans_schema.kml')
+      .pipe(kml)
+      .pipe(es.mapSync((thing) => things.push(thing)))
+      .on('end', () => {
+        var [t0, t1] = things;
+
+        expect(t0.columns.map((c) => c.value)).to.eql(pointExpected);
+        expect(t1.columns.map((c) => c.value)).to.eql(lineExpected);
+
+        onDone();
+      });
+  });
 });
