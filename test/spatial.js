@@ -18,31 +18,11 @@ import service from '../lib/service';
 
 var expect = chai.expect;
 
-describe('unit :: spatial service', function() {
-  var app;
-  var mockZk;
-  var mockCore;
-  var port = config().port;
-  var url = `http://localhost:${port}`;
+describe('unit :: spatial service', function(w, state) {
+  console.log("State is", state);
 
-  beforeEach(function(onDone) {
-    service({
-      zkClient: MockZKClient
-    }, (a, zk) => {
-      mockZk = zk;
-      app = a;
-      mockCore = new CoreMock(mockZk.corePort);
-      onDone();
-    });
-  });
-
-  afterEach(function() {
-    mockCore.close();
-    app.close();
-  });
-
-
-  it('can post geojson and it will make a create dataset request to core', function(onDone) {
+  it('can post geojson and it will make a create dataset request to core', function(onDone, s) {
+    console.log(s);
     fixture('simple_points.json')
       .pipe(request.post({
         url: url + '/spatial',
@@ -61,6 +41,7 @@ describe('unit :: spatial service', function() {
         onDone();
       });
   });
+
 
   it('can post kml and it will do an upsert to core', function(onDone) {
     bufferJs(fixture('simple_points.kml')
@@ -155,7 +136,7 @@ describe('unit :: spatial service', function() {
       });
   });
 
-  it('can post single layer and it will upsert to core', function(onDone) {
+  it('WTF can post single layer and it will upsert to core', function(onDone) {
     bufferJs(fixture('simple_points.json')
       .pipe(request.post({
         url: url + '/spatial',
@@ -188,6 +169,28 @@ describe('unit :: spatial service', function() {
                 "minx": 102.0,
                 "miny": 0.5
               },
+              "columns": [
+                {
+                  "dataTypeName": "point",
+                  "fieldName": "the_geom"
+                },
+                {
+                  "dataTypeName": "text",
+                  "fieldName": "a_string"
+                },
+                {
+                  "dataTypeName": "number",
+                  "fieldName": "a_num"
+                },
+                {
+                  "dataTypeName": "number",
+                  "fieldName": "a_float"
+                },
+                {
+                  "dataTypeName": "checkbox",
+                  "fieldName": "a_bool"
+                }
+              ],
               "projection": "GEOGCS[\"WGS 84\",\n    DATUM[\"WGS_1984\",\n        SPHEROID[\"WGS 84\",6378137,298.257223563,\n            AUTHORITY[\"EPSG\",\"7030\"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY[\"EPSG\",\"6326\"]],\n    PRIMEM[\"Greenwich\",0,\n        AUTHORITY[\"EPSG\",\"8901\"]],\n    UNIT[\"degree\",0.0174532925199433,\n        AUTHORITY[\"EPSG\",\"9108\"]],\n    AUTHORITY[\"EPSG\",\"4326\"]]"
             }
           }]

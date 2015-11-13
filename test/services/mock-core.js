@@ -2,23 +2,24 @@ var express = require('express');
 var bodyParser = require('body-parser');
 import es from 'event-stream' ;
 
+var a;
 class CoreMock {
   constructor(port) {
     this._history = [];
     this._colCounter = 0;
 
-    var app = express();
-    app.use(bodyParser.urlencoded({
+    var core = express();
+    core.use(bodyParser.urlencoded({
       extended: true
     }));
 
     //this is super hacky....express binds middleware to the
     //base route, which overrides more specific routes, ugh
-    app.use('/views/:fourfour/rows', bodyParser.raw());
-    app.use(/\/views$/, bodyParser.json());
-    app.use(/.*columns$/, bodyParser.json());
+    core.use('/views/:fourfour/rows', bodyParser.raw());
+    core.use(/\/views$/, bodyParser.json());
+    core.use(/.*columns$/, bodyParser.json());
 
-    app.post('/views', function(req, res) {
+    core.post('/views', function(req, res) {
       this._history.push(req);
       var hs = req.headers;
       if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
@@ -68,7 +69,7 @@ class CoreMock {
       res.status(200).send(JSON.stringify(view));
     }.bind(this));
 
-    app.post('/views/:fourfour/columns', function(req, res) {
+    core.post('/views/:fourfour/columns', function(req, res) {
       this._history.push(req);
       var hs = req.headers;
       if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
@@ -96,17 +97,20 @@ class CoreMock {
       res.status(200).send(JSON.stringify(view));
     }.bind(this));
 
-    app.post('/id/:fourfour', function(req, res) {
+    core.post('/id/:fourfour', function(req, res) {
       this._history.push(req);
 
       req.bufferedRows = '';
       req.pipe(es.map((thing, cb) => {
         req.bufferedRows += thing.toString('utf-8');
       }))
-      res.status(200).send('{}');
+      req.on('end', () => {
+        res.status(200).send('{}');
+      })
     }.bind(this));
 
-    this._app = app.listen(port);
+    console.log("CORE BINDING TO PORT", port);
+    a = core.listen(port);
   }
 
   get history() {
@@ -119,11 +123,7 @@ class CoreMock {
   }
 
   close() {
-    try {
-      return this._app.close();
-    } catch(e) {
-      //already closed...heh
-    }
+    a.close();
   }
 
 

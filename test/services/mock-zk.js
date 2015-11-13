@@ -15,14 +15,18 @@ class MockZKClient extends EventEmitter {
   }
 
   get corePort() {
-    return 6668
+    if(this._port) return this._port;
+    var min = 10020;
+    var max = 10080;
+    this._port = Math.floor(Math.random() * (max - min + 1)) + min;
+    return this._port;
   }
 
   _err(message) {
     return {
       statusCode: 503,
       body: message
-    }
+    };
   }
 
   getCore(cb) {

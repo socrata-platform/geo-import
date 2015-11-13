@@ -18,21 +18,6 @@ import service from '../lib/service';
 var expect = chai.expect;
 
 describe('unit :: summary service', () => {
-  var app;
-  var mockZk;
-  var port = config().port;
-  var url = `http://localhost:${port}`;
-
-  beforeEach((onDone) => {
-    service({
-      zkClient: MockZKClient
-    }, (a, zk) => {
-      app = a;
-      onDone();
-    });
-  });
-
-  afterEach(() => app.close());
 
   it('can post single layer geojson and it will make a summary', (onDone) => {
     bufferJs(fixture('simple_points.json')
