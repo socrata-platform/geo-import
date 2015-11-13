@@ -2,8 +2,10 @@ import {EventEmitter} from 'events';
 
 
 class MockZKClient extends EventEmitter {
-  constructor() {
+  constructor(corePort) {
     super();
+    if(!corePort) throw new Error('MockZKClient needs a core port');
+    this._corePort = corePort;
   }
 
   enableErrors() {
@@ -15,14 +17,14 @@ class MockZKClient extends EventEmitter {
   }
 
   get corePort() {
-    return 6668
+    return this._corePort;
   }
 
   _err(message) {
     return {
       statusCode: 503,
       body: message
-    }
+    };
   }
 
   getCore(cb) {

@@ -10,8 +10,7 @@ import Logger from '../lib/util/logger';
 describe('integration :: zookeeper client wrapper', function() {
 
   it("can connect to zk", (onDone) => {
-    var config = conf();
-    var zk = new Zookeeper(config)
+    var zk = new Zookeeper(conf())
     zk.once('connected', () => {
       onDone()
     })

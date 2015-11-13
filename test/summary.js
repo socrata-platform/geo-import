@@ -19,14 +19,13 @@ var expect = chai.expect;
 
 describe('unit :: summary service', () => {
   var app;
-  var mockZk;
   var port = config().port;
   var url = `http://localhost:${port}`;
+  var corePort = 7000;
 
   beforeEach((onDone) => {
-    service({
-      zkClient: MockZKClient
-    }, (a, zk) => {
+    var zk = new MockZKClient(corePort);
+    service(zk, {}, (a, zk) => {
       app = a;
       onDone();
     });
