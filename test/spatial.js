@@ -182,6 +182,31 @@ describe('unit :: spatial service', function() {
               "count": 2,
               "geometry": "point",
               "name": "layer_0",
+
+              "columns": [
+                {
+                  "dataTypeName": "point",
+                  "fieldName": "the_geom"
+                },
+                {
+                  "dataTypeName": "text",
+                  "fieldName": "a_string"
+                },
+                {
+                  "dataTypeName": "number",
+                  "fieldName": "a_num"
+                },
+                {
+                  "dataTypeName": "number",
+                  "fieldName": "a_float"
+                },
+                {
+                  "dataTypeName": "checkbox",
+                  "fieldName": "a_bool"
+                }
+              ],
+
+
               "bbox": {
                 "maxx": 103.0,
                 "maxy": 1.5,
