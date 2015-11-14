@@ -5,6 +5,7 @@ from 'chai';
 import should from 'should';
 import conf from '../lib/config';
 import Zookeeper from '../lib/upstream/zookeeper';
+import Logger from '../lib/util/logger';
 
 describe('integration :: zookeeper client wrapper', function() {
 

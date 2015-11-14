@@ -155,7 +155,7 @@ describe('unit :: spatial service', function() {
       });
   });
 
-  it('can post geojson and it will upsert to core', function(onDone) {
+  it('can post single layer and it will upsert to core', function(onDone) {
     bufferJs(fixture('simple_points.json')
       .pipe(request.post({
         url: url + '/spatial',
@@ -218,6 +218,37 @@ describe('unit :: spatial service', function() {
         onDone();
       });
   });
+
+  it('can post multi layer and it will upsert to core', function(onDone) {
+    bufferJs(fixture('points_and_lines_multigeom.kml')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/vnd.google-earth.kml+xml'
+        }
+      })), (resp, buffered) => {
+        var [{
+          layer: {
+            geometry: mps
+          }
+        }, {
+          layer: {
+            geometry: mls
+          }
+        }] = buffered.layers;
+
+        expect(mps).to.equal('multipoint');
+        expect(mls).to.equal('multiline');
+        expect(resp.statusCode).to.equal(200);
+
+        onDone();
+      });
+  });
+
+
 
   it('will return a 503 when zk is dead', function(onDone) {
     mockZk.enableErrors();
