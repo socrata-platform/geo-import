@@ -19,19 +19,18 @@ import service from '../lib/service';
 var expect = chai.expect;
 
 describe('unit :: spatial service', function() {
-  var app;
   var mockZk;
   var mockCore;
-  var port = config().port;
-  var url = `http://localhost:${port}`;
+  var conf = config()
+  var corePort = 7001; //coreport
+  var url = `http://localhost:${conf.port}`;
+  var app;
 
-  beforeEach(function(onDone) {
-    service({
-      zkClient: MockZKClient
-    }, (a, zk) => {
-      mockZk = zk;
+  beforeEach((onDone) => {
+    mockZk = new MockZKClient(corePort);
+    service(mockZk, {}, (a, zk) => {
       app = a;
-      mockCore = new CoreMock(mockZk.corePort);
+      mockCore = new CoreMock(corePort);
       onDone();
     });
   });
@@ -54,6 +53,7 @@ describe('unit :: spatial service', function() {
         }
       }))
       .on('response', function(response) {
+        expect(response.statusCode).to.equal(200);
         var createRequest = _.first(mockCore.history);
         expect(createRequest.body).to.eql({
           name: 'layer_0'

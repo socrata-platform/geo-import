@@ -20,23 +20,19 @@ var expect = chai.expect;
 
 describe('unit :: version service', function() {
   var app;
-  var mockZk;
-  var mockCore;
   var port = config().port;
   var url = `http://localhost:${port}`;
+  var corePort = 7000;
 
-  beforeEach(function(onDone) {
-    service({
-      zkClient: MockZKClient
-    }, (a, zk) => {
+  beforeEach((onDone) => {
+    var zk = new MockZKClient(corePort);
+    service(zk, {}, (a, zk) => {
       app = a;
       onDone();
     });
   });
 
-  afterEach(function() {
-    app.close();
-  });
+  afterEach(() => app.close());
 
   it('can get the version of the service', function(onDone) {
     request
