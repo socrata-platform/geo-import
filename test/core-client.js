@@ -18,7 +18,7 @@ describe('unit :: core client', function() {
   var url = `http://localhost:${port}`
 
   beforeEach(function(onDone) {
-    mockZk = new MockZKClient()
+    mockZk = new MockZKClient(port)
     mockZk.connect();
     mockZk.on('connected', function() {
       mockCore = new CoreService(port);

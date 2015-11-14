@@ -103,7 +103,11 @@ class CoreMock {
       req.pipe(es.map((thing, cb) => {
         req.bufferedRows += thing.toString('utf-8');
       }))
-      res.status(200).send('{}');
+
+      req.on('end', () => {
+
+        res.status(200).send('{}');
+      })
     }.bind(this));
 
     this._app = app.listen(port);
