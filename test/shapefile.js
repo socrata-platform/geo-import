@@ -13,10 +13,10 @@ import {
 }
 from 'events';
 var expect = chai.expect;
-
+var res;
 
 function shpDecoder() {
-  var res = new EventEmitter()
+  res = new EventEmitter()
   return [new Shapefile(new Disk(res)), res]
 }
 
@@ -24,13 +24,16 @@ function shpDecoder() {
 
 describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
 
+  afterEach(function() {
+    res.emit('finish');
+  })
+
   it('will emit an error for a corrupt shapefile', function(onDone) {
     var count = 0;
     var [decoder, res] = shpDecoder();
     fixture('corrupt_shapefile.zip')
       .pipe(decoder)
       .on('error', (err) => {
-        res.emit('finish')
         expect(err.toString()).to.contain("Failed to read feature");
         onDone();
       });
@@ -44,11 +47,10 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         var parsedCrs = srs.parse(feature.crs)
         expect(parsedCrs.valid).to.equal(true);
         expect(parsedCrs.proj4).to.equal("+proj=lcc +lat_1=41.7 +lat_2=40.43333333333333 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +units=m +no_defs")
-      })).on('end', () => {
-        res.emit('finish')
-        onDone();
-      });
+      })).on('end', onDone);
   });
+
+
 
   it('can turn simple points to SoQLPoint', function(onDone) {
     var expectedValues = [
@@ -95,7 +97,6 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
       })).on('end', () => {
-        res.emit('finish')
         expect(count).to.equal(2);
         onDone();
       });
@@ -147,10 +148,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', () => {
-        res.emit('finish')
-        onDone()
-      });
+      })).on('end', onDone);
   });
 
   it('can turn simple polys to SoQLPolygon', function(onDone) {
@@ -211,10 +209,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', () => {
-        res.emit('finish');
-        onDone();
-      });
+      })).on('end', onDone);
   });
 
   it('can turn simple multipoints to SoQLMultiPoint', function(onDone) {
@@ -251,10 +246,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', () => {
-        res.emit('finish')
-        onDone();
-      });
+      })).on('end', onDone);
   });
 
   it('can turn simple multilines to SoQLMultiLine', function(onDone) {
@@ -304,10 +296,7 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
 
-      })).on('end', () => {
-        res.emit('finish')
-        onDone();
-      });
+      })).on('end', onDone);
   });
 
   it('can turn simple multipolygons to SoQLMultiPolygon', function(onDone) {
@@ -389,9 +378,6 @@ describe('unit :: shapefile decoder turns things into SoQLTypes', function() {
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-      })).on('end', () => {
-        res.emit('finish')
-        onDone();
-      });
+      })).on('end', onDone);
   });
 });

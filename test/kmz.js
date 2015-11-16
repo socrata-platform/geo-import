@@ -14,12 +14,16 @@ import KMZ from '../lib/decoders/kmz';
 import Disk from '../lib/decoders/disk';
 var expect = chai.expect;
 
-
+var res;
 
 function kmzDecoder() {
-  var res = new EventEmitter()
+  res = new EventEmitter()
   return new KMZ(new Disk(res));
 }
+
+afterEach(function() {
+  res && res.emit('finish');
+})
 
 
 describe('unit :: kmz decoder turns things into SoQLTypes', function() {
