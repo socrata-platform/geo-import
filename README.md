@@ -5,6 +5,7 @@ import
 * geojson
 * kmz
 * kml
+* shp
 
 
 into soda-fountain
