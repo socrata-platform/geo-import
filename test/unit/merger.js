@@ -14,44 +14,44 @@ from 'events';
 import {
   fixture
 }
-from './fixture';
+from '../fixture';
 
-import GeoJSON from '../lib/decoders/geojson';
-import Merger from '../lib/decoders/merger';
-import Disk from '../lib/decoders/disk';
+import GeoJSON from '../../lib/decoders/geojson';
+import Merger from '../../lib/decoders/merger';
+import Disk from '../../lib/decoders/disk';
 
 
-import SoQLPoint from '../lib/soql/point';
-import SoQLLine from '../lib/soql/line';
-import SoQLPolygon from '../lib/soql/polygon';
-import SoQLMultiPoint from '../lib/soql/multipoint';
-import SoQLMultiLine from '../lib/soql/multiline';
-import SoQLMultiPolygon from '../lib/soql/multipolygon';
-import SoQLText from '../lib/soql/text';
-import SoQLBoolean from '../lib/soql/boolean';
-import SoQLNumber from '../lib/soql/number';
-import SoQLArray from '../lib/soql/array';
-import SoQLObject from '../lib/soql/object';
+import SoQLPoint from '../../lib/soql/point';
+import SoQLLine from '../../lib/soql/line';
+import SoQLPolygon from '../../lib/soql/polygon';
+import SoQLMultiPoint from '../../lib/soql/multipoint';
+import SoQLMultiLine from '../../lib/soql/multiline';
+import SoQLMultiPolygon from '../../lib/soql/multipolygon';
+import SoQLText from '../../lib/soql/text';
+import SoQLBoolean from '../../lib/soql/boolean';
+import SoQLNumber from '../../lib/soql/number';
+import SoQLArray from '../../lib/soql/array';
+import SoQLObject from '../../lib/soql/object';
 
 
 var expect = chai.expect;
 
 function makeMerger() {
-  var res = new EventEmitter()
+  var res = new EventEmitter();
   return [new Merger(new Disk(res)), res];
 }
 
 
-describe('unit :: merging feature streams to layers, reprojecting from scratch file', function() {
+describe('merging feature streams to layers', function() {
 
 
-  it('soql mapping :: homogenous points, default crs', function(onDone) {
+  it('will handle homogenous points, default crs', function(onDone) {
     var [merger, response] = makeMerger();
     fixture('simple_points.json')
       .pipe(new GeoJSON())
       .pipe(merger)
       .on('end', (layers) => {
-        response.emit('finish')
+        response.emit('finish');
         expect(layers.length).to.equal(1);
 
         var [layer] = layers;
@@ -93,11 +93,11 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
 
           onDone();
         });
-      })
+      });
   });
 
 
-  it('soql mapping :: homogenous points, heterogenous non wgs84 crs', function(onDone) {
+  it('will handle homogenous points, heterogenous non wgs84 crs', function(onDone) {
     var [merger, response] = makeMerger();
     fixture('multi_non_wgs84.json')
       .pipe(new GeoJSON())
@@ -152,7 +152,7 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
   });
 
 
-  it('soql mapping :: homogenous points, heterogenous crs', function(onDone) {
+  it('will handle homogenous points, heterogenous crs', function(onDone) {
     var [merger, response] = makeMerger();
 
     fixture('multi_crs.json')
@@ -207,7 +207,7 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
   });
 
 
-  it('soql mapping :: homogenous lines, heterogenous crs', function(onDone) {
+  it('will handle homogenous lines, heterogenous crs', function(onDone) {
     var [merger, response] = makeMerger();
 
     fixture('simple_lines.json')
@@ -266,7 +266,7 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
   });
 
 
-  it('soql mapping :: homogenous polygons, heterogenous crs', function(onDone) {
+  it('will handle homogenous polygons, heterogenous crs', function(onDone) {
     var [merger, response] = makeMerger();
     fixture('simple_polygons.json')
       .pipe(new GeoJSON())
@@ -340,7 +340,7 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
   });
 
 
-  it('soql mapping :: homogenous multipoints, heterogenous crs', function(onDone) {
+  it('will handle homogenous multipoints, heterogenous crs', function(onDone) {
     var [merger, response] = makeMerger();
 
     fixture('simple_multipoints.json')
@@ -393,7 +393,7 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
   });
 
 
-  it('soql mapping :: homogenous multilines, heterogenous crs', function(onDone) {
+  it('will handle homogenous multilines, heterogenous crs', function(onDone) {
     var [merger, response] = makeMerger();
 
     fixture('simple_multilines.json')
@@ -462,7 +462,7 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
   });
 
 
-  it('soql mapping :: homogenous multipolygons, heterogenous crs', function(onDone) {
+  it('will handle homogenous multipolygons, heterogenous crs', function(onDone) {
     var [merger, response] = makeMerger();
 
     fixture('simple_multipolygons.json')
@@ -549,5 +549,4 @@ describe('unit :: merging feature streams to layers, reprojecting from scratch f
         });
       });
   });
-
 });

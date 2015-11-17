@@ -5,23 +5,22 @@ import * as es from 'event-stream';
 import {
   fixture, bufferJs
 }
-from './fixture';
+from '../fixture';
 import request from 'request';
-import CoreMock from './services/mock-core';
-import MockZKClient from './services/mock-zk';
+import CoreMock from '../services/mock-core';
+import MockZKClient from '../services/mock-zk';
 import {
   EventEmitter
 }
 from 'events';
-import config from '../lib/config';
-import service from '../lib/service';
+import config from '../../lib/config';
+import service from '../../lib/service';
 
 var res;
 var expect = chai.expect;
 
 
-
-describe('http service smoketest', () => {
+describe('kml ingress', () => {
   var mockZk;
   var mockCore;
   var conf = config();
@@ -44,8 +43,8 @@ describe('http service smoketest', () => {
   });
 
 
-  it('smoke kml :: can do a largish ~30mb KML summary', function(onDone) {
-    this.timeout(15000);
+  it('should be able to do a ~30mb KML summary', function(onDone) {
+    this.timeout(150000);
 
     bufferJs(fixture('smoke/usbr.kml')
       .pipe(request.post({
@@ -96,8 +95,8 @@ describe('http service smoketest', () => {
       });
   });
 
-  it('smoke kml :: can do a largish ~30mb KML upsert', function(onDone) {
-    this.timeout(15000);
+  it('should be able to do a ~30mb KML upsert', function(onDone) {
+    this.timeout(150000);
     bufferJs(fixture('smoke/usbr.kml')
       .pipe(request.post({
         url: url + '/spatial',
@@ -129,83 +128,4 @@ describe('http service smoketest', () => {
         onDone();
       });
   });
-
-
-  it('smoke shapefile :: can do a ~12mb SHP summary', function(onDone) {
-    this.timeout(8000);
-
-    bufferJs(fixture('smoke/USBR_crs.zip')
-      .pipe(request.post({
-        url: url + '/summary',
-        encoding: null,
-        headers: {
-          'Authorization': 'test-auth',
-          'X-App-Token': 'app-token',
-          'X-Socrata-Host': 'localhost:6668',
-          'Content-Type': 'application/zip'
-        }
-      })), (res, buffered) => {
-        expect(res.statusCode).to.equal(200);
-
-        expect(buffered.layers.length).to.equal(2);
-        var [l0, l1] = buffered.layers;
-
-        expect(l0).to.eql({
-          count: 3,
-          projection: 'GEOGCS["WGS 84",\n    DATUM["WGS_1984",\n        SPHEROID["WGS 84",6378137,298.257223563,\n            AUTHORITY["EPSG","7030"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY["EPSG","6326"]],\n    PRIMEM["Greenwich",0,\n        AUTHORITY["EPSG","8901"]],\n    UNIT["degree",0.0174532925199433,\n        AUTHORITY["EPSG","9108"]],\n    AUTHORITY["EPSG","4326"]]',
-          name: 'layer_0',
-          geometry: 'multipolygon',
-          bbox: {
-            minx: null,
-            miny: null,
-            maxx: null,
-            maxy: null
-          },
-          columns: [{
-            fieldName: 'the_geom',
-            dataTypeName: 'multipolygon'
-          }, {
-            fieldName: 'OBJECTID',
-            dataTypeName: 'number'
-          }, {
-            fieldName: 'Region',
-            dataTypeName: 'text'
-          }, {
-            fieldName: 'Name',
-            dataTypeName: 'text'
-          }]
-        })
-
-        expect(l1).to.eql({
-          count: 2,
-          projection: 'GEOGCS["WGS 84",\n    DATUM["WGS_1984",\n        SPHEROID["WGS 84",6378137,298.257223563,\n            AUTHORITY["EPSG","7030"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY["EPSG","6326"]],\n    PRIMEM["Greenwich",0,\n        AUTHORITY["EPSG","8901"]],\n    UNIT["degree",0.0174532925199433,\n        AUTHORITY["EPSG","9108"]],\n    AUTHORITY["EPSG","4326"]]',
-          name: 'layer_1',
-          geometry: 'polygon',
-          bbox: {
-            minx: null,
-            miny: null,
-            maxx: null,
-            maxy: null
-          },
-          columns: [{
-            fieldName: 'the_geom',
-            dataTypeName: 'polygon'
-          }, {
-            fieldName: 'OBJECTID',
-            dataTypeName: 'number'
-          }, {
-            fieldName: 'Region',
-            dataTypeName: 'text'
-          }, {
-            fieldName: 'Name',
-            dataTypeName: 'text'
-          }]
-        })
-
-        onDone();
-      });
-  });
-
-
-
 });

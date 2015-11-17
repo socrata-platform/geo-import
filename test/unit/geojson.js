@@ -1,11 +1,11 @@
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
-import {fixture} from './fixture';
-import GeoJSON from '../lib/decoders/geojson';
+import {fixture} from '../fixture';
+import GeoJSON from '../../lib/decoders/geojson';
 var expect = chai.expect;
 
-describe('unit :: geojson decoder turns things into SoQLTypes', function() {
+describe('geojson decoder', function() {
 
   it('will emit an error for malformed json', function(onDone) {
     var count = 0;

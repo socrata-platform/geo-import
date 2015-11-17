@@ -5,20 +5,20 @@ import * as es from 'event-stream';
 import {
   fixture, bufferJs
 }
-from './fixture';
+from '../fixture';
 import request from 'request';
-import CoreMock from './services/mock-core';
-import MockZKClient from './services/mock-zk';
+import CoreMock from '../services/mock-core';
+import MockZKClient from '../services/mock-zk';
 import {
   EventEmitter
 }
 from 'events';
-import config from '../lib/config';
-import service from '../lib/service';
+import config from '../../lib/config';
+import service from '../../lib/service';
 
 var expect = chai.expect;
 
-describe('unit :: version service', function() {
+describe('version service', function() {
   var app;
   var port = config().port;
   var url = `http://localhost:${port}`;

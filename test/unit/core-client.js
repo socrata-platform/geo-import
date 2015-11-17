@@ -3,15 +3,15 @@ import {
 }
 from 'chai';
 import should from 'should';
-import CoreService from './services/mock-core';
-import MockZKClient from './services/mock-zk';
-import config from '../lib/config';
+import CoreService from '../services/mock-core';
+import MockZKClient from '../services/mock-zk';
+import config from '../../lib/config';
 import {
   CoreAuth, Core
 }
-from '../lib/upstream/core';
+from '../../lib/upstream/core';
 
-describe('unit :: core client', function() {
+describe('core client', function() {
   var mockCore;
   var mockZk;
   var port = 6668;

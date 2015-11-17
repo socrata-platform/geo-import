@@ -5,19 +5,19 @@ import * as es from 'event-stream';
 import {
   fixture, bufferJs
 }
-from './fixture';
+from '../fixture';
 import request from 'request';
-import MockZKClient from './services/mock-zk';
+import MockZKClient from '../services/mock-zk';
 import {
   EventEmitter
 }
 from 'events';
-import config from '../lib/config';
-import service from '../lib/service';
+import config from '../../lib/config';
+import service from '../../lib/service';
 
 var expect = chai.expect;
 
-describe('unit :: summary service', () => {
+describe('summary service', () => {
   var app;
   var port = config().port;
   var url = `http://localhost:${port}`;

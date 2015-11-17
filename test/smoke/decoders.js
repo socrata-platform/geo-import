@@ -5,55 +5,55 @@ import * as es from 'event-stream';
 import {
   fixture, bufferJs
 }
-from './fixture';
+from '../fixture';
 import request from 'request';
-import CoreMock from './services/mock-core';
-import MockZKClient from './services/mock-zk';
+import CoreMock from '../services/mock-core';
+import MockZKClient from '../services/mock-zk';
 import {
   EventEmitter
 }
 from 'events';
-import config from '../lib/config';
-import service from '../lib/service';
-import Shapefile from '../lib/decoders/shapefile';
-import KMZ from '../lib/decoders/kmz';
-import KML from '../lib/decoders/kml';
-import Disk from '../lib/decoders/disk';
+import config from '../../lib/config';
+import service from '../../lib/service';
+import Shapefile from '../../lib/decoders/shapefile';
+import KMZ from '../../lib/decoders/kmz';
+import KML from '../../lib/decoders/kml';
+import Disk from '../../lib/decoders/disk';
 
 var res;
 var expect = chai.expect;
 
 function kmzDecoder() {
-  res = new EventEmitter()
+  res = new EventEmitter();
   return new KMZ(new Disk(res));
 }
 function shpDecoder() {
-  res = new EventEmitter()
-  return [new Shapefile(new Disk(res)), res]
+  res = new EventEmitter();
+  return [new Shapefile(new Disk(res)), res];
 }
 function kmlDecoder() {
-  res = new EventEmitter()
-  return [new KML(new Disk(res)), res]
+  res = new EventEmitter();
+  return [new KML(new Disk(res)), res];
 }
 
 
 
-describe('decoder smoketest', () => {
+describe('decoders', () => {
 
 
   afterEach(function() {
-    res && res.emit('finish');
+    if(res) res.emit('finish');
   });
 
 
 
-  it('smoke :: can read a multi chunk kmz', function(onDone) {
-    this.timeout(15000)
+  it('should handle real multi chunk kmz', function(onDone) {
+    this.timeout(150000);
     var count = 0;
     fixture('smoke/usbr.kmz')
       .pipe(kmzDecoder())
       .pipe(es.mapSync(function(thing) {
-        count++
+        count++;
       }))
       .on('end', () => {
         expect(count).to.equal(5);
@@ -62,33 +62,33 @@ describe('decoder smoketest', () => {
   });
 
 
-  it('smoke :: can read a multi chunk shapefile', function(onDone) {
-    this.timeout(10000);
+  it('should handle real multi chunk shapefile', function(onDone) {
+    this.timeout(100000);
     var count = 0;
     var [decoder, res] = shpDecoder();
     fixture('smoke/USBR_crs.zip')
       .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
-        count++
+        count++;
       }))
       .on('end', () => {
-        res.emit('finish')
+        res.emit('finish');
         expect(count).to.equal(5);
         onDone();
       });
   });
 
-  it('smoke :: can read a multi chunk kml', function(onDone) {
-    this.timeout(10000);
+  it('should handle real multi chunk kml', function(onDone) {
+    this.timeout(100000);
     var count = 0;
     var [decoder, res] = kmlDecoder();
     fixture('smoke/usbr.kml')
       .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
-        count++
+        count++;
       }))
       .on('end', () => {
-        res.emit('finish')
+        res.emit('finish');
         expect(count).to.equal(5);
         onDone();
       });

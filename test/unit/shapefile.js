@@ -4,24 +4,55 @@ import * as es from 'event-stream';
 import {
   fixture
 }
-from './fixture';
-import KML from '../lib/decoders/kml';
+from '../fixture';
+import Shapefile from '../../lib/decoders/shapefile';
+import srs from 'node-srs';
+import Disk from '../../lib/decoders/disk';
+import {
+  EventEmitter
+}
+from 'events';
 var expect = chai.expect;
+var res;
+
+function shpDecoder() {
+  res = new EventEmitter()
+  return [new Shapefile(new Disk(res)), res]
+}
 
 
-describe('unit :: kml decoder turns things into SoQLTypes', function() {
 
-  it('will emit an error for unparsable kml', function(onDone) {
+describe('shapefile decoder', function() {
+
+  afterEach(function() {
+    res.emit('finish');
+  })
+
+  it('will emit an error for a corrupt shapefile', function(onDone) {
     var count = 0;
-    fixture('malformed_kml.kml')
-      .pipe(new KML())
+    var [decoder, res] = shpDecoder();
+    fixture('corrupt_shapefile.zip')
+      .pipe(decoder)
       .on('error', (err) => {
-        expect(err.toString()).to.contain("XML Parse error");
+        expect(err.toString()).to.contain("Failed to read feature");
         onDone();
       });
   });
 
-  it('can turn kml simple points to SoQLPoint', function(onDone) {
+  it('correctly reads .prj file for non epsg4326 features and populates the geojson feature with it', function(onDone) {
+    var [decoder, res] = shpDecoder();
+    fixture('simple_points_epsg_2834.zip')
+      .pipe(decoder)
+      .pipe(es.mapSync(function(feature) {
+        var parsedCrs = srs.parse(feature.crs)
+        expect(parsedCrs.valid).to.equal(true);
+        expect(parsedCrs.proj4).to.equal("+proj=lcc +lat_1=41.7 +lat_2=40.43333333333333 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +units=m +no_defs")
+      })).on('end', onDone);
+  });
+
+
+
+  it('can turn simple points to SoQLPoint', function(onDone) {
     var expectedValues = [
       [{
           "type": "Point",
@@ -33,7 +64,7 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         "first value",
         2,
         2.2,
-        false
+        0
       ],
       [{
           "type": "Point",
@@ -46,26 +77,23 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         "second value",
         2,
         2.2,
-        true
+        1
       ]
     ];
 
-    var kml = new KML();
     var count = 0;
-
-    fixture('simple_points.kml')
-      .pipe(kml)
+    var [decoder, res] = shpDecoder();
+    fixture('simple_points.zip')
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
-
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPoint',
           'SoQLText',
           'SoQLNumber',
           'SoQLNumber',
-          'SoQLBoolean'
+          'SoQLNumber'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
       })).on('end', () => {
@@ -74,8 +102,7 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
       });
   });
 
-  it('can turn kml simple lines to SoQLLine', function(onDone) {
-
+  it('can turn simple lines to SoQLLine', function(onDone) {
     var expectedValues = [
       [{
           "type": "LineString",
@@ -108,40 +135,33 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
-    var kml = new KML();
     var count = 0;
-
-    fixture('simple_lines.kml')
-      .pipe(kml)
+    var [decoder, res] = shpDecoder();
+    fixture('simple_lines.zip')
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
+
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLLine',
           'SoQLText'
         ]);
-
-        // console.log(columns.map((c) => c.value), expectedValues[count])
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
-
         count++;
-      })).on('end', () => {
-        expect(count).to.equal(2);
-        onDone();
-      });
+      })).on('end', onDone);
   });
 
-  it('can turn kml simple polys to SoQLPolygon', function(onDone) {
+  it('can turn simple polys to SoQLPolygon', function(onDone) {
     var expectedValues = [
       [{
           "type": "Polygon",
           "coordinates": [
             [
-              [100.0, 0.0],
-              [101.0, 0.0],
-              [101.0, 1.0],
-              [100.0, 1.0],
-              [100.0, 0.0]
+              [100, 0],
+              [100, 1],
+              [101, 1],
+              [101, 0],
+              [100, 0]
             ],
             [
               [100.2, 0.2],
@@ -158,11 +178,11 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
           "type": "Polygon",
           "coordinates": [
             [
-              [100.0, 0.0],
-              [101.0, 0.0],
-              [101.0, 1.0],
-              [100.0, 1.0],
-              [100.0, 0.0]
+              [100, 0],
+              [100, 1],
+              [101, 1],
+              [101, 0],
+              [100, 0]
             ],
             [
               [100.2, 0.2],
@@ -176,25 +196,23 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
-
-    var kml = new KML();
     var count = 0;
-    fixture('simple_polygons.kml')
-      .pipe(kml)
+
+    var [decoder, res] = shpDecoder();
+    fixture('simple_polygons.zip')
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPolygon',
           'SoQLText'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
       })).on('end', onDone);
   });
 
-  it('can turn kml simple multipoints to SoQLMultiPoint', function(onDone) {
+  it('can turn simple multipoints to SoQLMultiPoint', function(onDone) {
     var expectedValues = [
       [{
           "type": "MultiPoint",
@@ -215,11 +233,11 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
-    var kml = new KML();
     var count = 0;
-    fixture('simple_multipoints.kml')
-      .pipe(kml)
+
+    var [decoder, res] = shpDecoder();
+    fixture('simple_multipoints.zip')
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -231,7 +249,7 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
       })).on('end', onDone);
   });
 
-  it('can turn kml simple multilines to SoQLMultiLine', function(onDone) {
+  it('can turn simple multilines to SoQLMultiLine', function(onDone) {
     var expectedValues = [
       [{
           "type": "MultiLineString",
@@ -264,44 +282,44 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
-    var kml = new KML();
     var count = 0;
-    fixture('simple_multilines.kml')
-      .pipe(kml)
+
+    var [decoder, res] = shpDecoder();
+    fixture('simple_multilines.zip')
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiLine',
           'SoQLText'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
+
       })).on('end', onDone);
   });
 
-  it('can turn kml simple multipolys to SoQLMultiPolygon', function(onDone) {
+  it('can turn simple multipolygons to SoQLMultiPolygon', function(onDone) {
     var expectedValues = [
       [{
           "type": "MultiPolygon",
           "coordinates": [
             [
               [
-                [102.0, 2.0],
-                [103.0, 2.0],
-                [103.0, 3.0],
-                [102.0, 3.0],
-                [102.0, 2.0]
+                [102, 2],
+                [102, 3],
+                [103, 3],
+                [103, 2],
+                [102, 2]
               ]
             ],
             [
               [
-                [100.0, 0.0],
-                [101.0, 0.0],
-                [101.0, 1.0],
-                [100.0, 1.0],
-                [100.0, 0.0]
+                [100, 0],
+                [100, 1],
+                [101, 1],
+                [101, 0],
+                [100, 0]
               ],
               [
                 [100.2, 0.2],
@@ -320,20 +338,20 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
           "coordinates": [
             [
               [
-                [103.0, 2.0],
-                [102.0, 2.0],
-                [103.0, 3.0],
-                [102.0, 3.0],
-                [103.0, 2.0]
+                [103, 2],
+                [102, 2],
+                [103, 3],
+                [102, 3],
+                [103, 2]
               ]
             ],
             [
               [
-                [100.0, 0.0],
-                [101.0, 0.0],
-                [101.0, 1.0],
-                [100.0, 1.0],
-                [100.0, 0.0]
+                [100, 0],
+                [100, 1],
+                [101, 1],
+                [101, 0],
+                [100, 0]
               ],
               [
                 [100.2, 0.2],
@@ -348,101 +366,18 @@ describe('unit :: kml decoder turns things into SoQLTypes', function() {
         "second value"
       ]
     ];
-
-    var kml = new KML();
     var count = 0;
-    fixture('simple_multipolygons.kml')
-      .pipe(kml)
+    var [decoder, res] = shpDecoder();
+    fixture('simple_multipolygons.zip')
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPolygon',
           'SoQLText'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
-
       })).on('end', onDone);
-  });
-
-
-  it('can turn kml multi geometry heterogenous shapes into SoQL', function(onDone) {
-
-    var kml = new KML();
-    var things = [];
-
-    var pointExpected = [{
-        "type": "MultiPoint",
-        "coordinates": [[
-          102.0,
-          0.5
-        ]]
-      },
-      "first value"
-    ]
-
-
-    var lineExpected = [{
-        "type": "MultiLineString",
-        "coordinates": [[
-          [101.0, 0.0],
-          [101.0, 1.0]
-        ]]
-      },
-      "first value"
-    ]
-
-    fixture('points_and_lines_multigeom.kml')
-      .pipe(kml)
-      .pipe(es.mapSync((thing) => things.push(thing)))
-      .on('end', () => {
-        var [t0, t1] = things;
-
-        expect(t0.columns.map((c) => c.value)).to.eql(pointExpected);
-        expect(t1.columns.map((c) => c.value)).to.eql(lineExpected);
-
-        onDone();
-      });
-  });
-
-
-  it('can turn kml multi geometry heterogenous shapes into SoQL', function(onDone) {
-
-    var kml = new KML();
-    var things = [];
-
-    var pointExpected = [{
-        "type": "MultiPoint",
-        "coordinates": [[
-          102.0,
-          0.5
-        ]]
-      },
-      "first value"
-    ]
-
-
-    var lineExpected = [{
-        "type": "MultiLineString",
-        "coordinates": [[
-          [101.0, 0.0],
-          [101.0, 1.0]
-        ]]
-      },
-      "first value"
-    ]
-
-    fixture('points_and_lines_multigeom_sans_schema.kml')
-      .pipe(kml)
-      .pipe(es.mapSync((thing) => things.push(thing)))
-      .on('end', () => {
-        var [t0, t1] = things;
-
-        expect(t0.columns.map((c) => c.value)).to.eql(pointExpected);
-        expect(t1.columns.map((c) => c.value)).to.eql(lineExpected);
-
-        onDone();
-      });
   });
 });

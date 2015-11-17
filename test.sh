@@ -6,8 +6,8 @@
 while inotifywait -r -e modify ./lib ./test; do
   if [ -z "$1" ]
   then
-    echo "Running tests that match unit"
-    GEO_IMPORT_ENV=test ./node_modules/.bin/mocha --grep "unit" --compilers js:babel/register
+    echo "Running unit tests"
+    GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit --compilers js:babel/register
   else
     echo "Running tests that match $1"
     GEO_IMPORT_ENV=test ./node_modules/.bin/mocha --grep "$1" --compilers js:babel/register

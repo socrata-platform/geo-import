@@ -1,55 +1,27 @@
 import chai from 'chai';
 import should from 'should';
-import es from 'event-stream';
+import * as es from 'event-stream';
 import {
   fixture
 }
-from './fixture';
-import {
-  EventEmitter
-}
-from 'events';
-
-import KMZ from '../lib/decoders/kmz';
-import Disk from '../lib/decoders/disk';
+from '../fixture';
+import KML from '../../lib/decoders/kml';
 var expect = chai.expect;
 
-var res;
 
-function kmzDecoder() {
-  res = new EventEmitter()
-  return new KMZ(new Disk(res));
-}
+describe('kml decoder', function() {
 
-afterEach(function() {
-  res && res.emit('finish');
-})
-
-
-describe('unit :: kmz decoder turns things into SoQLTypes', function() {
-  it('will emit an error for a corrupt shapefile', function(onDone) {
+  it('will emit an error for unparsable kml', function(onDone) {
     var count = 0;
-    fixture('corrupt_kmz.kmz')
-      .pipe(kmzDecoder())
-      .on('error', (err) => {
-        expect(err.toString()).to.contain("invalid central directory");
-        onDone();
-      });
-  });
-
-  it('will emit an error for unparsable kml within the kmz', function(onDone) {
-    var count = 0;
-    fixture('malformed_kmz.kmz')
-      .pipe(kmzDecoder())
+    fixture('malformed_kml.kml')
+      .pipe(new KML())
       .on('error', (err) => {
         expect(err.toString()).to.contain("XML Parse error");
         onDone();
       });
   });
 
-  it('can turn simple kmz points to SoQLPoint', function(onDone) {
-    var count = 0;
-
+  it('can turn kml simple points to SoQLPoint', function(onDone) {
     var expectedValues = [
       [{
           "type": "Point",
@@ -78,8 +50,11 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       ]
     ];
 
-    fixture('simple_points.kmz')
-      .pipe(kmzDecoder())
+    var kml = new KML();
+    var count = 0;
+
+    fixture('simple_points.kml')
+      .pipe(kml)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
 
@@ -99,7 +74,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       });
   });
 
-  it('can turn simple lines to SoQLLine', function(onDone) {
+  it('can turn kml simple lines to SoQLLine', function(onDone) {
 
     var expectedValues = [
       [{
@@ -134,10 +109,11 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       ]
     ];
 
+    var kml = new KML();
     var count = 0;
 
-    fixture('simple_lines.kmz')
-      .pipe(kmzDecoder())
+    fixture('simple_lines.kml')
+      .pipe(kml)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -155,7 +131,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       });
   });
 
-  it('can turn simple polys to SoQLPolygon', function(onDone) {
+  it('can turn kml simple polys to SoQLPolygon', function(onDone) {
     var expectedValues = [
       [{
           "type": "Polygon",
@@ -202,9 +178,10 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
     ];
 
 
+    var kml = new KML();
     var count = 0;
-    fixture('simple_polygons.kmz')
-      .pipe(kmzDecoder())
+    fixture('simple_polygons.kml')
+      .pipe(kml)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -217,7 +194,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       })).on('end', onDone);
   });
 
-  it('can turn simple points to SoQLMultiPoint', function(onDone) {
+  it('can turn kml simple multipoints to SoQLMultiPoint', function(onDone) {
     var expectedValues = [
       [{
           "type": "MultiPoint",
@@ -239,22 +216,22 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       ]
     ];
 
+    var kml = new KML();
     var count = 0;
-    fixture('simple_multipoints.kmz')
-      .pipe(kmzDecoder())
+    fixture('simple_multipoints.kml')
+      .pipe(kml)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPoint',
           'SoQLText'
         ]);
-
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
         count++;
       })).on('end', onDone);
   });
 
-  it('can turn simple points to SoQLMultiLine', function(onDone) {
+  it('can turn kml simple multilines to SoQLMultiLine', function(onDone) {
     var expectedValues = [
       [{
           "type": "MultiLineString",
@@ -288,9 +265,10 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       ]
     ];
 
+    var kml = new KML();
     var count = 0;
-    fixture('simple_multilines.kmz')
-      .pipe(kmzDecoder())
+    fixture('simple_multilines.kml')
+      .pipe(kml)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -303,7 +281,7 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       })).on('end', onDone);
   });
 
-  it('can turn simple points to SoQLMultiPolygon', function(onDone) {
+  it('can turn kml simple multipolys to SoQLMultiPolygon', function(onDone) {
     var expectedValues = [
       [{
           "type": "MultiPolygon",
@@ -371,9 +349,10 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
       ]
     ];
 
+    var kml = new KML();
     var count = 0;
-    fixture('simple_multipolygons.kmz')
-      .pipe(kmzDecoder())
+    fixture('simple_multipolygons.kml')
+      .pipe(kml)
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -385,5 +364,85 @@ describe('unit :: kmz decoder turns things into SoQLTypes', function() {
         count++;
 
       })).on('end', onDone);
+  });
+
+
+  it('can turn kml multi geometry heterogenous shapes into SoQL', function(onDone) {
+
+    var kml = new KML();
+    var things = [];
+
+    var pointExpected = [{
+        "type": "MultiPoint",
+        "coordinates": [[
+          102.0,
+          0.5
+        ]]
+      },
+      "first value"
+    ];
+
+
+    var lineExpected = [{
+        "type": "MultiLineString",
+        "coordinates": [[
+          [101.0, 0.0],
+          [101.0, 1.0]
+        ]]
+      },
+      "first value"
+    ];
+
+    fixture('points_and_lines_multigeom.kml')
+      .pipe(kml)
+      .pipe(es.mapSync((thing) => things.push(thing)))
+      .on('end', () => {
+        var [t0, t1] = things;
+
+        expect(t0.columns.map((c) => c.value)).to.eql(pointExpected);
+        expect(t1.columns.map((c) => c.value)).to.eql(lineExpected);
+
+        onDone();
+      });
+  });
+
+
+  it('can turn kml multi geometry heterogenous shapes into SoQL', function(onDone) {
+
+    var kml = new KML();
+    var things = [];
+
+    var pointExpected = [{
+        "type": "MultiPoint",
+        "coordinates": [[
+          102.0,
+          0.5
+        ]]
+      },
+      "first value"
+    ];
+
+
+    var lineExpected = [{
+        "type": "MultiLineString",
+        "coordinates": [[
+          [101.0, 0.0],
+          [101.0, 1.0]
+        ]]
+      },
+      "first value"
+    ];
+
+    fixture('points_and_lines_multigeom_sans_schema.kml')
+      .pipe(kml)
+      .pipe(es.mapSync((thing) => things.push(thing)))
+      .on('end', () => {
+        var [t0, t1] = things;
+
+        expect(t0.columns.map((c) => c.value)).to.eql(pointExpected);
+        expect(t1.columns.map((c) => c.value)).to.eql(lineExpected);
+
+        onDone();
+      });
   });
 });

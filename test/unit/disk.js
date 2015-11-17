@@ -1,47 +1,48 @@
-import _ from 'underscore';
-import chai from 'chai';
-import path from 'path';
-import should from 'should';
-import * as es from 'event-stream';
-import {
-  fixture, bufferJs
-}
-from './fixture';
-import request from 'request';
-import CoreMock from './services/mock-core';
-import MockZKClient from './services/mock-zk';
-import {
-  EventEmitter
-}
-from 'events';
-import config from '../lib/config';
-import service from '../lib/service';
-import fs from 'fs';
+//TODO: how should this be tested...
+// import _ from 'underscore';
+// import chai from 'chai';
+// import path from 'path';
+// import should from 'should';
+// import * as es from 'event-stream';
+// import {
+//   fixture, bufferJs
+// }
+// from './fixture';
+// import request from 'request';
+// import CoreMock from './services/mock-core';
+// import MockZKClient from './services/mock-zk';
+// import {
+//   EventEmitter
+// }
+// from 'events';
+// import config from '../lib/config';
+// import service from '../lib/service';
+// import fs from 'fs';
 
-var expect = chai.expect;
+// var expect = chai.expect;
 
-describe('unit :: disk allocation/cleanup/logging tests', function() {
-  var app;
-  var mockZk;
-  var mockCore;
-  var port = config().port;
-  var url = `http://localhost:${port}`;
+// describe('unit :: disk allocation/cleanup/logging tests', function() {
+//   var app;
+//   var mockZk;
+//   var mockCore;
+//   var port = config().port;
+//   var url = `http://localhost:${port}`;
 
-  beforeEach(function(onDone) {
-    service({
-      zkClient: MockZKClient
-    }, (a, zk) => {
-      mockZk = zk;
-      app = a;
-      mockCore = new CoreMock(mockZk.corePort);
-      onDone();
-    });
-  });
+//   beforeEach(function(onDone) {
+//     service({
+//       zkClient: MockZKClient
+//     }, (a, zk) => {
+//       mockZk = zk;
+//       app = a;
+//       mockCore = new CoreMock(mockZk.corePort);
+//       onDone();
+//     });
+//   });
 
-  afterEach(() => {
-    mockCore.close();
-    app.close();
-  });
+//   afterEach(() => {
+//     mockCore.close();
+//     app.close();
+//   });
 
 
   /**
@@ -101,4 +102,4 @@ describe('unit :: disk allocation/cleanup/logging tests', function() {
   // });
 
 
-});
+// });
