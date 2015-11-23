@@ -12,4 +12,5 @@ while inotifywait -r -e modify ./lib ./test; do
     echo "Running tests that match $1"
     GEO_IMPORT_ENV=test ./node_modules/.bin/mocha --grep "$1" --compilers js:babel/register
   fi
+  jshint lib
 done

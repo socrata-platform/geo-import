@@ -21,7 +21,8 @@
     "through":"latest",
     "yauzl": "latest",
     "shapefile": "latest",
-    "bunyan": "latest"
+    "bunyan": "latest",
+    "change-case": "latest"
   },
   "devDependencies": {
     "mocha-traceur": "latest",
@@ -32,6 +33,6 @@
     "should": "latest"
   },
   "scripts": {
-    "test": "GEO_IMPORT_ENV=test ./node_modules/.bin/mocha --grep 'unit' --compilers js:babel/register"
+    "test": "GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit test/smoke --compilers js:babel/register && jshint lib"
   }
 }
