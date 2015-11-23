@@ -78,13 +78,13 @@ describe('shapefile ingress', () => {
             fieldName: 'the_geom',
             dataTypeName: 'multipolygon'
           }, {
-            fieldName: 'OBJECTID',
+            fieldName: 'objectid',
             dataTypeName: 'number'
           }, {
-            fieldName: 'Region',
+            fieldName: 'region',
             dataTypeName: 'text'
           }, {
-            fieldName: 'Name',
+            fieldName: 'name',
             dataTypeName: 'text'
           }]
         });
@@ -104,13 +104,13 @@ describe('shapefile ingress', () => {
             fieldName: 'the_geom',
             dataTypeName: 'polygon'
           }, {
-            fieldName: 'OBJECTID',
+            fieldName: 'objectid',
             dataTypeName: 'number'
           }, {
-            fieldName: 'Region',
+            fieldName: 'region',
             dataTypeName: 'text'
           }, {
-            fieldName: 'Name',
+            fieldName: 'name',
             dataTypeName: 'text'
           }]
         });
