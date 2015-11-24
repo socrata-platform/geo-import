@@ -50,7 +50,16 @@ describe('shapefile decoder', function() {
       })).on('end', onDone);
   });
 
-
+  it('defaults to default projection when prj is not there', function(onDone) {
+    var [decoder, res] = shpDecoder();
+    fixture('simple_points_sans_prj.zip')
+      .pipe(decoder)
+      .pipe(es.mapSync(function(feature) {
+        var parsedCrs = srs.parse(feature.crs)
+        expect(parsedCrs.valid).to.equal(true);
+        expect(parsedCrs.proj4).to.equal("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+      })).on('end', onDone);
+  });
 
   it('can turn simple points to SoQLPoint', function(onDone) {
     var expectedValues = [
@@ -154,8 +163,8 @@ describe('shapefile decoder', function() {
   it('can turn simple polys to SoQLPolygon', function(onDone) {
     var expectedValues = [
       [{
-          "type": "Polygon",
-          "coordinates": [
+          "type": "MultiPolygon",
+          "coordinates": [[
             [
               [100, 0],
               [100, 1],
@@ -170,13 +179,13 @@ describe('shapefile decoder', function() {
               [100.2, 0.8],
               [100.2, 0.2]
             ]
-          ]
+          ]]
         },
         "first value"
       ],
       [{
-          "type": "Polygon",
-          "coordinates": [
+          "type": "MultiPolygon",
+          "coordinates": [[
             [
               [100, 0],
               [100, 1],
@@ -191,7 +200,7 @@ describe('shapefile decoder', function() {
               [100.2, 0.8],
               [100.2, 0.2]
             ]
-          ]
+          ]]
         },
         "second value"
       ]
@@ -204,7 +213,7 @@ describe('shapefile decoder', function() {
       .pipe(es.mapSync(function(thing) {
         let columns = thing.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
-          'SoQLPolygon',
+          'SoQLMultiPolygon',
           'SoQLText'
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);

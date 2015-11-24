@@ -16,7 +16,7 @@
     },
     "type": "Feature",
     "properties": {
-      "a_string": "first value"
+      "A_STRING": "first value"
     }
   }, {
     "geometry": {
@@ -28,7 +28,7 @@
     },
     "type": "Feature",
     "properties": {
-      "a_string": "second value"
+      "A_STRING": "second value"
     }
   }],
   "crs": {

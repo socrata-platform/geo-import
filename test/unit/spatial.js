@@ -21,7 +21,7 @@ var expect = chai.expect;
 describe('spatial service', function() {
   var mockZk;
   var mockCore;
-  var conf = config()
+  var conf = config();
   var corePort = 7001; //coreport
   var url = `http://localhost:${conf.port}`;
   var app;
@@ -186,23 +186,28 @@ describe('spatial service', function() {
               "columns": [
                 {
                   "dataTypeName": "point",
-                  "fieldName": "the_geom"
+                  "fieldName": "the_geom",
+                  "name": "the_geom"
                 },
                 {
                   "dataTypeName": "text",
-                  "fieldName": "a_string"
+                  "fieldName": "a_string",
+                  "name": "a_string"
                 },
                 {
                   "dataTypeName": "number",
-                  "fieldName": "a_num"
+                  "fieldName": "a_num",
+                  "name": "a_num"
                 },
                 {
                   "dataTypeName": "number",
-                  "fieldName": "a_float"
+                  "fieldName": "a_float",
+                  "name": "a_float"
                 },
                 {
                   "dataTypeName": "checkbox",
-                  "fieldName": "a_bool"
+                  "fieldName": "a_bool",
+                  "name": "a_bool"
                 }
               ],
 

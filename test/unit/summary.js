@@ -80,6 +80,16 @@ describe('summary service', () => {
           maxy: null
         });
 
+        expect(l0.columns).to.eql([{
+          fieldName: 'the_geom',
+          name: 'the_geom',
+          dataTypeName: 'line'
+        }, {
+          fieldName: 'a_string',
+          name: 'A_STRING',
+          dataTypeName: 'text'
+        }]);
+
         expect(l1.count).to.equal(1);
         expect(l1.projection).to.contain('26915');
         expect(l1.name).to.equal('layer_1');

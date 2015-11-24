@@ -78,15 +78,19 @@ describe('kml ingress', () => {
           },
           columns: [{
             fieldName: 'the_geom',
+            name: 'the_geom',
             dataTypeName: 'multipolygon'
           }, {
             fieldName: 'objectid',
+            name: 'objectid',
             dataTypeName: 'text'
           }, {
             fieldName: 'region',
+            name: 'region',
             dataTypeName: 'text'
           }, {
             fieldName: 'name',
+            name: 'name',
             dataTypeName: 'text'
           }]
         });

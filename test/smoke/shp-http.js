@@ -60,11 +60,11 @@ describe('shapefile ingress', () => {
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
 
-        expect(buffered.layers.length).to.equal(2);
-        var [l0, l1] = buffered.layers;
+        expect(buffered.layers.length).to.equal(1);
+        var [l0] = buffered.layers;
 
         expect(l0).to.eql({
-          count: 3,
+          count: 5,
           projection: 'GEOGCS["WGS 84",\n    DATUM["WGS_1984",\n        SPHEROID["WGS 84",6378137,298.257223563,\n            AUTHORITY["EPSG","7030"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY["EPSG","6326"]],\n    PRIMEM["Greenwich",0,\n        AUTHORITY["EPSG","8901"]],\n    UNIT["degree",0.0174532925199433,\n        AUTHORITY["EPSG","9108"]],\n    AUTHORITY["EPSG","4326"]]',
           name: 'layer_0',
           geometry: 'multipolygon',
@@ -76,41 +76,19 @@ describe('shapefile ingress', () => {
           },
           columns: [{
             fieldName: 'the_geom',
+            name: 'the_geom',
             dataTypeName: 'multipolygon'
           }, {
             fieldName: 'objectid',
+            name: 'OBJECTID',
             dataTypeName: 'number'
           }, {
             fieldName: 'region',
+            name: 'Region',
             dataTypeName: 'text'
           }, {
             fieldName: 'name',
-            dataTypeName: 'text'
-          }]
-        });
-
-        expect(l1).to.eql({
-          count: 2,
-          projection: 'GEOGCS["WGS 84",\n    DATUM["WGS_1984",\n        SPHEROID["WGS 84",6378137,298.257223563,\n            AUTHORITY["EPSG","7030"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY["EPSG","6326"]],\n    PRIMEM["Greenwich",0,\n        AUTHORITY["EPSG","8901"]],\n    UNIT["degree",0.0174532925199433,\n        AUTHORITY["EPSG","9108"]],\n    AUTHORITY["EPSG","4326"]]',
-          name: 'layer_1',
-          geometry: 'polygon',
-          bbox: {
-            minx: null,
-            miny: null,
-            maxx: null,
-            maxy: null
-          },
-          columns: [{
-            fieldName: 'the_geom',
-            dataTypeName: 'polygon'
-          }, {
-            fieldName: 'objectid',
-            dataTypeName: 'number'
-          }, {
-            fieldName: 'region',
-            dataTypeName: 'text'
-          }, {
-            fieldName: 'name',
+            name: 'Name',
             dataTypeName: 'text'
           }]
         });
@@ -119,6 +97,24 @@ describe('shapefile ingress', () => {
       });
   });
 
+  it('missing files with garbage included SHP summary', function(onDone) {
+    this.timeout(80000);
 
+    bufferJs(fixture('smoke/wards-chicago.zip')
+      .pipe(request.post({
+        url: url + '/summary',
+        encoding: null,
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/zip'
+        }
+      })), (res, buffered) => {
+        expect(res.statusCode).to.equal(200);
+        expect(buffered.layers.length).to.equal(1);
+        onDone();
+      });
+  });
 
 });
