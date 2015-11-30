@@ -2,6 +2,7 @@ import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
+import fs from 'fs';
 import {
   fixture, bufferJs
 }
@@ -33,21 +34,129 @@ describe('summary service', () => {
 
   afterEach(() => app.close());
 
-  it('can post single layer geojson and it will make a summary', (onDone) => {
-    bufferJs(fixture('simple_points.json')
+  var sizeOf = function(fname) {
+    return fs.statSync(__dirname + '/../fixtures/' + fname).size;
+  };
+
+
+  it('can make an abbreviated summary for large geojsons', (onDone) => {
+    var fx = 'simple_points_large.json';
+    bufferJs(fixture(fx)
       .pipe(request.post({
         url: url + '/summary',
         headers: {
           'Authorization': 'test-auth',
           'X-App-Token': 'app-token',
           'X-Socrata-Host': 'localhost:6668',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Content-Length': sizeOf(fx)
+        }
+      })), (res, buffered) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.headers['content-type']).to.contain('application/json');
+        expect(buffered.layers).to.eql([]);
+        onDone();
+      });
+  });
+
+
+  it('can make an abbreviated summary for large kmls', (onDone) => {
+    var fx = 'usbr_gt_50k.kml';
+    bufferJs(fixture(fx)
+      .pipe(request.post({
+        url: url + '/summary',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/vnd.google-earth.kml+xml',
+          'Content-Length': sizeOf(fx)
+        }
+      })), (res, buffered) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.headers['content-type']).to.contain('application/json');
+        expect(buffered.layers).to.eql([]);
+        //setTimeout on the finish cb makes the test fail if
+        //the request tries to send the request twice, which was
+        //happening for streams that didn't bind to the correct
+        //events
+        setTimeout(onDone, 50);
+      });
+  });
+
+  it('can make an abbreviated summary for large kmzs', (onDone) => {
+    var fx = 'usbr_gt_50k.kmz';
+    bufferJs(fixture(fx)
+      .pipe(request.post({
+        url: url + '/summary',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/vnd.google-earth.kmz',
+          'Content-Length': sizeOf(fx)
+        }
+      })), (res, buffered) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.headers['content-type']).to.contain('application/json');
+        expect(buffered.layers).to.eql([]);
+        //setTimeout on the finish cb makes the test fail if
+        //the request tries to send the request twice, which was
+        //happening for streams that didn't bind to the correct
+        //events
+        setTimeout(onDone, 50);
+      });
+  });
+
+  it('can make an full summary for large shapefiles above the limit', (onDone) => {
+    var fx = 'wards_gt_50k.zip';
+    bufferJs(fixture(fx)
+      .pipe(request.post({
+        url: url + '/summary',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/zip',
+          'Content-Length': sizeOf(fx)
+        }
+      })), (res, buffered) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.headers['content-type']).to.contain('application/json');
+        expect(buffered.layers).to.eql([{
+          "bbox": {
+            "maxx": null,
+            "maxy": null,
+            "minx": null,
+            "miny": null,
+          },
+          "columns": [],
+          "count": 0,
+          "geometry": null,
+          "name": "wards_chicago_mid_simp",
+          "projection": "GEOGCS[\"WGS 84\",\n    DATUM[\"WGS_1984\",\n        SPHEROID[\"WGS 84\",6378137,298.257223563,\n            AUTHORITY[\"EPSG\",\"7030\"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY[\"EPSG\",\"6326\"]],\n    PRIMEM[\"Greenwich\",0,\n        AUTHORITY[\"EPSG\",\"8901\"]],\n    UNIT[\"degree\",0.0174532925199433,\n        AUTHORITY[\"EPSG\",\"9108\"]],\n    AUTHORITY[\"EPSG\",\"4326\"]]"
+        }]);
+
+        onDone();
+      });
+  });
+
+  it('can post single layer geojson and it will make a summary', (onDone) => {
+    var fx = 'simple_points.json';
+    bufferJs(fixture(fx)
+      .pipe(request.post({
+        url: url + '/summary',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json',
+          'Content-Length': sizeOf(fx)
         }
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
         expect(res.headers['content-type']).to.contain('application/json');
         var [layer] = buffered.layers;
-        expect(layer.count).to.equal(2);
         expect(layer.projection).to.equal('GEOGCS["WGS 84",\n    DATUM["WGS_1984",\n        SPHEROID["WGS 84",6378137,298.257223563,\n            AUTHORITY["EPSG","7030"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY["EPSG","6326"]],\n    PRIMEM["Greenwich",0,\n        AUTHORITY["EPSG","8901"]],\n    UNIT["degree",0.0174532925199433,\n        AUTHORITY["EPSG","9108"]],\n    AUTHORITY["EPSG","4326"]]');
         expect(layer.name).to.equal('layer_0');
         onDone();
@@ -55,20 +164,21 @@ describe('summary service', () => {
   });
 
   it('can post multi layer geojson and it will make a summary', (onDone) => {
-    bufferJs(fixture('points_and_lines.json')
+    var fx = 'points_and_lines.json';
+    bufferJs(fixture(fx)
       .pipe(request.post({
         url: url + '/summary',
         headers: {
           'Authorization': 'test-auth',
           'X-App-Token': 'app-token',
           'X-Socrata-Host': 'localhost:6668',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Content-Length': sizeOf(fx)
         }
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
         expect(res.headers['content-type']).to.contain('application/json');
         var [l0, l1] = buffered.layers;
-        expect(l0.count).to.equal(1);
         expect(l0.projection).to.contain('26915');
         expect(l0.name).to.equal('layer_0');
         expect(l0.geometry).to.equal('line');
@@ -90,7 +200,6 @@ describe('summary service', () => {
           dataTypeName: 'text'
         }]);
 
-        expect(l1.count).to.equal(1);
         expect(l1.projection).to.contain('26915');
         expect(l1.name).to.equal('layer_1');
         expect(l1.geometry).to.equal('point');

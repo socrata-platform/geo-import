@@ -10,7 +10,7 @@ while inotifywait -r -e modify ./lib ./test; do
     GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit --compilers js:babel/register
   else
     echo "Running tests that match $1"
-    GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit test/smoke --grep "$1" --compilers js:babel/register
+    GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit --grep "$1" --compilers js:babel/register
   fi
   jshint lib
 done

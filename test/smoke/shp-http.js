@@ -64,33 +64,17 @@ describe('shapefile ingress', () => {
         var [l0] = buffered.layers;
 
         expect(l0).to.eql({
-          count: 5,
-          projection: 'GEOGCS["WGS 84",\n    DATUM["WGS_1984",\n        SPHEROID["WGS 84",6378137,298.257223563,\n            AUTHORITY["EPSG","7030"]],\n        TOWGS84[0,0,0,0,0,0,0],\n        AUTHORITY["EPSG","6326"]],\n    PRIMEM["Greenwich",0,\n        AUTHORITY["EPSG","8901"]],\n    UNIT["degree",0.0174532925199433,\n        AUTHORITY["EPSG","9108"]],\n    AUTHORITY["EPSG","4326"]]',
-          name: 'layer_0',
-          geometry: 'multipolygon',
+          count: 0,
+          projection: 'PROJCS[\"WGS 84 / Pseudo-Mercator\",\n    GEOGCS[\"WGS 84\",\n        DATUM[\"WGS_1984\",\n            SPHEROID[\"WGS 84\",6378137,298.257223563,\n                AUTHORITY[\"EPSG\",\"7030\"]],\n            AUTHORITY[\"EPSG\",\"6326\"]],\n        PRIMEM[\"Greenwich\",0,\n            AUTHORITY[\"EPSG\",\"8901\"]],\n        UNIT[\"degree\",0.0174532925199433,\n            AUTHORITY[\"EPSG\",\"9122\"]],\n        AUTHORITY[\"EPSG\",\"4326\"]],\n    UNIT[\"metre\",1,\n        AUTHORITY[\"EPSG\",\"9001\"]],\n    PROJECTION[\"Mercator_1SP\"],\n    PARAMETER[\"central_meridian\",0],\n    PARAMETER[\"scale_factor\",1],\n    PARAMETER[\"false_easting\",0],\n    PARAMETER[\"false_northing\",0],\n    EXTENSION[\"PROJ4\",\"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over\"],\n    AUTHORITY[\"EPSG\",\"3857\"],\n    AXIS[\"X\",EAST],\n    AXIS[\"Y\",NORTH]]',
+          name: 'USBR_RegionalBoundaries',
+          geometry: null,
           bbox: {
             minx: null,
             miny: null,
             maxx: null,
             maxy: null
           },
-          columns: [{
-            fieldName: 'the_geom',
-            name: 'the_geom',
-            dataTypeName: 'multipolygon'
-          }, {
-            fieldName: 'objectid',
-            name: 'OBJECTID',
-            dataTypeName: 'number'
-          }, {
-            fieldName: 'region',
-            name: 'Region',
-            dataTypeName: 'text'
-          }, {
-            fieldName: 'name',
-            name: 'Name',
-            dataTypeName: 'text'
-          }]
+          columns: []
         });
 
         onDone();

@@ -4,28 +4,29 @@
   "private": true,
   "dependencies": {
     "JSONStream": "latest",
-    "proj4": "latest",
-    "event-stream": "latest",
-    "underscore": "latest",
-    "stream-reduce": "latest",
-    "uuid": "latest",
-    "ldjson-stream": "latest",
-    "bunyan": "latest",
-    "express": "latest",
-    "body-parser": "latest",
-    "request": "latest",
-    "async":"latest",
+    "async": "latest",
     "babel": "~5.8.29",
-    "node-zookeeper-client": "latest",
-    "node-expat" : "latest",
-    "through":"latest",
-    "yauzl": "latest",
-    "shapefile": "latest",
+    "body-parser": "latest",
     "bunyan": "latest",
-    "change-case": "latest"
+    "change-case": "latest",
+    "event-stream": "latest",
+    "express": "latest",
+    "ldjson-stream": "latest",
+    "node-expat": "latest",
+    "node-inspector": "~0.12.3",
+    "node-zookeeper-client": "latest",
+    "proj4": "latest",
+    "request": "latest",
+    "shapefile": "latest",
+    "stream-reduce": "latest",
+    "through": "latest",
+    "underscore": "latest",
+    "uuid": "latest",
+    "yauzl": "latest",
+    "dev-null": "latest",
+    "concat-stream": "latest"
   },
   "devDependencies": {
-    "mocha-traceur": "latest",
     "chai": "*",
     "mocha": "*",
     "jsonfile": "*",
@@ -33,6 +34,7 @@
     "should": "latest"
   },
   "scripts": {
-    "test": "GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit test/smoke --compilers js:babel/register && jshint lib"
+    "test": "GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit test/smoke --compilers js:babel/register && jshint lib",
+    "postinstall": "postinstall.sh"
   }
 }
