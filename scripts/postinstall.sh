@@ -5,6 +5,6 @@ fi
 pushd ../../node-srs
 echo $(pwd)
 rm -r node_modules
-CC=gcc CXX=g++ npm install --build-from-source
+CC=gcc CXX=g++ npm install
 popd
 ln -s $(pwd)/../node-srs node_modules/node-srs
