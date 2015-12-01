@@ -25,7 +25,7 @@ which is built from source in a sibling repo and symlinked here
 
 run the development configuration using
 ```
-GEO_IMPORT_ENV=dev babel-node lib/index.js
+GEO_IMPORT_ENV=dev node lib/index.js
 ```
 you will need core and the soda2 stack running
 
