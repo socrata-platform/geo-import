@@ -14,9 +14,17 @@ into soda-fountain
 ## setup
 
 install dependencies
+
+linux
 ```
-  npm install
+  CC=gcc CXX=g++ npm i
 ```
+
+mac
+```
+  ¯\_(ツ)_/¯
+```
+on a mac `npm i` *should* work, but i'm not sure how clang will deal with node-expat and node-srs, so brace yourself for some ugliness
 
 this also runs a postinstall script to install mapbox/node-srs,
 which is built from source in a sibling repo and symlinked here
