@@ -29,7 +29,10 @@ describe('shapefile ingress', () => {
   var url = `http://localhost:${conf.port}`;
   var app;
 
-  beforeEach((onDone) => {
+  beforeEach(function(onDone) {
+    //for jankins
+    this.timeout(6000);
+
     mockZk = new MockZKClient(corePort);
     service(mockZk, {}, (a, zk) => {
       app = a;

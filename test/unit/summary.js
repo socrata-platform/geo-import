@@ -60,7 +60,9 @@ describe('summary service', () => {
   });
 
 
-  it('can make an abbreviated summary for large kmls', (onDone) => {
+  it('can make an abbreviated summary for large kmls', function(onDone) {
+    //for jankins
+    this.timeout(6000);
     var fx = 'usbr_gt_50k.kml';
     bufferJs(fixture(fx)
       .pipe(request.post({
@@ -84,7 +86,10 @@ describe('summary service', () => {
       });
   });
 
-  it('can make an abbreviated summary for large kmzs', (onDone) => {
+  it('can make an abbreviated summary for large kmzs', function(onDone) {
+    //for jankins
+    this.timeout(8000);
+
     var fx = 'usbr_gt_50k.kmz';
     bufferJs(fixture(fx)
       .pipe(request.post({
