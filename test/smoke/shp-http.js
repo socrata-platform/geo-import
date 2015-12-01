@@ -66,6 +66,40 @@ describe('shapefile ingress', () => {
         buffered.bbox.maxx.should.be.approximately(-113.29525, .0001);
         buffered.bbox.maxy.should.be.approximately(53.65448, .0001);
         expect(buffered.layers.length).to.equal(1)
+
+        expect(buffered.layers[0].layer.columns).to.eql([{
+          fieldName: 'the_geom',
+          name: 'the_geom',
+          dataTypeName: 'line'
+        }, {
+          fieldName: 'facility',
+          name: 'FACILITY',
+          dataTypeName: 'text'
+        }, {
+          fieldName: 'type',
+          name: 'TYPE',
+          dataTypeName: 'text'
+        }, {
+          fieldName: 'year_const',
+          name: 'YEAR_CONST',
+          dataTypeName: 'number'
+        }, {
+          fieldName: 'nghbrhd',
+          name: 'NGHBRHD',
+          dataTypeName: 'text'
+        }, {
+          fieldName: 'nghbrhd_id',
+          name: 'NGHBRHD_ID',
+          dataTypeName: 'text'
+        }, {
+          fieldName: 'ward',
+          name: 'WARD',
+          dataTypeName: 'text'
+        }, {
+          fieldName: 'str_ave',
+          name: 'STR_AVE',
+          dataTypeName: 'text'
+        }])
         onDone();
       });
   });
