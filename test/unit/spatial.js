@@ -81,31 +81,31 @@ describe('spatial service', function() {
   });
 
 
-  //;_;
-  //So the request library doesn't work in a reasonable way and keeps posting
-  //data as non-binary, despite the fact that the stream is opened as binary?
-  //so this results in a corrupt file on the other end.
-  //this works via curl, so the problem is on the test side with the posting
-  //of the fixture, rather than in express. GAH
-  // it('can post kmz points and it will do an upsert to core', function(onDone) {
-  //   bufferJs(fixture('simple_points.kmz')
-  //     .pipe(request.post({
-  //       url: url + '/spatial',
-  //       encoding: null,
-  //       binary: true,
-  //       headers: {
-  //         'Authorization': 'test-auth',
-  //         'X-App-Token': 'app-token',
-  //         'X-Socrata-Host': 'localhost:6668',
-  //         'Content-Type': 'application/vnd.google-earth.kmz',
-  //       }
-  //     })), (resp, buffered) => {
-  //       expect(resp.statusCode).to.equal(200);
-  //       expect(buffered.layers.length).to.equal(1);
-  //       expect(buffered.layers[0].created).to.equal(2);
-  //       onDone();
-  //     });
-  // });
+  it('can post kmz points and it will do an upsert to core', function(onDone) {
+    bufferJs(fixture('simple_points.kmz')
+      .pipe(request.post({
+        url: url + '/spatial',
+        encoding: null,
+        binary: true,
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/vnd.google-earth.kmz',
+        }
+      })), (resp, buffered) => {
+        expect(resp.statusCode).to.equal(200);
+        expect(buffered.layers.length).to.equal(1);
+        expect(buffered.layers[0].layer.count).to.equal(2);
+        expect(buffered.bbox).to.eql({
+          minx: 102,
+          miny: 0.5,
+          maxx: 103,
+          maxy: 1.5
+        });
+        onDone();
+      });
+  });
 
 
   it('can post geojson and it will make a create columns request to core', function(onDone) {
@@ -183,33 +183,27 @@ describe('spatial service', function() {
               "geometry": "point",
               "name": "layer_0",
 
-              "columns": [
-                {
-                  "dataTypeName": "point",
-                  "fieldName": "the_geom",
-                  "name": "the_geom"
-                },
-                {
-                  "dataTypeName": "text",
-                  "fieldName": "a_string",
-                  "name": "a_string"
-                },
-                {
-                  "dataTypeName": "number",
-                  "fieldName": "a_num",
-                  "name": "a_num"
-                },
-                {
-                  "dataTypeName": "number",
-                  "fieldName": "a_float",
-                  "name": "a_float"
-                },
-                {
-                  "dataTypeName": "checkbox",
-                  "fieldName": "a_bool",
-                  "name": "a_bool"
-                }
-              ],
+              "columns": [{
+                "dataTypeName": "point",
+                "fieldName": "the_geom",
+                "name": "the_geom"
+              }, {
+                "dataTypeName": "text",
+                "fieldName": "a_string",
+                "name": "a_string"
+              }, {
+                "dataTypeName": "number",
+                "fieldName": "a_num",
+                "name": "a_num"
+              }, {
+                "dataTypeName": "number",
+                "fieldName": "a_float",
+                "name": "a_float"
+              }, {
+                "dataTypeName": "checkbox",
+                "fieldName": "a_bool",
+                "name": "a_bool"
+              }],
 
 
               "bbox": {
@@ -249,6 +243,7 @@ describe('spatial service', function() {
       });
   });
 
+
   it('can post multi layer and it will upsert to core', function(onDone) {
     bufferJs(fixture('points_and_lines_multigeom.kml')
       .pipe(request.post({
@@ -279,7 +274,6 @@ describe('spatial service', function() {
   });
 
 
-
   it('will return a 503 when zk is dead', function(onDone) {
     mockZk.enableErrors();
 
@@ -297,6 +291,7 @@ describe('spatial service', function() {
         onDone();
       });
   });
+
 
   it('will return a 503 when core is dead', function(onDone) {
     mockCore.close();
@@ -330,6 +325,46 @@ describe('spatial service', function() {
       }))
       .on('response', function(response) {
         expect(response.statusCode).to.equal(400);
+        onDone();
+      });
+  });
+
+  it('will delete any created layers when an error is encountered in column creation', function(onDone) {
+    mockCore.failColumns = 503;
+    bufferJs(fixture('simple_points.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        var del = _.last(mockCore.history);
+        expect(del.method).to.equal('DELETE')
+        expect(del.url).to.equal('/views/qs32-qpt7')
+        mockCore.failColumns = false;
+        onDone();
+      });
+  });
+
+  it('will delete any created layers when an error is encountered mid-upsert', function(onDone) {
+    mockCore.failUpsert = 503;
+    bufferJs(fixture('simple_points.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        var del = _.last(mockCore.history);
+        expect(del.method).to.equal('DELETE')
+        expect(del.url).to.equal('/views/qs32-qpt7')
+        mockCore.failUpsert = false;
         onDone();
       });
   });

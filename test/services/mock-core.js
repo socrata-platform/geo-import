@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-import es from 'event-stream' ;
+import es from 'event-stream';
 
 class CoreMock {
   constructor(port) {
@@ -22,8 +22,14 @@ class CoreMock {
       this._history.push(req);
       var hs = req.headers;
       if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
-        return res.status(400).send(JSON.stringify({error: 'headers'}));
+        return res.status(400).send(JSON.stringify({
+          error: 'headers'
+        }));
       }
+      if (this.failCreate) {
+        return res.status(this.failCreate).send('failCreate');
+      }
+
       var view = {
         "id": "qs32-qpt7",
         "name": req.body.name,
@@ -75,8 +81,12 @@ class CoreMock {
         return res.status(400).send('headers');
       }
 
-      if(!req.body.name || !req.body.dataTypeName || !req.body.fieldName) {
+      if (!req.body.name || !req.body.dataTypeName || !req.body.fieldName) {
         return res.status(400).send('body');
+      }
+
+      if (this.failColumns) {
+        return res.status(this.failColumns).send('failColumns');
       }
 
 
@@ -96,18 +106,26 @@ class CoreMock {
       res.status(200).send(JSON.stringify(view));
     }.bind(this));
 
+    app.delete('/views/:fourfour', function(req, res) {
+      this._history.push(req);
+      res.status(200).send('{}');
+    }.bind(this));
+
     app.post('/id/:fourfour', function(req, res) {
       this._history.push(req);
+
+      if (this.failUpsert) {
+        return res.status(this.failUpsert).send('failUpsert');
+      }
 
       req.bufferedRows = '';
       req.pipe(es.map((thing, cb) => {
         req.bufferedRows += thing.toString('utf-8');
-      }))
+      }));
 
       req.on('end', () => {
-
         res.status(200).send('{}');
-      })
+      });
     }.bind(this));
 
     this._app = app.listen(port);
@@ -125,7 +143,7 @@ class CoreMock {
   close() {
     try {
       return this._app.close();
-    } catch(e) {
+    } catch (e) {
       //already closed...heh
     }
   }
