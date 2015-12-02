@@ -31,7 +31,6 @@ import SoQLText from '../../lib/soql/text';
 import SoQLBoolean from '../../lib/soql/boolean';
 import SoQLNumber from '../../lib/soql/number';
 import SoQLArray from '../../lib/soql/array';
-import SoQLObject from '../../lib/soql/object';
 
 
 var expect = chai.expect;
