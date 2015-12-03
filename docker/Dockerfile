@@ -4,8 +4,7 @@ ENV GEO_IMPORT_ENV=prod
 ENV BABEL_DISABLE_CACHE=1
 EXPOSE 4444
 # Need git and gdal for node-srs
-RUN apt-get update
-RUN apt-get install -y git gdal-bin
+RUN apt-get -y update && apt-get install -y git gdal-bin
 
 COPY ship.d /etc/ship.d/
 WORKDIR /app
