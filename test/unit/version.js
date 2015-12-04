@@ -15,6 +15,7 @@ import {
 from 'events';
 import config from '../../lib/config';
 import service from '../../lib/service';
+import pack from '../../package.json';
 
 var expect = chai.expect;
 
@@ -38,7 +39,8 @@ describe('version service', function() {
     request
       .get(`${url}/version`, function(err, res) {
         expect(JSON.parse(res.body)).to.eql({
-          version: 0
+          version: pack.version,
+          name: pack.name
         });
         expect(res.statusCode).to.equal(200);
         expect(res.headers['content-type']).to.contain('application/json');

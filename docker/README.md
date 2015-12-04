@@ -6,13 +6,13 @@
 ## Building ##
 To build the image, run:
 ```
-cp -r ../lib ../scripts ../package.json .
+cp -r ../lib ../scripts ../package.json ../npm-shrinkwrap.json .
 docker build -t geo-import .
 ```
 
 Or, if you want to replace old versions:
 ```
-cp ../lib ../scripts ../package.json
+cp -r ../lib ../scripts ../package.json ../npm-shrinkwrap.json .
 docker build --rm -t geo-import .
 ```
 
