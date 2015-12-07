@@ -15,6 +15,7 @@ import {
 from 'events';
 import config from '../../lib/config';
 import service from '../../lib/service';
+import qs from 'querystring';
 
 var expect = chai.expect;
 
@@ -42,9 +43,10 @@ describe('spatial service', function() {
 
 
   it('can post geojson and it will make a create dataset request to core', function(onDone) {
+    var names = {names: ['A layer named foo']};
     fixture('simple_points.json')
       .pipe(request.post({
-        url: url + '/spatial',
+        url: url + `/spatial?${qs.stringify(names)}`,
         headers: {
           'Authorization': 'test-auth',
           'X-App-Token': 'app-token',
@@ -56,7 +58,7 @@ describe('spatial service', function() {
         expect(response.statusCode).to.equal(200);
         var createRequest = _.first(mockCore.history);
         expect(createRequest.body).to.eql({
-          name: 'layer_0'
+          name: 'A layer named foo'
         });
         onDone();
       });
@@ -87,25 +89,24 @@ describe('spatial service', function() {
   //so this results in a corrupt file on the other end.
   //this works via curl, so the problem is on the test side with the posting
   //of the fixture, rather than in express. GAH
-  // it('can post kmz points and it will do an upsert to core', function(onDone) {
-  //   bufferJs(fixture('simple_points.kmz')
-  //     .pipe(request.post({
-  //       url: url + '/spatial',
-  //       encoding: null,
-  //       binary: true,
-  //       headers: {
-  //         'Authorization': 'test-auth',
-  //         'X-App-Token': 'app-token',
-  //         'X-Socrata-Host': 'localhost:6668',
-  //         'Content-Type': 'application/vnd.google-earth.kmz',
-  //       }
-  //     })), (resp, buffered) => {
-  //       expect(resp.statusCode).to.equal(200);
-  //       expect(buffered.layers.length).to.equal(1);
-  //       expect(buffered.layers[0].created).to.equal(2);
-  //       onDone();
-  //     });
-  // });
+  it('can post kmz points and it will do an upsert to core', function(onDone) {
+    bufferJs(fixture('simple_points.kmz')
+      .pipe(request.post({
+        url: url + '/spatial',
+        encoding: null,
+        binary: true,
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/vnd.google-earth.kmz',
+        }
+      })), (resp, buffered) => {
+        expect(resp.statusCode).to.equal(200);
+        expect(buffered.layers.length).to.equal(1);
+        onDone();
+      });
+  });
 
 
   it('can post geojson and it will make a create columns request to core', function(onDone) {
@@ -156,9 +157,10 @@ describe('spatial service', function() {
   });
 
   it('can post single layer and it will upsert to core', function(onDone) {
+    var names = {names: ['Some Name', 'Another Name']};
     bufferJs(fixture('simple_points.json')
       .pipe(request.post({
-        url: url + '/spatial',
+        url: url + `/spatial?${qs.stringify(names)}`,
         headers: {
           'Authorization': 'test-auth',
           'X-App-Token': 'app-token',
@@ -181,7 +183,7 @@ describe('spatial service', function() {
             'layer': {
               "count": 2,
               "geometry": "point",
-              "name": "layer_0",
+              "name": "Some Name",
 
               "columns": [
                 {

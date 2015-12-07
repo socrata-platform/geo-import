@@ -37,7 +37,7 @@ var expect = chai.expect;
 
 function makeMerger() {
   var res = new EventEmitter();
-  return [new Merger(new Disk(res)), res];
+  return [new Merger(new Disk(res), []), res];
 }
 
 
