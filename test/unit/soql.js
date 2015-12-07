@@ -9,7 +9,7 @@ var expect = chai.expect;
 
 describe('layer', function() {
 
-  it('will launder the column names to appease soda-fountain', function() {
+  it('will snake case the column names to appease soda-fountain', function() {
     var t = new SoQLText('foo', 'some text')
     expect(t.name).to.equal('foo');
 
@@ -28,6 +28,11 @@ describe('layer', function() {
     var t = new SoQLText('FooBar', 'some text')
     expect(t.name).to.equal('foo_bar');
 
+  });
+
+  it('will launder the column names starting with numbers', function() {
+    var t = new SoQLText('1_foo', 'some text')
+    expect(t.name).to.equal('_1_foo');
   });
 
 });
