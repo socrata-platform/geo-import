@@ -43,7 +43,9 @@ describe('spatial service', function() {
 
 
   it('can post geojson and it will make a create dataset request to core', function(onDone) {
-    var names = {names: ['A layer named foo']};
+    var names = {
+      names: ['A layer named foo']
+    };
     fixture('simple_points.json')
       .pipe(request.post({
         url: url + `/spatial?${qs.stringify(names)}`,
@@ -64,6 +66,112 @@ describe('spatial service', function() {
       });
   });
 
+  it('can put geojson and it will make a replace dataset request to core', function(onDone) {
+    var names = {
+      names: ['A new layer name']
+    };
+    fixture('simple_points.json')
+      .pipe(request.put({
+        url: url + `/spatial/qs32-qpt7?${qs.stringify(names)}`,
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      }))
+      .on('response', function(response) {
+        expect(response.statusCode).to.equal(200);
+        var [replaceRequest, getColReq, delColReq0, delColReq1, geom, aString, aNum, aFloat, aBool] = mockCore.history;
+        expect(replaceRequest.url).to.equal(
+          '/views/qs32-qpt7/publication?method=copySchema'
+        )
+        expect(replaceRequest.method).to.equal('POST');
+
+        expect(getColReq.url).to.equal(
+          '/views/qs32-qpt8/columns'
+        )
+        expect(getColReq.method).to.equal('GET')
+
+        expect(delColReq0.url).to.equal(
+          '/views/qs32-qpt8/columns/3415'
+        )
+        expect(delColReq0.method).to.equal('DELETE')
+
+        expect(delColReq1.url).to.equal(
+          '/views/qs32-qpt8/columns/3416'
+        )
+        expect(delColReq1.method).to.equal('DELETE')
+
+        expect(geom.body).to.eql({
+          fieldName: "the_geom",
+          name: "the_geom",
+          dataTypeName: "point"
+        });
+
+        expect(aString.body).to.eql({
+          fieldName: "a_string",
+          name: "a_string",
+          dataTypeName: "text"
+        });
+
+        expect(aNum.body).to.eql({
+          fieldName: "a_num",
+          name: "a_num",
+          dataTypeName: "number"
+        });
+
+        expect(aFloat.body).to.eql({
+          fieldName: "a_float",
+          name: "a_float",
+          dataTypeName: "number"
+        });
+
+        expect(aBool.body).to.eql({
+          fieldName: "a_bool",
+          name: "a_bool",
+          dataTypeName: "checkbox"
+        });
+
+
+        onDone();
+      });
+  });
+
+  it('can put geojson combo new and replace ids and it will make create and replace requests to core', function(onDone) {
+    var names = {
+      names: ['A new layer name']
+    };
+    fixture('points_and_lines_multigeom.kml')
+      .pipe(request.put({
+        url: url + `/spatial/qs32-qpt7,__empty__?${qs.stringify(names)}`,
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/vnd.google-earth.kml+xml'
+        }
+      }))
+      .on('response', function(response) {
+        expect(response.statusCode).to.equal(200);
+
+        var [replaceRequest, createRequest] = mockCore.history;
+
+        expect(replaceRequest.url).to.equal(
+          '/views/qs32-qpt7/publication?method=copySchema'
+        )
+        expect(replaceRequest.method).to.equal('POST');
+
+        expect(createRequest.url).to.equal(
+          '/views?nbe=true'
+        )
+
+        onDone();
+      });
+  });
+
+
+
   it('can post kml and it will do an upsert to core', function(onDone) {
     bufferJs(fixture('simple_points.kml')
       .pipe(request.post({
@@ -82,13 +190,6 @@ describe('spatial service', function() {
       });
   });
 
-
-  //;_;
-  //So the request library doesn't work in a reasonable way and keeps posting
-  //data as non-binary, despite the fact that the stream is opened as binary?
-  //so this results in a corrupt file on the other end.
-  //this works via curl, so the problem is on the test side with the posting
-  //of the fixture, rather than in express. GAH
   it('can post kmz points and it will do an upsert to core', function(onDone) {
     bufferJs(fixture('simple_points.kmz')
       .pipe(request.post({
@@ -157,7 +258,9 @@ describe('spatial service', function() {
   });
 
   it('can post single layer and it will upsert to core', function(onDone) {
-    var names = {names: ['Some Name', 'Another Name']};
+    var names = {
+      names: ['Some Name', 'Another Name']
+    };
     bufferJs(fixture('simple_points.json')
       .pipe(request.post({
         url: url + `/spatial?${qs.stringify(names)}`,
@@ -185,33 +288,27 @@ describe('spatial service', function() {
               "geometry": "point",
               "name": "Some Name",
 
-              "columns": [
-                {
-                  "dataTypeName": "point",
-                  "fieldName": "the_geom",
-                  "name": "the_geom"
-                },
-                {
-                  "dataTypeName": "text",
-                  "fieldName": "a_string",
-                  "name": "a_string"
-                },
-                {
-                  "dataTypeName": "number",
-                  "fieldName": "a_num",
-                  "name": "a_num"
-                },
-                {
-                  "dataTypeName": "number",
-                  "fieldName": "a_float",
-                  "name": "a_float"
-                },
-                {
-                  "dataTypeName": "checkbox",
-                  "fieldName": "a_bool",
-                  "name": "a_bool"
-                }
-              ],
+              "columns": [{
+                "dataTypeName": "point",
+                "fieldName": "the_geom",
+                "name": "the_geom"
+              }, {
+                "dataTypeName": "text",
+                "fieldName": "a_string",
+                "name": "a_string"
+              }, {
+                "dataTypeName": "number",
+                "fieldName": "a_num",
+                "name": "a_num"
+              }, {
+                "dataTypeName": "number",
+                "fieldName": "a_float",
+                "name": "a_float"
+              }, {
+                "dataTypeName": "checkbox",
+                "fieldName": "a_bool",
+                "name": "a_bool"
+              }],
 
 
               "bbox": {

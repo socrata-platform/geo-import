@@ -15,15 +15,15 @@ describe('core client', function() {
   var mockCore;
   var mockZk;
   var port = 6668;
-  var url = `http://localhost:${port}`
+  var url = `http://localhost:${port}`;
 
   beforeEach(function(onDone) {
-    mockZk = new MockZKClient(port)
+    mockZk = new MockZKClient(port);
     mockZk.connect();
     mockZk.on('connected', function() {
       mockCore = new CoreService(port);
-      onDone()
-    })
+      onDone();
+    });
   });
 
   afterEach(function() {
@@ -38,7 +38,7 @@ describe('core client', function() {
         'x-app-token': 'test-token',
         'x-socrata-host': 'test-host',
       }
-    }
+    };
     var auth = new CoreAuth(request);
 
     expect(auth.host).to.eql('test-host');
@@ -53,13 +53,13 @@ describe('core client', function() {
         'x-app-token': 'test-token',
         'x-socrata-host': 'test-host',
       }
-    }
+    };
     var auth = new CoreAuth(request);
-    var core = new Core(auth, mockZk)
+    var core = new Core(auth, mockZk);
 
     core.create('my_layer', (err, res) => {
       expect(err.statusCode).to.equal(400);
-      onDone()
+      onDone();
     });
 
   });
@@ -72,19 +72,36 @@ describe('core client', function() {
         'x-app-token': 'test-token',
         'x-socrata-host': 'test-host',
       }
-    }
+    };
     var auth = new CoreAuth(request);
-    var core = new Core(auth, mockZk)
+    var core = new Core(auth, mockZk);
 
     core.create('my_layer', (err, res) => {
       if (err) throw new Error(`Got invalid status ${err.statusCode}`);
 
       expect(res.statusCode).to.equal(200);
-      expect(res.body.id).to.equal('qs32-qpt7')
-      onDone()
+      expect(res.body.id).to.equal('qs32-qpt7');
+      onDone();
     });
+  });
 
+  it("can make a replace request to core", function(onDone) {
+    var request = {
+      headers: {
+        'authorization': 'test-auth',
+        'x-app-token': 'test-token',
+        'x-socrata-host': 'test-host',
+      }
+    };
+    var auth = new CoreAuth(request);
+    var core = new Core(auth, mockZk);
 
+    core.replace('my_layer', (err, res) => {
+      if (err) throw new Error(`Got invalid status ${err.statusCode}`);
+
+      expect(res.statusCode).to.equal(200);
+      onDone();
+    });
   });
 
 
