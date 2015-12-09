@@ -82,7 +82,7 @@ describe('summary service', () => {
         //the request tries to send the request twice, which was
         //happening for streams that didn't bind to the correct
         //events
-        setTimeout(onDone, 50);
+        setTimeout(onDone, 10);
       });
   });
 
@@ -109,7 +109,7 @@ describe('summary service', () => {
         //the request tries to send the request twice, which was
         //happening for streams that didn't bind to the correct
         //events
-        setTimeout(onDone, 50);
+        setTimeout(onDone, 10);
       });
   });
 

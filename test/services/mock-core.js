@@ -81,6 +81,10 @@ class CoreMock {
           error: 'headers'
         }));
       }
+      if (this.failCreate) {
+        return res.status(this.failCreate).send('failCreate');
+      }
+
       var view = {
         "id": "qs32-qpt7",
         "name": req.body.name,
@@ -133,6 +137,10 @@ class CoreMock {
         return res.status(400).send('headers');
       }
 
+      if (this.failGetColumns) {
+        return res.status(this.failGetColumns).send('failGetColumns');
+      }
+
       var view = _.range(0, 2).map((i) => {
         return {
           "id": 3415 + i,
@@ -153,6 +161,10 @@ class CoreMock {
         return res.status(400).send('headers');
       }
 
+      if (this.failDeleteColumns) {
+        return res.status(this.failDeleteColumns).send('failDeleteColumns');
+      }
+
       res.status(200).send(JSON.stringify({}));
     }.bind(this));
 
@@ -166,6 +178,10 @@ class CoreMock {
 
       if (!req.body.name || !req.body.dataTypeName || !req.body.fieldName) {
         return res.status(400).send('body');
+      }
+
+      if (this.failColumns) {
+        return res.status(this.failColumns).send('failColumns');
       }
 
 
@@ -185,18 +201,26 @@ class CoreMock {
       res.status(200).send(JSON.stringify(view));
     }.bind(this));
 
+    app.delete('/views/:fourfour', function(req, res) {
+      this._history.push(req);
+      res.status(200).send('{}');
+    }.bind(this));
+
     app.post('/id/:fourfour', function(req, res) {
       this._history.push(req);
+
+      if (this.failUpsert) {
+        return res.status(this.failUpsert).send('failUpsert');
+      }
 
       req.bufferedRows = '';
       req.pipe(es.map((thing, cb) => {
         req.bufferedRows += thing.toString('utf-8');
-      }))
+      }));
 
       req.on('end', () => {
-
         res.status(200).send('{}');
-      })
+      });
     }.bind(this));
 
     this._app = app.listen(port);

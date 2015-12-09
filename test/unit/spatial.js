@@ -205,6 +205,13 @@ describe('spatial service', function() {
       })), (resp, buffered) => {
         expect(resp.statusCode).to.equal(200);
         expect(buffered.layers.length).to.equal(1);
+        expect(buffered.layers[0].layer.count).to.equal(2);
+        expect(buffered.bbox).to.eql({
+          minx: 102,
+          miny: 0.5,
+          maxx: 103,
+          maxy: 1.5
+        });
         onDone();
       });
   });
@@ -287,7 +294,6 @@ describe('spatial service', function() {
               "count": 2,
               "geometry": "point",
               "name": "Some Name",
-
               "columns": [{
                 "dataTypeName": "point",
                 "fieldName": "the_geom",
@@ -348,6 +354,7 @@ describe('spatial service', function() {
       });
   });
 
+
   it('can post multi layer and it will upsert to core', function(onDone) {
     bufferJs(fixture('points_and_lines_multigeom.kml')
       .pipe(request.post({
@@ -378,7 +385,6 @@ describe('spatial service', function() {
   });
 
 
-
   it('will return a 503 when zk is dead', function(onDone) {
     mockZk.enableErrors();
 
@@ -396,6 +402,7 @@ describe('spatial service', function() {
         onDone();
       });
   });
+
 
   it('will return a 503 when core is dead', function(onDone) {
     mockCore.close();
@@ -429,6 +436,96 @@ describe('spatial service', function() {
       }))
       .on('response', function(response) {
         expect(response.statusCode).to.equal(400);
+        onDone();
+      });
+  });
+
+  it('will delete any created layers when an error is encountered in column creation', function(onDone) {
+    mockCore.failColumns = 503;
+    bufferJs(fixture('simple_points.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        var del = _.last(mockCore.history);
+        expect(del.method).to.equal('DELETE')
+        expect(del.url).to.equal('/views/qs32-qpt7')
+        mockCore.failColumns = false;
+        onDone();
+      });
+  });
+
+
+  it('will delete any created layers when an error is encountered getting column info', function(onDone) {
+    mockCore.failGetColumns = 503;
+    var names = {
+      names: ['A new layer name']
+    };
+    bufferJs(
+      fixture('simple_points.json')
+      .pipe(request.put({
+        url: url + `/spatial/qs32-qpt7?${qs.stringify(names)}`,
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        mockCore.failGetColumns = false;
+        var del0 = _.last(mockCore.history);
+        expect(del0.method).to.equal('DELETE')
+        expect(del0.url).to.equal('/views/qs32-qpt8')
+        onDone();
+      });
+  });
+
+
+  it('will delete any created layers when an error is encountered in delete columns', function(onDone) {
+    mockCore.failDeleteColumns = 503;
+    var names = {
+      names: ['A new layer name']
+    };
+    bufferJs(
+      fixture('simple_points.json')
+      .pipe(request.put({
+        url: url + `/spatial/qs32-qpt7?${qs.stringify(names)}`,
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        mockCore.failColumns = false;
+        var del0 = _.last(mockCore.history);
+        expect(del0.method).to.equal('DELETE')
+        expect(del0.url).to.equal('/views/qs32-qpt8')
+        onDone();
+      });
+  });
+
+  it('will delete any created layers when an error is encountered mid-upsert', function(onDone) {
+    mockCore.failUpsert = 503;
+    bufferJs(fixture('simple_points.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        var del = _.last(mockCore.history);
+        expect(del.method).to.equal('DELETE')
+        expect(del.url).to.equal('/views/qs32-qpt7')
+        mockCore.failUpsert = false;
         onDone();
       });
   });
