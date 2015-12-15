@@ -36,7 +36,8 @@ describe('shapefile decoder', function() {
       .on('error', (err) => {
         expect(err.toString()).to.contain("Failed to read feature");
         onDone();
-      });
+      })
+      .pipe(es.mapSync(() => {}));
   });
 
   it('correctly reads .prj file for non epsg4326 features and populates the geojson feature with it', function(onDone) {

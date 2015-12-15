@@ -17,7 +17,7 @@ describe('geojson decoder', function() {
   });
 
 
-  it('can turn simple points to SoQLPoint', function(onDone) {
+  it('geojs can turn simple points to SoQLPoint', function(onDone) {
     var count = 0;
     fixture('simple_points.json')
     .pipe(new GeoJSON())
@@ -31,7 +31,6 @@ describe('geojson decoder', function() {
         'SoQLBoolean'
       ]);
       count++;
-
     })).on('end', () => {
       expect(count).to.equal(2);
       onDone();

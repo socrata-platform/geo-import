@@ -1,0 +1,16 @@
+{
+  "features": {
+    "foo": 1,
+    "bar": {
+      "nested": "bar value"
+    },
+    "baz": true
+  },
+  "others": {
+    "other_foo": 1,
+    "other_bar": "bar",
+    "other_nested": {
+      "arr": [1, 2, 3, 4]
+    }
+  }
+}

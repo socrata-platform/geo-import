@@ -1,0 +1,11 @@
+{
+  "features" : {
+    "foo": 1,
+    "bar": "bar value",
+    "baz": true
+  },
+  "others": {
+    "foo": 1,
+    "bar": "nope"
+  }
+}

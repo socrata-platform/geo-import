@@ -27,14 +27,15 @@ afterEach(function() {
 
 
 describe('kmz decoder', function() {
-  it('will emit an error for a corrupt shapefile', function(onDone) {
+  it('will emit an error for a corrupt kmz file', function(onDone) {
     var count = 0;
     fixture('corrupt_kmz.kmz')
       .pipe(kmzDecoder())
       .on('error', (err) => {
         expect(err.toString()).to.contain("invalid central directory");
         onDone();
-      });
+      })
+      .pipe(es.mapSync(() => {}));
   });
 
   it('will emit an error for unparsable kml within the kmz', function(onDone) {
@@ -44,7 +45,9 @@ describe('kmz decoder', function() {
       .on('error', (err) => {
         expect(err.toString()).to.contain("XML Parse error");
         onDone();
-      });
+      })
+      .pipe(es.mapSync(() => {}));
+
   });
 
   it('can turn simple kmz points to SoQLPoint', function(onDone) {

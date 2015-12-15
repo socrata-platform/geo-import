@@ -18,6 +18,7 @@ import service from '../../lib/service';
 import Shapefile from '../../lib/decoders/shapefile';
 import KMZ from '../../lib/decoders/kmz';
 import KML from '../../lib/decoders/kml';
+import GeoJSON from '../../lib/decoders/geojson';
 import Disk from '../../lib/decoders/disk';
 
 var res;
@@ -35,6 +36,11 @@ function kmlDecoder() {
   res = new EventEmitter();
   return [new KML(new Disk(res)), res];
 }
+function geojsonDecoder() {
+  res = new EventEmitter();
+  return [new GeoJSON(new Disk(res)), res];
+}
+
 
 
 
@@ -94,5 +100,19 @@ describe('decoders', () => {
       });
   });
 
-
+  it('should handle real multi chunk geojson', function(onDone) {
+    this.timeout(100000);
+    var count = 0;
+    var [decoder, res] = geojsonDecoder();
+    fixture('smoke/usbr.geojson')
+      .pipe(decoder)
+      .pipe(es.mapSync(function(thing) {
+        count++;
+      }))
+      .on('end', () => {
+        res.emit('finish');
+        expect(count).to.equal(5);
+        onDone();
+      });
+  });
 });

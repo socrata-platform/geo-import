@@ -138,7 +138,7 @@ describe('spatial service', function() {
       });
   });
 
-  it('can put geojson combo new and replace ids and it will make create and replace requests to core', function(onDone) {
+  it('can put kml combo new and replace ids and it will make create and replace requests to core', function(onDone) {
     var names = {
       names: ['A new layer name']
     };
@@ -355,7 +355,7 @@ describe('spatial service', function() {
   });
 
 
-  it('can post multi layer and it will upsert to core', function(onDone) {
+  it('can post multi layer kml and it will upsert to core', function(onDone) {
     bufferJs(fixture('points_and_lines_multigeom.kml')
       .pipe(request.post({
         url: url + '/spatial',

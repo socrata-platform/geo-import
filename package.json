@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "JSONStream": "latest",
+    "clarinet": "latest",
     "async": "latest",
     "babel": "~5.8.29",
     "body-parser": "latest",
@@ -24,7 +24,9 @@
     "uuid": "latest",
     "yauzl": "latest",
     "dev-null": "latest",
-    "concat-stream": "latest"
+    "concat-stream": "latest",
+    "segfault-handler": "latest",
+    "heapdump": "latest"
   },
   "devDependencies": {
     "chai": "*",

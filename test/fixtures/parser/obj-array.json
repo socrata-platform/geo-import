@@ -1,0 +1,18 @@
+{
+  "features": [{
+    "foo": 1,
+    "bar": "bar 1 value",
+    "baz": true
+  }, {
+    "foo": 2,
+    "bar": "bar 2 value",
+    "baz": null
+  }, {
+    "foo": 3,
+    "bar": "bar 3 value",
+    "baz": false
+  }],
+  "other": [
+    1, 2, 3
+  ]
+}

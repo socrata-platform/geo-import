@@ -1,0 +1,24 @@
+{
+  "features": [{
+    "foo": {
+      "foo_nested": "something",
+      "foo_nested_1": 1
+    },
+    "bar": "bar 1 value",
+    "baz": true
+  }, {
+    "foo": {
+      "foo_nested": "something",
+      "foo_nested_1": 2
+    },
+    "bar": "bar 2 value",
+    "baz": null
+  }, {
+    "foo": {
+      "foo_nested": "something",
+      "foo_nested_1": 3
+    },
+    "bar": "bar 3 value",
+    "baz": false
+  }]
+}
