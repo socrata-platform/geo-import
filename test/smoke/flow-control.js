@@ -70,7 +70,7 @@ describe('flow control', () => {
   });
 
   it('will not overwhelm geojson stream consumer', function(onDone) {
-    this.timeout(10000);
+    this.timeout(25000);
     var count = 0;
     var [decoder, res] = geojsonDecoder();
     fixture('smoke/wards.geojson')
