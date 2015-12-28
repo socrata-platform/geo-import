@@ -101,7 +101,7 @@ describe('decoders', () => {
   });
 
   it('should handle real multi chunk geojson', function(onDone) {
-    this.timeout(100000);
+    this.timeout(250000);
     var count = 0;
     var [decoder, res] = geojsonDecoder();
     fixture('smoke/usbr.geojson')
