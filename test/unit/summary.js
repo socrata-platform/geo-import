@@ -49,7 +49,8 @@ describe('summary service', () => {
           'X-App-Token': 'app-token',
           'X-Socrata-Host': 'localhost:6668',
           'Content-Type': 'application/json',
-          'Content-Length': sizeOf(fx)
+          'Content-Length': sizeOf(fx),
+          'X-Blob-Length': sizeOf(fx)
         }
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
@@ -72,7 +73,8 @@ describe('summary service', () => {
           'X-App-Token': 'app-token',
           'X-Socrata-Host': 'localhost:6668',
           'Content-Type': 'application/vnd.google-earth.kml+xml',
-          'Content-Length': sizeOf(fx)
+          'Content-Length': sizeOf(fx),
+          'X-Blob-Length': sizeOf(fx)
         }
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
@@ -99,7 +101,8 @@ describe('summary service', () => {
           'X-App-Token': 'app-token',
           'X-Socrata-Host': 'localhost:6668',
           'Content-Type': 'application/vnd.google-earth.kmz',
-          'Content-Length': sizeOf(fx)
+          'Content-Length': sizeOf(fx),
+          'X-Blob-Length': sizeOf(fx)
         }
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
@@ -124,7 +127,8 @@ describe('summary service', () => {
           'X-App-Token': 'app-token',
           'X-Socrata-Host': 'localhost:6668',
           'Content-Type': 'application/zip',
-          'Content-Length': sizeOf(fx)
+          'Content-Length': sizeOf(fx),
+          'X-Blob-Length': sizeOf(fx)
         }
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
@@ -157,7 +161,8 @@ describe('summary service', () => {
           'X-App-Token': 'app-token',
           'X-Socrata-Host': 'localhost:6668',
           'Content-Type': 'application/json',
-          'Content-Length': sizeOf(fx)
+          'Content-Length': sizeOf(fx),
+          'X-Blob-Length': sizeOf(fx)
         }
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
@@ -179,7 +184,8 @@ describe('summary service', () => {
           'X-App-Token': 'app-token',
           'X-Socrata-Host': 'localhost:6668',
           'Content-Type': 'application/json',
-          'Content-Length': sizeOf(fx)
+          'Content-Length': sizeOf(fx),
+          'X-Blob-Length': sizeOf(fx)
         }
       })), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
