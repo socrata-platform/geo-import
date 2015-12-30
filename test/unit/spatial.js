@@ -138,6 +138,61 @@ describe('spatial service', function() {
       });
   });
 
+
+  it('can put geojson with no metadata replace dataset request to core', function(onDone) {
+    fixture('simple_points.json')
+      .pipe(request.put({
+        url: url + `/spatial/?`,
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      }))
+      .on('response', function(response) {
+        expect(response.statusCode).to.equal(200);
+        var [createRequest, geom, aString, aNum, aFloat, aBool] = mockCore.history;
+        expect(createRequest.url).to.equal(
+          '/views?nbe=true'
+        )
+        expect(createRequest.method).to.equal('POST');
+
+        expect(geom.body).to.eql({
+          fieldName: "the_geom",
+          name: "the_geom",
+          dataTypeName: "point"
+        });
+
+        expect(aString.body).to.eql({
+          fieldName: "a_string",
+          name: "a_string",
+          dataTypeName: "text"
+        });
+
+        expect(aNum.body).to.eql({
+          fieldName: "a_num",
+          name: "a_num",
+          dataTypeName: "number"
+        });
+
+        expect(aFloat.body).to.eql({
+          fieldName: "a_float",
+          name: "a_float",
+          dataTypeName: "number"
+        });
+
+        expect(aBool.body).to.eql({
+          fieldName: "a_bool",
+          name: "a_bool",
+          dataTypeName: "checkbox"
+        });
+
+
+        onDone();
+      });
+  });
+
   it('can put kml combo new and replace ids and it will make create and replace requests to core', function(onDone) {
     var names = {
       names: ['A new layer name']
