@@ -37,6 +37,9 @@ describe('core client', function() {
         'authorization': 'test-auth',
         'x-app-token': 'test-token',
         'x-socrata-host': 'test-host',
+      },
+      log: {
+        info: () => {}
       }
     };
     var auth = new CoreAuth(request);
@@ -52,6 +55,9 @@ describe('core client', function() {
       headers: {
         'x-app-token': 'test-token',
         'x-socrata-host': 'test-host',
+      },
+      log: {
+        info: () => {}
       }
     };
     var auth = new CoreAuth(request);
@@ -71,6 +77,9 @@ describe('core client', function() {
         'authorization': 'test-auth',
         'x-app-token': 'test-token',
         'x-socrata-host': 'test-host',
+      },
+      log: {
+        info: () => {}
       }
     };
     var auth = new CoreAuth(request);
@@ -91,6 +100,9 @@ describe('core client', function() {
         'authorization': 'test-auth',
         'x-app-token': 'test-token',
         'x-socrata-host': 'test-host',
+      },
+      log: {
+        info: () => {}
       }
     };
     var auth = new CoreAuth(request);
