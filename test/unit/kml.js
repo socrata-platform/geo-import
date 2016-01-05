@@ -21,6 +21,58 @@ describe('kml decoder', function() {
       });
   });
 
+  it('can turn untyped extendeddata to SoQLTypes', function(onDone) {
+    var expectedValues = [
+      [{
+          "type": "Point",
+          "coordinates": [
+            102.0,
+            0.5
+          ]
+        },
+        "first value",
+        2,
+        2.2,
+        "false"
+      ],
+      [{
+          "type": "Point",
+          "coordinates": [
+            103.0,
+            1.5
+          ]
+        },
+
+        "second value",
+        2,
+        2.2,
+        "true"
+      ]
+    ];
+
+    var kml = new KML();
+    var count = 0;
+
+    fixture('untyped_simple_points.kml')
+      .pipe(kml)
+      .pipe(es.mapSync(function(thing) {
+        let columns = thing.columns;
+        expect(columns.map((c) => c.constructor.name)).to.eql([
+          'SoQLPoint',
+          'SoQLText',
+          'SoQLNumber',
+          'SoQLNumber',
+          'SoQLText'
+        ]);
+
+        expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
+        count++;
+      })).on('end', () => {
+        expect(count).to.equal(2);
+        onDone();
+      });
+  });
+
   it('can turn kml simple points to SoQLPoint', function(onDone) {
     var expectedValues = [
       [{
