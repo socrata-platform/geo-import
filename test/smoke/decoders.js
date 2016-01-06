@@ -115,4 +115,24 @@ describe('decoders', () => {
         onDone();
       });
   });
+
+
+  it('many many chunks of kml should end up with numbers', function(onDone) {
+    this.timeout(100000);
+    var count = 0;
+    var [decoder, res] = kmlDecoder();
+    fixture('smoke/boundaries.kml')
+      .pipe(decoder)
+      .pipe(es.mapSync((l) => {
+        l.columns[0].mapCoordinates(([x, y]) => {
+          expect(x).to.not.eql(NaN);
+          expect(y).to.not.eql(NaN);
+
+        });
+      }))
+      .on('end', (layers) => {
+        res.emit('finish');
+        onDone();
+      });
+  });
 });
