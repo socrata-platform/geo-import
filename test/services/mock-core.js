@@ -1,10 +1,30 @@
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var _eventStream = require('event-stream');
+
+var _eventStream2 = _interopRequireDefault(_eventStream);
+
 var express = require('express');
 var bodyParser = require('body-parser');
-import _ from 'underscore';
-import es from 'event-stream';
 
-class CoreMock {
-  constructor(port) {
+var CoreMock = (function () {
+  function CoreMock(port) {
+    _classCallCheck(this, CoreMock);
+
     this._history = [];
     this._colCounter = 0;
 
@@ -19,7 +39,7 @@ class CoreMock {
     app.use(/\/views$/, bodyParser.json());
     app.use(/.*columns$/, bodyParser.json());
 
-    app.post('/views/:uid/publication', function(req, res) {
+    app.post('/views/:uid/publication', (function (req, res) {
       this._history.push(req);
       var hs = req.headers;
       if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
@@ -27,7 +47,6 @@ class CoreMock {
           error: 'headers'
         }));
       }
-
 
       var view = {
         "id": "qs32-qpt8",
@@ -71,9 +90,9 @@ class CoreMock {
       };
 
       res.status(200).send(JSON.stringify(view));
-    }.bind(this));
+    }).bind(this));
 
-    app.post('/views', function(req, res) {
+    app.post('/views', (function (req, res) {
       this._history.push(req);
       var hs = req.headers;
       if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
@@ -127,10 +146,9 @@ class CoreMock {
       };
 
       res.status(200).send(JSON.stringify(view));
-    }.bind(this));
+    }).bind(this));
 
-
-    app.get('/views/:fourfour/columns', function(req, res) {
+    app.get('/views/:fourfour/columns', (function (req, res) {
       this._history.push(req);
       var hs = req.headers;
       if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
@@ -141,20 +159,19 @@ class CoreMock {
         return res.status(this.failGetColumns).send('failGetColumns');
       }
 
-      var view = _.range(0, 2).map((i) => {
+      var view = _underscore2['default'].range(0, 2).map(function (i) {
         return {
           "id": 3415 + i,
           "position": i,
           "tableColumnId": 3415 + i,
           "format": {}
-        }
+        };
       });
 
-
       res.status(200).send(JSON.stringify(view));
-    }.bind(this));
+    }).bind(this));
 
-    app.delete('/views/:fourfour/columns/:colId', function(req, res) {
+    app['delete']('/views/:fourfour/columns/:colId', (function (req, res) {
       this._history.push(req);
       var hs = req.headers;
       if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
@@ -166,10 +183,9 @@ class CoreMock {
       }
 
       res.status(200).send(JSON.stringify({}));
-    }.bind(this));
+    }).bind(this));
 
-
-    app.post('/views/:fourfour/columns', function(req, res) {
+    app.post('/views/:fourfour/columns', (function (req, res) {
       this._history.push(req);
       var hs = req.headers;
       if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
@@ -184,7 +200,6 @@ class CoreMock {
         return res.status(this.failColumns).send('failColumns');
       }
 
-
       var i = this.colCounter;
       var view = {
         "id": 3415 + i,
@@ -197,16 +212,15 @@ class CoreMock {
         "format": {}
       };
 
-
       res.status(200).send(JSON.stringify(view));
-    }.bind(this));
+    }).bind(this));
 
-    app.delete('/views/:fourfour', function(req, res) {
+    app['delete']('/views/:fourfour', (function (req, res) {
       this._history.push(req);
       res.status(200).send('{}');
-    }.bind(this));
+    }).bind(this));
 
-    app.post('/id/:fourfour', function(req, res) {
+    app.post('/id/:fourfour', (function (req, res) {
       this._history.push(req);
 
       if (this.failUpsert) {
@@ -214,38 +228,42 @@ class CoreMock {
       }
 
       req.bufferedRows = '';
-      req.pipe(es.map((thing, cb) => {
+      req.pipe(_eventStream2['default'].map(function (thing, cb) {
         req.bufferedRows += thing.toString('utf-8');
       }));
 
-      req.on('end', () => {
+      req.on('end', function () {
         res.status(200).send('{}');
       });
-    }.bind(this));
+    }).bind(this));
 
     this._app = app.listen(port);
   }
 
-  get history() {
-    return this._history;
-  }
-
-  get colCounter() {
-    this._colCounter++;
-    return this._colCounter;
-  }
-
-  close() {
-    try {
-      return this._app.close();
-    } catch (e) {
-      //already closed...heh
+  _createClass(CoreMock, [{
+    key: 'close',
+    value: function close() {
+      try {
+        return this._app.close();
+      } catch (e) {
+        //already closed...heh
+      }
     }
-  }
+  }, {
+    key: 'history',
+    get: function get() {
+      return this._history;
+    }
+  }, {
+    key: 'colCounter',
+    get: function get() {
+      this._colCounter++;
+      return this._colCounter;
+    }
+  }]);
 
+  return CoreMock;
+})();
 
-}
-
-
-
-export default CoreMock;
+exports['default'] = CoreMock;
+module.exports = exports['default'];

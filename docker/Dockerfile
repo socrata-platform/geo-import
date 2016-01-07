@@ -17,7 +17,6 @@ ADD lib /app/lib
 
 # Passing --production prevents node-srs from installing.
 # We will set it up sans symlinks in the next step
-RUN npm install -g babel@5.8.29
 RUN npm install --production
 
 # Do the annoying node-srs thing

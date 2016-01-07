@@ -33,8 +33,13 @@ which is built from source in a sibling repo and symlinked here
 
 run the development configuration using
 ```
-GEO_IMPORT_ENV=dev node lib/index.js
+GEO_IMPORT_ENV=dev node lib/es6.js
 ```
+
+To run it as es5
+
+
+
 you will need core and the soda2 stack running
 
 ## testing

@@ -36,7 +36,7 @@
     "should": "latest"
   },
   "scripts": {
-    "test": "GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit test/smoke --compilers js:babel/register && jshint lib",
+    "test": "make test",
     "postinstall": "scripts/postinstall.sh"
   }
 }
