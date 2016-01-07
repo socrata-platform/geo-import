@@ -29,5 +29,7 @@ node_modules
 docker/lib
 docker/scripts
 docker/package.json
+docker/lib.tar
 lib
 test
+lib.tar

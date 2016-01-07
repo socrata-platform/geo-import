@@ -12,7 +12,7 @@ WORKDIR /app
 # Add the stuff that makes up the base node app
 ADD package.json /app/
 ADD scripts /app/scripts
-ADD lib.tar /app/lib
+ADD lib.tar /app
 
 
 # Passing --production prevents node-srs from installing.
