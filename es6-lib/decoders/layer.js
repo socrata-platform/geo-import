@@ -281,8 +281,6 @@ class Layer extends Duplex {
 
         var rowString = sep + JSON.stringify(asSoda) + ep;
 
-        logger.info(`Layer Read Layer len ${self._readableState.length}`)
-
         if(!self.push(rowString)) {
           this.pause();
           self._readableState.pipes.once('drain', this.resume.bind(this));
