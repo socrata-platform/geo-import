@@ -48,7 +48,7 @@ class Merger extends Transform {
 
   _getOrCreateLayer(soqlRow, disk, spec) {
     var columns = soqlRow.columns;
-    var layer = this._layers.find((layer) => layer.belongsIn(columns));
+    var layer = _.find(this._layers, (layer) => layer.belongsIn(columns));
     if (!layer) {
       layer = new Layer(columns.map((soqlValue) => {
         let t = types[soqlValue.ctype];

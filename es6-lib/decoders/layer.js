@@ -107,7 +107,7 @@ class Layer extends Duplex {
   }
 
   get geomType() {
-    var geom = this.columns.find((col) => col.isGeometry);
+    var geom = _.find(this.columns, (col) => col.isGeometry);
     if (!geom) return null;
     return geom.dataTypeName;
   }
@@ -169,13 +169,13 @@ class Layer extends Duplex {
     //We want the set of columns that are defined for the value, but are not defined
     //for the layer. These are the columns that we will replace in the layer.
     var toAdd = definedSoqlCols.filter((valCol) => {
-      return undefinedColumns.find((col) => valCol.rawName === col.rawName);
+      return _.find(undefinedColumns, (col) => valCol.rawName === col.rawName);
     });
 
     if (toAdd.length === 0) return;
 
     this.columns = this.columns.map((col) => {
-      var valCol = toAdd.find((newCol) => newCol.rawName === col.rawName);
+      var valCol = _.find(toAdd, (newCol) => newCol.rawName === col.rawName);
       var newCol;
       if (valCol) {
         newCol = new valCol.constructor(valCol.rawName);

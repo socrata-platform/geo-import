@@ -91,7 +91,7 @@ var util = {
    * So KML is the  ¯\_(ツ)_/¯ of geo formats
    */
   setOrCloneFeature: (state, kind, coordinateMerger) => {
-    var aFeature = state.features.find((feature) => {
+    var aFeature = _.find(state.features, (feature) => {
       return !feature[GEOM_NAME] || (feature[GEOM_NAME].type === kind);
     });
     if (aFeature) {
@@ -333,7 +333,7 @@ class KML extends Transform {
     //first. this makes it so we can correctly identify multigeometries
     paths.sort((a, b) => (a.match(/\./g) || []).length < (b.match(/\./g) || []).length ? 1 : -1);
 
-    return paths.find((path) => {
+    return _.find(paths, (path) => {
       var route = path.split('.').reverse();
       return _.every(_.zip(at.slice(0, route.length), route), ([current, desired]) => {
         return (desired === '*') || (desired === current);
@@ -391,7 +391,7 @@ class KML extends Transform {
    *
    */
   _propToSoQL(schema, name, value) {
-    var column = schema.find((column) => column.name === name);
+    var column = _.find(schema, (column) => column.name === name);
     var typeName;
     if (column) {
       typeName = column.type;
