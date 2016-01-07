@@ -1,120 +1,125 @@
-import {
-  chai, expect
-}
-from 'chai';
-import should from 'should';
-import CoreService from '../services/mock-core';
-import MockZKClient from '../services/mock-zk';
-import config from '../../lib/config';
-import {
-  CoreAuth, Core
-}
-from '../../lib/upstream/core';
+'use strict';
 
-describe('core client', function() {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _chai = require('chai');
+
+var _should = require('should');
+
+var _should2 = _interopRequireDefault(_should);
+
+var _servicesMockCore = require('../services/mock-core');
+
+var _servicesMockCore2 = _interopRequireDefault(_servicesMockCore);
+
+var _servicesMockZk = require('../services/mock-zk');
+
+var _servicesMockZk2 = _interopRequireDefault(_servicesMockZk);
+
+var _libConfig = require('../../lib/config');
+
+var _libConfig2 = _interopRequireDefault(_libConfig);
+
+var _libUpstreamCore = require('../../lib/upstream/core');
+
+describe('core client', function () {
   var mockCore;
   var mockZk;
   var port = 6668;
-  var url = `http://localhost:${port}`;
+  var url = 'http://localhost:' + port;
 
-  beforeEach(function(onDone) {
-    mockZk = new MockZKClient(port);
+  beforeEach(function (onDone) {
+    mockZk = new _servicesMockZk2['default'](port);
     mockZk.connect();
-    mockZk.on('connected', function() {
-      mockCore = new CoreService(port);
+    mockZk.on('connected', function () {
+      mockCore = new _servicesMockCore2['default'](port);
       onDone();
     });
   });
 
-  afterEach(function() {
+  afterEach(function () {
     mockCore.close();
   });
 
-
-  it("can build auth from a request", function() {
+  it("can build auth from a request", function () {
     var request = {
       headers: {
         'authorization': 'test-auth',
         'x-app-token': 'test-token',
-        'x-socrata-host': 'test-host',
+        'x-socrata-host': 'test-host'
       },
       log: {
-        info: () => {}
+        info: function info() {}
       }
     };
-    var auth = new CoreAuth(request);
+    var auth = new _libUpstreamCore.CoreAuth(request);
 
-    expect(auth.host).to.eql('test-host');
-    expect(auth.appToken).to.eql('test-token');
-    expect(auth.authToken).to.eql('test-auth');
+    (0, _chai.expect)(auth.host).to.eql('test-host');
+    (0, _chai.expect)(auth.appToken).to.eql('test-token');
+    (0, _chai.expect)(auth.authToken).to.eql('test-auth');
   });
 
-
-  it('passes headers through to core', function(onDone) {
+  it('passes headers through to core', function (onDone) {
     var request = {
       headers: {
         'x-app-token': 'test-token',
-        'x-socrata-host': 'test-host',
+        'x-socrata-host': 'test-host'
       },
       log: {
-        info: () => {}
+        info: function info() {}
       }
     };
-    var auth = new CoreAuth(request);
-    var core = new Core(auth, mockZk);
+    var auth = new _libUpstreamCore.CoreAuth(request);
+    var core = new _libUpstreamCore.Core(auth, mockZk);
 
-    core.create('my_layer', (err, res) => {
-      expect(err.statusCode).to.equal(400);
+    core.create('my_layer', function (err, res) {
+      (0, _chai.expect)(err.statusCode).to.equal(400);
       onDone();
     });
-
   });
 
-
-  it("can make a create request to core", function(onDone) {
+  it("can make a create request to core", function (onDone) {
     var request = {
       headers: {
         'authorization': 'test-auth',
         'x-app-token': 'test-token',
-        'x-socrata-host': 'test-host',
+        'x-socrata-host': 'test-host'
       },
       log: {
-        info: () => {}
+        info: function info() {}
       }
     };
-    var auth = new CoreAuth(request);
-    var core = new Core(auth, mockZk);
+    var auth = new _libUpstreamCore.CoreAuth(request);
+    var core = new _libUpstreamCore.Core(auth, mockZk);
 
-    core.create('my_layer', (err, res) => {
-      if (err) throw new Error(`Got invalid status ${err.statusCode}`);
+    core.create('my_layer', function (err, res) {
+      if (err) throw new Error('Got invalid status ' + err.statusCode);
 
-      expect(res.statusCode).to.equal(200);
-      expect(res.body.id).to.equal('qs32-qpt7');
+      (0, _chai.expect)(res.statusCode).to.equal(200);
+      (0, _chai.expect)(res.body.id).to.equal('qs32-qpt7');
       onDone();
     });
   });
 
-  it("can make a replace request to core", function(onDone) {
+  it("can make a replace request to core", function (onDone) {
     var request = {
       headers: {
         'authorization': 'test-auth',
         'x-app-token': 'test-token',
-        'x-socrata-host': 'test-host',
+        'x-socrata-host': 'test-host'
       },
       log: {
-        info: () => {}
+        info: function info() {}
       }
     };
-    var auth = new CoreAuth(request);
-    var core = new Core(auth, mockZk);
+    var auth = new _libUpstreamCore.CoreAuth(request);
+    var core = new _libUpstreamCore.Core(auth, mockZk);
 
-    core.replace('my_layer', (err, res) => {
-      if (err) throw new Error(`Got invalid status ${err.statusCode}`);
+    core.replace('my_layer', function (err, res) {
+      if (err) throw new Error('Got invalid status ' + err.statusCode);
 
-      expect(res.statusCode).to.equal(200);
+      (0, _chai.expect)(res.statusCode).to.equal(200);
       onDone();
     });
   });
-
-
 });

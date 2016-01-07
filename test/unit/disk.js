@@ -1,3 +1,5 @@
+"use strict";
+
 //TODO: how should this be tested...
 // import _ from 'underscore';
 // import chai from 'chai';
@@ -44,62 +46,60 @@
 //     app.close();
 //   });
 
+/**
+ * TODO:
+ * This is kind of a stupid test...if anything allocates in /tmp while it is running
+ * then it will fail...should probably namespace everything in a /tmp/geo-import dir?
+ *
+ * TODO: this also breaks ther rest of the test suite, even though it all works??? wtf node
+ */
+// it('will clean up all allocated files created during a request lifetime', function(onDone) {
+//   var files = fs.readdirSync('/tmp');
+//   fixture('simple_points.json')
+//     .pipe(request.post({
+//       url: url + '/spatial',
+//       headers: {
+//         'Authorization': 'test-auth',
+//         'X-App-Token': 'app-token',
+//         'X-Socrata-Host': 'localhost:6668',
+//         'Content-Type': 'application/json'
+//       }
+//     }))
+//     .on('response', function(response) {
+//       setTimeout(() => {
+//         //need to wait for the event loop to clear because the removals don't
+//         //happen necessarily before the request closes
+//         var newFiles = fs.readdirSync('/tmp');
+//         var allocations = _.difference(newFiles, files);
 
-  /**
-   * TODO:
-   * This is kind of a stupid test...if anything allocates in /tmp while it is running
-   * then it will fail...should probably namespace everything in a /tmp/geo-import dir?
-   *
-   * TODO: this also breaks ther rest of the test suite, even though it all works??? wtf node
-   */
-  // it('will clean up all allocated files created during a request lifetime', function(onDone) {
-  //   var files = fs.readdirSync('/tmp');
-  //   fixture('simple_points.json')
-  //     .pipe(request.post({
-  //       url: url + '/spatial',
-  //       headers: {
-  //         'Authorization': 'test-auth',
-  //         'X-App-Token': 'app-token',
-  //         'X-Socrata-Host': 'localhost:6668',
-  //         'Content-Type': 'application/json'
-  //       }
-  //     }))
-  //     .on('response', function(response) {
-  //       setTimeout(() => {
-  //         //need to wait for the event loop to clear because the removals don't
-  //         //happen necessarily before the request closes
-  //         var newFiles = fs.readdirSync('/tmp');
-  //         var allocations = _.difference(newFiles, files);
+//         expect(allocations).to.eql([]);
+//         expect(response.statusCode).to.equal(200);
+//         onDone();
+//       }, 40)
+//     });
+// });
 
-  //         expect(allocations).to.eql([]);
-  //         expect(response.statusCode).to.equal(200);
-  //         onDone();
-  //       }, 40)
-  //     });
-  // });
+// it('will clean up all allocated files created during a request, even when the request fails', function(onDone) {
+//   var files = fs.readdirSync('/tmp');
+//   fixture('simple_points.json')
+//     .pipe(request.post({
+//       url: url + '/spatial',
+//       headers: {
+//         'Authorization': 'test-auth',
+//         'X-App-Token': 'app-token',
+//         'Content-Type': 'application/json'
+//       }
+//     }))
+//     .on('response', function(response) {
+//       setTimeout(() => {
+//         expect(response.statusCode).to.equal(400);
 
-  // it('will clean up all allocated files created during a request, even when the request fails', function(onDone) {
-  //   var files = fs.readdirSync('/tmp');
-  //   fixture('simple_points.json')
-  //     .pipe(request.post({
-  //       url: url + '/spatial',
-  //       headers: {
-  //         'Authorization': 'test-auth',
-  //         'X-App-Token': 'app-token',
-  //         'Content-Type': 'application/json'
-  //       }
-  //     }))
-  //     .on('response', function(response) {
-  //       setTimeout(() => {
-  //         expect(response.statusCode).to.equal(400);
-
-  //         var newFiles = fs.readdirSync('/tmp');
-  //         var allocations = _.difference(newFiles, files);
-  //         expect(allocations).to.eql([]);
-  //         onDone();
-  //       }, 0)
-  //     });
-  // });
-
+//         var newFiles = fs.readdirSync('/tmp');
+//         var allocations = _.difference(newFiles, files);
+//         expect(allocations).to.eql([]);
+//         onDone();
+//       }, 0)
+//     });
+// });
 
 // });
