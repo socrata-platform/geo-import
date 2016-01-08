@@ -103,9 +103,13 @@ class Shapefile extends Duplex {
     //;_:
     //hack because https://github.com/mbostock/shapefile/blob/b4470c9a3d121bd201ca0b458d1e97b0a4d3547f/index.js#L173
     //which turns things in to Multipolygons if they have rings ಠ_ಠ
+    if(!record.geometry.coordinates) record.geometry.coordinates = [];
+
     if (record.geometry.type === 'Polygon') {
       record.geometry.type = 'MultiPolygon';
-      record.geometry.coordinates = [record.geometry.coordinates];
+      if(record.geometry.coordinates.length) {
+        record.geometry.coordinates = [record.geometry.coordinates];
+      }
     }
 
     if (!this.push(geoJsToSoQL(record, projection))) {

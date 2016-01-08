@@ -205,7 +205,7 @@ class Layer extends Duplex {
     }
 
     this._out.write(
-      this._scratchSeparator(this._count) + JSON.stringify(soqlRow.map((r) => r.value)) + '\n',
+      this._scratchSeparator(this._count) + JSON.stringify(soqlRow.map((r) => r.value)),
       null, done);
   }
 
