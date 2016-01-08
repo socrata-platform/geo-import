@@ -17,7 +17,7 @@
     "node-zookeeper-client": "latest",
     "proj4": "latest",
     "request": "latest",
-    "shapefile": "latest",
+    "shapefile": "rozap/shapefile",
     "stream-reduce": "latest",
     "through": "latest",
     "underscore": "latest",

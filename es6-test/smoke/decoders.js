@@ -118,6 +118,23 @@ describe('decoders', () => {
       });
   });
 
+  it('should handle real multi chunk shapefile 03', function(onDone) {
+    this.timeout(100000);
+    var count = 0;
+    var [decoder, res] = shpDecoder();
+    fixture('smoke/xNeighbourhood.zip')
+      .pipe(decoder)
+      .pipe(es.mapSync(function(thing) {
+        count++;
+      }))
+      .on('end', () => {
+        res.emit('finish');
+        // expect(count).to.equal(116);
+        onDone();
+      });
+  });
+
+
   it('should handle real multi chunk kml', function(onDone) {
     this.timeout(100000);
     var count = 0;
