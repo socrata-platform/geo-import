@@ -1,6 +1,5 @@
 import yauzl from 'yauzl';
 import KML from './kml';
-import through from 'through';
 import uuid from 'uuid';
 import fs from 'fs';
 import path from 'path';

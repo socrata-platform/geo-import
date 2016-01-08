@@ -20,7 +20,6 @@ import {
 }
 from './transform';
 import config from '../config';
-import through from 'through';
 
 
 //kml has no facilities for name the geometry
