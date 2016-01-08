@@ -85,7 +85,7 @@ class Shapefile extends Duplex {
   }
 
   _fileGroup(extension, name) {
-    name = name || 'shapefile';
+    name = name? name.toLowerCase() : 'shapefile';
     return `/tmp/${name}_${this._fgroup}${extension}`;
   }
 
@@ -100,11 +100,17 @@ class Shapefile extends Duplex {
   }
 
   _onRecord(record, projection, readNext) {
+    //filter out things that don't have a geometry
+    if(!record.geometry) return readNext();
+
+    //of course, sometimes instead of giving an empty list of coordinates,
+    //the shapefile library gives 'null' coordinates, which doesn't
+    //make any sense, but ok...
+    if(!record.geometry.coordinates) record.geometry.coordinates = [];
+
     //;_:
     //hack because https://github.com/mbostock/shapefile/blob/b4470c9a3d121bd201ca0b458d1e97b0a4d3547f/index.js#L173
     //which turns things in to Multipolygons if they have rings ಠ_ಠ
-    if(!record.geometry.coordinates) record.geometry.coordinates = [];
-
     if (record.geometry.type === 'Polygon') {
       record.geometry.type = 'MultiPolygon';
       if(record.geometry.coordinates.length) {
