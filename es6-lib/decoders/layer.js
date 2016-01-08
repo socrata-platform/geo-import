@@ -12,7 +12,6 @@ import {
   EventEmitter
 }
 from 'events';
-import ldj from 'ldjson-stream';
 import srs from 'node-srs';
 import BBox from '../util/bbox';
 import {
@@ -23,9 +22,11 @@ import {
   types
 }
 from '../soql/mapper';
+import split2 from 'split2';
 import logger from '../util/logger';
 import conf from '../config';
-
+import LDJson from './ldjson';
+import WGS84Reprojector from './wgs84-reprojector';
 var config = conf();
 const scratchPrologue = "";
 const scratchSeparator = "\n";
@@ -35,7 +36,6 @@ const jsonPrologue = "[";
 const jsonSeparator = ",";
 const jsonEpilogue = "]";
 
-const WGS84 = '+proj=longlat +ellps=WGS84 +no_defs';
 
 
 class Layer extends Duplex {
@@ -51,10 +51,9 @@ class Layer extends Duplex {
     this.columns = columns;
     this._count = 0;
     this._crsMap = {};
-    this._projectTo = srs.parse(WGS84);
-    this._spec = spec || {};
+    this._wgs84Reprojector = new WGS84Reprojector(columns);
 
-    this._bbox = new BBox();
+    this._spec = spec || {};
 
     if (disk) {
       this._outName = '/tmp/import_' + uuid.v4() + '.ldjson';
@@ -69,9 +68,13 @@ class Layer extends Duplex {
       projection: this.defaultCrs.name,
       name: this.name,
       geometry: this.geomType,
-      bbox: this._bbox.toJSON(),
+      bbox: this.bbox.toJSON(),
       columns: this.columns.map((c) => c.toJSON())
     };
+  }
+
+  get bbox() {
+    return this._wgs84Reprojector.bbox;
   }
 
   get scratchName() {
@@ -117,7 +120,7 @@ class Layer extends Duplex {
   }
 
   get defaultCrs() {
-    return this._defaultCrs || this._projectTo;
+    return this._defaultCrs || this._wgs84Reprojector.projection;
   }
 
   get projections() {
@@ -232,56 +235,33 @@ class Layer extends Duplex {
     return this._count;
   }
 
-  _expandBbox(geom) {
-    //yes a map is silly here because this is a side effect on the layer
-    //but it keeps things simple
-    geom.mapCoordinates((coord) => {
-      this._bbox.expand(coord);
-    });
-  }
-
-
   _getProjectionFor(index) {
     if (!this._crsMap[index]) return this.defaultCrs;
     return srs.parse(this._crsMap[index]);
   }
 
-
   _startPushing() {
     this._isPushing = true;
     var projectTo = this._projectTo;
-    var index = 0;
+    var writeIndex = 0;
+    var prjIndex = 0;
     var self = this;
     this.push(jsonPrologue);
     fs.createReadStream(this._outName)
-      .pipe(ldj.parse({
-        highWaterMark: conf.rowBufferSize
+      .pipe(new LDJson())
+      .pipe(es.mapSync((row) => {
+        var thing = [this._getProjectionFor(prjIndex), row];
+        prjIndex++;
+        return thing;
       }))
-      .pipe(es.through(function write(row) {
-        var soqlRow = _.zip(self.columns, row).map(([column, value]) => {
-          var soql = new types[column.ctype](column.rawName, value);
-          if (soql.isGeometry) {
-            let projection = self._getProjectionFor(index);
-            let geom = soql.reproject(projection, projectTo);
-            self._expandBbox(geom);
-            return geom;
-          }
-          return soql;
-        });
-
-        var sep = self._jsonSeparator(index);
+      .pipe(this._wgs84Reprojector)
+      .pipe(es.through(function write(rowString) {
+        var sep = self._jsonSeparator(writeIndex);
         var ep = '';
-        index++;
-        if (index === self._count) ep = jsonEpilogue;
+        writeIndex++;
+        if (writeIndex === self._count) ep = jsonEpilogue;
 
-        var asSoda = soqlRow.reduce((acc, col) => {
-          acc[col.name] = col.value;
-          return acc;
-        }, {});
-
-        var rowString = sep + JSON.stringify(asSoda) + ep;
-
-        if(!self.push(rowString)) {
+        if(!self.push(sep + rowString + ep)) {
           this.pause();
           self._readableState.pipes.once('drain', this.resume.bind(this));
         }
