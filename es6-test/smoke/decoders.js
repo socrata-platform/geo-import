@@ -28,14 +28,17 @@ function kmzDecoder() {
   res = new EventEmitter();
   return new KMZ(new Disk(res));
 }
+
 function shpDecoder() {
   res = new EventEmitter();
   return [new Shapefile(new Disk(res)), res];
 }
+
 function kmlDecoder() {
   res = new EventEmitter();
   return [new KML(new Disk(res)), res];
 }
+
 function geojsonDecoder() {
   res = new EventEmitter();
   return [new GeoJSON(new Disk(res)), res];
@@ -43,12 +46,11 @@ function geojsonDecoder() {
 
 
 
-
 describe('decoders', () => {
 
 
   afterEach(function() {
-    if(res) res.emit('finish');
+    if (res) res.emit('finish');
   });
 
 
@@ -68,11 +70,27 @@ describe('decoders', () => {
   });
 
 
-  it('should handle real multi chunk shapefile', function(onDone) {
+  it('should handle real multi chunk shapefile 00', function(onDone) {
     this.timeout(100000);
     var count = 0;
     var [decoder, res] = shpDecoder();
     fixture('smoke/USBR_crs.zip')
+      .pipe(decoder)
+      .pipe(es.mapSync(function(thing) {
+        count++;
+      }))
+      .on('end', () => {
+        res.emit('finish');
+        expect(count).to.equal(5);
+        onDone();
+      });
+  });
+
+  it('should handle real multi chunk shapefile 01', function(onDone) {
+    this.timeout(100000);
+    var count = 0;
+    var [decoder, res] = shpDecoder();
+    fixture('smoke/xdpw_supervisorial_districts_2011.zip')
       .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         count++;
