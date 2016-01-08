@@ -22,7 +22,6 @@ import {
   types
 }
 from '../soql/mapper';
-import split2 from 'split2';
 import logger from '../util/logger';
 import conf from '../config';
 import LDJson from './ldjson';
