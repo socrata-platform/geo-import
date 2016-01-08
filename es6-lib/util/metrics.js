@@ -1,7 +1,7 @@
 import logger from './logger';
 import heapdump from 'heapdump';
 import fs from 'fs';
-
+import path from 'path';
 
 class Metrics {
   constructor() {
@@ -13,7 +13,7 @@ class Metrics {
     heapdump.writeSnapshot((err, filename) => {
       if (err) return res.status(500).send(err.toString());
       req.log.info(`Wrote heapdump to ${filename}`);
-      fs.createReadStream(filename)
+      fs.createReadStream(path.join(__dirname, '../..', filename))
         .pipe(res
           .status(200)
           .set('content-type', 'application/octet-stream')
