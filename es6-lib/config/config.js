@@ -19,7 +19,7 @@ export default {
   socketTimeoutMs: 60 * 60 * 1000,
 
   //number of rows to buffer in object mode feature streams
-  rowBufferSize: 1,
+  rowBufferSize: 2,
 
   metrics:  {
     heapMonitorInterval: 500,

@@ -10,7 +10,7 @@ if(!zkEnsemble) throw new Error(`Invalid ZOOKEEPER_ENSEMBLE environment variable
 
 export default {
   zk: zkEnsemble,
-  rowBufferSize: 1,
+  rowBufferSize: 2,
   log: {
     level: 'debug',
     name: 'geo-import'
