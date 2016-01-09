@@ -129,7 +129,7 @@ describe('decoders', () => {
       }))
       .on('end', () => {
         res.emit('finish');
-        // expect(count).to.equal(116);
+        expect(count).to.equal(236);
         onDone();
       });
   });
