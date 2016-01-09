@@ -117,6 +117,8 @@ describe('summary service', () => {
   });
 
   it('can make an full summary for large shapefiles above the limit', (onDone) => {
+    //for jankins
+    this.timeout(8000);
 
     var fx = 'wards_gt_50k.zip';
     bufferJs(fixture(fx)
