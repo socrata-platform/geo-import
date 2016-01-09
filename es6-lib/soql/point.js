@@ -12,6 +12,10 @@ class SoQLPoint extends SoQLGeom {
   static ctype() {
     return 'point';
   }
+
+  get vertexCount() {
+    return 1;
+  }
 }
 
 

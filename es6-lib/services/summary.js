@@ -44,7 +44,7 @@ class SummaryService {
       req
         .pipe(decoder)
         .on('error', onErr)
-        .pipe(new Merger(disk, [], true))
+        .pipe(new Merger(disk, [], true, this._config.maxVerticesPerRow))
         .on('error', onErr)
         .on('end', (layers) => {
           ok(layers.map((layer) => layer.toJSON()));
