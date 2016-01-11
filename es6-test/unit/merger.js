@@ -39,7 +39,8 @@ function makeMerger(maxVerticesPerRow) {
   var res = new EventEmitter();
   return [
     new Merger(
-      new Disk(res), [],
+      new Disk(res),
+      [],
       false,
       maxVerticesPerRow || conf.maxVerticesPerRow
     ),

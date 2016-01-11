@@ -208,7 +208,7 @@ class Layer extends Duplex {
     var geom = _.find(soqlRow, (r) => r.isGeometry);
     if(geom && geom.vertexCount > this._maxVerticesPerRow) {
       logger.warn(`Counted ${geom.vertexCount} vertices in ${this._count} row of layer ${this.name}`);
-      throw new Error(`Number of vertices exceeds max count of ${this._maxVerticesPerRow}`);
+      throw new Error(`Number of vertices exceeds max count of ${this._maxVerticesPerRow}. Please simplify your import and try again.`);
     }
 
     this._out.write(
