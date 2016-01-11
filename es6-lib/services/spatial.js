@@ -14,7 +14,9 @@ import {
 }
 from '../soql/mapper';
 import Layer from '../decoders/layer';
+import config from '../config';
 
+var conf = config();
 const MAX_PARALLEL = 4;
 
 class SpatialService {
@@ -277,7 +279,7 @@ class SpatialService {
     req
       .pipe(decoder)
       .on('error', onErr)
-      .pipe(new Merger(disk, specs, false))
+      .pipe(new Merger(disk, specs, false, conf.maxVerticesPerRow))
       .on('error', onErr)
       .on('end', (layers) => {
         onEnd(core, layers);

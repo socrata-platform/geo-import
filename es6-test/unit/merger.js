@@ -20,7 +20,6 @@ import GeoJSON from '../../lib/decoders/geojson';
 import Merger from '../../lib/decoders/merger';
 import Disk from '../../lib/decoders/disk';
 
-
 import SoQLPoint from '../../lib/soql/point';
 import SoQLLine from '../../lib/soql/line';
 import SoQLPolygon from '../../lib/soql/polygon';
@@ -31,13 +30,22 @@ import SoQLText from '../../lib/soql/text';
 import SoQLBoolean from '../../lib/soql/boolean';
 import SoQLNumber from '../../lib/soql/number';
 import SoQLArray from '../../lib/soql/array';
+import config from '../../lib/config';
 
-
+var conf = config();
 var expect = chai.expect;
 
-function makeMerger() {
+function makeMerger(maxVerticesPerRow) {
   var res = new EventEmitter();
-  return [new Merger(new Disk(res), []), res];
+  return [
+    new Merger(
+      new Disk(res),
+      [],
+      false,
+      maxVerticesPerRow || conf.maxVerticesPerRow
+    ),
+    res
+  ];
 }
 
 function jsbuf() {
@@ -52,6 +60,8 @@ function jsbuf() {
 
 
 describe('merging feature streams to layers', function() {
+
+
 
   it('will handle homogenous points, default crs', function(onDone) {
     var [merger, response] = makeMerger();
@@ -592,6 +602,17 @@ describe('merging feature streams to layers', function() {
 
           onDone();
         });
+      });
+  });
+
+  it('will emit an error if there are too many vertices', function(onDone) {
+    var [merger, response] = makeMerger(2);
+    fixture('simple_polygons.json')
+      .pipe(new GeoJSON())
+      .pipe(merger)
+      .on('error', (err) => {
+        expect(err.toString()).to.contain('Number of vertices exceeds')
+        onDone();
       });
   });
 });

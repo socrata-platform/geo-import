@@ -21,6 +21,9 @@ export default {
   //number of rows to buffer in object mode feature streams
   rowBufferSize: 2,
 
+  //maximum number of points to allow through the importer per row
+  maxVerticesPerRow: 1000000,
+
   metrics:  {
     heapMonitorInterval: 500,
   },

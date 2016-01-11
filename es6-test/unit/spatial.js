@@ -584,4 +584,23 @@ describe('spatial service', function() {
         onDone();
       });
   });
+
+  it('will give a 400 on complex shapes', function(onDone) {
+    var oldMax = conf.maxVerticesPerRow;
+    conf.maxVerticesPerRow = 2;
+    bufferJs(fixture('simple_multipolygons.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/json'
+        }
+      })), (resp, buffered) => {
+        expect(resp.statusCode).to.equal(400);
+        conf.maxVerticesPerRow = oldMax;
+        onDone();
+      });
+  });
 });

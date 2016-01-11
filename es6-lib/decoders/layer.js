@@ -23,10 +23,9 @@ import {
 }
 from '../soql/mapper';
 import logger from '../util/logger';
-import conf from '../config';
 import LDJson from './ldjson';
 import WGS84Reprojector from './wgs84-reprojector';
-var config = conf();
+
 const scratchPrologue = "";
 const scratchSeparator = "\n";
 const scratchEpilogue = "";
@@ -42,16 +41,16 @@ class Layer extends Duplex {
     return '__empty__';
   }
 
-  constructor(columns, position, disk, spec) {
+  constructor(columns, position, disk, spec, maxVertices) {
     if (position === undefined) throw new Error("Need a layer index!");
     super();
     this._position = position;
 
     this.columns = columns;
     this._count = 0;
+    this._maxVerticesPerRow = maxVertices;
     this._crsMap = {};
     this._wgs84Reprojector = new WGS84Reprojector(columns);
-
     this._spec = spec || {};
 
     if (disk) {
@@ -204,6 +203,12 @@ class Layer extends Duplex {
     if (throwaway) {
       if (done) done();
       return;
+    }
+
+    var geom = _.find(soqlRow, (r) => r.isGeometry);
+    if(geom && geom.vertexCount > this._maxVerticesPerRow) {
+      logger.warn(`Counted ${geom.vertexCount} vertices in ${this._count} row of layer ${this.name}`);
+      throw new Error(`Number of vertices exceeds max count of ${this._maxVerticesPerRow}. Please simplify your import and try again.`);
     }
 
     this._out.write(

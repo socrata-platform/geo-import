@@ -17,6 +17,14 @@ class SoQLMultiPolygon extends SoQLGeom {
       });
     });
   }
+
+  get vertexCount() {
+    return this._value.reduce((acc, polygon) => {
+      return acc + polygon.reduce((polyAcc, coords) => {
+        return polyAcc + coords.length;
+      }, 0);
+    }, 0);
+  }
 }
 
 module.exports = SoQLMultiPolygon;

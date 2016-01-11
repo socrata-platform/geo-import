@@ -13,6 +13,10 @@ class SoQLMultiPoint extends SoQLGeom {
   mapCoordinates(fn) {
     return this._value.map(fn);
   }
+
+  get vertexCount() {
+    return this._value.length;
+  }
 }
 
 module.exports = SoQLMultiPoint;

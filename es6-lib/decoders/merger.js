@@ -31,7 +31,7 @@ const DEFAULT_CRS = "urn:ogc:def:crs:OGC:1.3:CRS84";
 
 
 class Merger extends Transform {
-  constructor(disk, specs, throwaway) {
+  constructor(disk, specs, throwaway, maxVertices) {
     super({
       objectMode: true,
       highWaterMark: config().rowBufferSize
@@ -42,7 +42,7 @@ class Merger extends Transform {
     this._disk = disk;
     this._layers = [];
     this._defaultCrs = DEFAULT_CRS;
-
+    this._maxVertices = maxVertices;
     this.once('finish', this._onFinish);
   }
 
@@ -57,7 +57,7 @@ class Merger extends Transform {
           t = types.string;
         }
         return new t(soqlValue.rawName);
-      }), this._layers.length, disk, spec);
+      }), this._layers.length, disk, spec, this._maxVertices);
       this._layers.push(layer);
     }
     return layer;
@@ -70,7 +70,11 @@ class Merger extends Transform {
     }
     var spec = this._specs[this._layers.length];
     var layer = this._getOrCreateLayer(chunk, this._disk, spec);
-    layer.write(chunk.crs, chunk.columns, this._throwaway, done);
+    try {
+      layer.write(chunk.crs, chunk.columns, this._throwaway, done);
+    } catch(e) {
+      done(e);
+    }
   }
 
   _onFinish() {
