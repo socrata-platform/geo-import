@@ -3,4 +3,9 @@ set -ev
 
 unset HTTP_PROXY
 unset http_proxy
-exec su socrata -c 'node lib/index.js || (cp heapdump* /mnt/mesos/sandbox && cp crash.log* /mnt/mesos/sandbox)'
+RES=exec su socrata -c 'node lib/index.js'
+
+cp heapdump* /mnt/mesos/sandbox
+cp crash.log* /mnt/mesos/sandbox
+
+exit $RES
