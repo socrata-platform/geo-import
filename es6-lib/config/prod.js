@@ -14,5 +14,6 @@ export default {
   log: {
     level: 'debug',
     name: 'geo-import'
-  }
+  },
+  heapDumpOut: '../'
 };

@@ -27,6 +27,7 @@ export default {
   metrics:  {
     heapMonitorInterval: 500,
   },
+  heapDumpOut: '../..',
 
   log : {
     level: 'info',
