@@ -25,7 +25,9 @@
     "dev-null": "latest",
     "concat-stream": "latest",
     "segfault-handler": "latest",
-    "heapdump": "latest"
+    "heapdump": "latest",
+    "ofe" : "latest",
+    "gc-stats": "latest"
   },
   "devDependencies": {
     "chai": "*",
