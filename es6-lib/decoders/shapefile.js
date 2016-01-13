@@ -43,6 +43,10 @@ function isShp(fileName) {
   return path.extname(fileName) === '.shp';
 }
 
+function isDbf(fileName) {
+  return path.extname(fileName) === '.dbf';
+}
+
 /**
  * When this is created it allocates a file for writing the zip
  *
@@ -139,10 +143,13 @@ class Shapefile extends Duplex {
     });
 
     reader.readHeader((err, header) => {
-      if (err) return emitter.emit('error', new Error(`Failed to read shapefile header ${err}`));
+      if (err) {
+        return emitter.emit('error', new Error(`Failed to read shapefile header ${err}`));
+      }
       readNext();
     });
   }
+
 
   _shapeStream(reader, proj) {
     //the reader is closed automatically if an error occurrs
@@ -164,18 +171,35 @@ class Shapefile extends Duplex {
     return emitter;
   }
 
+  _hasRequiredComponents(components) {
+    var groups = this._groupComponents(components);
+    return _.reduce(groups, (errors, [shp, _prj, dbf]) => {
+      //if the shp or dbf are undefined, then record the error. prj
+      //is technically optional
+      if(!shp) {
+        errors.push(new Error('Missing spatial (.shp) file.'));
+      }
+      if(!dbf) {
+        errors.push(new Error('Missing attributes (.dbf) file.'));
+      }
+      return errors;
+    }, []);
+  }
+
   _groupComponents(components) {
     components.sort();
     var shps = components.filter((c) => isShp(c));
     var projs = components.filter((c) => isProjection(c));
-    return _.zip(shps, projs);
+    var dbfs = components.filter((c) => isDbf(c));
+    return _.zip(shps, projs, dbfs);
   }
 
   _startPushing() {
     this._isPushing = true;
 
     var groups = this._groupComponents(this._components);
-    async.mapSeries(groups, ([shp, proj], cb) => {
+
+    async.mapSeries(groups, ([shp, proj, _dbf], cb) => {
       this._shapeStream(shapefile.reader(shp), proj)
         .on('error', (err) => {
           return cb(err);
@@ -231,7 +255,13 @@ class Shapefile extends Duplex {
 
       }, () => {
         this._components = extracted;
-        this.emit('readable');
+
+        var fileErrors = this._hasRequiredComponents(this._components);
+        if(fileErrors.length) {
+          this.emit('error', new Error(fileErrors.map((err) => err.toString()).join(', ')));
+        } else {
+          this.emit('readable');
+        }
       });
   }
 

@@ -12,6 +12,7 @@ import {
   EventEmitter
 }
 from 'events';
+import DevNull from '../../lib/util/devnull';
 var expect = chai.expect;
 var res;
 
@@ -72,6 +73,26 @@ describe('shapefile decoder', function() {
         expect(Date.parse(date.value).toString()).to.not.equal('Invalid Date')
         expect(Date.parse(gpsDate.value).toString()).to.not.equal('Invalid Date')
       })).on('end', onDone);
+  });
+
+  it('can deal with a missing DBF', function(onDone) {
+    var [decoder, res] = shpDecoder();
+    fixture('missing_dbf.zip')
+      .pipe(decoder)
+      .on('error', (err) => {
+        expect(err.toString()).to.contain('Missing attributes');
+        onDone();
+      }).pipe(new DevNull())
+  });
+
+  it('can deal with a missing SHP', function(onDone) {
+    var [decoder, res] = shpDecoder();
+    fixture('missing_shp.zip')
+      .pipe(decoder)
+      .on('error', (err) => {
+        expect(err.toString()).to.contain('Missing spatial');
+        onDone();
+      }).pipe(new DevNull())
   });
 
 
