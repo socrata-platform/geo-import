@@ -125,7 +125,7 @@ describe('flow control', () => {
       });
   });
 
-  it('will not stop reading kmz stream consumer is unpiped', function(onDone) {
+  it('will not stop reading when kmz stream consumer is unpiped', function(onDone) {
     //for jankins
     this.timeout(10000);
 

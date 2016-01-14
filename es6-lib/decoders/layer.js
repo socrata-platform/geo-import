@@ -269,6 +269,9 @@ class Layer extends Duplex {
         if(!self.push(sep + rowString + ep)) {
           this.pause();
 
+          //our reader has gone away, this kills the stream.
+          //so end the stream with a null and flush anything
+          //that's buffered into oblivion
           if (!self._readableState.pipes) {
             self.push(null);
             return self.pipe(new DevNull());
