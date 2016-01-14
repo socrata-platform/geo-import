@@ -389,4 +389,18 @@ describe('kmz decoder', function() {
 
       })).on('end', onDone);
   });
+
+  it('multi layer kmz', function(onDone) {
+    var count = 0;
+
+    fixture('multi_layer.kmz')
+      .pipe(kmzDecoder())
+      .pipe(es.mapSync(function(thing) {
+        count++;
+      })).on('end', () => {
+        expect(count).to.equal(28);
+        onDone();
+      });
+  });
+
 });
