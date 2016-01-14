@@ -35,16 +35,23 @@ import config from '../config';
 
 const DEFAULT_PROJECTION = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
+function isHidden(parsedPath) {
+  return parsedPath.name[0] === '.';
+}
+
 function isProjection(fileName) {
-  return path.extname(fileName) === '.prj';
+  var p = path.parse(fileName);
+  return !isHidden(p) && p.ext === '.prj';
 }
 
 function isShp(fileName) {
-  return path.extname(fileName) === '.shp';
+  var p = path.parse(fileName);
+  return !isHidden(p) && p.ext === '.shp';
 }
 
 function isDbf(fileName) {
-  return path.extname(fileName) === '.dbf';
+  var p = path.parse(fileName);
+  return !isHidden(p) && p.ext === '.dbf';
 }
 
 /**
@@ -191,15 +198,18 @@ class Shapefile extends Duplex {
     var shps = components.filter((c) => isShp(c));
     var projs = components.filter((c) => isProjection(c));
     var dbfs = components.filter((c) => isDbf(c));
+
+    logger.debug(`Shps ${shps}`);
     return _.zip(shps, projs, dbfs);
   }
 
   _startPushing() {
     this._isPushing = true;
-
     var groups = this._groupComponents(this._components);
+    logger.debug(`Starting push of shapefile ${this._components} for ${groups.join(', ')}`);
 
     async.mapSeries(groups, ([shp, proj, _dbf], cb) => {
+      logger.debug(`Building shapestream based on ${shp}`);
       this._shapeStream(shapefile.reader(shp), proj)
         .on('error', (err) => {
           return cb(err);
@@ -256,6 +266,7 @@ class Shapefile extends Duplex {
       }, () => {
         this._components = extracted;
 
+        logger.debug(`${this._components.join(', ')} are now readable`);
         var fileErrors = this._hasRequiredComponents(this._components);
         if (fileErrors.length) {
           this.emit('error', new Error(fileErrors.map((err) => err.toString()).join(', ')));
@@ -280,6 +291,7 @@ class Shapefile extends Duplex {
       }
     }, () => {
       cb(false, extracted.map(([filename, projection]) => {
+        logger.debug(`Projection: ${filename} ${projection}`);
         var proj = srs.parse(projection);
         return {
           count: 0,
