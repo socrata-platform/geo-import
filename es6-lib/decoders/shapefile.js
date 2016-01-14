@@ -32,6 +32,7 @@ from 'events';
 import async from 'async';
 import logger from '../util/logger';
 import config from '../config';
+import DevNull from '../util/devnull';
 
 const DEFAULT_PROJECTION = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
@@ -130,6 +131,14 @@ class Shapefile extends Duplex {
     }
 
     if (!this.push(geoJsToSoQL(record, projection))) {
+          //our reader has gone away, this kills the stream.
+          //so end the stream with a null and flush anything
+          //that's buffered into oblivion
+          if (!this._readableState.pipes) {
+            this.push(null);
+            return this.pipe(new DevNull());
+          }
+
       this._readableState.pipes.once('drain', readNext);
     } else {
       readNext();
