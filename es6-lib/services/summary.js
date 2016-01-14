@@ -54,7 +54,7 @@ class SummaryService {
 
       req
         .pipe(decoder)
-        .on('data', (_datum) => {
+        .once('data', (_datum) => {
           decoder.pause();
           decoder.summarize((err, summary) => {
             if (err) return res.status(400).send(JSON.stringify(err));
