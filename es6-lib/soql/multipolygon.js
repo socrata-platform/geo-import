@@ -1,4 +1,5 @@
 import SoQLGeom from './geom';
+import SoQLPolygon from './polygon';
 
 class SoQLMultiPolygon extends SoQLGeom {
   get _type() {
@@ -8,6 +9,11 @@ class SoQLMultiPolygon extends SoQLGeom {
 
   static ctype() {
     return 'multipolygon';
+  }
+
+  fixSemantics() {
+    this._value = this._value.map(SoQLPolygon.closeRings);
+    return this;
   }
 
   mapCoordinates(fn) {
