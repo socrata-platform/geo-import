@@ -15,6 +15,10 @@ class SoQLGeom extends SoQL {
     return this;
   }
 
+  fixSemantics() {
+    return this;
+  }
+
   set value(v) {
     if(!v) return;
     if(!v.coordinates) throw new Error("Geometry needs coordinates");

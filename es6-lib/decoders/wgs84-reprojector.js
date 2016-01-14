@@ -46,7 +46,9 @@ class WGS84Reprojector extends Transform {
     var reprojected = _.zip(this._columns, row).map(([column, value]) => {
       var soql = new types[column.ctype](column.rawName, value);
       if (soql.isGeometry) {
-        let geom = soql.reproject(projection, this.projection);
+        let geom = soql
+          .fixSemantics()
+          .reproject(projection, this.projection);
         this._expandBbox(geom);
         return geom;
       }
