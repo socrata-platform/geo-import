@@ -52,7 +52,7 @@ class KMZ extends Duplex {
     this.emit('readable');
   }
 
-  _onOpenKmlStream(kmlStream, zipFile) {
+  _onOpenKmlStream(kmlStream) {
     kmlStream
       .pipe(this._kmlDecoder)
       .on('error', (err) => {
@@ -67,14 +67,14 @@ class KMZ extends Duplex {
         }
       })
       .on('end', () => {
-        if (zipFile.entriesRead === zipFile.entryCount) {
-          this.push(null);
-        }
+        logger.info('Done reading KML stream');
+        this.push(null);
       });
   }
 
   _startPushing() {
     this._isPushing = true;
+    var hasOpened = false;
     yauzl.open(this._zName, (err, zipFile) => {
       if (err) return this.emit('error', err);
       zipFile
@@ -83,12 +83,12 @@ class KMZ extends Duplex {
         })
         .on('entry', (entry) => {
           if (path.extname(entry.fileName) !== '.kml') return;
-
-          zipFile.openReadStream(entry, (err, kmlStream) => {
+          if(!hasOpened) zipFile.openReadStream(entry, (err, kmlStream) => {
             if (err) return this.emit('error', err);
             logger.info(`Extracting kml ${entry.fileName} from kmz archive`);
-            this._onOpenKmlStream(kmlStream,  zipFile);
+            this._onOpenKmlStream(kmlStream);
           });
+          hasOpened = true;
         });
     });
   }
