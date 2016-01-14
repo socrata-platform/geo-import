@@ -25,6 +25,7 @@ from '../soql/mapper';
 import logger from '../util/logger';
 import LDJson from './ldjson';
 import WGS84Reprojector from './wgs84-reprojector';
+import DevNull from '../util/devnull';
 
 const scratchPrologue = "";
 const scratchSeparator = "\n";
@@ -267,6 +268,12 @@ class Layer extends Duplex {
 
         if(!self.push(sep + rowString + ep)) {
           this.pause();
+
+          if (!self._readableState.pipes) {
+            self.push(null);
+            return self.pipe(new DevNull());
+          }
+
           self._readableState.pipes.once('drain', this.resume.bind(this));
         }
       }, function end() {

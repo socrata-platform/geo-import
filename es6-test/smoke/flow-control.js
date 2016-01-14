@@ -107,7 +107,7 @@ describe('flow control', () => {
       });
   });
 
-  it('will not overwhelm kml stream consumer', function(onDone) {
+  it('will not overwhelm kmz stream consumer', function(onDone) {
     this.timeout(10000);
     var count = 0;
     var [decoder, res] = kmzDecoder();
@@ -123,6 +123,32 @@ describe('flow control', () => {
         expect(count).to.equal(53);
         onDone();
       });
+  });
+
+  it('will not stop reading kmz stream consumer is unpiped', function(onDone) {
+    //for jankins
+    this.timeout(10000);
+
+    var count = 0;
+    var [decoder, res] = kmzDecoder();
+    var slowConsumer = new SlowConsumer();
+
+    decoder.on('end', () => {
+      expect(decoder._readableState.endEmitted).to.equal(true);
+      onDone();
+    });
+
+    fixture('smoke/wards.kmz')
+      .pipe(decoder)
+      .pipe(slowConsumer)
+      .pipe(es.mapSync((t) => {
+        count++;
+        //simulate the consumer going away mid stream
+        if (count > 8) {
+          decoder.unpipe(slowConsumer);
+        }
+        return t;
+      }));
   });
 
   it('will not overwhelm shapefile stream consumer', function(onDone) {
@@ -143,6 +169,32 @@ describe('flow control', () => {
       });
   });
 
+  it('will stop flowing when shapefile reader is unpiped', function(onDone) {
+    //for jankins
+    this.timeout(10000);
+
+    var count = 0;
+    var [decoder, res] = shpDecoder();
+    var slowConsumer = new SlowConsumer();
+
+    decoder.on('end', () => {
+      expect(decoder._readableState.endEmitted).to.equal(true);
+      onDone();
+    });
+
+    fixture('smoke/wards.zip')
+      .pipe(decoder)
+      .pipe(slowConsumer)
+      .pipe(es.mapSync((t) => {
+        count++;
+        //simulate the consumer going away mid stream
+        if (count > 8) {
+          decoder.unpipe(slowConsumer);
+        }
+        return t;
+      }));
+  });
+
   it('will not overwhelm merger stream consumer', function(onDone) {
     this.timeout(10000);
     var count = 0;
@@ -159,15 +211,51 @@ describe('flow control', () => {
       .on('end', (layers) => {
         layers.map((layer) => {
           layer
-          .pipe(new SlowConsumer())
-          .pipe(es.mapSync((thing) => {
-            expect(layer._readableState.length).to.be.at.most(64000);
-            return thing;
-          }))
-          .on('end', () => {
+            .pipe(new SlowConsumer())
+            .pipe(es.mapSync((thing) => {
+              expect(layer._readableState.length).to.be.at.most(64000);
+              return thing;
+            }))
+            .on('end', () => {
+              res.emit('finish');
+              onDone();
+            });
+        });
+      });
+  });
+
+
+  it('will stop flowing when a layer consumer is unpiped', function(onDone) {
+    //for jankins
+    this.timeout(10000);
+
+    var res = new EventEmitter();
+    var disk = new Disk(res);
+    var decoder = new Shapefile(disk);
+    var merger = new Merger(disk, []);
+    var slowConsumer = new SlowConsumer();
+
+    fixture('smoke/wards.zip')
+      .pipe(decoder)
+      .pipe(merger)
+      .on('end', (layers) => {
+        layers.map((layer) => {
+          var layerCount = 0;
+          layer
+            .pipe(slowConsumer)
+            .pipe(es.mapSync(() => {
+              if (layerCount++ > 8) {
+                layer.unpipe(slowConsumer);
+              }
+            }));
+
+          layer.on('end', () => {
+            expect(layer._readableState.endEmitted).to.equal(true);
+
             res.emit('finish');
             onDone();
           });
+
         });
       });
   });
