@@ -10,6 +10,7 @@ import {
 from 'stream';
 import logger from '../util/logger';
 import config from '../config';
+import DevNull from '../util/devnull';
 
 
 /**
@@ -61,6 +62,15 @@ class KMZ extends Duplex {
       .on('data', (data) => {
         if (!this.push(data)) {
           kmlStream.pause();
+
+          //our reader has gone away, this kills the stream.
+          //so end the stream with a null and flush anything
+          //that's buffered into oblivion
+          if (!this._readableState.pipes) {
+            this.push(null);
+            return this.pipe(new DevNull());
+          }
+
           this._readableState.pipes.once('drain', () => {
             kmlStream.resume();
           });

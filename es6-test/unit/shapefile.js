@@ -17,8 +17,8 @@ var expect = chai.expect;
 var res;
 
 function shpDecoder() {
-  res = new EventEmitter()
-  return [new Shapefile(new Disk(res)), res]
+  res = new EventEmitter();
+  return [new Shapefile(new Disk(res)), res];
 }
 
 
@@ -27,7 +27,7 @@ describe('shapefile decoder', function() {
 
   afterEach(function() {
     res.emit('finish');
-  })
+  });
 
   it('will emit an error for a corrupt shapefile', function(onDone) {
     var count = 0;
@@ -46,9 +46,9 @@ describe('shapefile decoder', function() {
     fixture('simple_points_epsg_2834.zip')
       .pipe(decoder)
       .pipe(es.mapSync(function(feature) {
-        var parsedCrs = srs.parse(feature.crs)
+        var parsedCrs = srs.parse(feature.crs);
         expect(parsedCrs.valid).to.equal(true);
-        expect(parsedCrs.proj4).to.equal("+proj=lcc +lat_1=41.7 +lat_2=40.43333333333333 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +units=m +no_defs")
+        expect(parsedCrs.proj4).to.equal("+proj=lcc +lat_1=41.7 +lat_2=40.43333333333333 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +units=m +no_defs");
       })).on('end', onDone);
   });
 
@@ -57,9 +57,9 @@ describe('shapefile decoder', function() {
     fixture('simple_points_sans_prj.zip')
       .pipe(decoder)
       .pipe(es.mapSync(function(feature) {
-        var parsedCrs = srs.parse(feature.crs)
+        var parsedCrs = srs.parse(feature.crs);
         expect(parsedCrs.valid).to.equal(true);
-        expect(parsedCrs.proj4).to.equal("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+        expect(parsedCrs.proj4).to.equal("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs");
       })).on('end', onDone);
   });
 
@@ -68,10 +68,10 @@ describe('shapefile decoder', function() {
     fixture('dates.zip')
       .pipe(decoder)
       .pipe(es.mapSync(function(feature) {
-        var [date, gpsDate] = feature.columns.filter((c) => (c.name === 'gps_date') || (c.name === 'date'))
-        //just check that the date is ISO8601 parsable
-        expect(Date.parse(date.value).toString()).to.not.equal('Invalid Date')
-        expect(Date.parse(gpsDate.value).toString()).to.not.equal('Invalid Date')
+        var [date, gpsDate] = feature.columns.filter((c) => (c.name === 'gps_date') || (c.name === 'date'));
+          //just check that the date is ISO8601 parsable
+        expect(Date.parse(date.value).toString()).to.not.equal('Invalid Date');
+        expect(Date.parse(gpsDate.value).toString()).to.not.equal('Invalid Date');
       })).on('end', onDone);
   });
 
@@ -82,7 +82,7 @@ describe('shapefile decoder', function() {
       .on('error', (err) => {
         expect(err.toString()).to.contain('Missing attributes');
         onDone();
-      }).pipe(new DevNull())
+      }).pipe(new DevNull());
   });
 
   it('can deal with a missing SHP', function(onDone) {
@@ -92,9 +92,22 @@ describe('shapefile decoder', function() {
       .on('error', (err) => {
         expect(err.toString()).to.contain('Missing spatial');
         onDone();
-      }).pipe(new DevNull())
+      }).pipe(new DevNull());
   });
 
+  it('can deal with corrupt hidden files', function(onDone) {
+    var [decoder, res] = shpDecoder();
+    var count = 0;
+    fixture('simple_points_hidden_garbage.zip')
+      .pipe(decoder)
+      .pipe(es.mapSync(() => {
+        count++;
+      }))
+      .on('end', () => {
+        expect(count).to.equal(2);
+        onDone();
+      });
+  });
 
   it('can turn simple points to SoQLPoint', function(onDone) {
     var expectedValues = [
@@ -199,43 +212,47 @@ describe('shapefile decoder', function() {
     var expectedValues = [
       [{
           "type": "MultiPolygon",
-          "coordinates": [[
+          "coordinates": [
             [
-              [100, 0],
-              [100, 1],
-              [101, 1],
-              [101, 0],
-              [100, 0]
-            ],
-            [
-              [100.2, 0.2],
-              [100.8, 0.2],
-              [100.8, 0.8],
-              [100.2, 0.8],
-              [100.2, 0.2]
+              [
+                [100, 0],
+                [100, 1],
+                [101, 1],
+                [101, 0],
+                [100, 0]
+              ],
+              [
+                [100.2, 0.2],
+                [100.8, 0.2],
+                [100.8, 0.8],
+                [100.2, 0.8],
+                [100.2, 0.2]
+              ]
             ]
-          ]]
+          ]
         },
         "first value"
       ],
       [{
           "type": "MultiPolygon",
-          "coordinates": [[
+          "coordinates": [
             [
-              [100, 0],
-              [100, 1],
-              [101, 1],
-              [101, 0],
-              [100, 0]
-            ],
-            [
-              [100.2, 0.2],
-              [100.8, 0.2],
-              [100.8, 0.8],
-              [100.2, 0.8],
-              [100.2, 0.2]
+              [
+                [100, 0],
+                [100, 1],
+                [101, 1],
+                [101, 0],
+                [100, 0]
+              ],
+              [
+                [100.2, 0.2],
+                [100.8, 0.2],
+                [100.8, 0.8],
+                [100.2, 0.8],
+                [100.2, 0.2]
+              ]
             ]
-          ]]
+          ]
         },
         "second value"
       ]
