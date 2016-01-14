@@ -89,7 +89,7 @@ class Shapefile extends Duplex {
   }
 
   _fileGroup(extension, name) {
-    name = name? name.toLowerCase() : 'shapefile';
+    name = name ? name.toLowerCase() : 'shapefile';
     return `/tmp/${name}_${this._fgroup}${extension}`;
   }
 
@@ -105,19 +105,19 @@ class Shapefile extends Duplex {
 
   _onRecord(record, projection, readNext) {
     //filter out things that don't have a geometry
-    if(!record.geometry) return readNext();
+    if (!record.geometry) return readNext();
 
     //of course, sometimes instead of giving an empty list of coordinates,
     //the shapefile library gives 'null' coordinates, which doesn't
     //make any sense, but ok...
-    if(!record.geometry.coordinates) record.geometry.coordinates = [];
+    if (!record.geometry.coordinates) record.geometry.coordinates = [];
 
     //;_:
     //hack because https://github.com/mbostock/shapefile/blob/b4470c9a3d121bd201ca0b458d1e97b0a4d3547f/index.js#L173
     //which turns things in to Multipolygons if they have rings ಠ_ಠ
     if (record.geometry.type === 'Polygon') {
       record.geometry.type = 'MultiPolygon';
-      if(record.geometry.coordinates.length) {
+      if (record.geometry.coordinates.length) {
         record.geometry.coordinates = [record.geometry.coordinates];
       }
     }
@@ -176,10 +176,10 @@ class Shapefile extends Duplex {
     return _.reduce(groups, (errors, [shp, _prj, dbf]) => {
       //if the shp or dbf are undefined, then record the error. prj
       //is technically optional
-      if(!shp) {
+      if (!shp) {
         errors.push(new Error('Missing spatial (.shp) file.'));
       }
-      if(!dbf) {
+      if (!dbf) {
         errors.push(new Error('Missing attributes (.dbf) file.'));
       }
       return errors;
@@ -208,7 +208,7 @@ class Shapefile extends Duplex {
           return cb(false, false);
         });
     }, (err) => {
-      if(err) return this.emit('error', err);
+      if (err) return this.emit('error', err);
       this.push(null);
     });
   }
@@ -257,7 +257,7 @@ class Shapefile extends Duplex {
         this._components = extracted;
 
         var fileErrors = this._hasRequiredComponents(this._components);
-        if(fileErrors.length) {
+        if (fileErrors.length) {
           this.emit('error', new Error(fileErrors.map((err) => err.toString()).join(', ')));
         } else {
           this.emit('readable');
