@@ -30,8 +30,11 @@ this also runs a postinstall script to install mapbox/node-srs,
 which is built from source in a sibling repo and symlinked here
 
 ## developing
-
-run the development configuration using
+to compile to es5, run
+```
+make
+```
+then run the development configuration using
 ```
 GEO_IMPORT_ENV=dev node lib/es6.js
 ```
