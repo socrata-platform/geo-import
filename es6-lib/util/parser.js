@@ -70,7 +70,7 @@ class Parser extends Transform {
       obj[key] = value;
       this._maybeEmit(value);
     });
-    this._onkey(firstKey);
+    if(firstKey) this._onkey(firstKey);
   }
 
   _onkey(key) {
@@ -89,14 +89,14 @@ class Parser extends Transform {
     if (!this.matching()) {
       pusher = (unused) => {
         var e = this._stack.pop(); //ignore the value because not matching
-        if (e !== key) throw new Error("Invalid keys! (unused)");
+        if (e !== key) throw new Error(`Invalid keys! (unused) ${unused} expected: ${e} got: ${key}`);
       };
     } else {
       pusher = (value) => {
         // get to the obj setter because this fn has been popped
         _.last(this._state)(key, value);
         var e = this._stack.pop();
-        if (e !== key) throw new Error("Invalid keys!");
+        if (e !== key) throw new Error(`Invalid keys! expected ${e} got: ${key}`);
       };
     }
     this._state.push(pusher);
