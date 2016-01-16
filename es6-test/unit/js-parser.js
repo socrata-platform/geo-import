@@ -19,7 +19,7 @@ describe('streaming js parser', function() {
           "foo": 1,
           "bar": "bar value",
           "baz": true
-        })
+        });
         count++;
       })).on('end', () => {
         expect(count).to.equal(1);
@@ -32,7 +32,7 @@ describe('streaming js parser', function() {
     fixture('parser/array.json')
       .pipe(new Parser('features'))
       .pipe(es.mapSync(function(thing) {
-        expect(thing).to.eql([1, 2, 3, 4])
+        expect(thing).to.eql([1, 2, 3, 4]);
         count++;
       })).on('end', () => {
         expect(count).to.equal(1);
@@ -47,7 +47,7 @@ describe('streaming js parser', function() {
       .pipe(es.mapSync(function(thing) {
         expect(thing).to.eql([1, 2, 3, [4, 5, 6],
           [7, 8, 9, [10, 11, 12]]
-        ])
+        ]);
         count++;
       })).on('end', () => {
         expect(count).to.equal(1);
@@ -61,7 +61,7 @@ describe('streaming js parser', function() {
     fixture('parser/nested-array.json')
       .pipe(new Parser('features.*.*'))
       .pipe(es.mapSync(function(thing) {
-        expect(thing).to.eql(expected[count])
+        expect(thing).to.eql(expected[count]);
         count++;
       })).on('end', () => {
         expect(count).to.equal(7);
@@ -80,7 +80,7 @@ describe('streaming js parser', function() {
             "nested": "bar value"
           },
           "baz": true
-        })
+        });
         count++;
       })).on('end', () => {
         expect(count).to.equal(1);
@@ -98,7 +98,7 @@ describe('streaming js parser', function() {
         });
         count++;
       })).on('end', () => {
-        expect(count).to.equal(1)
+        expect(count).to.equal(1);
         onDone();
       });
   });
@@ -111,7 +111,7 @@ describe('streaming js parser', function() {
         expect(thing).to.eql("bar value");
         count++;
       })).on('end', () => {
-        expect(count).to.equal(1)
+        expect(count).to.equal(1);
         onDone();
       });
   });
@@ -129,13 +129,13 @@ describe('streaming js parser', function() {
       "foo": 3,
       "bar": "bar 3 value",
       "baz": false
-    }]
+    }];
     var count = 0;
 
     fixture('parser/obj-array.json')
       .pipe(new Parser('features.*'))
       .pipe(es.mapSync(function(thing) {
-        expect(thing).to.eql(expected[count])
+        expect(thing).to.eql(expected[count]);
         count++;
       })).on('end', () => {
         expect(count).to.equal(3);
@@ -145,13 +145,13 @@ describe('streaming js parser', function() {
 
 
   it('can emit objects in a nested array path', function(onDone) {
-    var expected = [1, 2, 3]
+    var expected = [1, 2, 3];
     var count = 0;
 
     fixture('parser/obj-array.json')
       .pipe(new Parser('features.*.foo'))
       .pipe(es.mapSync(function(thing) {
-        expect(thing).to.eql(expected[count])
+        expect(thing).to.eql(expected[count]);
         count++;
       })).on('end', () => {
         expect(count).to.equal(3);
@@ -182,7 +182,7 @@ describe('streaming js parser', function() {
       },
       "bar": "bar 3 value",
       "baz": false
-    }]
+    }];
 
     var count = 0;
 
@@ -208,7 +208,7 @@ describe('streaming js parser', function() {
         103.0,
         1.5
       ]
-    ]
+    ];
     var count = 0;
 
     fixture('simple_points.json')
@@ -223,19 +223,32 @@ describe('streaming js parser', function() {
   });
 
   it('matching current state works', function() {
-    var p = new Parser('a.b.c')
+    var p = new Parser('a.b.c');
 
-    p._stack = ['a', 'b']
-    expect(p.matching()).to.equal(false)
+    p._stack = ['a', 'b'];
+    expect(p.matching()).to.equal(false);
 
-    p._stack = ['a', 'b', 'c']
-    expect(p.matching()).to.equal(true)
+    p._stack = ['a', 'b', 'c'];
+    expect(p.matching()).to.equal(true);
 
-    p._stack = ['a', 'b', 'c', 'd']
-    expect(p.matching()).to.equal(true)
+    p._stack = ['a', 'b', 'c', 'd'];
+    expect(p.matching()).to.equal(true);
 
   });
 
+
+  it('empty objs', function(onDone) {
+    var actual;
+    fixture('empty_attrs.json')
+      .pipe(new Parser('features'))
+      .pipe(es.mapSync(function(thing) {
+        actual = thing;
+      })).on('end', () => {
+        expect(actual).to.eql({ foo: {}, bar: 'baz' });
+        onDone();
+      });
+
+  });
 
 
 });
