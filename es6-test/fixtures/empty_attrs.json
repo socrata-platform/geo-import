@@ -1,0 +1,6 @@
+{
+  "features": {
+    "foo": {},
+    "bar": "baz"
+  }
+}

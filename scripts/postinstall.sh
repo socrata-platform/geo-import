@@ -7,5 +7,5 @@ if [ \"$NODE_ENV\" != production ] ; then
   rm -r node_modules
   CC=gcc CXX=g++ npm install
   popd
-  ln -s $(pwd)/../node-srs node_modules/node-srs
+  ln -sf $(pwd)/../node-srs node_modules/node-srs
 fi

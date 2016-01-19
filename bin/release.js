@@ -25,10 +25,8 @@ if (curVersion === defaultRelease) {
   throw new Error('Not a SNAPSHOT version!');
 }
 
-var test = spawn('npm', ['test'], {cwd: __dirname + '/..', stdio: 'inherit'})
-test.on('close', function(code) {
-  if (code !== 0) throw new Error("Exited with code " + code);
 
+function doRelease() {
   var packagePath = path.resolve(__dirname, '..', 'package.json');
 
   prompt.get({
@@ -101,5 +99,12 @@ test.on('close', function(code) {
       });
     });
   });
+}
 
-})
+// var test = spawn('npm', ['test'], {cwd: __dirname + '/..', stdio: 'inherit'});
+// test.on('close', function(code) {
+//   if (code !== 0) throw new Error("Exited with code " + code);
+//   doRelease();
+// });
+
+doRelease();

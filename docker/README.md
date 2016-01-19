@@ -12,7 +12,10 @@ docker build -t geo-import .
 
 Or, if you want to replace old versions:
 ```
-cp -r ../lib ../scripts ../package.json ../npm-shrinkwrap.json .
+cd ..
+make appease_jenkins
+cd docker
+cp -r ../lib.tar ../scripts ../package.json ../npm-shrinkwrap.json .
 docker build --rm -t geo-import .
 ```
 

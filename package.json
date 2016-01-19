@@ -1,6 +1,6 @@
 {
   "name": "geo-import",
-  "version": "0.1.10-SNAPSHOT",
+  "version": "0.1.29-SNAPSHOT",
   "private": true,
   "dependencies": {
     "clarinet": "latest",
@@ -11,13 +11,12 @@
     "change-case": "latest",
     "event-stream": "latest",
     "express": "latest",
-    "ldjson-stream": "latest",
     "node-expat": "latest",
     "node-inspector": "~0.12.3",
     "node-zookeeper-client": "latest",
     "proj4": "latest",
     "request": "latest",
-    "shapefile": "latest",
+    "shapefile": "rozap/shapefile",
     "stream-reduce": "latest",
     "through": "latest",
     "underscore": "latest",
@@ -26,7 +25,9 @@
     "dev-null": "latest",
     "concat-stream": "latest",
     "segfault-handler": "latest",
-    "heapdump": "latest"
+    "heapdump": "latest",
+    "ofe": "latest",
+    "gc-stats": "latest"
   },
   "devDependencies": {
     "chai": "*",
@@ -36,7 +37,7 @@
     "should": "latest"
   },
   "scripts": {
-    "test": "GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit test/smoke --compilers js:babel/register && jshint lib",
+    "test": "make test",
     "postinstall": "scripts/postinstall.sh"
   }
 }

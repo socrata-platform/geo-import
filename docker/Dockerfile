@@ -12,12 +12,11 @@ WORKDIR /app
 # Add the stuff that makes up the base node app
 ADD package.json /app/
 ADD scripts /app/scripts
-ADD lib /app/lib
+ADD lib.tar /app
 
 
 # Passing --production prevents node-srs from installing.
 # We will set it up sans symlinks in the next step
-RUN npm install -g babel@5.8.29
 RUN npm install --production
 
 # Do the annoying node-srs thing

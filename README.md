@@ -30,11 +30,19 @@ this also runs a postinstall script to install mapbox/node-srs,
 which is built from source in a sibling repo and symlinked here
 
 ## developing
+to compile to es5, run
+```
+make
+```
+then run the development configuration using
+```
+GEO_IMPORT_ENV=dev node lib/es6.js
+```
 
-run the development configuration using
-```
-GEO_IMPORT_ENV=dev node lib/index.js
-```
+To run it as es5
+
+
+
 you will need core and the soda2 stack running
 
 ## testing
