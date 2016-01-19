@@ -119,6 +119,7 @@ var util = {
 
   'int': [parseInt, 'number'],
   'float': [parseFloat, 'number'],
+  'number': [parseFloat, 'number'],
   'double': [parseFloat, 'number'],
   'boolean': [(strBool) => {
     return strBool.toLowerCase() === 'true';
@@ -176,6 +177,11 @@ var startElement = {
   'placemark.extendeddata.schemadata.simpledata': (state, attrs) => {
     state.attr = attrs.name;
     return [state, []];
+  },
+
+  'placemark.extendeddata.data': (state, attrs) => {
+    state.attr = attrs.name;
+    return [state, []];
   }
 };
 
@@ -202,6 +208,14 @@ var endElement = {
   },
 
   'placemark.extendeddata.schemadata.simpledata': (state) => {
+    state.features = state.features.map((feature) => {
+      feature[state.attr] = state.attrValue;
+      return feature;
+    });
+    return [state, []];
+  },
+
+  'placemark.extendeddata.data.value': (state, attrs) => {
     state.features = state.features.map((feature) => {
       feature[state.attr] = state.attrValue;
       return feature;
