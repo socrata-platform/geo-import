@@ -62,12 +62,11 @@ class KMZ extends Duplex {
       .on('data', (data) => {
         if (!this.push(data)) {
           kmlStream.pause();
-
           //our reader has gone away, this kills the stream.
           //so end the stream with a null and flush anything
           //that's buffered into oblivion
           if (!this._readableState.pipes) {
-            this.push(null);
+            if (!this._readableState.ended) this.push(null);
             return this.pipe(new DevNull());
           }
 
@@ -78,7 +77,7 @@ class KMZ extends Duplex {
       })
       .on('end', () => {
         logger.info('Done reading KML stream');
-        this.push(null);
+        if (!this._readableState.ended) this.push(null);
       });
   }
 
@@ -93,7 +92,7 @@ class KMZ extends Duplex {
         })
         .on('entry', (entry) => {
           if (path.extname(entry.fileName) !== '.kml') return;
-          if(!hasOpened) zipFile.openReadStream(entry, (err, kmlStream) => {
+          if (!hasOpened) zipFile.openReadStream(entry, (err, kmlStream) => {
             if (err) return this.emit('error', err);
             logger.info(`Extracting kml ${entry.fileName} from kmz archive`);
             this._onOpenKmlStream(kmlStream);

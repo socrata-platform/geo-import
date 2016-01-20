@@ -164,12 +164,12 @@ var startElement = {
     return [util.pushSchema(state, attrs), []];
   },
 
-  'placemark.extendeddata.schemadata.name': (state, attrs) => {
+  'placemark.name': (state, attrs) => {
     state.attr = 'name';
     return [state, []];
   },
 
-  'placemark.extendeddata.schemadata.description': (state, attrs) => {
+  'placemark.description': (state, attrs) => {
     state.attr = 'description';
     return [state, []];
   },
