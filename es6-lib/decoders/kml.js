@@ -191,7 +191,7 @@ var endElement = {
     return [state, state.features];
   },
 
-  'placemark.extendeddata.schemadata.name': (state) => {
+  'placemark.name': (state) => {
     state.features = state.features.map((feature) => {
       feature.name = state.attrValue;
       return feature;
@@ -199,7 +199,7 @@ var endElement = {
     return [state, []];
   },
 
-  'placemark.extendeddata.schemadata.description': (state) => {
+  'placemark.description': (state) => {
     state.features = state.features.map((feature) => {
       feature.description = state.attrValue;
       return feature;
