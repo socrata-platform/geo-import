@@ -186,4 +186,22 @@ describe('decoders', () => {
         onDone();
       });
   });
+
+  it('kml nulls', function(onDone) {
+    var count = 0;
+    var [decoder, res] = kmlDecoder();
+    fixture('smoke/noaa.kml')
+      .pipe(decoder)
+      .pipe(es.mapSync((l) => {
+        expect(l.columns.map((c) => c.name).sort()).to.eql([
+          "the_geom",
+          "name",
+          "descriptio"
+        ].sort())
+      }))
+      .on('end', (layers) => {
+        res.emit('finish');
+        onDone();
+      });
+  });
 });

@@ -1,0 +1,2056 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns:kml="http://earth.google.com/kml/2.2">
+  <Document id="featureCollection">
+<Style id="defaultStyle">
+  <LineStyle>
+    <width>1.5</width>
+  </LineStyle>
+  <PolyStyle>
+    <color>7d8a30c4</color>
+  </PolyStyle>
+</Style>
+  <Folder><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Arnavon, Solomon Islands</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      158.0,-8.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Bali Barat NP, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      114.5,-7.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Bunaken, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      124.5,2.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Derawan, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      118.5,2.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Komodo, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      119.5,-8.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Mabul Island, Malaysia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      119.0,4.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Misool, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      131.0,-2.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Nusa Penida, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      115.5,-9.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Raja Ampat, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      130.0,-0.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Wakatobi, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      124.0,-5.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Easter Island, Chile</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -109.5,-27.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Funafuti, Tuvalu</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      178.5,-8.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Jarvis Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -160.0,-0.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Johnston Atoll</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -169.5,17.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Kingman Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -162.5,6.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Niue</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -169.5,-19.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Palmyra Atoll</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -162.0,6.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Rarotonga, Cook Islands</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -159.5,-21.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Tokelau Islands, New Zealand</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -171.5,-9.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Uiha Island, Tonga</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -174.5,-20.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Ofu</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -170.0,-14.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Rose Atoll</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -168.0,-14.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Swains Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -171.0,-11.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Tutuila</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -171.0,-14.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Banco Chinchorro, Mexico</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -87.5,18.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Barbados</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -60.0,13.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Bay Islands, Honduras</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -85.5,16.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Bocas del Toro, Panama</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -81.5,9.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Buccoo Reef, Tobago</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -61.0,11.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Cayman Islands</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -80.5,19.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Cayos Miskitos, Nicaragua</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -83.0,14.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Curacao and Aruba</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -69.5,12.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Flower Garden Banks, Texas</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -93.5,28.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Glovers Reef, Belize</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -88.0,16.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Guadeloupe</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -62.5,16.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Isla de la Juventud, Cuba</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -83.5,21.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Jardines de la Reina, Cuba</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -79.0,20.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Lee Stocking Island, Bahamas</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -76.5,23.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Los Roques, Venezuela</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -67.0,12.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Montecristi, Dominican Republic</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -72.0,20.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Negril, Jamaica</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -78.5,18.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Puerto Morelos, Mexico</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -86.5,21.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Puerto Rico</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -67.5,18.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>San Bernardo, Colombia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -76.0,10.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Santa Marta, Colombia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -74.5,11.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Turks and Caicos</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -72.0,21.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>US Virgin Islands</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -65.0,18.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Ashmore Reef, Western Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      123.0,-12.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Christmas Island, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      105.5,-10.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Cobourg Park, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      132.5,-10.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Flinders Reef, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      148.5,-17.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Houtman Abrolhos Islands, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      114.0,-28.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Lihou Reef, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      151.5,-17.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Lord Howe Island, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      159.5,-31.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Montebello Islands, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      116.0,-20.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Montgomery Reef, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      124.0,-15.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Ningaloo, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      114.0,-21.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Osprey Reef, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      146.5,-14.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pulu Keeling, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      96.5,-12.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Rowley Shoals, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      119.0,-17.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Scott Reef, Australia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      122.0,-14.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Clipperton Island, France</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -109.0,10.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Galapagos, Ecuador</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -90.0,-1.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Isla del Coco, Costa Rica</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -87.0,5.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Abrolhos Reefs, Brazil</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -38.5,-18.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Buzios, Brazil</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -41.5,-22.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Costa dos Corais, Brazil</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -34.5,-8.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Fernando de Noronha, Brazil</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -32.5,-4.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Maracajau, Brazil</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -35.0,-5.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Recife de Fora, Brazil</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -38.5,-16.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Howland and Baker</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -176.5,0.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Nauru</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      166.5,-0.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Palau</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      134.0,7.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Phoenix Islands, Kiribati</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -171.0,-3.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Tarawa, Kiribati</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      172.5,1.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Wake Atoll</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      166.0,19.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Bermuda</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -64.5,32.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Bar Reef, Sri Lanka</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      79.5,8.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Chagos Archipelago, UK</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      72.0,-6.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Lakshadweep, India</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      72.5,11.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Male, Maldives</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      73.0,4.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Amedee, New Caledonia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      166.0,-22.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Beqa, Fiji</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      178.5,-18.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Efate, Vanuatu</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      168.0,-18.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Kambara, Fiji</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -179.0,-19.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Vanua, Fiji</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      179.0,-16.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>TOGA-TAO 2n138e</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      138.0,2.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>TOGA-TAO 5n147e</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      147.0,5.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Marquesas, French Polynesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -140.0,-9.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Marutea, French Polynesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -136.0,-21.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Tahiti and Moorea, French Polynesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -150.5,-17.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Aldabra, Seychelles</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      46.5,-9.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Ambodivahibe, Madagascar</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      50.0,-12.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Andavadoaka, Madagascar</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      43.0,-22.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Bassas da India, France</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      39.5,-21.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Blue Bay, Mauritius</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      58.0,-20.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Cargados Carajos, Mauritius</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      59.5,-16.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Comoros</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      44.0,-12.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Farquhar Atoll, Seychelles</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      51.5,-10.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Glorieuse Island, France</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      47.5,-11.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Inhambane, Mozambique</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      36.0,-24.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Juan de Nova, France</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      42.5,-17.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Kiunga, Kenya</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      42.0,-2.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Mafia Island, Tanzania</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      40.0,-8.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Mahe, Seychelles</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      56.0,-5.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Maluane, Mozambique</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      41.0,-11.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Mayotte, France</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      45.5,-13.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Mombasa, Kenya</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      40.5,-4.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Nosy Atafana, Madagascar</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      50.5,-16.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Nosy Be, Madagascar</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      48.5,-13.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pemba, Mozambique</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      41.0,-13.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Reunion, France</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      55.0,-21.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Rodrigues, Mauritius</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      63.5,-20.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Segundas Island, Mozambique</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      39.5,-17.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Sodwana Bay, South Africa</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      33.0,-27.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Tolagnaro, Madagascar</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      47.5,-25.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Zanzibar, Tanzania</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      40.0,-6.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Ailuk, Marshall Islands</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      170.0,10.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Enewetak, Marshall Islands</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      162.0,11.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Majuro, Marshall Islands</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      171.0,7.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Namorik, Marshall Islands</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      168.5,5.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Apo Reef, Philippines</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      120.5,12.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Batanes, Philippines</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      122.0,20.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Bohol Sea, Philippines</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      124.0,9.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Bolinao, Philippines</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      119.5,16.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>El Nido, Philippines</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      119.0,11.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Polillo Islands, Philippines</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      122.5,15.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Tawitawi, Philippines</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      120.5,5.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Tubbataha, Philippines</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      120.0,9.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Visayan Sea, Philippines</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      123.5,11.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Biscayne, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -79.5,25.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Broward, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -79.5,26.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Dry Tortugas, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -83.0,24.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Gulf SW FL Shelf, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -82.0,25.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Gulf Sloughsway, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -81.5,25.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Lower Keys, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -81.5,24.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Lower Keys-Marquesas, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -82.0,24.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Rebecca Shoal, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -82.5,24.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Marquesas Offshore, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -82.5,24.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Martin, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -79.5,27.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Middle Keys, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -80.5,24.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Middle Keys Offshore, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -81.0,24.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Palm Beach, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -79.5,26.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>SW FL Shelf Inshore, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -81.5,25.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>SW FL Shelf Offshore, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -82.5,25.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Upper Keys, Florida</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -80.0,25.0
+    </coordinates></Point>
+    </Placemark></Folder><Folder><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>French Frigate Shoals</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -166.0,23.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Gardner</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -168.5,25.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Kure Atoll</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -179.0,28.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Laysan Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -171.5,25.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Lisianski Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -174.5,26.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Maro Reef</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -170.5,25.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Midway Atoll North</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -177.5,28.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Midway Atoll West</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -178.0,28.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Necker Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -165.0,23.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Nihoa</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -162.5,23.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pearl and Hermes Atoll</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -176.0,28.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Hilo, Big Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -154.5,20.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Kahoolawe</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -156.5,20.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Kauai and Niihau</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -160.0,22.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Kona, Big Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -156.5,19.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Lanai</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -157.5,20.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Maui and Molokai</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -157.0,21.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Oahu</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      -158.0,21.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Kimbe Bay, PNG</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      150.5,-5.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Madang Lagoon, PNG</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      146.5,-5.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Agincourt Reef, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      146.0,-16.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Ashmore Reef, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      144.5,-10.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Cannan Reef, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      150.0,-20.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Davies Reef, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      147.5,-19.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Feather Reef, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      146.5,-17.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Gannett Cay, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      152.5,-22.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Hardy Reef, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      149.0,-19.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Heron Island, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      152.0,-23.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Lizard Island, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      145.5,-14.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>North Torres Reef, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      141.5,-10.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pith Reef, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      147.0,-18.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Princess Charlotte Bay, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      144.0,-14.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Raine Island, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      144.0,-11.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Sassie Reef, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      143.0,-10.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Turner Cay, GBR</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      152.5,-21.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Brunei Darussalam</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      114.0,5.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Con Dao, Vietnam</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      106.5,9.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Great Nicobar, India</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      94.0,7.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Karimun Java NP, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      109.5,-6.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Mannai Island, Thailand</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      101.5,12.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Mentawai Islands, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      99.5,-2.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>North Andaman, India</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      92.5,13.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pulau Payar, Malaysia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      100.0,6.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pulau Redang, Malaysia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      103.5,5.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Singapore</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      104.0,0.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>South Phuket, Thailand</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      98.5,7.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Spratly Islands</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      115.0,11.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Tao Island, Thailand</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      99.5,10.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Thousand Island NP, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      107.0,-5.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Weh Island, Indonesia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      94.5,6.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Chuuk, FSM</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      152.0,7.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Kosrae, FSM</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      163.0,5.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Ngulu, FSM</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      137.5,8.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pisaras, FSM</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      150.0,9.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pohnpei, FSM</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      158.0,6.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pulusuk, FSM</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      149.0,7.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Ulithi, FSM</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      139.5,10.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Woleai, FSM</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      144.0,7.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Yap, FSM</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      138.5,9.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Agrihan and Asuncion</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      145.0,19.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Guam East</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      145.5,13.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Guguan and Alamagan</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      145.5,17.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Maug Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      146.0,20.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pagan Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      146.0,18.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Rota Island</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      145.5,14.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Saipan and Tinian</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      145.5,15.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Santa Rosa Reef, Guam</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      144.5,13.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Sarigan and Anatahan</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      146.0,16.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Urracas</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      144.5,20.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>East coast, Taiwan</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      121.5,22.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Hainan Island, China</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      110.0,18.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Ishigaki Islands, Japan</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      125.0,24.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Okinawa, Japan</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      128.0,27.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Paracel Islands, China</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      112.5,16.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Pratas Reef, Taiwan</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      116.5,20.5
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>West coast, Taiwan</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      120.0,24.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Abul Thama, Bahrain</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      51.0,27.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Farasan Bank, Saudi Arabia</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      41.5,17.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Hurghada, Egypt</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      34.5,27.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Muscat, Oman</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      58.0,24.0
+    </coordinates></Point>
+    </Placemark><Placemark>
+      <styleUrl>#defaultStyle</styleUrl>
+      <name>Socotra, Yemen</name>
+      <ExtendedData>
+        <Data name="descriptio"><value>&lt;img src=&quot;http://coralreefwatch.noaa.gov/satellite/vs/graphs_infoboxes/vs_infobo</value></Data>
+      </ExtendedData>
+      <Point><coordinates>
+      54.0,13.0
+    </coordinates></Point>
+    </Placemark></Folder>  </Document>
+  </kml>

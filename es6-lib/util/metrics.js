@@ -18,7 +18,7 @@ class Metrics {
     req.log.info('Making a heapdump');
     heapdump.writeSnapshot((err, filename) => {
       if (err) return res.status(500).send(err.toString());
-      var heapDumpLocation = path.join(__dirname, conf.heapDumpOut, filename);
+      var heapDumpLocation = path.join(conf.heapDumpOut, filename);
       req.log.info(`Wrote heapdump to ${filename}, reading from ${heapDumpLocation}`);
       fs.createReadStream(heapDumpLocation)
         .pipe(res
