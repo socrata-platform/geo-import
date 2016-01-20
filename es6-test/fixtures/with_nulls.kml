@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document><Folder><name>some nulls</name>
+  <Placemark>
+    <ExtendedData>
+        <Data name="a_string"><value></value></Data>
+        <Data name="a_num"><value></value></Data>
+        <Data name="a_float"><value></value></Data>
+        <Data name="a_bool"><value></value></Data>
+    </ExtendedData>
+      <Point><coordinates>102.0,0.5</coordinates></Point>
+  </Placemark>
+</Folder></Document></kml>

@@ -21,6 +21,23 @@ describe('kml decoder', function() {
       });
   });
 
+  it('will make empty elements soql nulls', function(onDone) {
+    var count = 0;
+    fixture('with_nulls.kml')
+      .pipe(new KML())
+      .pipe(es.mapSync((row) => {
+        expect(row.columns.map((c) => c.constructor.name).sort()).to.eql([
+          'SoQLPoint',
+          'SoQLNull',
+          'SoQLNull',
+          'SoQLNull',
+          'SoQLNull'
+        ].sort())
+      }))
+      .on('end', onDone);
+  });
+
+
   it('can turn untyped extendeddata to SoQLTypes', function(onDone) {
     var expectedValues = [
       [{

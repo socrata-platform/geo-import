@@ -123,7 +123,8 @@ var util = {
   'double': [parseFloat, 'number'],
   'boolean': [(strBool) => {
     return strBool.toLowerCase() === 'true';
-  }, 'boolean']
+  }, 'boolean'],
+  'null' : [() => null, 'null']
 };
 
 
@@ -387,6 +388,7 @@ class KML extends Transform {
 
   //argh
   _guessType(name, value) {
+    if(value === "") return 'null';
     var guess = parseFloat(value) || parseInt(value);
     if (!_.isNaN(guess)) return 'number';
     return 'string';
@@ -409,7 +411,7 @@ class KML extends Transform {
     if (column) {
       typeName = column.type;
     } else {
-      typeName = this._guessType(name, value);
+      typeName = this._guessType(name, value.trim());
     }
 
     var [fn, soqlCtype] = (util[typeName] || [false, 'string']);
