@@ -118,9 +118,9 @@ var util = {
   },
 
   'int': [parseInt, 'number'],
-  'float': [parseFloat, 'number'],
-  'number': [parseFloat, 'number'],
-  'double': [parseFloat, 'number'],
+  'float': [(value) => Number(value), 'number'],
+  'number': [(value) => Number(value), 'number'],
+  'double': [(value) => Number(value), 'number'],
   'boolean': [(strBool) => {
     return strBool.toLowerCase() === 'true';
   }, 'boolean'],
@@ -391,8 +391,7 @@ class KML extends Transform {
   //argh
   _guessType(name, value) {
     if(value === "") return 'null';
-    var guess = parseFloat(value) || parseInt(value);
-    if (!_.isNaN(guess)) return 'number';
+    if (!_.isNaN(Number(value))) return 'number';
     return 'string';
   }
 
