@@ -62,7 +62,7 @@ class KMZ extends Duplex {
       .on('data', (data) => {
         if (this._readableState.ended) return;
         if (!this.push(data)) {
-          kmlStream.pause();
+
           //our reader has gone away, this kills the stream.
           //so end the stream with a null and flush anything
           //that's buffered into oblivion
@@ -71,9 +71,12 @@ class KMZ extends Duplex {
             return this.pipe(new DevNull());
           }
 
-          this._readableState.pipes.once('drain', () => {
-            kmlStream.resume();
-          });
+          if (!kmlStream.isPaused()) {
+            this._readableState.pipes.once('drain', () => {
+              kmlStream.resume();
+            });
+            kmlStream.pause();
+          }
         }
       })
       .on('end', () => {
