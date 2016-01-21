@@ -69,7 +69,7 @@ class SummaryService {
           if (err.code === 'EPIPE') return;
           return onErr(err);
         })
-        .pipe(new DevNull())
+        .pipe(new DevNull());
     }
 
 
