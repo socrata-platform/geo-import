@@ -76,7 +76,7 @@ describe('summary service', () => {
           'Content-Length': sizeOf(fx),
           'X-Blob-Length': sizeOf(fx)
         }
-      })), (res, buffered) => {
+      })).on('error', () => {}), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
         expect(res.headers['content-type']).to.contain('application/json');
         expect(buffered.layers).to.eql([]);
@@ -104,7 +104,7 @@ describe('summary service', () => {
           'Content-Length': sizeOf(fx),
           'X-Blob-Length': sizeOf(fx)
         }
-      })), (res, buffered) => {
+      })).on('error', () => {}), (res, buffered) => {
         expect(res.statusCode).to.equal(200);
         expect(res.headers['content-type']).to.contain('application/json');
         expect(buffered.layers).to.eql([]);
