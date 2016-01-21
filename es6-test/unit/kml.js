@@ -37,6 +37,21 @@ describe('kml decoder', function() {
       .on('end', onDone);
   });
 
+  it('will guess number types in a reasonable way', function(onDone) {
+    var count = 0;
+    fixture('type_guessing.kml')
+      .pipe(new KML())
+      .pipe(es.mapSync((row) => {
+        expect(row.columns.map((c) => c.constructor.name).sort()).to.eql([
+          'SoQLPoint',
+          'SoQLText',
+          'SoQLNumber',
+          'SoQLNumber'
+        ].sort())
+      }))
+      .on('end', onDone);
+  });
+
 
   it('can turn untyped extendeddata to SoQLTypes', function(onDone) {
     var expectedValues = [
