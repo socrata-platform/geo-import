@@ -61,8 +61,10 @@ class SummaryService {
             return ok(summary);
           });
         })
-        .on('error', onErr)
-        .pipe(new DevNull());
+        .on('error', (err) => {
+          if (err.code === 'EPIPE') return;
+          return onErr(err);
+        });
     }
 
 
