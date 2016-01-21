@@ -171,7 +171,7 @@ class SpatialService {
   _upsertLayers(req, res, core, layers) {
     var fail = _.once((code, reason) => {
       this._destroyLayers(layers, core, () => {
-        res.status(code).send(JSON.stringify(reason));
+        res.status(code).send(reason);
       });
     });
 
@@ -182,9 +182,7 @@ class SpatialService {
     //layer's scratch file to the open request
     return async.map(layers, core.upsert.bind(core), (err, upsert) => {
       req.log.info(`Created upsert requests`);
-      if (err) return fail(503, {
-        message: err.toString()
-      });
+      if (err) return fail(503, err.toString());
 
       return async.map(upsert, ([layer, upsertBuilder], cb) => {
         cb = _.once(cb);
