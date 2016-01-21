@@ -52,19 +52,24 @@ class SummaryService {
     } else {
       req.log.info("Making abbreviated summary");
 
+      var summarized = false;
+
       req
         .pipe(decoder)
         .once('data', (_datum) => {
-          decoder.pause();
-          decoder.summarize((err, summary) => {
-            if (err) return res.status(400).send(JSON.stringify(err));
-            return ok(summary);
-          });
+          if(!summarized) {
+            summarized = true;
+            decoder.summarize((err, summary) => {
+              if (err) return res.status(400).send(JSON.stringify(err));
+              return ok(summary);
+            });
+          }
         })
         .on('error', (err) => {
           if (err.code === 'EPIPE') return;
           return onErr(err);
-        });
+        })
+        .pipe(new DevNull());
     }
 
 
