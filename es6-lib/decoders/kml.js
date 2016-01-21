@@ -325,7 +325,9 @@ class KML extends Transform {
           });
 
           //if all pushes return true, then we should continue reading from the stream
-          rows.forEach(this.push.bind(this));
+          rows.forEach((row) => {
+            if (!this._readableState.ended) this.push(row);
+          });
           newState.features = this._newFeatures();
         }
         state = newState;
