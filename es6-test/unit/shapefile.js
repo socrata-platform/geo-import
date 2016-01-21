@@ -96,6 +96,7 @@ describe('shapefile decoder', function() {
   });
 
   it('can deal with corrupt hidden files', function(onDone) {
+    this.timeout(4000);
     var [decoder, res] = shpDecoder();
     var count = 0;
     fixture('simple_points_hidden_garbage.zip')
