@@ -6,7 +6,7 @@ export default {
 
   zk : ["localhost:2181"],
   log : {
-    level: 'debug',
+    level: 'critical',
     name : 'geo-import'
   }
 };
