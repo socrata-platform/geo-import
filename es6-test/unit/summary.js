@@ -228,6 +228,4 @@ describe('summary service', () => {
         onDone();
       });
   });
-
-
 });
