@@ -33,7 +33,6 @@ class KMZ extends Duplex {
 
     this.on('finish', this._onFinished.bind(this));
     this._zBuffer.on('finish', this._onBuffered.bind(this));
-    this._kmlDecoder = new KML();
   }
 
   static canDecode() {
@@ -54,11 +53,9 @@ class KMZ extends Duplex {
   }
 
   _onOpenKmlStream(kmlStream) {
-    kmlStream
-      .pipe(this._kmlDecoder)
-      .on('error', (err) => {
-        this.emit('error', err);
-      })
+    return kmlStream
+      .pipe(new KML())
+      .on('error', this._onError.bind(this))
       .on('data', (data) => {
         if (this._readableState.ended) return;
         if (!this.push(data)) {
@@ -78,31 +75,42 @@ class KMZ extends Duplex {
             kmlStream.pause();
           }
         }
-      })
-      .on('end', () => {
-        logger.info('Done reading KML stream');
-        if (!this._readableState.ended) this.push(null);
       });
+  }
+
+  _onError(err) {
+    this.emit('error', err);
   }
 
   _startPushing() {
     this._isPushing = true;
     var hasOpened = false;
-    yauzl.open(this._zName, (err, zipFile) => {
+
+    yauzl.open(this._zName, {
+      lazyEntries: true
+    }, (err, zipFile) => {
       if (err) return this.emit('error', err);
+
       zipFile
-        .on('error', (err) => {
-          this.emit('error', err);
-        })
+        .on('error', this._onError.bind(this))
         .on('entry', (entry) => {
-          if (path.extname(entry.fileName) !== '.kml') return;
-          if (!hasOpened) zipFile.openReadStream(entry, (err, kmlStream) => {
+          logger.info(`Checking KMZ entry ${entry.fileName}`);
+          if (path.extname(entry.fileName) !== '.kml') return zipFile.readEntry();
+
+          zipFile.openReadStream(entry, (err, kmlStream) => {
             if (err) return this.emit('error', err);
             logger.info(`Extracting kml ${entry.fileName} from kmz archive`);
-            this._onOpenKmlStream(kmlStream);
+
+            this._onOpenKmlStream(kmlStream)
+              .on('end', () => zipFile.readEntry());
           });
-          hasOpened = true;
+        })
+        .once('end', () => {
+          this.push(null);
+          logger.info('Done reading KMZ archive');
         });
+
+      zipFile.readEntry();
     });
   }
 
@@ -116,7 +124,7 @@ class KMZ extends Duplex {
   }
 
   summarize(cb) {
-    return this._kmlDecoder.summarize(cb);
+    return (new KML()).summarize(cb);
   }
 
   canSummarizeQuickly() {

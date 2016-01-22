@@ -26,7 +26,7 @@ var expect = chai.expect;
 
 function kmzDecoder() {
   res = new EventEmitter();
-  return new KMZ(new Disk(res));
+  return [new KMZ(new Disk(res)), res];
 }
 
 function shpDecoder() {
@@ -57,14 +57,16 @@ describe('decoders', () => {
 
   it('should handle real multi chunk kmz', function(onDone) {
     this.timeout(150000);
+    var [decoder, res] = kmzDecoder();
     var count = 0;
     fixture('smoke/usbr.kmz')
-      .pipe(kmzDecoder())
+      .pipe(decoder)
       .pipe(es.mapSync(function(thing) {
         count++;
       }))
       .on('end', () => {
         expect(count).to.equal(5);
+        res.emit('finish');
         onDone();
       });
   });
@@ -199,9 +201,36 @@ describe('decoders', () => {
           "descriptio"
         ].sort())
       }))
-      .on('end', (layers) => {
+      .on('end', () => {
         res.emit('finish');
         onDone();
       });
   });
+
+  it('KML nested within a KMZ with some links', function(onDone) {
+    var [decoder, res] = kmzDecoder();
+    var rows = [];
+    var expected = ['the_geom',
+      'objectid',
+      'area',
+      'perimeter',
+      'patternc',
+      'patternc_i',
+      'districtc',
+      'square_mil',
+      'shape_leng',
+      'shape_area'
+    ].sort();
+
+    fixture('smoke/police_beats_patternc.kmz')
+      .pipe(decoder)
+      .pipe(es.mapSync((row) => rows.push(row)))
+      .on('end', () => {
+        rows.map((r) => r.columns.map((c) => c.name)).forEach((colNames) => {
+          expect(colNames.sort()).to.eql(expected);
+        })
+        onDone();
+      });
+  });
+
 });
