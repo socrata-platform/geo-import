@@ -197,9 +197,10 @@ class SpatialService {
             core.bufferResponse((bufferedResponse) => {
               req.log.info(`Finished upsert response ${upsertResponse.statusCode}`);
               if (bufferedResponse.statusCode > 300) {
+                req.log.error(`Core returned upsert error: ${bufferedResponse}`);
                 return cb({
                   statusCode: 503,
-                  reason: bufferedResponse.body,
+                  reason: "Upstream Error",
                   layer: layer
                 });
               }
@@ -213,10 +214,11 @@ class SpatialService {
             //
             //It's important to munge this error so core doesn't
             //get blamed for a local exception
+            req.log.error(err.toString());
             upsertRequest.abort();
             return cb({
               statusCode: 500,
-              body: err.toString(),
+              reason: "Internal Error",
               layer: layer
             });
           });
