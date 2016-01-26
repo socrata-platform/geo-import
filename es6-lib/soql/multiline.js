@@ -1,4 +1,5 @@
 import SoQLGeom from './geom';
+import SoQLLine from './line';
 
 class SoQLMultiLine extends SoQLGeom {
   get _type() {
@@ -7,6 +8,11 @@ class SoQLMultiLine extends SoQLGeom {
 
   static ctype() {
     return 'multilinestring';
+  }
+
+  fixSemantics() {
+    this._value = this._value.map(SoQLLine.linify);
+    return this;
   }
 
   mapCoordinates(fn) {
