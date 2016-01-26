@@ -10,6 +10,32 @@ var expect = chai.expect;
 
 describe('geometry transforms', function() {
 
+  it('can linify a line which is just a point', function(onDone) {
+    fixture('non-line-lines.json')
+      .pipe(new GeoJSON())
+      .pipe(es.mapSync(function(row) {
+        var line = row.columns[0].fixSemantics();
+        expect(line.value.coordinates).to.eql([
+          [100.0, 0.0],
+          [100.0, 0.0]
+        ])
+      }))
+      .on('end', onDone);
+  });
+
+  it('can linify a multiline which is just a point', function(onDone) {
+    fixture('non-line-multiline.json')
+      .pipe(new GeoJSON())
+      .pipe(es.mapSync(function(row) {
+        var line = row.columns[0].fixSemantics();
+        expect(line.value.coordinates).to.eql([[
+          [100.0, 0.0],
+          [100.0, 0.0]
+        ]])
+      }))
+      .on('end', onDone);
+  });
+
   it('can close an unclosed polygon', function(onDone) {
     var geoms = [];
     fixture('unclosed_polygons.json')
