@@ -51,6 +51,7 @@ class Layer extends Duplex {
     this._count = 0;
     this._maxVerticesPerRow = maxVertices;
     this._crsMap = {};
+    this._crsCache = {};
     this._wgs84Reprojector = new WGS84Reprojector(columns);
     this._spec = spec || {};
 
@@ -240,9 +241,16 @@ class Layer extends Duplex {
     return this._count;
   }
 
+  /**
+   * Returns the projection for the row at index
+   */
   _getProjectionFor(index) {
     if (!this._crsMap[index]) return this.defaultCrs;
-    return srs.parse(this._crsMap[index]);
+    var unparsed = this._crsMap[index];
+    if(!this._crsCache[unparsed]) {
+      this._crsCache[unparsed] = srs.parse(unparsed);
+    }
+    return this._crsCache[unparsed];
   }
 
   _startPushing() {
@@ -276,7 +284,6 @@ class Layer extends Duplex {
             self.push(null);
             return self.pipe(new DevNull());
           }
-
           self._readableState.pipes.once('drain', this.resume.bind(this));
         }
       }, function end() {
