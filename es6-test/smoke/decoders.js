@@ -20,9 +20,11 @@ import KMZ from '../../lib/decoders/kmz';
 import KML from '../../lib/decoders/kml';
 import GeoJSON from '../../lib/decoders/geojson';
 import Disk from '../../lib/decoders/disk';
+import Merger from '../../lib/decoders/merger';
 
 var res;
 var expect = chai.expect;
+var conf = config();
 
 function kmzDecoder() {
   res = new EventEmitter();
@@ -44,6 +46,17 @@ function geojsonDecoder() {
   return [new GeoJSON(new Disk(res)), res];
 }
 
+function makeMerger(maxVerticesPerRow) {
+  var res = new EventEmitter();
+  return [
+    new Merger(
+      new Disk(res), [],
+      false,
+      maxVerticesPerRow || conf.maxVerticesPerRow
+    ),
+    res
+  ];
+}
 
 
 describe('decoders', () => {
@@ -230,6 +243,62 @@ describe('decoders', () => {
           expect(colNames.sort()).to.eql(expected);
         })
         onDone();
+      });
+  });
+
+  it('weird line bug where coordinate state was not being reset between elements', function(onDone) {
+    var [merger, response] = makeMerger();
+    var async = require('async');
+    var theRow;
+
+    fixture('line_extra_dimension.kml')
+      .pipe(new KML())
+      .pipe(es.mapSync((row) => {
+        var {
+          columns: [{
+            value: {
+              coordinates: cs,
+              type: t
+            }
+          }, {
+            value: name
+          }]
+        } = row;
+        cs.forEach((coord) => {
+          if (t !== 'LineString') return;
+
+          chai.assert(coord.length === 2, `${name}::${t} is an invalid linestring ${JSON.stringify(cs, null, 2)}`)
+        });
+        return row;
+      }))
+      .pipe(merger)
+      .on('end', (layers) => {
+        async.map(layers, (layer, cb) => {
+
+          var buf = '[';
+          layer
+            .pipe(es.mapSync((row) => buf += row.toString()))
+            .on('end', () => {
+              buf += ']';
+
+              var [js] = JSON.parse(buf);
+
+              js.forEach((row) => {
+                var {
+                  the_geom: {
+                    coordinates: cs,
+                    type: t
+                  }
+                } = row;
+                if (t !== 'LineString') return;
+                cs.forEach((coord) => {
+                  chai.assert(coord.length === 2, `${row.name}::${t} is an invalid linestring ${JSON.stringify(cs, null, 2)}`)
+                });
+              });
+
+              cb();
+            })
+        }, onDone);
       });
   });
 

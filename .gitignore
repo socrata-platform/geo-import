@@ -33,3 +33,4 @@ docker/lib.tar
 lib
 test
 lib.tar
+mem.ldjson
