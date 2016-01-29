@@ -249,6 +249,7 @@ var endElement = {
 
   'linestring': (state) => {
     state = util.setOrCloneFeature(state, 'linestring', util.mergeSingleGeom);
+    state.coordinates = [];
     return [state, []];
   },
 
