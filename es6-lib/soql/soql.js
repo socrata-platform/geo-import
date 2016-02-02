@@ -1,7 +1,6 @@
 import _ from 'underscore';
 import changeCase from 'change-case';
 
-
 class SoQL {
   constructor(name, value) {
     this.rawName = name;

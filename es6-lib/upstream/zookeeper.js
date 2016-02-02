@@ -48,11 +48,18 @@ class Zookeeper extends EventEmitter {
 
   _getCore(cb) {
     this._client.getChildren(CORE_PATH, (err, children) => {
-      if (err) return cb(err);
-      if (!children.length) return cb({
-        statusCode: 502,
-        body: 'No core nodes registered in zookeeper'
-      });
+      if (err) {
+        var zkError = new BadResponseFromServer({
+          message: err.toString()
+        });
+        return cb(zkError);
+      }
+      if (!children.length) {
+        let nameError = new BadResponseFromServer({
+          message: 'No core nodes registered in zookeeper'
+        });
+        return cb(nameError);
+      }
       var chosen = children[Math.floor(Math.random() * children.length)];
       var instance = path.join(CORE_PATH, chosen);
       this._client.getData(instance, (err, buf) => {
@@ -65,7 +72,10 @@ class Zookeeper extends EventEmitter {
           logger.debug(`Core lives at ${url}`);
           return cb(false, url);
         } catch (err) {
-          return cb(err);
+          let zkEntryError = new BadResponseFromServer({
+            message: 'Zookeeper state is not parseable'
+          });
+          return cb(zkEntryError);
         }
       });
     });

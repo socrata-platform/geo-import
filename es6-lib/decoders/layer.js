@@ -26,6 +26,10 @@ import logger from '../util/logger';
 import LDJson from './ldjson';
 import WGS84Reprojector from './wgs84-reprojector';
 import DevNull from '../util/devnull';
+import {
+  RecordTooLarge
+}
+from '../errors';
 
 const scratchPrologue = "";
 const scratchSeparator = "\n";
@@ -208,9 +212,13 @@ class Layer extends Duplex {
     }
 
     var geom = _.find(soqlRow, (r) => r.isGeometry);
-    if(geom && geom.vertexCount > this._maxVerticesPerRow) {
+    if (geom && geom.vertexCount > this._maxVerticesPerRow) {
       logger.warn(`Counted ${geom.vertexCount} vertices in ${this._count} row of layer ${this.name}`);
-      throw new Error(`Number of vertices exceeds max count of ${this._maxVerticesPerRow}. Please simplify your import and try again.`);
+      throw new RecordTooLarge({
+        limit: this._maxVerticesPerRow,
+        nearRecord: this._count,
+        name: this.name
+      });
     }
 
     this._out.write(
@@ -247,7 +255,7 @@ class Layer extends Duplex {
   _getProjectionFor(index) {
     if (!this._crsMap[index]) return this.defaultCrs;
     var unparsed = this._crsMap[index];
-    if(!this._crsCache[unparsed]) {
+    if (!this._crsCache[unparsed]) {
       this._crsCache[unparsed] = srs.parse(unparsed);
     }
     return this._crsCache[unparsed];
@@ -274,7 +282,7 @@ class Layer extends Duplex {
         writeIndex++;
         if (writeIndex === self._count) ep = jsonEpilogue;
 
-        if(!self.push(sep + rowString + ep)) {
+        if (!self.push(sep + rowString + ep)) {
           this.pause();
 
           //our reader has gone away, this kills the stream.

@@ -1,5 +1,5 @@
 import {EventEmitter} from 'events';
-
+import {BadResponseFromServer}  from '../../lib/errors';
 
 class MockZKClient extends EventEmitter {
   constructor(corePort) {
@@ -21,10 +21,9 @@ class MockZKClient extends EventEmitter {
   }
 
   _err(message) {
-    return {
-      statusCode: 503,
-      body: message
-    };
+    return new BadResponseFromServer({
+      message: message
+    });
   }
 
   getCore(cb) {

@@ -16,7 +16,10 @@ describe('kml decoder', function() {
     fixture('malformed_kml.kml')
       .pipe(new KML())
       .on('error', (err) => {
-        expect(err.toString()).to.contain("XML Parse error");
+        err = err.toJSON();
+        expect(err.lineNumber).to.equal(30);
+        expect(err.reason).to.equal('mismatched tag');
+        expect(err.type).to.equal('parse_error');
         onDone();
       });
   });

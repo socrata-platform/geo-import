@@ -177,6 +177,15 @@ class Parser extends Transform {
     this.emit('error', e);
   }
 
+  getError() {
+    if(!this._underlying.error) return;
+    return {
+      line: this._underlying.line,
+      column: this._underlying.column,
+      token: this._underlying.c
+    };
+  }
+
   _write(chunk, encoding, cb) {
     this._underlying.write(chunk.toString());
     cb();
