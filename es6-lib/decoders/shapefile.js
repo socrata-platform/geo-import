@@ -33,6 +33,10 @@ import async from 'async';
 import logger from '../util/logger';
 import config from '../config';
 import DevNull from '../util/devnull';
+import {
+  UninterpretableValue, CorruptShapefile, IncompleteArchive
+}
+from '../errors';
 
 const DEFAULT_PROJECTION = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
@@ -131,13 +135,13 @@ class Shapefile extends Duplex {
     }
 
     if (!this.push(geoJsToSoQL(record, projection))) {
-          //our reader has gone away, this kills the stream.
-          //so end the stream with a null and flush anything
-          //that's buffered into oblivion
-          if (!this._readableState.pipes) {
-            this.push(null);
-            return this.pipe(new DevNull());
-          }
+      //our reader has gone away, this kills the stream.
+      //so end the stream with a null and flush anything
+      //that's buffered into oblivion
+      if (!this._readableState.pipes) {
+        this.push(null);
+        return this.pipe(new DevNull());
+      }
 
       this._readableState.pipes.once('drain', readNext);
     } else {
@@ -145,10 +149,18 @@ class Shapefile extends Duplex {
     }
   }
 
-  _emitFeatures(emitter, reader, projection) {
+  _emitFeatures(shapeFile, emitter, reader, projection) {
+    var featureCount = 0;
     var readNext = () => {
+      featureCount++;
       reader.readRecord((err, record) => {
-        if (err) return emitter.emit('error', new Error(`Failed to read feature ${err}`));
+        if (err) {
+          var error = new UninterpretableValue({
+            record: featureCount,
+            filename: shapeFile
+          });
+          return emitter.emit('error', error);
+        }
         if (record === shapefile.end) return emitter.emit('end');
         return emitter.emit('record', record);
       });
@@ -160,28 +172,31 @@ class Shapefile extends Duplex {
 
     reader.readHeader((err, header) => {
       if (err) {
-        return emitter.emit('error', new Error(`Failed to read shapefile header ${err}`));
+        var error = new CorruptShapefile({
+          filename: shapeFile
+        });
+        return emitter.emit('error', error);
       }
       readNext();
     });
   }
 
 
-  _shapeStream(reader, proj) {
+  _shapeStream(shapeFile, reader, proj) {
     //the reader is closed automatically if an error occurrs
     var emitter = new EventEmitter();
 
     fs.stat(proj || '', (err, status) => {
       if (err && err.code === 'ENOENT') {
         logger.warn("Shapefile is missing a projection, going with the default");
-        return this._emitFeatures(emitter, reader, DEFAULT_PROJECTION);
+        return this._emitFeatures(shapeFile, emitter, reader, DEFAULT_PROJECTION);
       }
 
       fs.readFile(proj, (projError, projection) => {
         if (projError) return emitter.emit('error', projError);
         projection = projection.toString('utf-8');
 
-        return this._emitFeatures(emitter, reader, projection);
+        return this._emitFeatures(shapeFile, emitter, reader, projection);
       });
     });
     return emitter;
@@ -193,10 +208,16 @@ class Shapefile extends Duplex {
       //if the shp or dbf are undefined, then record the error. prj
       //is technically optional
       if (!shp) {
-        errors.push(new Error('Missing spatial (.shp) file.'));
+        let error = new IncompleteArchive({
+          missing: '.shp'
+        });
+        errors.push(error);
       }
       if (!dbf) {
-        errors.push(new Error('Missing attributes (.dbf) file.'));
+        let error = new IncompleteArchive({
+          missing: '.dbf'
+        });
+        errors.push(error);
       }
       return errors;
     }, []);
@@ -219,7 +240,7 @@ class Shapefile extends Duplex {
 
     async.mapSeries(groups, ([shp, proj, _dbf], cb) => {
       logger.debug(`Building shapestream based on ${shp}`);
-      this._shapeStream(shapefile.reader(shp), proj)
+      this._shapeStream(shp, shapefile.reader(shp), proj)
         .on('error', (err) => {
           return cb(err);
         })
@@ -278,7 +299,9 @@ class Shapefile extends Duplex {
         logger.debug(`${this._components.join(', ')} are now readable`);
         var fileErrors = this._hasRequiredComponents(this._components);
         if (fileErrors.length) {
-          this.emit('error', new Error(fileErrors.map((err) => err.toString()).join(', ')));
+          this.emit('error', new IncompleteArchive({
+              missing: fileErrors.map((err) => err.toJSON().missing).join(', ')
+          }));
         } else {
           this.emit('readable');
         }

@@ -4,6 +4,7 @@ import Merger from '../decoders/merger';
 import _ from 'underscore';
 import logger from '../util/logger';
 import DevNull from '../util/devnull';
+import {CorruptArchive} from '../errors';
 
 class SummaryService {
 
@@ -26,11 +27,11 @@ class SummaryService {
     //this exists
     var onErr = _.once((err) => {
       req.log.error(err.stack);
-      return res.status(400).send(err.toString());
+      return res.status(err.statusCode).send(err.toString());
     });
 
     var [err, decoder] = getDecoder(req, disk);
-    if (err) return res.status(400).send(err.toString());
+    if (err) return res.status(err.statusCode).send(err.toString());
 
     var ok = (layers) => {
       res.status(200).send(JSON.stringify({
@@ -63,7 +64,9 @@ class SummaryService {
         })
         .on('error', (err) => {
           if (err.code === 'EPIPE') return;
-          return onErr(err);
+          return onErr(new CorruptArchive({
+            reason: err.toString()
+          }));
         });
     }
 

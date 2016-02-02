@@ -31,6 +31,30 @@ describe('core client', function() {
   });
 
 
+
+  it("will pass back 503 errors from zk", function(onDone) {
+    var request = {
+      headers: {
+        'x-app-token': 'test-token',
+        'x-socrata-host': 'test-host',
+      },
+      log: {
+        info: () => {}
+      }
+    };
+    var auth = new CoreAuth(request);
+    var core = new Core(auth, mockZk);
+    mockZk.enableErrors();
+
+    core.create('my_layer', (err, res) => {
+      expect(err.statusCode).to.equal(503);
+      expect(err.toJSON().type).to.equal('bad_response_from_server');
+      onDone();
+    });
+  });
+
+
+
   it("can build auth from a request", function() {
     var request = {
       headers: {

@@ -15,6 +15,11 @@ import {
 from '../soql/mapper';
 import Layer from '../decoders/layer';
 import config from '../config';
+import {
+  BadResponseFromServer,
+  InternalError
+}
+from '../errors';
 
 var conf = config();
 const MAX_PARALLEL = 4;
@@ -50,15 +55,21 @@ class SpatialService {
   }
 
   _destroyLayers(layers, core, cb) {
-    return async.map(layers, core.destroy.bind(core), (err, destroyResponses) => {
+    return async.mapLimit(layers, MAX_PARALLEL, core.destroy.bind(core), (err, destroyResponses) => {
       return cb(err, destroyResponses);
+    });
+  }
+
+  _layersFail(req, res, core, layers, err) {
+    this._destroyLayers(layers, core, () => {
+      res.status(err.statusCode).send(err.toString());
     });
   }
 
   _createLayers(req, res, core, layers) {
     async.mapLimit(layers, MAX_PARALLEL, core.create.bind(core), (err, datasetResponses) => {
       //failed to get upstream from zk or create request failed
-      if (err) return res.status(err.statusCode || 500).send(err.body || err.toString());
+      if (err) return res.status(err.statusCode).send(err.toString());
       req.log.info(`Successfully created ${layers.length} layers`);
       _.zip(layers, datasetResponses)
         .forEach(([layer, response]) => layer.uid = response.body.id);
@@ -126,11 +137,7 @@ class SpatialService {
     };
 
     async.seq(createOrReplace, flatColumns, deleteColumns)(layers, (err, newLayers) => {
-      if (err) {
-        return this._destroyLayers(layers, core, () => {
-          return res.status(err.statusCode || 500).send(err.body || err.toString());
-        });
-      }
+      if (err) return this._layersFail(req, res, core, layers, err);
       return this._createColumns(req, res, core, newLayers);
     });
   }
@@ -140,16 +147,11 @@ class SpatialService {
     var colSpecs = this._flatColSpecs(layers);
     //only make MAX_PARALLEL requests in parallel. core will die if we do a bunch.
     return async.mapLimit(colSpecs, MAX_PARALLEL, core.addColumn.bind(core), (err, colResponses) => {
-      if (err) {
-        return this._destroyLayers(layers, core, () => {
-          res.status(err.statusCode || 500).send(err.body || err.toString());
-        });
-      }
+      if (err) return this._layersFail(req, res, core, layers, err);
       req.log.info(`Successfully created ${colResponses.length} columns`);
       return this._upsertLayers(req, res, core, layers);
     });
   }
-
 
   /**
    * Take all the bounding boxes from the layers and make a bounding box
@@ -169,11 +171,7 @@ class SpatialService {
 
 
   _upsertLayers(req, res, core, layers) {
-    var fail = _.once((code, reason) => {
-      this._destroyLayers(layers, core, () => {
-        res.status(code).send(reason);
-      });
-    });
+    var fail = _.once((err) => this._layersFail(req, res, core, layers, err));
 
     //this is a little different than the two preceding core calls. core.upsert
     //just sets up the request, so the callback will
@@ -182,7 +180,7 @@ class SpatialService {
     //layer's scratch file to the open request
     return async.map(layers, core.upsert.bind(core), (err, upsert) => {
       req.log.info(`Created upsert requests`);
-      if (err) return fail(503, err.toString());
+      if (err) return fail(err.statusCode, err.toString());
 
       return async.map(upsert, ([layer, upsertBuilder], cb) => {
         cb = _.once(cb);
@@ -198,11 +196,10 @@ class SpatialService {
               req.log.info(`Finished upsert response ${upsertResponse.statusCode}`);
               if (bufferedResponse.statusCode > 300) {
                 req.log.error(`Core returned upsert error: ${bufferedResponse}`);
-                return cb({
-                  statusCode: 503,
-                  reason: "Upstream Error",
+                return cb(new BadResponseFromServer({
+                  message: bufferedResponse,
                   layer: layer
-                });
+                }));
               }
               return cb(false, [layer, bufferedResponse]);
             })(upsertResponse);
@@ -216,17 +213,17 @@ class SpatialService {
             //get blamed for a local exception
             req.log.error(err.toString());
             upsertRequest.abort();
-            return cb({
-              statusCode: 500,
-              reason: "Internal Error",
+            return cb(new InternalError({
+              message: err.toString(),
               layer: layer
-            });
+            }));
           });
 
       }, (err, upsertResponses) => {
         if (err) {
-          req.log.error(`Upsert failed for layer ${err.layer.name} ${err.layer.uid} with ${JSON.stringify(err.reason)} in ${err.layer.scratchName}`);
-          return fail(err.statusCode, err.reason);
+          let layer = err.parameters.layer;
+          req.log.error(`Upsert failed for layer ${layer.name} ${layer.uid} with ${err.parameters.message} in ${layer.scratchName}`);
+          return fail(err);
         }
 
         var layerResults = upsertResponses.map(([layer, response]) => {
@@ -260,16 +257,14 @@ class SpatialService {
     //with `.on` with a method that noops after one call
     var onErr = _.once((err) => {
       req.log.error(err.stack);
-      //TODO: this shouldn't be hardcoded as a 400, errors should carry their
-      //own reponse code
-      return res.status(400).send(err.toString());
+      return res.status(err.statusCode || 400).send(err.toString());
     });
 
     //If we can't get a decoder, then the user tried to import
     //an unsupported file, or set the content type incorrectly
     //on their header
     var [decoderErr, decoder] = getDecoder(req, disk);
-    if (decoderErr) return res.status(400).send(decoderErr.toString());
+    if (decoderErr) return res.status(decoderErr.statusCode).send(decoderErr.toString());
 
     var [mungeErr, specs] = this._mungeLayerSpecs(req);
     if (mungeErr) return res.status(400).send(mungeErr.toString());

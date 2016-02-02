@@ -2,6 +2,7 @@ import request from 'request';
 import reduceStream from 'stream-reduce';
 import logger from '../util/logger';
 import Layer from '../decoders/layer';
+import {BadResponseFromServer} from '../errors';
 
 class CoreAuth {
   constructor(request) {
@@ -98,7 +99,10 @@ class Core {
 
   _onErrorResponse(onComplete) {
     return this.bufferResponse((response) => {
-      return onComplete(response, false);
+      var error = new BadResponseFromServer({
+        message: response.body
+      });
+      return onComplete(error, false);
     });
   }
 

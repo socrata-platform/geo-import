@@ -35,7 +35,12 @@ describe('shapefile decoder', function() {
     fixture('corrupt_shapefile.zip')
       .pipe(decoder)
       .on('error', (err) => {
-        expect(err.toString()).to.contain("Failed to read feature");
+        var js = err.toJSON();
+
+        expect(js.type).to.equal('uninterpretable_value');
+        expect(js.record).to.equal(1);
+        expect(js.filename).to.contain('.shp');
+
         onDone();
       })
       .pipe(es.mapSync(() => {}));
@@ -80,7 +85,9 @@ describe('shapefile decoder', function() {
     fixture('missing_dbf.zip')
       .pipe(decoder)
       .on('error', (err) => {
-        expect(err.toString()).to.contain('Missing attributes');
+        err = err.toJSON();
+        expect(err.type).to.equal('incomplete_archive');
+        expect(err.missing).to.equal('.dbf');
         onDone();
       }).pipe(new DevNull());
   });
@@ -90,7 +97,9 @@ describe('shapefile decoder', function() {
     fixture('missing_shp.zip')
       .pipe(decoder)
       .on('error', (err) => {
-        expect(err.toString()).to.contain('Missing spatial');
+        err = err.toJSON();
+        expect(err.type).to.equal('incomplete_archive');
+        expect(err.missing).to.equal('.shp');
         onDone();
       }).pipe(new DevNull());
   });

@@ -85,23 +85,23 @@ describe('spatial service', function() {
         var [replaceRequest, getColReq, delColReq0, delColReq1, geom, aString, aNum, aFloat, aBool] = mockCore.history;
         expect(replaceRequest.url).to.equal(
           '/views/qs32-qpt7/publication?method=copySchema'
-        )
+        );
         expect(replaceRequest.method).to.equal('POST');
 
         expect(getColReq.url).to.equal(
           '/views/qs32-qpt8/columns'
-        )
-        expect(getColReq.method).to.equal('GET')
+        );
+        expect(getColReq.method).to.equal('GET');
 
         expect(delColReq0.url).to.equal(
           '/views/qs32-qpt8/columns/3415'
-        )
-        expect(delColReq0.method).to.equal('DELETE')
+        );
+        expect(delColReq0.method).to.equal('DELETE');
 
         expect(delColReq1.url).to.equal(
           '/views/qs32-qpt8/columns/3416'
-        )
-        expect(delColReq1.method).to.equal('DELETE')
+        );
+        expect(delColReq1.method).to.equal('DELETE');
 
         expect(geom.body).to.eql({
           fieldName: "the_geom",
@@ -155,7 +155,7 @@ describe('spatial service', function() {
         var [createRequest, geom, aString, aNum, aFloat, aBool] = mockCore.history;
         expect(createRequest.url).to.equal(
           '/views?nbe=true'
-        )
+        );
         expect(createRequest.method).to.equal('POST');
 
         expect(geom.body).to.eql({
@@ -214,12 +214,12 @@ describe('spatial service', function() {
 
         expect(replaceRequest.url).to.equal(
           '/views/qs32-qpt7/publication?method=copySchema'
-        )
+        );
         expect(replaceRequest.method).to.equal('POST');
 
         expect(createRequest.url).to.equal(
           '/views?nbe=true'
-        )
+        );
 
         onDone();
       });
@@ -508,8 +508,8 @@ describe('spatial service', function() {
         }
       })), (resp, buffered) => {
         var del = _.last(mockCore.history);
-        expect(del.method).to.equal('DELETE')
-        expect(del.url).to.equal('/views/qs32-qpt7')
+        expect(del.method).to.equal('DELETE');
+        expect(del.url).to.equal('/views/qs32-qpt7');
         mockCore.failColumns = false;
         onDone();
       });
@@ -534,8 +534,8 @@ describe('spatial service', function() {
       })), (resp, buffered) => {
         mockCore.failGetColumns = false;
         var del0 = _.last(mockCore.history);
-        expect(del0.method).to.equal('DELETE')
-        expect(del0.url).to.equal('/views/qs32-qpt8')
+        expect(del0.method).to.equal('DELETE');
+        expect(del0.url).to.equal('/views/qs32-qpt8');
         onDone();
       });
   });
@@ -559,8 +559,8 @@ describe('spatial service', function() {
       })), (resp, buffered) => {
         mockCore.failColumns = false;
         var del0 = _.last(mockCore.history);
-        expect(del0.method).to.equal('DELETE')
-        expect(del0.url).to.equal('/views/qs32-qpt8')
+        expect(del0.method).to.equal('DELETE');
+        expect(del0.url).to.equal('/views/qs32-qpt8');
         onDone();
       });
   });
@@ -578,8 +578,8 @@ describe('spatial service', function() {
         }
       })), (resp, buffered) => {
         var del = _.last(mockCore.history);
-        expect(del.method).to.equal('DELETE')
-        expect(del.url).to.equal('/views/qs32-qpt7')
+        expect(del.method).to.equal('DELETE');
+        expect(del.url).to.equal('/views/qs32-qpt7');
         mockCore.failUpsert = false;
         onDone();
       });
@@ -600,6 +600,26 @@ describe('spatial service', function() {
       })), (resp, buffered) => {
         expect(resp.statusCode).to.equal(400);
         conf.maxVerticesPerRow = oldMax;
+        onDone();
+      });
+  });
+
+  it('will give a 400 on invalid content type', function(onDone) {
+    bufferJs(fixture('simple_multipolygons.json')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'nope'
+        }
+      })), (resp, buffered) => {
+        expect(resp.statusCode).to.equal(400);
+        expect(buffered).to.eql({
+          type: 'unknown_file_type',
+          extension: 'nope'
+        });
         onDone();
       });
   });

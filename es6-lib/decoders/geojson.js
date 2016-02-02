@@ -20,6 +20,7 @@ import {
 from 'stream';
 import Parser from '../util/parser';
 import config from '../config';
+import {ParseError} from '../errors';
 
 class GeoJSON extends Transform {
 
@@ -39,14 +40,19 @@ class GeoJSON extends Transform {
     .on('data', this._onCrs.bind(this));
   }
 
-
-
   static canDecode() {
     return ['application/json'];
   }
 
   _onError(err) {
-    this.emit('error', err);
+    var parserState = this._crsParser.getError() || this._featureParser.getError() || {};
+    var [_m, reason] = /Error: ([\w ]+)/.exec(err);
+    this.emit('error', new ParseError({
+      lineNumber: parserState.line,
+      column: parserState.column,
+      token: parserState.token,
+      reason: reason || 'Parse Error'
+    }));
   }
 
   _onFeature(feature) {

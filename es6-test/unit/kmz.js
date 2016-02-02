@@ -17,7 +17,7 @@ var expect = chai.expect;
 var res;
 
 function kmzDecoder() {
-  res = new EventEmitter()
+  res = new EventEmitter();
   return new KMZ(new Disk(res));
 }
 
@@ -32,7 +32,10 @@ describe('kmz decoder', function() {
     fixture('corrupt_kmz.kmz')
       .pipe(kmzDecoder())
       .on('error', (err) => {
-        expect(err.toString()).to.contain("invalid central directory");
+        expect(err.toJSON()).to.eql({
+          type: 'corrupt_archive',
+          reason: 'Error: invalid central directory file header signature: 0x80000'
+        })
         onDone();
       })
       .pipe(es.mapSync(() => {}));
@@ -43,7 +46,10 @@ describe('kmz decoder', function() {
     fixture('malformed_kmz.kmz')
       .pipe(kmzDecoder())
       .on('error', (err) => {
-        expect(err.toString()).to.contain("XML Parse error");
+        err = err.toJSON();
+        expect(err.lineNumber).to.equal(30);
+        expect(err.reason).to.equal('mismatched tag');
+        expect(err.type).to.equal('parse_error');
         onDone();
       })
       .pipe(es.mapSync(() => {}));

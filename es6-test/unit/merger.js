@@ -61,8 +61,6 @@ function jsbuf() {
 
 describe('merging feature streams to layers', function() {
 
-
-
   it('will handle homogenous points, default crs', function(onDone) {
     var [merger, response] = makeMerger();
     fixture('simple_points.json')
@@ -611,7 +609,12 @@ describe('merging feature streams to layers', function() {
       .pipe(new GeoJSON())
       .pipe(merger)
       .on('error', (err) => {
-        expect(err.toString()).to.contain('Number of vertices exceeds')
+        err = err.toJSON();
+
+        expect(err.type).to.equal('record_too_large');
+        expect(err.limit).to.equal(2);
+        expect(err.nearRecord).to.equal(1);
+
         onDone();
       });
   });
