@@ -65,8 +65,10 @@ class Logger extends LogWrapper {
 
     var s = res.send.bind(res);
     res.send = (payload) => {
-      if (res.statusCode >= 400) {
+      if (res.statusCode >= 400 && res.statusCode < 500) {
         res.log.warn(payload);
+      } else if(res.statusCode >= 500) {
+        res.log.error(payload);
       }
       return s(payload);
     };

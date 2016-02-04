@@ -4,7 +4,10 @@ import Merger from '../decoders/merger';
 import _ from 'underscore';
 import logger from '../util/logger';
 import DevNull from '../util/devnull';
-import {CorruptArchive} from '../errors';
+import {
+  CorruptArchive
+}
+from '../errors';
 
 class SummaryService {
 
@@ -26,7 +29,6 @@ class SummaryService {
     //;_; see the note in service/spatial for why
     //this exists
     var onErr = _.once((err) => {
-      req.log.error(err.stack);
       return res.status(err.statusCode).send(err.toString());
     });
 
@@ -50,7 +52,7 @@ class SummaryService {
         .on('end', (layers) => {
           ok(layers.map((layer) => layer.toJSON()));
         });
-    } else {
+    } else if (decoder.canSummarizeQuickly()) {
       req.log.info("Making abbreviated summary");
 
       req
@@ -58,19 +60,20 @@ class SummaryService {
         .once('data', (_datum) => {
           decoder.pause();
           decoder.summarize((err, summary) => {
-            if (err) return res.status(400).send(JSON.stringify(err));
+            if (err) return onErr(err);
             return ok(summary);
           });
         })
         .on('error', (err) => {
           if (err.code === 'EPIPE') return;
-          return onErr(new CorruptArchive({
-            reason: err.toString()
-          }));
+          return onErr(err);
         });
+    } else {
+      decoder.summarize((err, summary) => {
+        if (err) return onErr(err);
+        return ok(summary);
+      });
     }
-
-
   }
 }
 
