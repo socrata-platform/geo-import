@@ -516,7 +516,7 @@ describe('spatial service', function() {
   });
 
 
-  it('will delete any created layers when an error is encountered getting column info', function(onDone) {
+  it('will not delete any replacement layers when an error is encountered getting column info', function(onDone) {
     mockCore.failGetColumns = 503;
     var names = {
       names: ['A new layer name']
@@ -533,15 +533,15 @@ describe('spatial service', function() {
         }
       })), (resp, buffered) => {
         mockCore.failGetColumns = false;
-        var del0 = _.last(mockCore.history);
-        expect(del0.method).to.equal('DELETE')
-        expect(del0.url).to.equal('/views/qs32-qpt8')
+        var colInfo = _.last(mockCore.history);
+        expect(colInfo.method).to.equal('GET');
+        expect(colInfo.url).to.equal('/views/qs32-qpt8/columns');
         onDone();
       });
   });
 
 
-  it('will delete any created layers when an error is encountered in delete columns', function(onDone) {
+  it('will not delete any created layers when an error is encountered in delete columns', function(onDone) {
     mockCore.failDeleteColumns = 503;
     var names = {
       names: ['A new layer name']
@@ -558,9 +558,9 @@ describe('spatial service', function() {
         }
       })), (resp, buffered) => {
         mockCore.failColumns = false;
-        var del0 = _.last(mockCore.history);
-        expect(del0.method).to.equal('DELETE')
-        expect(del0.url).to.equal('/views/qs32-qpt8')
+        var deleteColumn = _.last(mockCore.history);
+        expect(deleteColumn.method).to.equal('DELETE');
+        expect(deleteColumn.url).to.equal('/views/qs32-qpt8/columns/3416');
         onDone();
       });
   });
