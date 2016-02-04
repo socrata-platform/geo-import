@@ -126,11 +126,7 @@ class SpatialService {
     };
 
     async.seq(createOrReplace, flatColumns, deleteColumns)(layers, (err, newLayers) => {
-      if (err) {
-        return this._destroyLayers(layers, core, () => {
-          return res.status(err.statusCode || 500).send(err.body || err.toString());
-        });
-      }
+      if (err) return res.status(err.statusCode).send(err.toString());
       return this._createColumns(req, res, core, newLayers);
     });
   }
