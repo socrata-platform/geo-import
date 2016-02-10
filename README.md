@@ -13,21 +13,24 @@ into soda-fountain
 
 ## setup
 
-install dependencies
+### use the correct node version
+You'll either need system wide node >= 3.3 or use something like [nvm](https://github.com/creationix/nvm) and invoke `nvm install 5.1` and then `nvm use 5.1` when you run geo-import.
+
+### install dependencies
 
 linux
 ```
-  CC=gcc CXX=g++ npm i
+  make
 ```
 
 mac
-```
-  ¯\_(ツ)_/¯
-```
-on a mac `npm i` *should* work, but i'm not sure how clang will deal with node-expat and node-srs, so brace yourself for some ugliness
+  * el capitan, run `make`
+  * earlier OSX versions don't have the correct version of clang. Either update xcode (??) or add this [workaround](https://github.com/Homebrew/homebrew/issues/40653)
 
 this also runs a postinstall script to install mapbox/node-srs,
 which is built from source in a sibling repo and symlinked here
+
+Note that `make clean` doesn't remove the dependencie directory. If you run dependency resolution with the wrong version of node, you will need to delete `make clean && rm -r node_modules`, change node versions, and then `make` again.
 
 ## developing
 to compile to es5, run

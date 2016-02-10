@@ -14,7 +14,7 @@ appease_jenkins: lib
 
 
 node_modules:
-	CC=gcc CXX=g++ npm i
+	npm i
 
 clean:
 	rm -rf lib
