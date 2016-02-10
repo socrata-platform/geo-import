@@ -30,7 +30,7 @@ mac
 this also runs a postinstall script to install mapbox/node-srs,
 which is built from source in a sibling repo and symlinked here
 
-Note that `make clean` doesn't remove the dependency directory. If you run dependency resolution with the wrong version of node, you will need to delete `make clean && rm -r node_modules`, change node versions, and then `make` again.
+Note that `make clean` doesn't remove the dependency directory. If you run dependency resolution with the wrong version of node, you will need to `make clean && rm -r node_modules`, change node versions, and then `make` again.
 
 ## developing
 to compile to es5, run
