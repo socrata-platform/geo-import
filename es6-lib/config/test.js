@@ -4,9 +4,9 @@ export default {
   //abbreviate summaries at 50kb
   abbreviateSummarySize: 50 * 1000,
 
-  zk : ["localhost:2181"],
-  log : {
-    level: 'critical',
-    name : 'geo-import'
+  zk: ["localhost:2181"],
+  log: {
+    level: 'error',
+    name: 'geo-import'
   }
 };

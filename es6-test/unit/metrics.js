@@ -70,7 +70,7 @@ describe('metrics service', () => {
   });
 
 
-  it('can get the process memory from the endpoint', (onDone) => {
+  it('can get the process memory from the endpoint ', (onDone) => {
     makeARequest(() => {
       expect(Object.keys(app.metrics.state.memory).sort()).to.eql([
         'rss',
