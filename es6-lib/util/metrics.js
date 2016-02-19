@@ -9,12 +9,59 @@ var conf = config();
 
 class Metrics {
   constructor() {
-    setInterval(this._sampleMemory.bind(this), 1000);
+    this._resetState();
     this._gc = gcstats();
     this._gc.on('stats', _.throttle(this._onGcStat, 1000).bind(this));
   }
 
-  static heapdump(req, res) {
+  _resetState() {
+    this._state = {
+      http: {
+        status: {}
+      },
+      gc: {},
+      memory: {}
+    };
+  }
+
+  metrics(req, res) {
+    res.status(200).send(JSON.stringify(this.state));
+    this._resetState();
+  }
+
+  get state() {
+    this._sampleMemory();
+    return this._state;
+  }
+
+  _onGcStat(stats) {
+    this._state.gc.pause = stats.pause;
+  }
+
+  _sampleMemory() {
+    this._state.memory = _.pick(process.memoryUsage(), 'rss', 'heapUsed', 'heapTotal');
+  }
+
+  countRequest(method, path, status, latency) {
+    status = parseInt(status);
+    var current = this._state.http.status[status] || {count: 0};
+    this._state.http.status[status] = {count: current.count + 1};
+  }
+
+  _bindRequest(req, res, next) {
+    var start = Date.now();
+    res.on('finish', () => {
+      var latency = Date.now() - start;
+      this.countRequest(req.method, req.path, res.statusCode, latency);
+    });
+    next();
+  }
+
+  request() {
+    return this._bindRequest.bind(this);
+  }
+
+  heapdump(req, res) {
     req.log.info('Making a heapdump');
     heapdump.writeSnapshot((err, filename) => {
       if (err) return res.status(500).send(err.toString());
@@ -27,33 +74,6 @@ class Metrics {
           .set('content-disposition', `inline; filename="${filename}"`))
         .on('end', () => fs.unlink(filename));
     });
-  }
-
-  _onGcStat(stats) {
-    var kind = {
-      1: 'scavenge',
-      2: 'mark-sweep',
-      3: 'both'
-    }[stats.gctype];
-
-    logger.info({
-      kind: kind,
-      pause: stats.pause,
-      cleaned: stats.diff.usedHeapSize * -1
-    }, "metrics");
-  }
-
-  _sampleMemory() {
-    var sample = process.memoryUsage();
-    if (this._last) {
-      sample.rssGrowth = sample.rss / this._last.rss;
-      logger.info(sample, "metrics");
-      if (sample.rssGrowth > 1.8) {
-        logger.warn("RSS Growth is very high!");
-      }
-    }
-
-    this._last = sample;
   }
 }
 

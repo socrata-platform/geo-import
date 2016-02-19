@@ -17,17 +17,19 @@ function js(req, res, next) {
 }
 
 
-function router(config, app, zookeeper) {
+function router(config, app, zookeeper, metrics) {
   var spatial = new Spatial(zookeeper);
   var summary = new Summary(config);
 
-  app.post('/summary', app.logger.request(), js, summary.post.bind(summary));
-  app.post('/spatial', app.logger.request(), js, spatial.create.bind(spatial));
-  app.put('/spatial/:fourfours?', app.logger.request(), js, spatial.replace.bind(spatial));
+  app.post('/summary', app.logger.request(), js, metrics.request(), summary.post.bind(summary));
+  app.post('/spatial', app.logger.request(), js, metrics.request(), spatial.create.bind(spatial));
+  app.put('/spatial/:fourfours?', app.logger.request(), js, metrics.request(), spatial.replace.bind(spatial));
 
   //meta
   app.get('/version', app.logger.request(), js, version.get);
-  app.get('/heapdump', app.logger.request(), Metrics.heapdump);
+  app.get('/metrics', app.logger.request(), js, metrics.metrics.bind(metrics));
+  app.get('/heapdump', app.logger.request(),    metrics.heapdump);
+
 }
 
 export default router;
