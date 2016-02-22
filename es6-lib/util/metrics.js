@@ -26,7 +26,6 @@ class Metrics {
 
   metrics(req, res) {
     res.status(200).send(JSON.stringify(this.state));
-    this._resetState();
   }
 
   get state() {
