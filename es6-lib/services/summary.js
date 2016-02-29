@@ -49,6 +49,12 @@ class SummaryService {
         .on('end', (layers) => {
           ok(layers.map((layer) => layer.toJSON()));
         });
+
+    } else if (!decoder.canSummarizeQuickly()) {
+      decoder.summarize((err, summary) => {
+        if (err) return res.status(400).send(JSON.stringify(err));
+        return ok(summary);
+      });
     } else {
       req.log.info("Making abbreviated summary");
 

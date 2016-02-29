@@ -1,18 +1,21 @@
-FROM socrata/nodejs
+FROM socrata/runit-nodejs
 
 ENV GEO_IMPORT_ENV=prod
 ENV BABEL_DISABLE_CACHE=1
+ENV SERVICE_DIR /etc/service/geo-import
+ENV ROOT_DIR /srv/geo-import
+
 EXPOSE 4444
 # Need git and gdal for node-srs
 RUN apt-get -y update && apt-get install -y git gdal-bin
 
-COPY ship.d /etc/ship.d/
-WORKDIR /app
+COPY runit ${SERVICE_DIR}
+WORKDIR ${ROOT_DIR}
 
 # Add the stuff that makes up the base node app
-ADD package.json /app/
-ADD scripts /app/scripts
-ADD lib.tar /app
+ADD package.json ${ROOT_DIR}/
+ADD scripts ${ROOT_DIR}/scripts
+ADD lib.tar ${ROOT_DIR}
 
 
 # Passing --production prevents node-srs from installing.
@@ -20,11 +23,11 @@ ADD lib.tar /app
 RUN npm install --production
 
 # Do the annoying node-srs thing
-WORKDIR /app/node_modules
+WORKDIR ${ROOT_DIR}/node_modules
 RUN git clone https://github.com/rozap/node-srs
-WORKDIR /app/node_modules/node-srs
+WORKDIR ${ROOT_DIR}/node_modules/node-srs
 RUN CC=gcc CXX=g++ npm install
 
-WORKDIR /app
+WORKDIR ${ROOT_DIR}
 
 RUN date -u +"%Y-%m-%dT%H:%M:%SZ" > build-time.txt
