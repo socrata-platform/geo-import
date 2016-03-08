@@ -133,7 +133,7 @@ describe('kml ingress', () => {
 
   it('should be able to do la bikelanes KML upsert', function(onDone) {
     //long timeout for jankins
-    this.timeout(25000);
+    this.timeout(45000);
     bufferJs(fixture('smoke/la_bikelanes.kml')
       .pipe(request.post({
         url: url + '/spatial',
