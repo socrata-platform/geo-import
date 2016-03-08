@@ -130,4 +130,23 @@ describe('kml ingress', () => {
         onDone();
       });
   });
+
+  it('should be able to do la bikelanes KML upsert', function(onDone) {
+    //long timeout for jankins
+    this.timeout(25000);
+    bufferJs(fixture('smoke/la_bikelanes.kml')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/vnd.google-earth.kml+xml'
+        }
+      })), (res, buffered) => {
+        expect(res.statusCode).to.equal(200);
+        expect(buffered.layers.length).to.equal(4);
+        onDone();
+      });
+  });
 });

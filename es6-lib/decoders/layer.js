@@ -95,6 +95,8 @@ class Layer extends Duplex {
   }
 
   belongsIn(soqlRow) {
+    if(soqlRow.length !== this.columns.length) return false;
+
     for (var i = 0; i < this.columns.length; i++) {
       let column = this.columns[i];
       let soqlValue = soqlRow[i];
@@ -274,9 +276,12 @@ class Layer extends Duplex {
         writeIndex++;
         if (writeIndex === self._count) ep = jsonEpilogue;
 
+        var percent = Math.floor((writeIndex / self._count) * 100);
+        if(percent % 25 === 0) {
+          logger.info(`Upserted ${percent}% of layer ${self.uid}, ${self.name}`);
+        }
         if(!self.push(sep + rowString + ep)) {
           this.pause();
-
           //our reader has gone away, this kills the stream.
           //so end the stream with a null and flush anything
           //that's buffered into oblivion
