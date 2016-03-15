@@ -17,6 +17,9 @@ ADD package.json ${ROOT_DIR}/
 ADD scripts ${ROOT_DIR}/scripts
 ADD lib.tar ${ROOT_DIR}
 
+# Add geo-import specific metrics
+COPY collectd-nodejs.conf /etc/collectd/conf.d/nodejs.conf
+
 
 # Passing --production prevents node-srs from installing.
 # We will set it up sans symlinks in the next step
