@@ -279,8 +279,9 @@ class Layer extends Duplex {
         if (writeIndex === self._count) ep = jsonEpilogue;
 
         var percent = Math.floor((writeIndex / self._count) * 100);
-        if (percent % 25 === 0) {
+        if ((percent % 10 === 0) && (percent !== this._lastProgress)) {
           logger.info(`Upserted ${percent}% of layer ${self.uid}, ${self.name}`);
+          this._lastProgress = percent;
         }
         if (!self.push(sep + rowString + ep)) {
           this.pause();

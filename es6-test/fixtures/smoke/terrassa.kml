@@ -1,0 +1,5587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document id="Connexió Internet Terrassa" xsi:schemaLocation="http://www.opengis.net/kml/2.2 http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd http://www.google.com/kml/ext/2.2 http://code.google.com/apis/kml/schema/kml22gx.xsd">
+	<name>Connexió Internet Terrassa</name>
+	<open>1</open>
+	<Snippet maxLines="0"></Snippet>
+	<Style id="PolyStyle50">
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<LineStyle>
+			<color>ffff7000</color>
+			<width>1.5</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>ff00e698</color>
+		</PolyStyle>
+	</Style>
+	<Style id="IconStyle30">
+		<IconStyle>
+			<scale>1.5</scale>
+			<Icon>
+				<href>files/Layer3_Symbol_2c866d50_0.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<PolyStyle>
+			<color>ff000000</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="IconStyle10">
+		<IconStyle>
+			<scale>1.5</scale>
+			<Icon>
+				<href>files/Layer1_Symbol_2c866d50_0.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<PolyStyle>
+			<color>ff000000</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="LegendRadioFolder0">
+		<IconStyle>
+			<scale>0</scale>
+		</IconStyle>
+		<ListStyle>
+			<listItemType>radioFolder</listItemType>
+		</ListStyle>
+	</Style>
+	<Style id="IconStyle20">
+		<IconStyle>
+			<scale>1.5</scale>
+			<Icon>
+				<href>files/Layer2_Symbol_2c866d50_0.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<PolyStyle>
+			<color>ff000000</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="IconStyle40">
+		<IconStyle>
+			<scale>1.5</scale>
+			<Icon>
+				<href>files/Layer4_Symbol_2c866d50_0.png</href>
+			</Icon>
+		</IconStyle>
+		<LabelStyle>
+			<color>00000000</color>
+			<scale>0</scale>
+		</LabelStyle>
+		<PolyStyle>
+			<color>ff000000</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Folder id="legend0">
+		<name>Legend</name>
+		<Style id="LegendRadioFolder0">
+			<IconStyle>
+				<scale>0</scale>
+			</IconStyle>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+				<maxSnippetLines>2</maxSnippetLines>
+			</ListStyle>
+		</Style>
+		<ScreenOverlay id="A0">
+			<name>Upper Left</name>
+			<visibility>0</visibility>
+			<color>b0ffffff</color>
+			<Icon>
+				<href>files/legend0.png</href>
+			</Icon>
+			<overlayXY x="0.01" y="0.99" xunits="fraction" yunits="fraction"/>
+			<screenXY x="0.01" y="0.99" xunits="fraction" yunits="fraction"/>
+			<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<size x="-1" y="-1" xunits="pixels" yunits="pixels"/>
+		</ScreenOverlay>
+		<ScreenOverlay id="B0">
+			<name>Upper Center</name>
+			<visibility>0</visibility>
+			<color>b0ffffff</color>
+			<Icon>
+				<href>files/legend0.png</href>
+			</Icon>
+			<overlayXY x="0.5" y="0.99" xunits="fraction" yunits="fraction"/>
+			<screenXY x="0.5" y="0.99" xunits="fraction" yunits="fraction"/>
+			<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<size x="-1" y="-1" xunits="pixels" yunits="pixels"/>
+		</ScreenOverlay>
+		<ScreenOverlay id="C0">
+			<name>Upper Right</name>
+			<visibility>0</visibility>
+			<color>b0ffffff</color>
+			<Icon>
+				<href>files/legend0.png</href>
+			</Icon>
+			<overlayXY x="0.99" y="0.99" xunits="fraction" yunits="fraction"/>
+			<screenXY x="0.99" y="0.99" xunits="fraction" yunits="fraction"/>
+			<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<size x="-1" y="-1" xunits="pixels" yunits="pixels"/>
+		</ScreenOverlay>
+		<ScreenOverlay id="D0">
+			<name>Center Left</name>
+			<visibility>0</visibility>
+			<color>b0ffffff</color>
+			<Icon>
+				<href>files/legend0.png</href>
+			</Icon>
+			<overlayXY x="0.01" y="0.5" xunits="fraction" yunits="fraction"/>
+			<screenXY x="0.01" y="0.5" xunits="fraction" yunits="fraction"/>
+			<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<size x="-1" y="-1" xunits="pixels" yunits="pixels"/>
+		</ScreenOverlay>
+		<ScreenOverlay id="E0">
+			<name>Center</name>
+			<visibility>0</visibility>
+			<color>b0ffffff</color>
+			<Icon>
+				<href>files/legend0.png</href>
+			</Icon>
+			<overlayXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<screenXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<size x="-1" y="-1" xunits="pixels" yunits="pixels"/>
+		</ScreenOverlay>
+		<ScreenOverlay id="F0">
+			<name>Center Right</name>
+			<visibility>0</visibility>
+			<color>b0ffffff</color>
+			<Icon>
+				<href>files/legend0.png</href>
+			</Icon>
+			<overlayXY x="0.99" y="0.5" xunits="fraction" yunits="fraction"/>
+			<screenXY x="0.99" y="0.5" xunits="fraction" yunits="fraction"/>
+			<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<size x="-1" y="-1" xunits="pixels" yunits="pixels"/>
+		</ScreenOverlay>
+		<ScreenOverlay id="G0">
+			<name>Lower Left</name>
+			<visibility>0</visibility>
+			<color>b0ffffff</color>
+			<Icon>
+				<href>files/legend0.png</href>
+			</Icon>
+			<overlayXY x="0.01" y="0.01" xunits="fraction" yunits="fraction"/>
+			<screenXY x="0.01" y="0.01" xunits="fraction" yunits="fraction"/>
+			<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<size x="-1" y="-1" xunits="pixels" yunits="pixels"/>
+		</ScreenOverlay>
+		<ScreenOverlay id="H0">
+			<name>Lower Center</name>
+			<visibility>0</visibility>
+			<color>b0ffffff</color>
+			<Icon>
+				<href>files/legend0.png</href>
+			</Icon>
+			<overlayXY x="0.5" y="0.01" xunits="fraction" yunits="fraction"/>
+			<screenXY x="0.5" y="0.01" xunits="fraction" yunits="fraction"/>
+			<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<size x="-1" y="-1" xunits="pixels" yunits="pixels"/>
+		</ScreenOverlay>
+		<ScreenOverlay id="I0">
+			<name>Lower Right</name>
+			<visibility>0</visibility>
+			<color>b0ffffff</color>
+			<Icon>
+				<href>files/legend0.png</href>
+			</Icon>
+			<overlayXY x="0.99" y="0.01" xunits="fraction" yunits="fraction"/>
+			<screenXY x="0.99" y="0.01" xunits="fraction" yunits="fraction"/>
+			<rotationXY x="0.5" y="0.5" xunits="fraction" yunits="fraction"/>
+			<size x="-1" y="-1" xunits="pixels" yunits="pixels"/>
+		</ScreenOverlay>
+		<Placemark id="ID_0">
+			<name>None</name>
+			<styleUrl>#LegendRadioFolder0</styleUrl>
+		</Placemark>
+	</Folder>
+	<Folder id="GroupLayer0">
+		<name>PuntXarxa</name>
+		<Snippet maxLines="0"></Snippet>
+		<Folder id="FeatureLayer1">
+			<name>PX biblioteca</name>
+			<Snippet maxLines="0"></Snippet>
+			<Placemark id="ID_10000">
+				<name>PX Biblioteca Central de Terrassa - BCT</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa biblioteca</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Biblioteca Central de Terrassa - BCT</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>PS DE LES LLETRES, 1</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937894589</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>10</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle10</styleUrl>
+				<Point>
+					<coordinates>2.009563350719385,41.56884147536596,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_10001">
+				<name>PX Biblioteca Districte 6 - BD6</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa biblioteca</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Biblioteca Districte 6 - BD6</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>RM DE FRANCESC MACIÀ, 193</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397420</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>8</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>6</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle10</styleUrl>
+				<Point>
+					<coordinates>2.02585910164066,41.57745402616955,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_10002">
+				<name>PX Biblioteca Districte 4 - Bd4</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa biblioteca</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Biblioteca Districte 4 - Bd4</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE L'INFANT MARTÍ, 183</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397423</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>8</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>4</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle10</styleUrl>
+				<Point>
+					<coordinates>1.998728322563836,41.55682133401941,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_10003">
+				<name>PX Biblioteca Districte 3 - Bd2</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa biblioteca</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Biblioteca Districte 3 - Bd2</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DEL GERMÀ JOAQUIM, 66</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397014</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>7</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>3</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle10</styleUrl>
+				<Point>
+					<coordinates>2.020380947708305,41.55591327194512,0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+		<Folder id="FeatureLayer2">
+			<name>PX equipament</name>
+			<Snippet maxLines="0"></Snippet>
+			<Placemark id="ID_20000">
+				<name>PX Casa Soler i Palet</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casa Soler i Palet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE LA FONT VELLA, 28</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937832711</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>2</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.012565994747482,41.56244181813306,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20001">
+				<name>PX Casa Baumann</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casa Baumann</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>AV DE JACQUARD, 1</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937861112</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>4</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.018901593228373,41.56379753304817,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20002">
+				<name>PX Centre Cívic Montserrat Roig ( Districte II )</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Centre Cívic Montserrat Roig ( Districte II )</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>AV DE BARCELONA, 180</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937362412</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>8</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>2</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.027602538101346,41.56451583896389,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20003">
+				<name>PX Casal de Can Boada</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal de Can Boada</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE JOAN D'ÀUSTRIA, 11</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937894249</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>2</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>5</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.001043750891332,41.56919111803428,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20004">
+				<name>PX Casal de Can Parellada</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal de Can Parellada</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA D'AMÈRICA, 33</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937869150</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>6</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>3</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.04189051900481,41.53698703295935,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20005">
+				<name>PX Casal Grup Guadalhorce</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal Grup Guadalhorce</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DEL GUADALHORCE, 2</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937857002</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>4</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>3</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.026987934955117,41.55370528921235,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20006">
+				<name>PX Casal Cívic de Torre-Sana / Montserrat / Vilardell</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal Cívic de Torre-Sana / Montserrat / Vilardell</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE SALAMANCA, 33</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>6</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>2</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.038567333968996,41.56068103128673,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20007">
+				<name>PX Casal del Segle XX</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal del Segle XX</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>PL DEL SEGLE XX, 11</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937839612</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>6</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>3</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.012293022154197,41.55318228457404,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20008">
+				<name>PX Casal de Xúquer</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal de Xúquer</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DEL XÚQUER, 17</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>4</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>3</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.033946950569394,41.55569491587623,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20009">
+				<name>PX Local social de Ca N&apos;Anglada</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Local social de Ca N'Anglada</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE SANT COSME, 150</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>4</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>2</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.030037930453928,41.56348234577644,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20010">
+				<name>PX Casal de Can Palet II</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal de Can Palet II</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE BADALONA, 1-B</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937869844</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>4</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>3</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.030209371811576,41.55384406833766,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20011">
+				<name>PX Casal de Can Gonteres</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal de Can Gonteres</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>PL DEL PI, 4</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>1</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>5</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>1.977150687546724,41.5738158672924,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20012">
+				<name>PX Casal de Can Palet de Vista Alegre</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal de Can Palet de Vista Alegre</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>PL DE LA PAU, 1</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>1</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>4</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>1.98944754490348,41.54398354092417,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_20013">
+				<name>PX Casal de joves de Sant Llorenç</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa equipament</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal de joves de Sant Llorenç</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>AV DE JACQUARD, 1</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937861112</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>6</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle20</styleUrl>
+				<Point>
+					<coordinates>2.018901593228373,41.56379753304817,0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+		<Folder id="FeatureLayer3">
+			<name>PX casal gent gran</name>
+			<Snippet maxLines="0"></Snippet>
+			<Placemark id="ID_30000">
+				<name>PX Casal Gent Gran de les Arenes</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa casal gent gran</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal Gent Gran de les Arenes</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DEL MATAGALLS, 1</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937851514</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>2</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>6</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle30</styleUrl>
+				<Point>
+					<coordinates>2.034086661787407,41.57263809354951,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_30001">
+				<name>PX Casal Gent Gran Anna Murià</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa casal gent gran</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal Gent Gran Anna Murià</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE SANT ILDEFONS, 8</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937883333</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>6</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle30</styleUrl>
+				<Point>
+					<coordinates>2.012307028405436,41.56705044535684,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_30002">
+				<name>PX Casal Gent Gran de la Maurina</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa casal gent gran</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal Gent Gran de la Maurina</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE NÚRIA, 175</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937886933</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Connexions</td>
+
+<td>8</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>4</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle30</styleUrl>
+				<Point>
+					<coordinates>1.994973913769242,41.56403353461094,0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+		<Folder id="FeatureLayer4">
+			<name>PX omnia</name>
+			<open>1</open>
+			<Snippet maxLines="0"></Snippet>
+			<Placemark id="ID_40000">
+				<name>PX Casal Gent Gran Can Jofresa</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa Òmnia</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal Gent Gran Can Jofresa</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA D'IGUALADA, 8</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>3</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle40</styleUrl>
+				<Point>
+					<coordinates>2.016810350942023,41.54939158034554,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_40001">
+				<name>PX Casal Cìvic del Pla del Bonaire</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa Òmnia</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal Cìvic del Pla del Bonaire</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE SABADELL, 4</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937352907</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>5</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle40</styleUrl>
+				<Point>
+					<coordinates>2.01726475643755,41.58238974592273,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_40002">
+				<name>PX Associació de veins Sant Llorenç</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa Òmnia</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Associació de veins Sant Llorenç</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>PL DE LA FONT DE L'OLLA, 79</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>6</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle40</styleUrl>
+				<Point>
+					<coordinates>2.031311784191523,41.57880220879328,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_40003">
+				<name>PX Casal de Egara</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa Òmnia</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Casal de Egara</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>PL DE LA IMMACULADA, 4</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>6</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle40</styleUrl>
+				<Point>
+					<coordinates>2.028383602690489,41.57285385616792,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_40004">
+				<name>PX Local social Montserrat</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa Òmnia</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Local social Montserrat</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>GR DE MONTSERRAT, 2</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>2</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle40</styleUrl>
+				<Point>
+					<coordinates>2.035115636506114,41.55807992697443,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_40005">
+				<name>PX Esplai La Fàbrica de Can Tusell</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa Òmnia</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Esplai La Fàbrica de Can Tusell</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>PL DE CAN TUSELL, 1</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>6</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle40</styleUrl>
+				<Point>
+					<coordinates>2.019021662129873,41.58109649279258,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ID_40006">
+				<name>PX Centre Juvenil Les Arenes</name>
+				<Snippet maxLines="0"></Snippet>
+				<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>PuntXarxa Òmnia</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>PX Centre Juvenil Les Arenes</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Adreça</td>
+
+<td>CA DE CALAF, 46</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937317866</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">DISTRICTE</td>
+
+<td>6</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+				<styleUrl>#IconStyle40</styleUrl>
+				<Point>
+					<coordinates>2.034706375213518,41.5716473327752,0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+	</Folder>
+	<Folder id="FeatureLayer5">
+		<name>Espai Wi·Fi</name>
+		<Snippet maxLines="0"></Snippet>
+		<Placemark id="ID_50000">
+			<name>Wi·Serveis Centrals - Edifici Noble</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Serveis Centrals - Edifici Noble</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397000</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>RV DE MONTSERRAT, 14</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.01008273563503,41.56333178276331,0 2.010063912373577,41.56330547289104,0 2.010041251891992,41.5632649796807,0 2.010030467576317,41.56326751699059,0 2.009982813256039,41.56311701088472,0 2.009966920988298,41.56307231549104,0 2.010251275825501,41.56301690406012,0 2.010372916117088,41.5629935546101,0 2.010410926720434,41.56310252645669,0 2.010440992552526,41.56315917015634,0 2.010470707731909,41.5632049931794,0 2.010347631104863,41.56322897459371,0 2.010280783119518,41.56324390096029,0 2.010284176041528,41.56325812550136,0 2.010248472510851,41.56326682556592,0 2.010245083871626,41.56325782523915,0 2.010087114921206,41.56328527121217,0 2.010102821522232,41.56332720878601,0 2.01008273563503,41.56333178276331,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50001">
+			<name>Wi·Serveis Centrals - Edifici B</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Serveis Centrals - Edifici B</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397000</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DIDÓ, 5</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.010398412665475,41.56383087929273,0 2.010304420231904,41.56386273041798,0 2.010290581348907,41.56383683940403,0 2.009993236617084,41.5639290099237,0 2.009795953582664,41.563575986187,0 2.009706833246752,41.56341728681917,0 2.009845761373258,41.56338568731226,0 2.010082732388102,41.56333177822498,0 2.010102821522232,41.56332720878601,0 2.010122708104259,41.56331997596522,0 2.010265451024939,41.56358002600727,0 2.010389598674692,41.56380617926334,0 2.010402419882774,41.56382952136846,0 2.010398412665475,41.56383087929273,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50002">
+			<name>Wi·Serveis Centrals - Plaça Didó</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Serveis Centrals - Plaça Didó</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397000</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DIDÓ, 5</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.010398412665475,41.56383087929273,0 2.010304420231904,41.56386273041798,0 2.010290581348907,41.56383683940403,0 2.009993236617084,41.5639290099237,0 2.009795953582664,41.563575986187,0 2.009706833246752,41.56341728681917,0 2.009845761373258,41.56338568731226,0 2.010082732388102,41.56333177822498,0 2.010102821522232,41.56332720878601,0 2.010122708104259,41.56331997596522,0 2.010265451024939,41.56358002600727,0 2.010389598674692,41.56380617926334,0 2.010402419882774,41.56382952136846,0 2.010398412665475,41.56383087929273,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50003">
+			<name>Wi·Edifici Pantà-20</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Edifici Pantà-20</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397090</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DEL PANTÀ, 20</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.010700995065978,41.56502856331555,0 2.011404924730113,41.56515603117905,0 2.011358428902253,41.56531650026692,0 2.011291252946721,41.56554725494939,0 2.011098722653903,41.56551354361857,0 2.011099625497195,41.56550545390503,0 2.011164227315179,41.56528074806415,0 2.010677825665117,41.56518737722087,0 2.010700995065978,41.56502856331555,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50004">
+			<name>Wi·Edifici Pantà-30</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Edifici Pantà-30</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397000</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DEL PANTÀ, 30</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.010700995065978,41.56502856331555,0 2.011404924730113,41.56515603117905,0 2.011358428902253,41.56531650026692,0 2.011291252946721,41.56554725494939,0 2.011098722653903,41.56551354361857,0 2.011099625497195,41.56550545390503,0 2.011164227315179,41.56528074806415,0 2.010677825665117,41.56518737722087,0 2.010700995065978,41.56502856331555,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50005">
+			<name>Wi·Cultura i Esports</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Cultura i Esports</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937832711</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE LA FONT VELLA, 28</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.012519746199567,41.5627116824143,0 2.012404384483706,41.56268983153201,0 2.01247297242472,41.56251713963368,0 2.012532403665916,41.56237005765173,0 2.012613468921072,41.56216940629162,0 2.01272759108269,41.56220882839476,0 2.012652151340691,41.56238657774964,0 2.012578455234594,41.56256083821003,0 2.012540160697428,41.56265553556929,0 2.012519160275074,41.56271156929892,0 2.012519746199567,41.5627116824143,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50006">
+			<name>Wi·Edifici Unió</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Edifici Unió</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937885065</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE LA UNIÓ, 36</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.009635903137166,41.56181984293923,0 2.00951113632813,41.56177870483351,0 2.009479490361006,41.5618241169384,0 2.009422830155668,41.56179708488328,0 2.009447028526508,41.56176583105215,0 2.009485688237066,41.56171661524745,0 2.00954596657773,41.56164565299199,0 2.009600076782788,41.56158201450938,0 2.009760102831847,41.56167965195716,0 2.009648196813141,41.56180089852048,0 2.009635903137166,41.56181984293923,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50007">
+			<name>WI·Educació - Edifici PAME</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>WI·Educació - Edifici PAME</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937803511</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE LA RASA, 24</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.011613409112524,41.56483907556068,0 2.011392408294138,41.56479911232918,0 2.011395028465537,41.56479244249238,0 2.011387368667368,41.56478353160085,0 2.011456490831302,41.56463672266558,0 2.011663150600121,41.56468749732318,0 2.011613409112524,41.56483907556068,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50008">
+			<name>Wi·Parc de Vallparadís</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Parc de Vallparadís</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397065</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>RM DE SANT NEBRIDI, 55</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.021307376650496,41.55948333229152,0 2.02124670308436,41.5594998014838,0 2.021244320256503,41.55949240430546,0 2.02104031098795,41.55951932959715,0 2.021030193501366,41.55947613498655,0 2.021234202637562,41.55944920971119,0 2.021295742412965,41.55943993336253,0 2.021307376650496,41.55948333229152,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50009">
+			<name>Wi·Casa Baumann</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casa Baumann</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937861112</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>AV DE JACQUARD, 1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.019013536783129,41.56369828241039,0 2.018950482002431,41.56390982844004,0 2.018794251870942,41.56388506841969,0 2.018784310377369,41.56388299976188,0 2.018776639852912,41.56388025747321,0 2.018772395840205,41.56387772439005,0 2.018767824511729,41.56387360026565,0 2.018764507682547,41.56386849722368,0 2.018762901256681,41.56386241019538,0 2.018763164583171,41.56385769268109,0 2.018764667139613,41.56385318664206,0 2.018767011995197,41.56384941384022,0 2.018770221989504,41.56384601940476,0 2.01877483284924,41.56384273391197,0 2.018783495711352,41.56383922667351,0 2.018790376067738,41.56383807997221,0 2.018797117215967,41.56383811389347,0 2.018810895999157,41.56384016584076,0 2.018863055554111,41.56369944920529,0 2.018864354094418,41.56369441872197,0 2.018867960690279,41.5636890477771,0 2.018873245974473,41.56368486104984,0 2.018877548975481,41.56368277042859,0 2.018883108780627,41.563681157985,0 2.018889189393768,41.56368049648103,0 2.018895620557571,41.56368093279279,0 2.019013536783129,41.56369828241039,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50010">
+			<name>Wi·La Seu d&apos;Egara</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·La Seu d'Egara</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937833702</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DEL RECTOR HOMS, 1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.018377205570205,41.56674106396026,0 2.018233674155866,41.56672199295263,0 2.018248521420801,41.56659716577176,0 2.018268394521042,41.5665979658549,0 2.018270989997082,41.56655245659701,0 2.018328254478294,41.56655433232869,0 2.018336451831872,41.56648418212613,0 2.018485879955049,41.56649835532446,0 2.018548126413755,41.56650864113885,0 2.018539733924077,41.56656554009812,0 2.018490528814023,41.56656209391639,0 2.018478259623583,41.56662393177341,0 2.018394368693389,41.56661259656309,0 2.018377205570205,41.56674106396026,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50011">
+			<name>Wi·Foment de Terrassa</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Foment de Terrassa</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937891123</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CR DE MARTORELL, 95</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.00445035392424,41.55573525992588,0 2.004291356654481,41.55610909753295,0 2.004189499841756,41.55608568895566,0 2.004206190416401,41.55604514783092,0 2.004068027959727,41.55601049916654,0 2.004203553475412,41.5556714157167,0 2.004296326968104,41.55569491117717,0 2.004409510296199,41.55572357543063,0 2.00445035392424,41.55573525992588,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50012">
+			<name>Wi·Vapor Universitari de Terrassa</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Vapor Universitari de Terrassa</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937830755</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE COLOM, 114</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.022947079351496,41.55868525673093,0 2.023114135282171,41.55873817851165,0 2.023331562729044,41.55868957497733,0 2.023436471366877,41.55849572946237,0 2.023574258618607,41.55853492897418,0 2.023686082012161,41.55856766275903,0 2.023702222924835,41.55857287253824,0 2.023711996650504,41.55857674025326,0 2.02372013754233,41.55858041927317,0 2.023729758099327,41.55858536370464,0 2.023739568260231,41.5585911624981,0 2.023747296855265,41.5585963560554,0 2.023755431344942,41.55860252774974,0 2.0237616040507,41.55860778568058,0 2.023768962963346,41.55861485044355,0 2.023773966392382,41.55862026557727,0 2.023782528469984,41.55863108825611,0 2.023786983140496,41.55863780312381,0 2.02379193384137,41.55864660941248,0 2.023795597755696,41.55865455347357,0 2.023798797924466,41.55866326025005,0 2.023801169077292,41.55867187822125,0 2.023802739704101,41.55868022249639,0 2.023803677682627,41.55868962412693,0 2.023803784923378,41.5586978867003,0 2.023803143334245,41.55870685769437,0 2.023801873504747,41.55871498686558,0 2.023799905334024,41.55872322074319,0 2.023796174438094,41.55873491557395,0 2.023790244313635,41.55875316507595,0 2.023785137413995,41.55876888115814,0 2.023774204586438,41.55880252604813,0 2.023743770606503,41.55890252087758,0 2.023652365056099,41.55919080204844,0 2.023575924869713,41.55943877635561,0 2.023454858469113,41.55949360032138,0 2.022813217440359,41.55938161497094,0 2.022743710231923,41.55929761859547,0 2.022781644479909,41.55918340989083,0 2.022947079351496,41.55868525673093,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50013">
+			<name>Wi·Centre Cívic Alcalde Morera</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Centre Cívic Alcalde Morera</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937869159</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DE CAN PALET, 1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.024594553982352,41.55600240220782,0 2.023873203819167,41.55587477722407,0 2.023878571219449,41.55586052717761,0 2.023889923766801,41.55583828313003,0 2.023898383030015,41.5558251394348,0 2.023910803752187,41.55580896634945,0 2.023926993378236,41.55579159148105,0 2.023947757152132,41.55577343269898,0 2.023955046133533,41.55576788929791,0 2.023986206316019,41.5557730535584,0 2.024002872516806,41.55574287663144,0 2.02409280866548,41.55577557910482,0 2.024123536806968,41.55569940446411,0 2.02426024209772,41.55577024373208,0 2.024355615042479,41.5557699356082,0 2.024366811194195,41.55581647177534,0 2.024350832454783,41.55581847099238,0 2.024614493773919,41.55597221691611,0 2.024594553982352,41.55600240220782,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50014">
+			<name>Wi·Centre Cívic Maria Aurèlia Capmany</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Centre Cívic Maria Aurèlia Capmany</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937333098</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>AV D'ÀNGEL SALLENT, 55</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								1.999613928303123,41.55747281004482,0 1.999677297964081,41.55732385935737,0 2.000063155754094,41.55741813229113,0 2.000052423824472,41.55744533086451,0 2.000051162553441,41.55746489678321,0 2.000043355838074,41.55749400565276,0 2.000030156561315,41.5575193740294,0 2.000014163317362,41.55753995233493,0 2.000003245352747,41.55756521273611,0 1.999613928303123,41.55747281004482,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50015">
+			<name>Wi·Centre Cívic Avel.lí Estrenjer</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Centre Cívic Avel.lí Estrenjer</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937349103</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DE LA CULTURA, 5</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.006153162261755,41.57711664043109,0 2.006188922687062,41.57690981119078,0 2.006479461944739,41.57693494667444,0 2.006460555391023,41.57705801966085,0 2.006453359401416,41.5771048461215,0 2.006430195513015,41.57710891889605,0 2.006431433920864,41.57712764695386,0 2.006434840759503,41.57712826977441,0 2.006435026154788,41.57713104558753,0 2.006357656509298,41.57713960072665,0 2.006358036042386,41.57712657061271,0 2.006153162261755,41.57711664043109,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50016">
+			<name>Wi·Casal de Can Boada</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal de Can Boada</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937894249</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE JOAN D'ÀUSTRIA, 11</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.001198857182661,41.56919959059591,0 2.001165352778421,41.56923506608085,0 2.001047693788745,41.56931129019745,0 2.001010850213079,41.56928063810086,0 2.000990125659793,41.56925812527273,0 2.000964347646183,41.56922229214343,0 2.000951947778035,41.56919587831415,0 2.000940197119291,41.56916216143298,0 2.000933665572658,41.56912755312475,0 2.000932475061303,41.56909270296702,0 2.000936639438228,41.56905826860521,0 2.001198857182661,41.56919959059591,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50017">
+			<name>Wi·Casal Can Parellada</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal Can Parellada</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937869150</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA D'AMÈRICA, 33</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.041724222147775,41.53727057465069,0 2.041719289567284,41.53719780900035,0 2.041744556114195,41.53707782661282,0 2.041701722965098,41.53707538021683,0 2.041669320784268,41.53682418625764,0 2.041655410628072,41.53671638867267,0 2.041967689982007,41.53669006678317,0 2.042038409817411,41.53682725959489,0 2.042112998440484,41.53697196221101,0 2.042140833256523,41.53703227068776,0 2.042097265794097,41.53724709132326,0 2.041724222147775,41.53727057465069,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50018">
+			<name>Wi·Casal Grup Guadalhorce</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal Grup Guadalhorce</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937857002</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DEL GUADALHORCE, 2</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.027104422837657,41.55362636687905,0 2.027106028561283,41.55367435413272,0 2.027111542377746,41.55367425003019,0 2.027112490774305,41.55370259288522,0 2.027123400331631,41.5537023869087,0 2.027124515080144,41.55373570100592,0 2.027118521795711,41.55373581416145,0 2.027120007811587,41.55378022361404,0 2.026867570862895,41.55378505340781,0 2.026865946273333,41.55373662221548,0 2.026875535528841,41.55373644118754,0 2.026874645437874,41.5537098378972,0 2.026859062904042,41.55371013206715,0 2.026858038665998,41.55367951911183,0 2.026852049547625,41.553679632175,0 2.026850719287418,41.55363018843261,0 2.027104422837657,41.55362636687905,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50019">
+			<name>Wi·Casal del Segle XX</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal del Segle XX</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937839612</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DEL SEGLE XX, 11</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.012150263791488,41.55308807743764,0 2.012493696810282,41.55314410510749,0 2.012466956924108,41.55322450823917,0 2.01236442405923,41.55327086201638,0 2.012108649146177,41.55322949158791,0 2.012150263791488,41.55308807743764,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50020">
+			<name>Wi·Equipament sòcio-esportiu La Cogullada</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Equipament sòcio-esportiu La Cogullada</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937330054</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>AV DE JOAQUIM DE SAGRERA, 15</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.002960638386692,41.55476498323018,0 2.002756209935525,41.55524041374122,0 2.002735577086952,41.5552370103205,0 2.002725290557427,41.55525951125197,0 2.002551598008249,41.55522187764981,0 2.002541279758872,41.55521756381366,0 2.002671936927536,41.55489839091346,0 2.002597084367602,41.55488061933201,0 2.002374132010354,41.55466589992074,0 2.002342332764464,41.55463224345164,0 2.002419336637663,41.55459037006037,0 2.002415816325154,41.55458383032245,0 2.002463892301174,41.55455628575801,0 2.002457862735969,41.55454991041618,0 2.00253780594691,41.55450402719657,0 2.002539476926657,41.55450609532802,0 2.002575565321079,41.5545423379684,0 2.002515898622799,41.55468503541392,0 2.002753377630711,41.55472772556777,0 2.002960638386692,41.55476498323018,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50021">
+			<name>Wi·Local Social de Roc Blanc</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Local Social de Roc Blanc</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937883307</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DEL ROC BLANC, 48</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								1.989071722614472,41.55717680255973,0 1.989244520825776,41.55715017222712,0 1.989275363396325,41.55726309800426,0 1.989103286962472,41.55728989823267,0 1.989071722614472,41.55717680255973,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50022">
+			<name>Wi·Conservatori de Música</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Conservatori de Música</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937361760</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE MIQUEL VIVES, 2</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.019223296723864,41.56299338327017,0 2.019328864850111,41.56271115057362,0 2.019984136931542,41.56284940118288,0 2.019878559281561,41.56313164340679,0 2.019223296723864,41.56299338327017,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50023">
+			<name>Wi·Escola La Llar</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Escola La Llar</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937881886</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE SANT ISIDRE, 1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.013007904372634,41.56661073888186,0 2.012997632501026,41.56660951983687,0 2.012670584910438,41.56657070791559,0 2.012724636083247,41.56637239713898,0 2.012790830493122,41.56638214675593,0 2.012770978722967,41.56648817175623,0 2.013030524900883,41.56652158151101,0 2.013007904372634,41.56661073888186,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50024">
+			<name>WI·Casal Gent Gran Anna Murià</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>WI·Casal Gent Gran Anna Murià</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937883333</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE SANT ILDEFONS, 8</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.011795244911274,41.56683583159641,0 2.011800335197338,41.56682920098374,0 2.012497012304989,41.56693579324677,0 2.012908331953526,41.56699872735454,0 2.012838524038347,41.56727272897268,0 2.012804760053108,41.56728862520019,0 2.01271309045779,41.5672708652359,0 2.012551265606179,41.56723951326953,0 2.012171475890246,41.56716593175324,0 2.011629999639408,41.56706102218659,0 2.011744134818324,41.56690392836251,0 2.011795244911274,41.56683583159641,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50025">
+			<name>Wi·Local social de Ca N&apos;Anglada</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Local social de Ca N'Anglada</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937311363</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE SANT COSME, 150</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.029948410609321,41.56345457841942,0 2.029957776628012,41.5634256160046,0 2.030119559964658,41.5634552168848,0 2.030093153203559,41.56354605094306,0 2.030012398455899,41.56352962554571,0 2.029948410609321,41.56345457841942,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50026">
+			<name>Wi·Centre Cívic President Macià</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Centre Cívic President Macià</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937357438</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>RM DE FRANCESC MACIÀ, 189</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.024755314964447,41.57750406811677,0 2.024782965562578,41.57736278157992,0 2.024799982435466,41.57736469123444,0 2.024810537861439,41.57730808046281,0 2.024771584981669,41.57730273327008,0 2.024784228879157,41.57723806075661,0 2.024819854639776,41.5772421007225,0 2.024832782474474,41.57718247463475,0 2.024912219433226,41.57719104723977,0 2.024918135061453,41.57716458922456,0 2.025001808069303,41.57717427280502,0 2.024996006852438,41.57720147611143,0 2.025070735558641,41.57721151744173,0 2.025077237022431,41.57718305436317,0 2.02515360550826,41.57719333606649,0 2.025152558238558,41.57721938665303,0 2.025224329440008,41.57722681722493,0 2.025230211118121,41.57720040232616,0 2.025315949417047,41.57721106862216,0 2.025311646040354,41.57723881033063,0 2.025386024279611,41.57724477270185,0 2.025378678356541,41.57727941516523,0 2.025365146303607,41.57731302343797,0 2.025345665740171,41.57734495101344,0 2.025320605409299,41.57737460653824,0 2.02528340416964,41.57740675326593,0 2.025190135386831,41.57735027036116,0 2.025140773769249,41.57734635853326,0 2.025139884882701,41.5773544214412,0 2.025104055276767,41.57735037083984,0 2.025095375775592,41.57740030519491,0 2.025134128770438,41.57740538937585,0 2.025105538888156,41.5775453710035,0 2.02498189241215,41.57753078536599,0 2.024979613662033,41.57754113332604,0 2.024928212547422,41.57753477096085,0 2.024930414874032,41.57752471959129,0 2.024755314964447,41.57750406811677,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50027">
+			<name>Wi·Edifici Glòries</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Edifici Glòries</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397080</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>AV DE LES GLÒRIES CATALANES, 3</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.028566311396828,41.55806298032473,0 2.028664959715331,41.55842180506026,0 2.028555223251331,41.558438487692,0 2.028597610486517,41.55859343644382,0 2.028442254913458,41.5586174079501,0 2.028432476770216,41.55858166580745,0 2.028358999840565,41.55859300690649,0 2.028348505577099,41.55855463760877,0 2.02832066095125,41.5584528460798,0 2.028160803664125,41.55847714848444,0 2.028141331142959,41.55840489924339,0 2.028121162603861,41.55840797147953,0 2.02806088949595,41.55818462377081,0 2.028048235929613,41.55814071477821,0 2.028566311396828,41.55806298032473,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50028">
+			<name>Wi·Campus Professional Vallparadís</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Campus Professional Vallparadís</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937847613</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE BADALONA, 1-B</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.018975318799151,41.55021439877729,0 2.018823189611513,41.55045384606675,0 2.018748616000234,41.55057088946878,0 2.018746235623435,41.55057045301878,0 2.018625256195459,41.5505479119505,0 2.018299588074119,41.55048721728812,0 2.018237949696415,41.55047573310021,0 2.018201517135781,41.55046877562215,0 2.018039667599109,41.55044058628486,0 2.017979116182886,41.55043028760714,0 2.017964933107634,41.55036410931188,0 2.01796112965512,41.55032961187462,0 2.018000736575366,41.55029311558018,0 2.018051502339059,41.55024633674796,0 2.018090001225906,41.55021703249655,0 2.018226789536281,41.55011345111546,0 2.018975318799151,41.55021439877729,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50029">
+			<name>Wi·Casal Can Palet II</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal Can Palet II</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937869844</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DEL TÚRIA, 3</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.030014040729178,41.55403236614689,0 2.030142023986042,41.55361096598418,0 2.030405657949793,41.55365553747464,0 2.030275061535215,41.55407842819705,0 2.030014040729178,41.55403236614689,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50030">
+			<name>Wi·Casal de Xúquer</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal de Xúquer</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DEL XÚQUER, 17</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.033617297909199,41.55621686649977,0 2.034050669071256,41.55615662628183,0 2.033995066441496,41.55627427044434,0 2.033561694443717,41.55633451044252,0 2.033617297909199,41.55621686649977,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50031">
+			<name>Wi·Casal de Can Gonteres</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal de Can Gonteres</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937888172</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DEL PI, 4</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								1.976906563914046,41.57377361460194,0 1.977064614649945,41.57365753043408,0 1.977393664215633,41.57385709145866,0 1.977238260695473,41.5739748899884,0 1.976906563914046,41.57377361460194,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50032">
+			<name>WI·Casal Cívic de Ca n&apos;Aurell</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>WI·Casal Cívic de Ca n'Aurell</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DEL TINT, 5</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.003818801423867,41.56606562941317,0 2.003793381381703,41.56563581229199,0 2.004196275809467,41.56562534303954,0 2.004203635362209,41.56586321114575,0 2.004457599810701,41.56585661114473,0 2.004470402041866,41.56605023991908,0 2.003818801423867,41.56606562941317,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50033">
+			<name>Wi·Parc de Sant Jordi</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Parc de Sant Jordi</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397421</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DE JOSEP FREIXA I ARGEMÍ, 11</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.00397597464614,41.5630785049892,0 2.003968208549851,41.56293360193897,0 2.004487532660126,41.56292345999495,0 2.004488904179982,41.56298650426768,0 2.004510769402557,41.56298713481285,0 2.004529729964796,41.56300043137032,0 2.004528584148798,41.5630211830586,0 2.00451140071893,41.56303667088317,0 2.004486023070287,41.56303828876815,0 2.004485562268455,41.5630451821254,0 2.004485079429702,41.56305520250648,0 2.00448458403306,41.56306408195211,0 2.004470955696472,41.56306473340467,0 2.004451771529256,41.56306565351143,0 2.004445110707279,41.56306596882497,0 2.004439322904372,41.56306622858862,0 2.004276691773887,41.56307401930071,0 2.004277620626397,41.56310571467806,0 2.004196068938788,41.56310652206246,0 2.004197034773174,41.563074059457,0 2.00397597464614,41.5630785049892,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50034">
+			<name>Wi·Casal de Can Palet de Vista Alegre</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal de Can Palet de Vista Alegre</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937886540</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PL DE LA PAU, 1</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								1.989399055299569,41.54408169913064,0 1.989336697255357,41.54392233598118,0 1.989363650492003,41.54391608752823,0 1.989357092144176,41.54390608594352,0 1.989341482156562,41.54391070464501,0 1.989324875966085,41.54388072684257,0 1.989440738816222,41.54384384210841,0 1.989451194962715,41.54386223662898,0 1.989489241296496,41.54385810319394,0 1.98950448271313,41.54391415391611,0 1.989493313335544,41.54391693813418,0 1.989565186898791,41.5440935345239,0 1.989561308455523,41.54412088243277,0 1.989553638580908,41.54412067096066,0 1.989552977972951,41.54412614155299,0 1.989495727554076,41.54411929767864,0 1.989497689211946,41.54410418276613,0 1.989435425036793,41.54409902421603,0 1.989427036083825,41.54408338604786,0 1.989434944845464,41.54408057319839,0 1.989431227634259,41.54407290242182,0 1.989399055299569,41.54408169913064,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50035">
+			<name>Wi·Casal de Can Tusell</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal de Can Tusell</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937342435</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE TARRAGONA, 101</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.018917161647328,41.58031178030246,0 2.019151698768266,41.58032083130368,0 2.01915017482208,41.58034405419107,0 2.019568385311501,41.58035942106861,0 2.019551300794837,41.58061486088096,0 2.018899011424579,41.58059095444838,0 2.018917161647328,41.58031178030246,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50036">
+			<name>Wi·Casal Cívic Vapor Gran</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Casal Cívic Vapor Gran</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937846306</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>PS DEL VAPOR GRAN, 39</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.013737218230015,41.55997849242115,0 2.013745197019885,41.55992387955685,0 2.013836128331656,41.55992919006049,0 2.013829672671576,41.5599845299548,0 2.013737218230015,41.55997849242115,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50037">
+			<name>WI·Casal Cívic de Torre-Sana / Montserrat / Vilardell</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>WI·Casal Cívic de Torre-Sana / Montserrat / Vilardell</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td></td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE SALAMANCA, 33</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.038891620279161,41.56082244348246,0 2.038289278619837,41.56082155188826,0 2.038270666534891,41.5605385436978,0 2.038320140577667,41.56050336971404,0 2.038876343919559,41.56058474797781,0 2.038891620279161,41.56082244348246,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50038">
+			<name>Wi·Complex Funerari Municipal</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Complex Funerari Municipal</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937869400</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td></td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.043211556023484,41.55784855881531,0 2.043404149912515,41.55781490593986,0 2.04333035006391,41.55757987934914,0 2.04432559822859,41.55741059080503,0 2.044751875975582,41.55733982602867,0 2.045106947295859,41.55727613300002,0 2.045167533464948,41.55726446704128,0 2.044977385922852,41.5575130870424,0 2.044562684176651,41.55805530628653,0 2.044412508386824,41.55803232793388,0 2.044230943670854,41.55800454648804,0 2.044080950945454,41.55798159807378,0 2.043211556023484,41.55784855881531,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50039">
+			<name>Wi·Recinte Firal de Terrassa</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Recinte Firal de Terrassa</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937330493</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td></td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.007264982257301,41.57082012815197,0 2.007388545288683,41.57034123705807,0 2.007486267803683,41.57028988346471,0 2.00818416479463,41.57036649142648,0 2.008252332212804,41.57043917263832,0 2.008129318244912,41.57092884200252,0 2.007264982257301,41.57082012815197,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50040">
+			<name>Wi·Teatre Principal</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Teatre Principal</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937832711</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td></td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.012727608206126,41.56429444687658,0 2.012786179683284,41.56425529656835,0 2.012865006347868,41.56420261744112,0 2.012868822843211,41.56420007412606,0 2.01289564292656,41.56422348877865,0 2.012907533156679,41.56421684439667,0 2.012961437910945,41.56423051142365,0 2.013222790681063,41.56446711172494,0 2.013183398386659,41.56449359730893,0 2.013186838013668,41.56449769806704,0 2.013180021391765,41.56450285722337,0 2.013169726331969,41.56451006774113,0 2.013158528742946,41.56451720327556,0 2.013148035013653,41.56452329508701,0 2.013133598388089,41.5645308364016,0 2.013119946639923,41.56453716330314,0 2.013104910409084,41.5645433149615,0 2.013085056969167,41.5645502467542,0 2.013078260460007,41.56454527952761,0 2.013050201260791,41.56455284196549,0 2.013028835175434,41.56455800766136,0 2.0130088950793,41.56456244668919,0 2.012902806775599,41.56446686182879,0 2.012914983266174,41.56445953535496,0 2.012727608206126,41.56429444687658,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50041">
+			<name>Wi·Vapor Gran</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Vapor Gran</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937885065</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td>CA DE BISCAIA, 6</td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.013750786352043,41.55988951465906,0 2.013760537172848,41.55983355509954,0 2.013845508921147,41.55983994927271,0 2.013839714166576,41.55989806404605,0 2.013750786352043,41.55988951465906,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50042">
+			<name>Wi·Masia Ca N&apos;Anglada</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Masia Ca N'Anglada</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937397000</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td></td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.030104377360636,41.56096851560232,0 2.030071103492314,41.56111202881523,0 2.029948222569118,41.56110738093049,0 2.029943926232087,41.56114183080627,0 2.029829992091312,41.5611408701424,0 2.02982541774554,41.56099520293452,0 2.029824222478698,41.56095482252196,0 2.029972191686797,41.56094236116545,0 2.029973439030555,41.56096241273342,0 2.030104377360636,41.56096851560232,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+		<Placemark id="ID_50043">
+			<name>Wi·Centre Cívic Montserrat Roig ( Districte II )</name>
+			<Snippet maxLines="0"></Snippet>
+			<description><![CDATA[<html xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
+<body>
+
+<h3>Espai Wi·Fi</h3>
+
+<table border="1" width="300" cellpadding="5" cellspacing="0" style="font-family:Verdana; font-size:8pt;">
+
+<tr bgcolor="#E41915" style="color:#ffffff;">
+
+<th width="25%" align="left">Camp</th>
+
+<th width="75%" align="left">Valor</th>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Tipus entitat</td>
+
+<td>Connexió Internet</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">Nom</td>
+
+<td>Wi·Centre Cívic Montserrat Roig ( Districte II )</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">TELEFON</td>
+
+<td>937362412</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">N_CONEX</td>
+
+<td>0</td>
+
+</tr>
+
+<tr>
+
+<td bgcolor="#f77674">ADR_1</td>
+
+<td></td>
+
+</tr>
+
+</table><br></body>
+
+</html>]]></description>
+			<styleUrl>#PolyStyle50</styleUrl>
+			<MultiGeometry>
+				<Polygon>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								2.027390413026388,41.56428317318522,0 2.027802381782219,41.56436116268237,0 2.027769197798223,41.56437871654556,0 2.027916450163722,41.56441706146599,0 2.027771372384336,41.56475871299632,0 2.027383061222649,41.56466327826312,0 2.027323261995883,41.56458495945827,0 2.027390413026388,41.56428317318522,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</MultiGeometry>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

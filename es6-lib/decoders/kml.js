@@ -317,7 +317,10 @@ class KML extends Transform {
         var [newState, features] = this['_' + ev](state, name, attrs);
 
         if (features.length) {
-          let rows = features.map((feature) => {
+          let rows = features
+          .filter((feature) => feature[GEOM_NAME] !== undefined)
+          .map((feature) => {
+
             return toRow(
               feature[GEOM_NAME], geomToSoQL, _.omit(feature, GEOM_NAME),
               _.partial(this._propToSoQL, state.schema).bind(this),
