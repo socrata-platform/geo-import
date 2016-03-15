@@ -246,6 +246,25 @@ describe('decoders', () => {
       });
   });
 
+  it('terrassa kml', function(onDone) {
+    var [decoder, res] = kmlDecoder();
+    var rows = [];
+    var expected = ['the_geom',
+      'name',
+      'description'
+    ].sort();
+
+    fixture('smoke/terrassa.kml')
+      .pipe(decoder)
+      .pipe(es.mapSync((row) => rows.push(row)))
+      .on('end', () => {
+        rows.map((r) => r.columns.map((c) => c.name)).forEach((colNames) => {
+          expect(colNames.sort()).to.eql(expected);
+        })
+        onDone();
+      });
+  });
+
   it('weird line bug where coordinate state was not being reset between elements', function(onDone) {
     var [merger, response] = makeMerger();
     var async = require('async');
