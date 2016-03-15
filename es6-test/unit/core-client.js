@@ -67,7 +67,6 @@ describe('core client', function() {
       expect(err.statusCode).to.equal(400);
       onDone();
     });
-
   });
 
 

@@ -3,6 +3,15 @@ var bodyParser = require('body-parser');
 import _ from 'underscore';
 import es from 'event-stream';
 
+function enforceUA(req, res, next) {
+  if(req.headers['user-agent'] !== 'geo-import') {
+    res.status(400).send(JSON.stringify({
+      error: 'user-agent invalid'
+    }));
+  }
+  next();
+}
+
 class CoreMock {
   constructor(port) {
     this._history = [];
@@ -15,9 +24,9 @@ class CoreMock {
 
     //this is super hacky....express binds middleware to the
     //base route, which overrides more specific routes, ugh
-    app.use('/views/:fourfour/rows', bodyParser.raw());
-    app.use(/\/views$/, bodyParser.json());
-    app.use(/.*columns$/, bodyParser.json());
+    app.use('/views/:fourfour/rows', enforceUA, bodyParser.raw());
+    app.use(/\/views$/, enforceUA, bodyParser.json());
+    app.use(/.*columns$/, enforceUA, bodyParser.json());
 
     app.post('/views/:uid/publication', function(req, res) {
       this._history.push(req);
@@ -147,7 +156,7 @@ class CoreMock {
           "position": i,
           "tableColumnId": 3415 + i,
           "format": {}
-        }
+        };
       });
 
 
