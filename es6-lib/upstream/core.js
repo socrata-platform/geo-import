@@ -53,7 +53,8 @@ class Core {
       'X-Socrata-Host': this._auth.host,
       'X-Socrata-RequestId': this._auth.reqId,
       'Cookie': this._auth.cookie,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'User-Agent': 'geo-import'
     };
   }
 
