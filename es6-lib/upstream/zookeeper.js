@@ -22,7 +22,7 @@ class Zookeeper extends EventEmitter {
     logger.info('Initializing zookeeper client');
     if (this._client) this._client.close();
 
-    var [aZookeeperNode] = this._conf.zk;
+    var aZookeeperNode = _.sample(this._conf.zk);
     this._client = zookeeper.createClient(aZookeeperNode);
 
     //proxy the underlying events onto this emitter
