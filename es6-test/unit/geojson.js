@@ -21,8 +21,11 @@ describe('geojson decoder', function() {
     var count = 0;
     fixture('simple_points.json')
     .pipe(new GeoJSON())
-    .pipe(es.mapSync(function(thing) {
-      let columns = thing.columns;
+    .pipe(es.mapSync(function(row) {
+      var [theGeom] = row.columns;
+      expect(theGeom.isCorrectArity()).to.equal(true);
+
+      let columns = row.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLPoint',
         'SoQLText',
@@ -40,8 +43,11 @@ describe('geojson decoder', function() {
   it('can turn simple points to SoQLLine', function(onDone) {
     fixture('simple_lines.json')
     .pipe(new GeoJSON())
-    .pipe(es.mapSync(function(thing) {
-      let columns = thing.columns;
+    .pipe(es.mapSync(function(row) {
+      var [theGeom] = row.columns;
+      expect(theGeom.isCorrectArity()).to.equal(true);
+
+      let columns = row.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLLine',
         'SoQLText'
@@ -53,8 +59,11 @@ describe('geojson decoder', function() {
   it('can turn simple points to SoQLPolygon', function(onDone) {
     fixture('simple_polygons.json')
     .pipe(new GeoJSON())
-    .pipe(es.mapSync(function(thing) {
-      let columns = thing.columns;
+    .pipe(es.mapSync(function(row) {
+      var [theGeom] = row.columns;
+      expect(theGeom.isCorrectArity()).to.equal(true);
+
+      let columns = row.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLPolygon',
         'SoQLText'
@@ -68,8 +77,11 @@ describe('geojson decoder', function() {
 
     fixture('simple_multipoints.json')
     .pipe(new GeoJSON())
-    .pipe(es.mapSync(function(thing) {
-      let columns = thing.columns;
+    .pipe(es.mapSync(function(row) {
+      var [theGeom] = row.columns;
+      expect(theGeom.isCorrectArity()).to.equal(true);
+
+      let columns = row.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiPoint',
         'SoQLText'
@@ -81,8 +93,11 @@ describe('geojson decoder', function() {
   it('can turn simple points to SoQLMultiLine', function(onDone) {
     fixture('simple_multilines.json')
     .pipe(new GeoJSON())
-    .pipe(es.mapSync(function(thing) {
-      let columns = thing.columns;
+    .pipe(es.mapSync(function(row) {
+      var [theGeom] = row.columns;
+      expect(theGeom.isCorrectArity()).to.equal(true);
+
+      let columns = row.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiLine',
         'SoQLText'
@@ -94,8 +109,11 @@ describe('geojson decoder', function() {
   it('can turn simple points to SoQLMultiPolygon', function(onDone) {
     fixture('simple_multipolygons.json')
     .pipe(new GeoJSON())
-    .pipe(es.mapSync(function(thing) {
-      let columns = thing.columns;
+    .pipe(es.mapSync(function(row) {
+      var [theGeom] = row.columns;
+      expect(theGeom.isCorrectArity()).to.equal(true);
+
+      let columns = row.columns;
       expect(columns.map((c) => c.constructor.name)).to.eql([
         'SoQLMultiPolygon',
         'SoQLText'

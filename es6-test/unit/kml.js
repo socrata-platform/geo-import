@@ -26,13 +26,16 @@ describe('kml decoder', function() {
     fixture('with_nulls.kml')
       .pipe(new KML())
       .pipe(es.mapSync((row) => {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
         expect(row.columns.map((c) => c.constructor.name).sort()).to.eql([
           'SoQLPoint',
           'SoQLNull',
           'SoQLNull',
           'SoQLNull',
           'SoQLNull'
-        ].sort())
+        ].sort());
       }))
       .on('end', onDone);
   });
@@ -42,16 +45,18 @@ describe('kml decoder', function() {
     fixture('type_guessing.kml')
       .pipe(new KML())
       .pipe(es.mapSync((row) => {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
         expect(row.columns.map((c) => c.constructor.name).sort()).to.eql([
           'SoQLPoint',
           'SoQLText',
           'SoQLNumber',
           'SoQLNumber'
-        ].sort())
+        ].sort());
       }))
       .on('end', onDone);
   });
-
 
   it('can turn untyped extendeddata to SoQLTypes', function(onDone) {
     var expectedValues = [
@@ -87,8 +92,11 @@ describe('kml decoder', function() {
 
     fixture('untyped_simple_points.kml')
       .pipe(kml)
-      .pipe(es.mapSync(function(thing) {
-        let columns = thing.columns;
+      .pipe(es.mapSync(function(row) {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
+        let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPoint',
           'SoQLText',
@@ -139,8 +147,11 @@ describe('kml decoder', function() {
 
     fixture('simple_points.kml')
       .pipe(kml)
-      .pipe(es.mapSync(function(thing) {
-        let columns = thing.columns;
+      .pipe(es.mapSync(function(row) {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
+        let columns = row.columns;
 
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPoint',
@@ -198,8 +209,11 @@ describe('kml decoder', function() {
 
     fixture('simple_lines.kml')
       .pipe(kml)
-      .pipe(es.mapSync(function(thing) {
-        let columns = thing.columns;
+      .pipe(es.mapSync(function(row) {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
+        let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLLine',
           'SoQLText'
@@ -266,8 +280,11 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('simple_polygons.kml')
       .pipe(kml)
-      .pipe(es.mapSync(function(thing) {
-        let columns = thing.columns;
+      .pipe(es.mapSync(function(row) {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
+        let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPolygon',
           'SoQLText'
@@ -304,8 +321,11 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('simple_multipoints.kml')
       .pipe(kml)
-      .pipe(es.mapSync(function(thing) {
-        let columns = thing.columns;
+      .pipe(es.mapSync(function(row) {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
+        let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPoint',
           'SoQLText'
@@ -353,8 +373,11 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('simple_multilines.kml')
       .pipe(kml)
-      .pipe(es.mapSync(function(thing) {
-        let columns = thing.columns;
+      .pipe(es.mapSync(function(row) {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
+        let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiLine',
           'SoQLText'
@@ -437,8 +460,11 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('simple_multipolygons.kml')
       .pipe(kml)
-      .pipe(es.mapSync(function(thing) {
-        let columns = thing.columns;
+      .pipe(es.mapSync(function(row) {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
+        let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPolygon',
           'SoQLText'
@@ -454,14 +480,16 @@ describe('kml decoder', function() {
   it('can turn kml multi geometry heterogenous shapes into SoQL', function(onDone) {
 
     var kml = new KML();
-    var things = [];
+    var rows = [];
 
     var pointExpected = [{
         "type": "MultiPoint",
-        "coordinates": [[
-          102.0,
-          0.5
-        ]]
+        "coordinates": [
+          [
+            102.0,
+            0.5
+          ]
+        ]
       },
       "first value"
     ];
@@ -469,19 +497,26 @@ describe('kml decoder', function() {
 
     var lineExpected = [{
         "type": "MultiLineString",
-        "coordinates": [[
-          [101.0, 0.0],
-          [101.0, 1.0]
-        ]]
+        "coordinates": [
+          [
+            [101.0, 0.0],
+            [101.0, 1.0]
+          ]
+        ]
       },
       "first value"
     ];
 
     fixture('points_and_lines_multigeom.kml')
       .pipe(kml)
-      .pipe(es.mapSync((thing) => things.push(thing)))
+      .pipe(es.mapSync((row) => {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
+        rows.push(row);
+      }))
       .on('end', () => {
-        var [t0, t1] = things;
+        var [t0, t1] = rows;
 
         expect(t0.columns.map((c) => c.value)).to.eql(pointExpected);
         expect(t1.columns.map((c) => c.value)).to.eql(lineExpected);
@@ -494,14 +529,16 @@ describe('kml decoder', function() {
   it('can turn kml multi geometry heterogenous shapes into SoQL', function(onDone) {
 
     var kml = new KML();
-    var things = [];
+    var rows = [];
 
     var pointExpected = [{
         "type": "MultiPoint",
-        "coordinates": [[
-          102.0,
-          0.5
-        ]]
+        "coordinates": [
+          [
+            102.0,
+            0.5
+          ]
+        ]
       },
       "first value"
     ];
@@ -509,19 +546,26 @@ describe('kml decoder', function() {
 
     var lineExpected = [{
         "type": "MultiLineString",
-        "coordinates": [[
-          [101.0, 0.0],
-          [101.0, 1.0]
-        ]]
+        "coordinates": [
+          [
+            [101.0, 0.0],
+            [101.0, 1.0]
+          ]
+        ]
       },
       "first value"
     ];
 
     fixture('points_and_lines_multigeom_sans_schema.kml')
       .pipe(kml)
-      .pipe(es.mapSync((thing) => things.push(thing)))
+      .pipe(es.mapSync((row) => {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
+
+        rows.push(row);
+      }))
       .on('end', () => {
-        var [t0, t1] = things;
+        var [t0, t1] = rows;
 
         expect(t0.columns.map((c) => c.value)).to.eql(pointExpected);
         expect(t1.columns.map((c) => c.value)).to.eql(lineExpected);
