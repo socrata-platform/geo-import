@@ -235,8 +235,8 @@ describe('decoders', () => {
 
     fixture('smoke/police_beats_patternc.kmz')
       .pipe(decoder)
-      .pipe(es.mapSync((row) => rows.push(row)))
       .pipe(new ArityChecker())
+      .pipe(es.mapSync((row) => rows.push(row)))
       .on('end', () => {
         rows.map((r) => r.columns.map((c) => c.name)).forEach((colNames) => {
           expect(colNames.sort()).to.eql(expected);
