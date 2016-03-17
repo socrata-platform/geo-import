@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import proj4 from 'proj4';
 import SoQL from './soql';
 import * as srs from 'node-srs';
@@ -13,6 +14,10 @@ class SoQLGeom extends SoQL {
       return this;
     }
     return this;
+  }
+
+  isCorrectArity() {
+    return _.every(this.mapCoordinates((coord) => coord.length === 2), (isTwo) => isTwo);
   }
 
   fixSemantics() {

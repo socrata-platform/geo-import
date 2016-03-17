@@ -21,6 +21,7 @@ import KML from '../../lib/decoders/kml';
 import GeoJSON from '../../lib/decoders/geojson';
 import Disk from '../../lib/decoders/disk';
 import Merger from '../../lib/decoders/merger';
+import {ArityChecker} from '../util';
 
 var res;
 var expect = chai.expect;
@@ -74,9 +75,8 @@ describe('decoders', () => {
     var count = 0;
     fixture('smoke/usbr.kmz')
       .pipe(decoder)
-      .pipe(es.mapSync(function(thing) {
-        count++;
-      }))
+      .pipe(new ArityChecker())
+      .pipe(es.mapSync((row) => count++))
       .on('end', () => {
         expect(count).to.equal(5);
         res.emit('finish');
@@ -91,7 +91,10 @@ describe('decoders', () => {
     var [decoder, res] = shpDecoder();
     fixture('smoke/USBR_crs.zip')
       .pipe(decoder)
-      .pipe(es.mapSync(function(thing) {
+      .pipe(new ArityChecker())
+      .pipe(es.mapSync(function(row) {
+        var [theGeom] = row.columns;
+        expect(theGeom.isCorrectArity()).to.equal(true);
         count++;
       }))
       .on('end', () => {
@@ -107,9 +110,8 @@ describe('decoders', () => {
     var [decoder, res] = shpDecoder();
     fixture('smoke/xdpw_supervisorial_districts_2011.zip')
       .pipe(decoder)
-      .pipe(es.mapSync(function(thing) {
-        count++;
-      }))
+      .pipe(new ArityChecker())
+      .pipe(es.mapSync((row) => count++))
       .on('end', () => {
         res.emit('finish');
         expect(count).to.equal(5);
@@ -123,9 +125,8 @@ describe('decoders', () => {
     var [decoder, res] = shpDecoder();
     fixture('smoke/xLibrTaxDist.zip')
       .pipe(decoder)
-      .pipe(es.mapSync(function(thing) {
-        count++;
-      }))
+      .pipe(new ArityChecker())
+      .pipe(es.mapSync((row) => count++))
       .on('end', () => {
         res.emit('finish');
         expect(count).to.equal(116);
@@ -139,9 +140,8 @@ describe('decoders', () => {
     var [decoder, res] = shpDecoder();
     fixture('smoke/xNeighbourhood.zip')
       .pipe(decoder)
-      .pipe(es.mapSync(function(thing) {
-        count++;
-      }))
+      .pipe(new ArityChecker())
+      .pipe(es.mapSync((row) => count++))
       .on('end', () => {
         res.emit('finish');
         expect(count).to.equal(236);
@@ -156,9 +156,8 @@ describe('decoders', () => {
     var [decoder, res] = kmlDecoder();
     fixture('smoke/usbr.kml')
       .pipe(decoder)
-      .pipe(es.mapSync(function(thing) {
-        count++;
-      }))
+      .pipe(new ArityChecker())
+      .pipe(es.mapSync((row) => count++))
       .on('end', () => {
         res.emit('finish');
         expect(count).to.equal(5);
@@ -172,9 +171,8 @@ describe('decoders', () => {
     var [decoder, res] = geojsonDecoder();
     fixture('smoke/usbr.geojson')
       .pipe(decoder)
-      .pipe(es.mapSync(function(thing) {
-        count++;
-      }))
+      .pipe(new ArityChecker())
+      .pipe(es.mapSync((row) => count++))
       .on('end', () => {
         res.emit('finish');
         expect(count).to.equal(5);
@@ -237,6 +235,7 @@ describe('decoders', () => {
 
     fixture('smoke/police_beats_patternc.kmz')
       .pipe(decoder)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync((row) => rows.push(row)))
       .on('end', () => {
         rows.map((r) => r.columns.map((c) => c.name)).forEach((colNames) => {
@@ -248,7 +247,6 @@ describe('decoders', () => {
 
   it('terrassa kml', function(onDone) {
     var [decoder, res] = kmlDecoder();
-    var rows = [];
     var expected = ['the_geom',
       'name',
       'description'
@@ -256,13 +254,12 @@ describe('decoders', () => {
 
     fixture('smoke/terrassa.kml')
       .pipe(decoder)
-      .pipe(es.mapSync((row) => rows.push(row)))
-      .on('end', () => {
-        rows.map((r) => r.columns.map((c) => c.name)).forEach((colNames) => {
-          expect(colNames.sort()).to.eql(expected);
-        })
-        onDone();
-      });
+      .pipe(new ArityChecker())
+      .pipe(es.mapSync((row) => {
+        var colNames = row.columns.map((c) => c.name);
+        expect(colNames.sort()).to.eql(expected);
+      }))
+      .on('end', onDone);
   });
 
   it('weird line bug where coordinate state was not being reset between elements', function(onDone) {

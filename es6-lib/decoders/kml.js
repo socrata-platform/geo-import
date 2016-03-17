@@ -233,6 +233,7 @@ var endElement = {
 
   'point': (state) => {
     state = util.setOrCloneFeature(state, 'point', util.mergeSingleGeom);
+    state.coordinates = [];
     return [state, []];
   },
 
