@@ -49,7 +49,7 @@ class WGS84Reprojector extends Transform {
         if (soql.isGeometry) {
 
           if (!soql.isCorrectArity()) {
-            logger.error(`Found invalid arity with geom ${geom}`);
+            logger.error(`Found invalid arity with geom ${soql}`);
             throw new Error({
               message: "Invalid arity",
               row: row
