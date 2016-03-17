@@ -13,6 +13,7 @@ import {
 }
 from 'events';
 import DevNull from '../../lib/util/devnull';
+import {ArityChecker} from '../util';
 var expect = chai.expect;
 var res;
 
@@ -101,9 +102,7 @@ describe('shapefile decoder', function() {
     var count = 0;
     fixture('simple_points_hidden_garbage.zip')
       .pipe(decoder)
-      .pipe(es.mapSync(() => {
-        count++;
-      }))
+      .pipe(es.mapSync(() => count++))
       .on('end', () => {
         expect(count).to.equal(2);
         onDone();
@@ -143,10 +142,8 @@ describe('shapefile decoder', function() {
     var [decoder, res] = shpDecoder();
     fixture('simple_points.zip')
       .pipe(decoder)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPoint',
@@ -200,10 +197,8 @@ describe('shapefile decoder', function() {
     var [decoder, res] = shpDecoder();
     fixture('simple_lines.zip')
       .pipe(decoder)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLLine',
@@ -268,10 +263,8 @@ describe('shapefile decoder', function() {
     var [decoder, res] = shpDecoder();
     fixture('simple_polygons.zip')
       .pipe(decoder)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPolygon',
@@ -308,10 +301,8 @@ describe('shapefile decoder', function() {
     var [decoder, res] = shpDecoder();
     fixture('simple_multipoints.zip')
       .pipe(decoder)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPoint',
@@ -360,6 +351,7 @@ describe('shapefile decoder', function() {
     var [decoder, res] = shpDecoder();
     fixture('simple_multilines.zip')
       .pipe(decoder)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
@@ -443,10 +435,8 @@ describe('shapefile decoder', function() {
     var [decoder, res] = shpDecoder();
     fixture('simple_multipolygons.zip')
       .pipe(decoder)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPolygon',

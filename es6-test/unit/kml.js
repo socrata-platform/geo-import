@@ -6,6 +6,7 @@ import {
 }
 from '../fixture';
 import KML from '../../lib/decoders/kml';
+import {ArityChecker} from '../util';
 var expect = chai.expect;
 
 
@@ -25,10 +26,8 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('with_nulls.kml')
       .pipe(new KML())
+      .pipe(new ArityChecker())
       .pipe(es.mapSync((row) => {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         expect(row.columns.map((c) => c.constructor.name).sort()).to.eql([
           'SoQLPoint',
           'SoQLNull',
@@ -44,10 +43,8 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('type_guessing.kml')
       .pipe(new KML())
+      .pipe(new ArityChecker())
       .pipe(es.mapSync((row) => {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         expect(row.columns.map((c) => c.constructor.name).sort()).to.eql([
           'SoQLPoint',
           'SoQLText',
@@ -92,10 +89,8 @@ describe('kml decoder', function() {
 
     fixture('untyped_simple_points.kml')
       .pipe(kml)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPoint',
@@ -147,12 +142,9 @@ describe('kml decoder', function() {
 
     fixture('simple_points.kml')
       .pipe(kml)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
-
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPoint',
           'SoQLText',
@@ -209,10 +201,8 @@ describe('kml decoder', function() {
 
     fixture('simple_lines.kml')
       .pipe(kml)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLLine',
@@ -280,10 +270,8 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('simple_polygons.kml')
       .pipe(kml)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLPolygon',
@@ -321,10 +309,8 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('simple_multipoints.kml')
       .pipe(kml)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPoint',
@@ -373,10 +359,8 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('simple_multilines.kml')
       .pipe(kml)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiLine',
@@ -460,10 +444,8 @@ describe('kml decoder', function() {
     var count = 0;
     fixture('simple_multipolygons.kml')
       .pipe(kml)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync(function(row) {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
           'SoQLMultiPolygon',
@@ -509,10 +491,8 @@ describe('kml decoder', function() {
 
     fixture('points_and_lines_multigeom.kml')
       .pipe(kml)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync((row) => {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         rows.push(row);
       }))
       .on('end', () => {
@@ -558,10 +538,8 @@ describe('kml decoder', function() {
 
     fixture('points_and_lines_multigeom_sans_schema.kml')
       .pipe(kml)
+      .pipe(new ArityChecker())
       .pipe(es.mapSync((row) => {
-        var [theGeom] = row.columns;
-        expect(theGeom.isCorrectArity()).to.equal(true);
-
         rows.push(row);
       }))
       .on('end', () => {
