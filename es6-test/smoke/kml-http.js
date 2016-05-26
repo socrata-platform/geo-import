@@ -149,4 +149,46 @@ describe('kml ingress', () => {
         onDone();
       });
   });
+
+  it('should be able to do la bikelanes KML upsert', function(onDone) {
+    //long timeout for jankins
+    this.timeout(10000);
+    bufferJs(fixture('smoke/cgis-en-6393.kml')
+      .pipe(request.post({
+        url: url + '/spatial',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/vnd.google-earth.kml+xml'
+        }
+      })), (res, buffered) => {
+        expect(res.statusCode).to.equal(200);
+        expect(buffered.layers.length).to.equal(2);
+        var [{layer: {columns: cols0}}, {layer: {columns: cols1}}] = buffered.layers
+
+        expect(cols0).to.eql([
+          {fieldName: 'the_geom', name: 'the_geom', dataTypeName: 'point'},
+          {fieldName: 'name', name: 'name', dataTypeName: 'text'},
+          {fieldName: 'description', name: 'description', dataTypeName: 'text'},
+          {fieldName: '__address', name: 'ADDRESS', dataTypeName: 'text'},
+          {fieldName: '__type', name: 'TYPE', dataTypeName: 'text'},
+          {fieldName: '__name', name: 'NAME', dataTypeName: 'text'},
+          {fieldName: '__created_dt', name: 'CREATED_DT', dataTypeName: 'text'},
+          {fieldName: '__comm_code', name: 'COMM_CODE', dataTypeName: 'text' }])
+
+        expect(cols1).to.eql([
+          {fieldName: 'the_geom', name: 'the_geom', dataTypeName: 'point' },
+          {fieldName: 'name', name: 'name', dataTypeName: 'text' },
+          {fieldName: 'description', name: 'description', dataTypeName: 'text' },
+          {fieldName: '__address', name: 'ADDRESS', dataTypeName: 'text' },
+          {fieldName: '__type', name: 'TYPE', dataTypeName: 'text' },
+          {fieldName: '__name', name: 'NAME', dataTypeName: 'text' },
+          {fieldName: '__created_dt', name: 'CREATED_DT', dataTypeName: 'text' }])
+
+        onDone();
+      });
+  });
+
+
 });

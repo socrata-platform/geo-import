@@ -72,31 +72,31 @@ describe('shapefile ingress', () => {
           name: 'the_geom',
           dataTypeName: 'line'
         }, {
-          fieldName: 'facility',
+          fieldName: '__facility',
           name: 'FACILITY',
           dataTypeName: 'text'
         }, {
-          fieldName: 'type',
+          fieldName: '__type',
           name: 'TYPE',
           dataTypeName: 'text'
         }, {
-          fieldName: 'year_const',
+          fieldName: '__year_const',
           name: 'YEAR_CONST',
           dataTypeName: 'number'
         }, {
-          fieldName: 'nghbrhd',
+          fieldName: '__nghbrhd',
           name: 'NGHBRHD',
           dataTypeName: 'text'
         }, {
-          fieldName: 'nghbrhd_id',
+          fieldName: '__nghbrhd_id',
           name: 'NGHBRHD_ID',
           dataTypeName: 'text'
         }, {
-          fieldName: 'ward',
+          fieldName: '__ward',
           name: 'WARD',
           dataTypeName: 'text'
         }, {
-          fieldName: 'str_ave',
+          fieldName: '__str_ave',
           name: 'STR_AVE',
           dataTypeName: 'text'
         }])
