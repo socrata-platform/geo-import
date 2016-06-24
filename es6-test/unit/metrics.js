@@ -44,7 +44,7 @@ describe('metrics service', () => {
   function makeARequest(onDone) {
     fixture('simple_points.json')
       .pipe(request.post({
-        url: url + `/spatial?what=asf`,
+        url: url + `/summary?what=asf`,
         headers: {
           'Authorization': 'test-auth',
           'X-App-Token': 'app-token',

@@ -1,5 +1,7 @@
 var zkEnsemble;
-var envZk = process.env.ZOOKEEPER_ENSEMBLE;
+const envZk = process.env.ZOOKEEPER_ENSEMBLE;
+const amqUrl = process.env.AMQ_URL;
+
 try {
   zkEnsemble = JSON.parse(envZk);
 } catch (e) {
@@ -15,5 +17,8 @@ export default {
     level: 'debug',
     name: 'geo-import'
   },
-  heapDumpOut: '/app'
+  heapDumpOut: '/app',
+  amq: {
+    host: amqUrl
+  }
 };

@@ -23,5 +23,5 @@ docker build --rm -t geo-import .
 if the ip for lxcbr0 is is `10.0.3.1`, and I wanted to run the container connected to
 my local ZK instance, i would run
 ```
-docker run -p 4444:4444 -e 'ZOOKEEPER_ENSEMBLE=["10.0.3.1:2181"]' geo-import
+docker run -p 4445:4445 -e 'ZOOKEEPER_ENSEMBLE=["10.0.3.1:2181"]' geo-import
 ```
