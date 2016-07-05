@@ -9,5 +9,8 @@ default {
   log: {
     level: 'critical',
     name: 'geo-import'
+  },
+  amq: {
+    host: 'stomp://localhost:61613,stomp://localhost:61613'
   }
 };
