@@ -68,8 +68,6 @@ describe('spatial service', function() {
     };
   }
 
-
-
   it('can put an Import geojson message and it will make a create dataset request to core', function(onDone) {
     const names = ['A layer named foo'];
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
@@ -77,12 +75,13 @@ describe('spatial service', function() {
         startMessage = JSON.parse(startMessage);
 
         expect(messageDetails(startMessage)).to.eql({
-          actType: 'Import',
-          user: 'kacw-u8uj',
-          datasetId: 'ffff-ffff',
-          domain: 'localhost',
-          jobId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          jobName: 'simple_points.json',
+          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
+          eventType: 'row-progress',
+          info: {
+            rowsComplete: 0,
+            totalRows: 0
+          },
+          status: 'InProgress',
           service: 'Imports2'
         });
       }, (finishMessage) => {
@@ -120,14 +119,15 @@ describe('spatial service', function() {
       (startMessage) => {
         startMessage = JSON.parse(startMessage);
 
-        expect(startMessage.tag).to.eql('IMPORT_ACTIVITY_START');
+        expect(startMessage.tag).to.eql('IMPORT_ACTIVITY_EVENT');
         expect(messageDetails(startMessage)).to.eql({
-          actType: 'Import',
-          user: 'kacw-u8uj',
-          datasetId: 'ffff-ffff',
-          domain: 'localhost',
-          jobId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          jobName: 'simple_points.json',
+          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
+          eventType: 'row-progress',
+          info: {
+            rowsComplete: 0,
+            totalRows: 0
+          },
+          status: 'InProgress',
           service: 'Imports2'
         });
       }, (finishMessage) => {
@@ -195,14 +195,15 @@ describe('spatial service', function() {
       (startMessage) => {
         startMessage = JSON.parse(startMessage);
 
-        expect(startMessage.tag).to.eql('IMPORT_ACTIVITY_START');
+        expect(startMessage.tag).to.eql('IMPORT_ACTIVITY_EVENT');
         expect(messageDetails(startMessage)).to.eql({
-          actType: 'Import',
-          user: 'kacw-u8uj',
-          datasetId: 'ffff-ffff',
-          domain: 'localhost',
-          jobId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          jobName: 'simple_points.json',
+          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
+          eventType: 'row-progress',
+          info: {
+            rowsComplete: 0,
+            totalRows: 0
+          },
+          status: 'InProgress',
           service: 'Imports2'
         });
       }, (finishMessage) => {
@@ -260,14 +261,15 @@ describe('spatial service', function() {
       (startMessage) => {
         startMessage = JSON.parse(startMessage);
 
-        expect(startMessage.tag).to.eql('IMPORT_ACTIVITY_START');
+        expect(startMessage.tag).to.eql('IMPORT_ACTIVITY_EVENT');
         expect(messageDetails(startMessage)).to.eql({
-          actType: 'Import',
-          user: 'kacw-u8uj',
-          datasetId: 'ffff-ffff',
-          domain: 'localhost',
-          jobId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          jobName: 'points_and_lines_multigeom.kml',
+          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
+          eventType: 'row-progress',
+          info: {
+            rowsComplete: 0,
+            totalRows: 0
+          },
+          status: 'InProgress',
           service: 'Imports2'
         });
       }, (_) => {
@@ -295,7 +297,7 @@ describe('spatial service', function() {
           status: 'Success',
           info: {
             warnings: [],
-            totalRows: 0
+            totalRows: 2
           },
           service: 'Imports2'
         });
@@ -329,7 +331,7 @@ describe('spatial service', function() {
           status: 'Success',
           info: {
             warnings: [],
-            totalRows: 0
+            totalRows: 2
           },
           service: 'Imports2'
         });
@@ -358,12 +360,13 @@ describe('spatial service', function() {
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (startMessage) => {
         expect(messageDetails(JSON.parse(startMessage))).to.eql({
-          actType: 'Import',
-          user: 'kacw-u8uj',
-          datasetId: 'ffff-ffff',
-          domain: 'localhost',
-          jobId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          jobName: 'simple_points.json',
+          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
+          eventType: 'row-progress',
+          info: {
+            rowsComplete: 0,
+            totalRows: 0
+          },
+          status: 'InProgress',
           service: 'Imports2'
         });
       }, (finishMessage) => {
@@ -468,7 +471,6 @@ describe('spatial service', function() {
     mockAmq.importFixture('points_and_lines_multigeom.kml', names);
   });
 
-
   it('will emit a failure to ISS when zk is dead', function(onDone) {
     mockZk.enableErrors();
 
@@ -483,7 +485,6 @@ describe('spatial service', function() {
     mockAmq.importFixture('simple_points.json', []);
   });
 
-
   it('will emit a failure to ISS when core is dead', function(onDone) {
     mockCore.close();
 
@@ -497,7 +498,6 @@ describe('spatial service', function() {
     ], onDone));
     mockAmq.importFixture('simple_points.json', []);
   });
-
 
   it('will emit an error for a corrupt shapefile', function(onDone) {
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
@@ -523,7 +523,6 @@ describe('spatial service', function() {
     mockAmq.importFixture('simple_points.json', []);
   });
 
-
   it('will not delete any replacement layers when an error is encountered getting column info', function(onDone) {
     mockCore.failGetColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
@@ -542,7 +541,6 @@ describe('spatial service', function() {
     );
   });
 
-
   it('will not delete any created layers when an error is encountered in delete columns', function(onDone) {
     mockCore.failDeleteColumns = 503;
 
@@ -560,7 +558,6 @@ describe('spatial service', function() {
         replacingUid: 'qs32-qpt7'
       }]
     );
-
   });
 
   it('will delete any created layers when an error is encountered mid-upsert', function(onDone) {

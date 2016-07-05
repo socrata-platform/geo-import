@@ -11,28 +11,6 @@ const senders = {
     return message.view;
   },
 
-  onCreate: function(message, user, datasetId, domain, filename) {
-    this._onStart({
-      actType: 'Import',
-      user,
-      datasetId,
-      domain,
-      jobId: message.id,
-      jobName: filename
-    });
-  },
-
-  onReplace: function(message, user, datasetId, domain, filename) {
-    this._onStart({
-      actType: 'Replace',
-      user,
-      datasetId,
-      domain,
-      jobId: message.id,
-      jobName: filename
-    });
-  },
-
   //   {
   //   "tag" : "IMPORT_ACTIVITY_COMPLETE",
   //   "details" :
@@ -52,8 +30,8 @@ const senders = {
       activityId: message.id,
       status: 'Success',
       info: {
-        warnings: [],
-        totalRows: 0
+        warnings: warnings,
+        totalRows: totalRows
       },
     });
   },
@@ -104,9 +82,21 @@ const senders = {
   onProgress: function(message, rowsComplete, totalRows) {
     this._onProgress({
       activityId: message.id,
+      status: 'InProgress',
       eventType: 'row-progress',
       info: {
         rowsComplete, totalRows
+      }
+    });
+  },
+
+  onStart: function(message) {
+    this._onProgress({
+      activityId: message.id,
+      status: 'InProgress',
+      eventType: 'row-progress',
+      info: {
+        rowsComplete: 0, totalRows: 0
       }
     });
   }

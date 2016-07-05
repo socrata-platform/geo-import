@@ -27,6 +27,9 @@ default {
   },
   heapDumpOut: '.',
 
+  //send an ISS progress event every X rows
+  emitProgressEvery: 250,
+
   log: {
     level: 'info',
     name: 'geo-import'

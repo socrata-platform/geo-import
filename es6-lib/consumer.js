@@ -14,11 +14,7 @@ function consumer(config, zookeeper, metrics) {
     delay: 500
   };
 
-  var hostIndex = 0;
-
-  const connect = () => {
-    const [host, port] = hosts[hostIndex % hosts.length];
-
+  hosts.forEach(([host, port]) => {
     logger.info(`Attempting to connect to stomp://${host}:${port}`);
     var amq = new Stomp(
       host,
@@ -34,21 +30,11 @@ function consumer(config, zookeeper, metrics) {
       new Spatial(zookeeper, amq, new ISS(amq));
     });
 
-    hostIndex++;
-
     amq.on('error', (reason) => {
       logger.error(`AMQ Disconnected, ${reason.message}`);
-
-      // When the underlying library gives up on reconnects, it
-      // will have a reconnectionFailed attribute in the error
-      // https://github.com/easternbloc/node-stomp-client#event-error
-      if (reason.reconnectionFailed) {
-        connect();
-      }
     });
-  };
-  connect();
 
+  });
 }
 
 export

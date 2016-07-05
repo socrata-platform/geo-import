@@ -32,6 +32,10 @@ import EventEmitter from 'events';
 var conf = config();
 const MAX_PARALLEL = 4;
 
+function totalLayerRows(layers) {
+  return layers.reduce((acc, layer) => acc + layer.count, 0);
+}
+
 class SpatialService {
   constructor(zookeeper, amq, iss) {
     if (!zookeeper) throw new Error("SpatialService needs zookeeper!");
@@ -50,12 +54,8 @@ class SpatialService {
 
     const activity = this._iss.activity(saneMessage);
     //Send iss a start message
-    activity.onCreate(
-      saneMessage.user,
-      saneMessage.view,
-      saneMessage['file-type'].auth.host,
-      saneMessage.filename
-    );
+    activity.onStart();
+
     const kind = saneMessage.type.toLowerCase();
     if (kind === 'import') return this.create(activity, saneMessage);
     if (kind === 'replace') return this.replace(activity, saneMessage);
@@ -206,6 +206,9 @@ class SpatialService {
       });
     });
 
+    var totalRowsUpserted = 0;
+    const totalRows = totalLayerRows(layers);
+
     //this is a little different than the two preceding core calls. core.upsert
     //just sets up the request, so the callback will
     //return to the finish callback a list of *open* requests, rather than completed
@@ -221,6 +224,16 @@ class SpatialService {
         logger.info(`Starting upsert to ${layer.uid}`);
         var upsertRequest = upsertBuilder();
         layer
+          .pipe(es.map(function(datum, callback) {
+            callback(null, datum);
+
+            totalRowsUpserted++;
+
+            if((totalRowsUpserted % conf.emitProgressEvery) === 0) {
+              logger.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
+              activity.onProgress(totalRowsUpserted, totalRows);
+            }
+          }))
           .pipe(upsertRequest)
           .on('response', (upsertResponse) => {
             logger.info(`Got upsert response ${upsertResponse.statusCode}`);
@@ -285,7 +298,7 @@ class SpatialService {
   _updateParentMetadata(activity, core, layers) {
     const bbox = this._expandBbox(layers);
     const warnings = [];
-    const totalRows = layers.reduce((acc, layer) => acc + layer.count, 0);
+    const totalRows = totalLayerRows(layers);
     core.updateMetadata(activity.getParentUid(), layers, bbox, (err, resp) => {
       if (err) {
         return this._destroyLayers(layers, core, () => {

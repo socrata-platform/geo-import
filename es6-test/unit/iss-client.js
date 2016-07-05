@@ -18,51 +18,44 @@ describe('iss client', function() {
     issClient = new ISS(amq);
   });
 
-  it('can emit an import event', function(onDone) {
+  it('can emit a success event', function(onDone) {
     amq.on('/queue/eurybates.import-status-events', (message) => {
       expect(messageDetails(JSON.parse(message))).to.eql({
-        actType: 'Import',
-        user: 'user',
-        datasetId: 'four-four',
-        domain: 'domain.foo.com',
-        jobId: 'activity-id',
-        jobName: 'foo.csv',
-        service: 'Imports2'
+        activityId: 'activity-id',
+        info: {
+          totalRows: 42,
+          warnings: ['i am a warning']
+        },
+        service: 'Imports2',
+        status: 'Success'
       });
       onDone();
     });
 
     issClient.activity({
       id: 'activity-id'
-    }).onCreate(
-      'user',
-      'four-four',
-      'domain.foo.com',
-      'foo.csv'
-    );
+    }).onSuccess(['i am a warning'], 42);
   });
 
-  it('can emit a replace event', function(onDone) {
+  it('can emit a failure event', function(onDone) {
     amq.on('/queue/eurybates.import-status-events', (message) => {
       expect(messageDetails(JSON.parse(message))).to.eql({
-        actType: 'Replace',
-        user: 'user',
-        datasetId: 'four-four',
-        domain: 'domain.foo.com',
-        jobId: 'activity-id',
-        jobName: 'foo.csv',
-        service: 'Imports2'
+        activityId: 'activity-id',
+        eventType: 'generic',
+        info: {
+          message: 'something broke',
+          type: 'generic'
+        },
+        service: 'Imports2',
+        status: 'Failure'
       });
       onDone();
     });
 
     issClient.activity({
       id: 'activity-id'
-    }).onReplace(
-      'user',
-      'four-four',
-      'domain.foo.com',
-      'foo.csv'
+    }).onError(
+      'something broke'
     );
   });
 

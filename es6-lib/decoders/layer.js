@@ -278,11 +278,6 @@ class Layer extends Duplex {
         writeIndex++;
         if (writeIndex === self._count) ep = jsonEpilogue;
 
-        var percent = Math.floor((writeIndex / self._count) * 100);
-        if ((percent % 10 === 0) && (percent !== this._lastProgress)) {
-          logger.info(`Upserted ${percent}% of layer ${self.uid}, ${self.name}`);
-          this._lastProgress = percent;
-        }
         if (!self.push(sep + rowString + ep)) {
           this.pause();
           //our reader has gone away, this kills the stream.
