@@ -39,10 +39,8 @@ function makeMerger(maxVerticesPerRow) {
   var res = new EventEmitter();
   return [
     new Merger(
-      new Disk(res),
-      [],
-      false,
-      maxVerticesPerRow || conf.maxVerticesPerRow
+      new Disk(res), [],
+      false
     ),
     res
   ];
@@ -60,8 +58,6 @@ function jsbuf() {
 
 
 describe('merging feature streams to layers', function() {
-
-
 
   it('will handle homogenous points, default crs', function(onDone) {
     var [merger, response] = makeMerger();
@@ -606,11 +602,15 @@ describe('merging feature streams to layers', function() {
   });
 
   it('will emit an error if there are too many vertices', function(onDone) {
-    var [merger, response] = makeMerger(2);
+    const oldMax = conf.maxVerticesPerRow;
+    conf.maxVerticesPerRow = 2;
+
+    var [merger, response] = makeMerger();
     fixture('simple_polygons.json')
       .pipe(new GeoJSON())
       .pipe(merger)
       .on('error', (err) => {
+        conf.maxVerticesPerRow = oldMax;
         expect(err.toString()).to.contain('Number of vertices exceeds')
         onDone();
       });

@@ -1,10 +1,26 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+import path from 'path';
 import _ from 'underscore';
 import es from 'event-stream';
 
+function hasHeaders(req, res) {
+  const hasHeaders = _.every(['x-app-token', 'x-socrata-host'], (key) => {
+    return !_.isUndefined(req.headers[key]) && (req.headers[key] !== 'null');
+  })
+  if (!hasHeaders) {
+    console.warn("Missing", req.headers)
+    res.status(400).send(JSON.stringify({
+      error: 'headers'
+    }));
+  }
+  return hasHeaders
+}
+
+
+
 function enforceUA(req, res, next) {
-  if(req.headers['user-agent'] !== 'geo-import') {
+  if (req.headers['user-agent'] !== 'geo-import') {
     res.status(400).send(JSON.stringify({
       error: 'user-agent invalid'
     }));
@@ -30,12 +46,8 @@ class CoreMock {
 
     app.post('/views/:uid/publication', function(req, res) {
       this._history.push(req);
-      var hs = req.headers;
-      if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
-        return res.status(400).send(JSON.stringify({
-          error: 'headers'
-        }));
-      }
+      const valid = hasHeaders(req, res);
+      if (!valid) return;
 
 
       var view = {
@@ -84,12 +96,9 @@ class CoreMock {
 
     app.post('/views', function(req, res) {
       this._history.push(req);
-      var hs = req.headers;
-      if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
-        return res.status(400).send(JSON.stringify({
-          error: 'headers'
-        }));
-      }
+      const valid = hasHeaders(req, res);
+      if (!valid) return;
+
       if (this.failCreate) {
         return res.status(this.failCreate).send('failCreate');
       }
@@ -141,10 +150,8 @@ class CoreMock {
 
     app.get('/views/:fourfour/columns', function(req, res) {
       this._history.push(req);
-      var hs = req.headers;
-      if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
-        return res.status(400).send('headers');
-      }
+      const valid = hasHeaders(req, res);
+      if (!valid) return;
 
       if (this.failGetColumns) {
         return res.status(this.failGetColumns).send('failGetColumns');
@@ -165,10 +172,8 @@ class CoreMock {
 
     app.delete('/views/:fourfour/columns/:colId', function(req, res) {
       this._history.push(req);
-      var hs = req.headers;
-      if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
-        return res.status(400).send('headers');
-      }
+      const valid = hasHeaders(req, res);
+      if (!valid) return;
 
       if (this.failDeleteColumns) {
         return res.status(this.failDeleteColumns).send('failDeleteColumns');
@@ -180,10 +185,8 @@ class CoreMock {
 
     app.post('/views/:fourfour/columns', function(req, res) {
       this._history.push(req);
-      var hs = req.headers;
-      if (!hs.authorization || !hs['x-app-token'] || !hs['x-socrata-host']) {
-        return res.status(400).send('headers');
-      }
+      const valid = hasHeaders(req, res);
+      if (!valid) return;
 
       if (!req.body.name || !req.body.dataTypeName || !req.body.fieldName) {
         return res.status(400).send('body');
@@ -215,6 +218,19 @@ class CoreMock {
       res.status(200).send('{}');
     }.bind(this));
 
+    app.put('/views/:fourfour', function(req, res) {
+      this._history.push(req);
+
+      req.bufferedRows = '';
+      req.pipe(es.map((thing, cb) => {
+        req.bufferedRows += thing.toString('utf-8');
+      }));
+
+      req.on('end', () => {
+        res.status(200).send('{}');
+      });
+    }.bind(this));
+
     app.post('/id/:fourfour', function(req, res) {
       this._history.push(req);
 
@@ -232,11 +248,20 @@ class CoreMock {
       });
     }.bind(this));
 
+    app.get('/file_data/:blobId', (req, res) => {
+      const absPath = path.resolve(`${__dirname}/../fixtures/${req.params.blobId}`);
+      res.sendFile(absPath);
+    });
+
     this._app = app.listen(port);
   }
 
   get history() {
     return this._history;
+  }
+
+  clear() {
+    this._history = [];
   }
 
   get colCounter() {
@@ -257,4 +282,5 @@ class CoreMock {
 
 
 
-export default CoreMock;
+export
+default CoreMock;

@@ -6,7 +6,10 @@ import {
 }
 from '../fixture';
 import KML from '../../lib/decoders/kml';
-import {ArityChecker} from '../util';
+import {
+  ArityChecker
+}
+from '../util';
 var expect = chai.expect;
 
 
@@ -209,7 +212,6 @@ describe('kml decoder', function() {
           'SoQLText'
         ]);
 
-        // console.log(columns.map((c) => c.value), expectedValues[count])
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
 
         count++;

@@ -21,7 +21,10 @@ import KML from '../../lib/decoders/kml';
 import GeoJSON from '../../lib/decoders/geojson';
 import Disk from '../../lib/decoders/disk';
 import Merger from '../../lib/decoders/merger';
-import {ArityChecker} from '../util';
+import {
+  ArityChecker
+}
+from '../util';
 
 var res;
 var expect = chai.expect;
@@ -47,13 +50,12 @@ function geojsonDecoder() {
   return [new GeoJSON(new Disk(res)), res];
 }
 
-function makeMerger(maxVerticesPerRow) {
-  var res = new EventEmitter();
+function makeMerger(res) {
+  res = res || new EventEmitter();
   return [
     new Merger(
       new Disk(res), [],
-      false,
-      maxVerticesPerRow || conf.maxVerticesPerRow
+      false
     ),
     res
   ];
@@ -83,7 +85,6 @@ describe('decoders', () => {
         onDone();
       });
   });
-
 
   it('should handle real multi chunk shapefile 00', function(onDone) {
     this.timeout(100000);

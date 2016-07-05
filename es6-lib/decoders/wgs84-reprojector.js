@@ -78,4 +78,5 @@ class WGS84Reprojector extends Transform {
   }
 }
 
-export default WGS84Reprojector;
+export
+default WGS84Reprojector;

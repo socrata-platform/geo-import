@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import router from './router';
+import consumer from './consumer';
 import conf from './config';
 import logger from './util/logger';
 import Metrics from './util/metrics';
@@ -11,10 +12,12 @@ function service(zk, options, ready) {
 
   zk.once('connected', function() {
     var app = express();
-    var metrics =  new Metrics(config);
+    var metrics = new Metrics(config);
     app.logger = logger;
-    router(config, app, zk, metrics);
+
+    router(app, zk, metrics);
     logger.info(`Service started an listening on ${config.port}`);
+    consumer(config, zk, metrics);
 
     app = app
       .listen(config.port)
@@ -28,4 +31,5 @@ function service(zk, options, ready) {
   return this;
 }
 
-export default service;
+export
+default service;
