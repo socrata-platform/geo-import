@@ -148,7 +148,6 @@ describe('kmz decoder', function() {
           'SoQLText'
         ]);
 
-        // console.log(columns.map((c) => c.value), expectedValues[count])
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
 
         count++;

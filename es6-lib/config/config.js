@@ -1,5 +1,6 @@
-export default {
-  port: 4444,
+export
+default {
+  port: 4445,
 
   //gate at which the service will not read the whole file to generate
   //a detailed summary. for files over this limit, an abbreviated summary
@@ -13,10 +14,7 @@ export default {
   //in memory.
   spillRowsToDiskAfter: 20,
 
-  //an hour is totally absurd. but until we have the import status service,
-  //geo-import needs to keep requests from core open until upsert completes,
-  //which can take a long time.
-  socketTimeoutMs: 60 * 60 * 1000,
+  socketTimeoutMs: 60 * 1000,
 
   //number of rows to buffer in object mode feature streams
   rowBufferSize: 2,
@@ -24,13 +22,23 @@ export default {
   //maximum number of points to allow through the importer per row
   maxVerticesPerRow: 1000000,
 
-  metrics:  {
+  metrics: {
     heapMonitorInterval: 500,
   },
   heapDumpOut: '.',
 
-  log : {
+  //send an ISS progress event every X rows
+  emitProgressEvery: 250,
+
+  log: {
     level: 'info',
-    name : 'geo-import'
+    name: 'geo-import'
+  },
+
+  amq: {
+    inName: '/queue/GeoImports',
+    outName: '/queue/eurybates.import-status-events',
+    user: 'admin',
+    pass: 'admin'
   }
 };

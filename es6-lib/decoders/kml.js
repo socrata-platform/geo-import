@@ -345,6 +345,10 @@ class KML extends Transform {
     return ['application/vnd.google-earth.kml+xml'];
   }
 
+  static canDecodeExtensions() {
+    return ['.kml'];
+  }
+
   _getHandler(state, handlers) {
     var at = _.clone(state.path).reverse();
 

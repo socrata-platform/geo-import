@@ -1,22 +1,22 @@
-import getDecoder from '../decoders';
+import {
+  getDecoderForContentType
+}
+from '../decoders';
 import Disk from '../decoders/disk';
 import Merger from '../decoders/merger';
 import _ from 'underscore';
 import logger from '../util/logger';
 import DevNull from '../util/devnull';
+import config from '../config';
+const conf = config();
 
 class SummaryService {
-
-  constructor(config) {
-    this._config = config;
-  }
-
   _fullSummary(req) {
     //Not content length because the core http was sometimes omitting it and sometimes
     //including it? It would crash when setting it twice.
     var rSize = req.headers['x-blob-length'];
     if (!rSize) return logger.warn("X-Blob-Length omitted, going with abbreviated summary");
-    return (rSize < this._config.abbreviateSummarySize);
+    return (rSize < conf.abbreviateSummarySize);
   }
 
 
@@ -29,7 +29,7 @@ class SummaryService {
       return res.status(400).send(err.toString());
     });
 
-    var [err, decoder] = getDecoder(req, disk);
+    var [err, decoder] = getDecoderForContentType(req, disk);
     if (err) return res.status(400).send(err.toString());
 
     var ok = (layers) => {
@@ -44,7 +44,7 @@ class SummaryService {
       req
         .pipe(decoder)
         .on('error', onErr)
-        .pipe(new Merger(disk, [], true, this._config.maxVerticesPerRow))
+        .pipe(new Merger(disk, [], true))
         .on('error', onErr)
         .on('end', (layers) => {
           ok(layers.map((layer) => layer.toJSON()));
@@ -77,4 +77,5 @@ class SummaryService {
   }
 }
 
-export default SummaryService;
+export
+default SummaryService;

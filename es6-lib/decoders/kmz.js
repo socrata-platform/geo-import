@@ -38,6 +38,9 @@ class KMZ extends Duplex {
   static canDecode() {
     return ['application/vnd.google-earth.kmz'];
   }
+  static canDecodeExtensions() {
+    return ['.kmz'];
+  }
 
   _write(chunk, encoding, done) {
     return this._zBuffer.write(chunk, null, done);

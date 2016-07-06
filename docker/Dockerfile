@@ -5,7 +5,7 @@ ENV BABEL_DISABLE_CACHE=1
 ENV SERVICE_DIR /etc/service/geo-import
 ENV ROOT_DIR /srv/geo-import
 
-EXPOSE 4444
+EXPOSE 4445
 # Need git and gdal for node-srs
 RUN apt-get -y update && apt-get install -y git gdal-bin
 
