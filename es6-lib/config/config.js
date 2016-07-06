@@ -29,6 +29,14 @@ default {
 
   //send an ISS progress event every X rows
   emitProgressEvery: 250,
+  //don't send more than 1 ISS progress event within this time window
+  debounceProgressMs: 2000,
+
+  //wait this long before process.exit()
+  //need this because we need to wait for ISS messages to
+  //get sent, and the best we can do is give them time to get
+  //sent becuase there's no callback on them to indicate completion
+  shutdownDrainMs: 5000,
 
   log: {
     level: 'info',

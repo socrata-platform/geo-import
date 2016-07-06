@@ -42,10 +42,15 @@ class SpatialService {
     if (!amq) throw new Error("SpatialService needs amq!");
     if (!iss) throw new Error("SpatialService needs iss!");
 
+    this._inFlight = 0;
     this._zk = zookeeper;
     this._iss = iss;
+    this._onComplete = () => {
+      logger.info('No jobs in progress...');
+    };
+    this._amq = amq;
     logger.info(`Connected and listening to queue: ${conf.amq.inName}`);
-    amq.subscribe(conf.amq.inName, this._onMessage.bind(this));
+    this._amq.subscribe(conf.amq.inName, this._onMessage.bind(this));
   }
 
   _onMessage(message, headers) {
@@ -92,7 +97,7 @@ class SpatialService {
 
   _createLayers(activity, core, layers) {
     async.mapLimit(layers, MAX_PARALLEL, _.partial(core.create, activity.view).bind(core), (err, datasetResponses) => {
-      if (err) return activity.onError(err.body || err.toString());
+      if (err) return this._onError(activity, err.body || err.toString());
       logger.info(`Successfully created ${layers.length} layers`);
       _.zip(layers, datasetResponses)
         .forEach(([layer, response]) => layer.uid = response.body.id);
@@ -163,7 +168,7 @@ class SpatialService {
     };
 
     async.seq(createOrReplace, flatColumns, deleteColumns)(layers, (err, newLayers) => {
-      if (err) return activity.onError(err.toString());
+      if (err) return this._onError(activity, err.toString());
       return this._createColumns(activity, core, newLayers);
     });
   }
@@ -175,7 +180,7 @@ class SpatialService {
     return async.mapLimit(colSpecs, MAX_PARALLEL, core.addColumn.bind(core), (err, colResponses) => {
       if (err) {
         return this._destroyLayers(layers, core, () => {
-          return activity.onError(err.body || err.toString());
+          return this._onError(activity, err.body || err.toString());
         });
       }
       logger.info(`Successfully created ${colResponses.length} columns`);
@@ -202,12 +207,17 @@ class SpatialService {
   _upsertLayers(activity, core, layers) {
     var fail = _.once((reason) => {
       this._destroyLayers(layers, core, () => {
-        activity.onError(reason);
+        this._onError(activity, reason);
       });
     });
 
     var totalRowsUpserted = 0;
     const totalRows = totalLayerRows(layers);
+
+    const sendProgress = _.debounce(() => {
+      logger.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
+      activity.onProgress(totalRowsUpserted, totalRows);
+    }, conf.debounceProgressMs);
 
     //this is a little different than the two preceding core calls. core.upsert
     //just sets up the request, so the callback will
@@ -230,8 +240,7 @@ class SpatialService {
             totalRowsUpserted++;
 
             if((totalRowsUpserted % conf.emitProgressEvery) === 0) {
-              logger.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
-              activity.onProgress(totalRowsUpserted, totalRows);
+              sendProgress();
             }
           }))
           .pipe(upsertRequest)
@@ -282,7 +291,7 @@ class SpatialService {
     return async.mapLimit(layers, MAX_PARALLEL, core.publish.bind(core), (err, publications) => {
       if (err) {
         return this._destroyLayers(layers, core, () => {
-          return activity.onError(err.body);
+          return this._onError(activity, err.body);
         });
       }
       logger.info(`Successfully published ${layers.map(l => l.uid)}`);
@@ -302,11 +311,13 @@ class SpatialService {
     core.updateMetadata(activity.getParentUid(), layers, bbox, (err, resp) => {
       if (err) {
         return this._destroyLayers(layers, core, () => {
-          return activity.onError(err.body);
+          return this._onError(activity, err.body);
         });
       }
       logger.info(`Updated metadata for ${activity.getParentUid()} : ${resp.body}`);
-      return activity.onSuccess(warnings, totalRows);
+      activity.onSuccess(warnings, totalRows);
+
+      return this._endProgress();
     });
   }
 
@@ -325,15 +336,14 @@ class SpatialService {
     var onErr = _.once((err) => {
       //TODO: this shouldn't be hardcoded as a 400, errors should carry their
       //own reponse code
-      logger.error(err.toString());
-      return activity.onError(err.toString());
+      return this._onError(activity, err.toString());
     });
 
     //If we can't get a decoder, then the user tried to import
     //an unsupported file, or set the content type incorrectly
     // on their header
     var [decoderErr, decoder] = getDecoderForExtension(message.filename, disk);
-    if (decoderErr) return activity.onError(decoderErr.toString());
+    if (decoderErr) return this._onError(activity, decoderErr.toString());
 
     core.getBlob(message.blobId, (err, stream) => {
       if (err) return onErr(err);
@@ -347,10 +357,7 @@ class SpatialService {
         .on('error', onErr)
         .pipe(new Merger(disk, specs, false))
         .on('error', onErr)
-        .on('end', (layers) => {
-          onEnd(core, layers);
-        });
-
+        .on('end', (layers) => onEnd(core, layers));
     });
   }
 
@@ -363,30 +370,48 @@ class SpatialService {
     });
   }
 
+  _onError(activity, reason) {
+    activity.onError(reason);
+    this._endProgress();
+  }
+
+  _endProgress() {
+    if(this._inFlight > 0) this._inFlight--;
+    if(this._inFlight === 0) this._onComplete();
+  }
+
+  _startProgress() {
+    this._inFlight++;
+  }
+
   create(activity, message) {
+    this._startProgress();
     this._readShapeBlob(activity, message, (core, layers) => {
       logger.info("Done reading shape blob, starting create");
       this._createLayers(activity, core, layers);
     });
   }
 
-  //   {
-  //   "source" : "x-socrata-blob:e661ce20-9f14-4671-a6ce-6370dd6edfc5",
-  //   "file-type" : "{\"auth\":\"{\\\"host\\\":\\\"localhost\\\",\\\"token\\\":\\\"U29jcmF0YS0td2VraWNrYXNz0\\\",\\\"cookie\\\":\\\"_gat_socrata=1; logged_in=true; _ga=GA1.1.1255887846.1440201765; mp_mixpanel__c=44; mp_mixpanel__c3=60608; mp_mixpanel__c4=56305; mp_mixpanel__c5=402; socrata-csrf-token=IblWI%2FXGx3PM2EC1CrocQy0QitFcXuTDc%2BQCPW6sRbf5fasW9kJYB6z%2FZxAwAATijiDLMrMBL5vOsVhmnEtMIQ%3D%3D; _socrata_session_id=BAh7CkkiD3Nlc3Npb25faWQGOgZFRkkiJTM1ZDgzYmMxMTNlZTIxZjI3YTNkYWZmZDZhNTZhMTY0BjsARkkiCXVzZXIGOwBGaQdJIhBfY3NyZl90b2tlbgY7AEZJIjEyTVQ5TlFPRW4zUmdKeWVsT3JvWW9hTXdRZVB2WDh0WXZWVmFXL0xuQ1pZPQY7AEZJIglpbml0BjsAVFRJIg5yZXR1cm5fdG8GOwBGMA%3D%3D--48f658c3bae2b10dd9275ae1b4af0941c74b5c71; _core_session_id=a2Fjdy11OHVqIDE0NjcxNTcwNDAgOGZlOTljMTI5M2MyIDAyNTBkMmQ3ZWQzNTQxNDZhNjYwN2MzMjAwM2NmMmFkNzc1NzMyOTY\\\",\\\"reqId\\\":\\\"b0p3jfy1fj723n4mf6vmbe2lb\\\"}\",\"filename\":\"nycc_14b_av-2015-11-24.zip\",\"replace\":true}",
-  //   "skip" : 0,
-  //   "id" : "84c1af13-32aa-42f6-a70c-28232ec4a84a",
-  //   "filename" : "nycc_14b_av-2015-11-24.zip",
-  //   "script" : "{\"layers\":[{\"name\":\"nycc\",\"replacingUid\":\"gv77-ccxj\"}]}",
-  //   "type" : "replace",
-  //   "user" : "kacw-u8uj",
-  //   "view" : "7kqb-5s8x"
-  // }
   replace(activity, message) {
+    this._startProgress();
     this._readShapeBlob(activity, message, (core, layers) => {
       logger.info("Done reading shape blob, starting replace");
       this._replaceLayers(activity, core, layers);
     });
   }
+
+  close(cb) {
+    logger.info("SpatialService is supposed to close");
+    this._amq.unsubscribe(conf.amq.inName);
+
+    this._onComplete = () => {
+      logger.info(`Spatial service received a close, exiting in ${conf.shutdownDrainMs}ms`);
+      setTimeout(cb, conf.shutdownDrainMs);
+    };
+    if(this._inFlight === 0) this._onComplete();
+  }
+
+
 }
 
 export
