@@ -63,10 +63,10 @@ class SpatialService {
   }
 
 
-  _createOrReplace(activity, core, layer, cb) {
+  _createOrReplace(activity, core, publicationGroup, layer, cb) {
     if (layer.uid === Layer.EMPTY) {
-      return core.create(activity.view, layer, (err, resp) => {
-        cb(err, [resp, false]);
+      return core.create(activity.getParentUid(), publicationGroup, layer, (err, resp) => {
+        return cb(err, [resp, false]);
       });
     }
     return core.replace(layer, (err, resp) => {
@@ -91,18 +91,34 @@ class SpatialService {
   }
 
   _createLayers(activity, core, layers) {
-    async.mapLimit(layers, MAX_PARALLEL, _.partial(core.create, activity.view).bind(core), (err, datasetResponses) => {
+    const onComplete = (err, datasetResponses) => {
       if (err) return activity.onError(err.body || err.toString());
       logger.info(`Successfully created ${layers.length} layers`);
       _.zip(layers, datasetResponses)
         .forEach(([layer, response]) => layer.uid = response.body.id);
       return this._createColumns(activity, core, layers);
+    };
+
+    const parentUid = activity.getParentUid();
+    return core.get(parentUid, (err, response) => {
+      if (err) return onComplete(err);
+
+      const publicationGroup = response.body.publicationGroup;
+      return async.mapLimit(
+        layers,
+        MAX_PARALLEL,
+        _.partial(core.create, parentUid, publicationGroup).bind(core),
+        onComplete
+      );
+
     });
+
   }
 
   /**
    * Replace the layers in core.
    * This will
+   *   Get the parent view, in order to get the publicationGroup
    *   Create or replace the layers
    *     create a layer if the id in the layer is __empty__
    *     replace a layer if the id in the layer is a uid
@@ -122,11 +138,18 @@ class SpatialService {
    *
    */
   _replaceLayers(activity, core, layers) {
-    var createOrReplace = (layers, cb) => {
+    var getParent = (layers, cb) => {
+      core.get(activity.getParentUid(), (err, response) => {
+        if(err) return cb(err);
+        return cb(false, {layers, publicationGroup: response.publicationGroup});
+      });
+    };
+
+    var createOrReplace = ({layers, publicationGroup}, cb) => {
       async.mapLimit(
         layers,
         MAX_PARALLEL,
-        _.partial(this._createOrReplace, activity, core), (err, responses) => {
+        _.partial(this._createOrReplace, activity, core, publicationGroup).bind(this), (err, responses) => {
           if (err) return cb(err);
           var replacements = _.flatten(
             _.zip(layers, responses)
@@ -162,7 +185,7 @@ class SpatialService {
       });
     };
 
-    async.seq(createOrReplace, flatColumns, deleteColumns)(layers, (err, newLayers) => {
+    async.seq(getParent, createOrReplace, flatColumns, deleteColumns)(layers, (err, newLayers) => {
       if (err) return activity.onError(err.toString());
       return this._createColumns(activity, core, newLayers);
     });
@@ -229,7 +252,7 @@ class SpatialService {
 
             totalRowsUpserted++;
 
-            if((totalRowsUpserted % conf.emitProgressEvery) === 0) {
+            if ((totalRowsUpserted % conf.emitProgressEvery) === 0) {
               logger.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
               activity.onProgress(totalRowsUpserted, totalRows);
             }

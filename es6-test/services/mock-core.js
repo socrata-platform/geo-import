@@ -94,6 +94,51 @@ class CoreMock {
       res.status(200).send(JSON.stringify(view));
     }.bind(this));
 
+    app.get('/views/:uid', (req, res) => {
+      this._history.push(req);
+      var view = {
+        "id": "qs32-qpt8",
+        "name": req.body.name,
+        "averageRating": 0,
+        "createdAt": 1446152737,
+        "downloadCount": 0,
+        "newBackend": false,
+        "numberOfComments": 0,
+        "oid": 913,
+        "publicationAppendEnabled": false,
+        "publicationGroup": 42,
+        "publicationStage": "unpublished",
+        "tableId": 971,
+        "totalTimesRated": 0,
+        "viewCount": 0,
+        "viewLastModified": 1446152737,
+        "viewType": "tabular",
+        "columns": [],
+        "owner": {
+          "id": "y6j7-unfr",
+          "displayName": "wat",
+          "emailUnsubscribed": false,
+          "profileLastModified": 1437685194,
+          "screenName": "wat",
+          "rights": ["create_datasets", "edit_others_datasets", "edit_sdp", "edit_site_theme", "moderate_comments", "manage_users", "chown_datasets", "edit_nominations", "approve_nominations", "feature_items", "federations", "manage_stories", "manage_approval", "change_configurations", "view_domain", "view_others_datasets", "edit_pages", "create_pages", "view_goals", "view_dashboards", "edit_goals", "edit_dashboards", "create_dashboards"],
+          "flags": ["admin"]
+        },
+        "query": {},
+        "rights": ["read", "write", "add", "delete", "grant", "add_column", "remove_column", "update_column", "update_view", "delete_view"],
+        "tableAuthor": {
+          "id": "y6j7-unfr",
+          "displayName": "wat",
+          "emailUnsubscribed": false,
+          "profileLastModified": 1437685194,
+          "screenName": "wat",
+          "rights": ["create_datasets", "edit_others_datasets", "edit_sdp", "edit_site_theme", "moderate_comments", "manage_users", "chown_datasets", "edit_nominations", "approve_nominations", "feature_items", "federations", "manage_stories", "manage_approval", "change_configurations", "view_domain", "view_others_datasets", "edit_pages", "create_pages", "view_goals", "view_dashboards", "edit_goals", "edit_dashboards", "create_dashboards"],
+          "flags": ["admin"]
+        },
+        "flags": ["default"]
+      };
+      res.status(200).send(JSON.stringify(view));
+    })
+
     app.post('/views', function(req, res) {
       this._history.push(req);
       const valid = hasHeaders(req, res);

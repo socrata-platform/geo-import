@@ -80,8 +80,22 @@ class Core extends GenClient {
     });
   }
 
-  create(parentUid, layer, onComplete) {
-    if (layer.uid !== Layer.EMPTY) {
+  get(uid, onComplete) {
+    return this._url((err, url) => {
+      if (err) return onComplete(err);
+
+      this._log(`Looking up view ${uid}`);
+      request.get({
+        url: `${url}/views/${uid}`,
+        headers: this._headers()
+      })
+        .on('response', this._onResponseStart(onComplete))
+        .on('error', this._onErrorResponse(onComplete));
+    });
+  }
+
+  create(parentUid, publicationGroup, layer, onComplete) {
+    if(layer.uid !== Layer.EMPTY) {
       logger.warn(`Layer uid is not empty, layer uid is ${layer.uid}, cannot create layer in datastore!`);
     }
     return this._url((err, url) => {
@@ -97,7 +111,8 @@ class Core extends GenClient {
           privateMetadata: {
             isNbe: true,
             parentUid
-          }
+          },
+          publicationGroup
         },
         json: true
       })

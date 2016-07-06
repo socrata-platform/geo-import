@@ -61,7 +61,7 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    )
+    );
     const auth = new Auth(parseAMQMessage(message));
     const core = new Core(auth, mockZk);
 
@@ -100,9 +100,9 @@ describe('core client', function() {
               "a_bool": true
             }
           }]
-        })
+        });
         onDone();
-      })
+      });
     });
   });
 
@@ -115,11 +115,13 @@ describe('core client', function() {
       null,
       'test-cookie',
       'test-reqid'
-    )
+    );
     const auth = new Auth(parseAMQMessage(message));
     var core = new Core(auth, mockZk);
 
-    core.create('ffff-ffff', 'my_layer', (err, res) => {
+    core.create('ffff-ffff', 42, {
+      name: 'my_layer'
+    }, (err, res) => {
       expect(err.statusCode).to.equal(400);
       onDone();
     });
@@ -134,11 +136,13 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    )
+    );
     const auth = new Auth(parseAMQMessage(message));
     var core = new Core(auth, mockZk);
 
-    core.create('pare-ntid', 'my_layer', (err, res) => {
+    core.create('pare-ntid', 42, {
+      name: 'my_layer'
+    }, (err, res) => {
       if (err) throw new Error(`Got invalid status ${err.statusCode}`);
 
       expect(res.statusCode).to.equal(200);
@@ -155,7 +159,7 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    )
+    );
     const auth = new Auth(parseAMQMessage(message));
     var core = new Core(auth, mockZk);
 

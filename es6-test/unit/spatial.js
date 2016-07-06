@@ -87,16 +87,18 @@ describe('spatial service', function() {
       }, (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
-        var createRequest = _.first(mockCore.history);
+        var createRequest = mockCore.history[1];
         expect(createRequest.body).to.eql({
           name: 'A layer named foo',
           displayType: 'geoRows',
+          publicationGroup: 42,
           privateMetadata: {
-            isNbe: true
+            isNbe: true,
+            parentUid: 'ffff-ffff'
           }
         });
 
-        const [geomCol, strCol, numCol, floatCol, boolCol] = mockCore.history.slice(1, 6).map(r => r.body);
+        const [geomCol, strCol, numCol, floatCol, boolCol] = mockCore.history.slice(2, 7).map(r => r.body);
 
         expect(geomCol.dataTypeName).to.eql('point');
         expect(strCol.dataTypeName).to.eql('text');
@@ -133,7 +135,23 @@ describe('spatial service', function() {
       }, (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
-        var [replaceRequest, getColReq, delColReq0, delColReq1, geom, aString, aNum, aFloat, aBool] = mockCore.history;
+        var [
+          getParentRequest,
+          replaceRequest,
+          getColReq,
+          delColReq0,
+          delColReq1,
+          geom,
+          aString,
+          aNum,
+          aFloat,
+          aBool
+        ] = mockCore.history;
+
+        expect(getParentRequest.url).to.equal(
+          '/views/ffff-ffff'
+        );
+
         expect(replaceRequest.url).to.equal(
           '/views/qs32-qpt7/publication?method=copySchema'
         );
@@ -209,7 +227,15 @@ describe('spatial service', function() {
       }, (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
-        var [createRequest, geom, aString, aNum, aFloat, aBool] = mockCore.history;
+        var [
+          getParentRequest,
+          createRequest,
+          geom,
+          aString,
+          aNum,
+          aFloat,
+          aBool
+        ] = mockCore.history;
         expect(createRequest.url).to.equal(
           '/views?nbe=true'
         );
@@ -274,7 +300,7 @@ describe('spatial service', function() {
         });
       }, (_) => {
 
-        var [replaceRequest, createRequest] = mockCore.history;
+        var [getParentRequest, replaceRequest, createRequest] = mockCore.history;
 
         expect(replaceRequest.url).to.equal(
           '/views/qs32-qpt7/publication?method=copySchema'
@@ -305,6 +331,7 @@ describe('spatial service', function() {
         const trace = mockCore.history.map(r => [r.method, r.url]);
 
         expect(trace).to.eql([
+          ['GET', '/views/qs32-qpt7'],
           ['POST', '/views?nbe=true'],
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/views/qs32-qpt7/columns'],
@@ -339,6 +366,7 @@ describe('spatial service', function() {
         const trace = mockCore.history.map(r => [r.method, r.url]);
 
         expect(trace).to.eql([
+          ['GET', '/views/qs32-qpt7'],
           ['POST', '/views?nbe=true'],
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/views/qs32-qpt7/columns'],
@@ -370,16 +398,18 @@ describe('spatial service', function() {
           service: 'Imports2'
         });
       }, (finishMessage) => {
-        var createRequest = _.first(mockCore.history);
+        var createRequest = mockCore.history[1];
         expect(createRequest.body).to.eql({
           name: 'A layer named foo',
           displayType: 'geoRows',
+          publicationGroup: 42,
           privateMetadata: {
-            isNbe: true
+            isNbe: true,
+            parentUid: 'ffff-ffff'
           }
         });
 
-        const [geom, aString, aNum, aFloat, aBool] = mockCore.history.slice(1, 6);
+        const [geom, aString, aNum, aFloat, aBool] = mockCore.history.slice(2, 7);
 
         expect(geom.body).to.eql({
           fieldName: "the_geom",
@@ -421,7 +451,7 @@ describe('spatial service', function() {
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (startMessage) => {}, (finishMessage) => {
-        var [upsert] = mockCore.history.slice(6);
+        var [upsert] = mockCore.history.slice(7);
 
         //check the request body that was actuall sent to core
         expect(JSON.parse(upsert.bufferedRows)).to.eql(
@@ -459,8 +489,8 @@ describe('spatial service', function() {
 
         expect(finishMessage.details.status).to.eql('Success');
 
-        //get the 2 upserts, which will be requests 6 and 7
-        const [upsertPoints, upsertLines] = mockCore.history.slice(6, 8).map(r => {
+        //get the 2 upserts, which will be requests 7 and 8
+        const [upsertPoints, upsertLines] = mockCore.history.slice(7, 9).map(r => {
           return JSON.parse(r.bufferedRows);
         });
 
