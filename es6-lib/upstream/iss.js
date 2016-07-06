@@ -108,7 +108,6 @@ class ISS extends EventEmitter {
 
     this.send = (tag, details) => {
       details.service = 'Imports2';
-      //TODO: make sure this is UTC?
       details.eventTime = (new Date()).toISOString();
       details.eventId = uuid.v4();
 
