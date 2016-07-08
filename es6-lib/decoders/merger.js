@@ -25,7 +25,7 @@ import Disk from './disk';
 import logger from '../util/logger';
 import async from 'async';
 import config from '../config';
-
+const conf = config();
 
 const DEFAULT_CRS = "urn:ogc:def:crs:OGC:1.3:CRS84";
 
@@ -42,7 +42,13 @@ class Merger extends Transform {
     this._disk = disk;
     this._layers = [];
     this._defaultCrs = DEFAULT_CRS;
+    this._rowsComplete = 0;
     this.once('finish', this._onFinish);
+
+    this._onProgress = _.debounce(() => {
+      logger.info(`Merged ${this._rowsComplete}, merged`);
+      this._rowsComplete++;
+    }, conf.debounceProgressMs);
   }
 
   _getOrCreateLayer(soqlRow, disk, spec) {
@@ -71,6 +77,7 @@ class Merger extends Transform {
     var layer = this._getOrCreateLayer(chunk, this._disk, spec);
     try {
       layer.write(chunk.crs, chunk.columns, this._throwaway, done);
+      this._onProgress();
     } catch (e) {
       done(e);
     }

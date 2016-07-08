@@ -236,12 +236,8 @@ class SpatialService {
         layer
           .pipe(es.map(function(datum, callback) {
             callback(null, datum);
-
             totalRowsUpserted++;
-
-            if((totalRowsUpserted % conf.emitProgressEvery) === 0) {
-              sendProgress();
-            }
+            sendProgress();
           }))
           .pipe(upsertRequest)
           .on('response', (upsertResponse) => {

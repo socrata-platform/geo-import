@@ -27,8 +27,6 @@ default {
   },
   heapDumpOut: '.',
 
-  //send an ISS progress event every X rows
-  emitProgressEvery: 250,
   //don't send more than 1 ISS progress event within this time window
   debounceProgressMs: 2000,
 
