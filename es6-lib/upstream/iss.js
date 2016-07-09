@@ -134,6 +134,7 @@ class ISS extends EventEmitter {
 
   _onEnd(details) {
     this.send('IMPORT_ACTIVITY_COMPLETE', details);
+    this.emit('finish');
   }
 
   _onProgress(details) {

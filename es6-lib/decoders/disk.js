@@ -7,7 +7,8 @@ class Disk {
     this._scope = scope;
 
     this._allocations = [];
-    this._scope.on('finish', this._cleanup.bind(this));
+
+    this._scope.once('finish', this._cleanup.bind(this));
   }
 
   _cleanup() {

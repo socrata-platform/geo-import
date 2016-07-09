@@ -46,8 +46,8 @@ class Merger extends Transform {
     this.once('finish', this._onFinish);
 
     this._onProgress = _.debounce(() => {
-      logger.info(`Merged ${this._rowsComplete}, merged`);
       this._rowsComplete++;
+      logger.info(`Merged ${this._rowsComplete} rows`);
     }, conf.debounceProgressMs);
   }
 

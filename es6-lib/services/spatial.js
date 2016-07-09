@@ -214,7 +214,7 @@ class SpatialService {
     var totalRowsUpserted = 0;
     const totalRows = totalLayerRows(layers);
 
-    const sendProgress = _.debounce(() => {
+    const sendProgress = _.throttle(() => {
       logger.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
       activity.onProgress(totalRowsUpserted, totalRows);
     }, conf.debounceProgressMs);
@@ -237,7 +237,9 @@ class SpatialService {
           .pipe(es.map(function(datum, callback) {
             callback(null, datum);
             totalRowsUpserted++;
-            sendProgress();
+            if(totalRowsUpserted % conf.emitProgressEvery === 0) {
+              sendProgress();
+            }
           }))
           .pipe(upsertRequest)
           .on('response', (upsertResponse) => {
