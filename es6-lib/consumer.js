@@ -12,8 +12,8 @@ function consumer(config, zookeeper, metrics, onStarted) {
     .map(hostAndPort => hostAndPort.split(':'));
 
   const reconnectOpts = {
-    retries: 3,
-    delay: 500
+    retries: config.amq.reconnectAttempts,
+    delay: config.amq.reconnectDelayMs
   };
 
   var thunks = hosts.map(([host, port]) => {
@@ -35,8 +35,16 @@ function consumer(config, zookeeper, metrics, onStarted) {
         cb(null, spatialConsumer);
       });
 
+      amq.on('reconnecting', () => {
+        logger.warn('Attempting to reconnect to AMQ');
+      });
+      amq.on('reconnect', (sessionId) => {
+        logger.warn(`AMQ reconnected ${sessionId}`);
+      });
       amq.on('error', (reason) => {
         logger.error(`AMQ Disconnected, ${reason.message}`);
+        logger.error(`Reached ${config.amq.reconnectAttempts} reconnect attempts. Going to exit. Maybe it will be brought back up and AMQ will be available.`);
+        process.exit();
       });
     };
   });
