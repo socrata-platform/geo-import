@@ -24,6 +24,7 @@ from '../soql/mapper';
 import Layer from '../decoders/layer';
 import config from '../config';
 import logger from '../util/logger';
+import ISS from '../upstream/iss';
 
 //TODO: resource scope?
 import EventEmitter from 'events';
@@ -37,14 +38,12 @@ function totalLayerRows(layers) {
 }
 
 class SpatialService {
-  constructor(zookeeper, amq, iss) {
+  constructor(zookeeper, amq) {
     if (!zookeeper) throw new Error("SpatialService needs zookeeper!");
     if (!amq) throw new Error("SpatialService needs amq!");
-    if (!iss) throw new Error("SpatialService needs iss!");
 
     this._inFlight = 0;
     this._zk = zookeeper;
-    this._iss = iss;
     this._onComplete = () => {
       logger.info('No jobs in progress...');
     };
@@ -57,7 +56,8 @@ class SpatialService {
     const saneMessage = parseAMQMessage(message);
     logger.info(`Got a message ${JSON.stringify(saneMessage)}`);
 
-    const activity = this._iss.activity(saneMessage);
+    const iss = new ISS(this._amq);
+    const activity = iss.activity(saneMessage);
     //Send iss a start message
     activity.onStart();
 

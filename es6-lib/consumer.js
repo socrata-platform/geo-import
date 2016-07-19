@@ -1,7 +1,6 @@
 import Stomp from 'stomp-client';
 import Spatial from './services/spatial';
 import logger from './util/logger';
-import ISS from './upstream/iss';
 import async from 'async';
 import _ from 'underscore';
 
@@ -30,8 +29,7 @@ function consumer(config, zookeeper, metrics, onStarted) {
       );
       amq.connect((sessionId) => {
         logger.info(`Connected to amq with ${sessionId}`);
-        const spatialConsumer = new Spatial(zookeeper, amq, new ISS(amq));
-
+        const spatialConsumer = new Spatial(zookeeper, amq);
         cb(null, spatialConsumer);
       });
 

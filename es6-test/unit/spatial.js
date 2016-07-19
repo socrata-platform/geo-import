@@ -32,8 +32,6 @@ describe('spatial service', function() {
 
   var mockCore;
   const mockAmq = new AmqMock();
-  const iss = new ISS(mockAmq);
-  iss.setMaxListeners(100);
 
   //start on ISS mocking, hook into events from ISS
   //for testing the actual imports
@@ -44,7 +42,7 @@ describe('spatial service', function() {
   before(function(onDone) {
     mockZk = new MockZKClient(corePort);
     mockZk.on('connected', () => {
-      service = new SpatialService(mockZk, mockAmq, iss);
+      service = new SpatialService(mockZk, mockAmq);
       onDone();
     });
     mockZk.connect();
