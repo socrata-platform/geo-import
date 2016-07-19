@@ -46,6 +46,8 @@ default {
     inName: '/queue/GeoImports',
     outName: '/queue/eurybates.import-status-events',
     user: 'admin',
-    pass: 'admin'
+    pass: 'admin',
+    reconnectAttempts: 100,
+    reconnectDelayMs: 500
   }
 };
