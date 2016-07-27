@@ -103,9 +103,8 @@ const senders = {
 };
 
 class ISS extends EventEmitter {
-  constructor(client) {
+  constructor(amq) {
     super();
-
     this.send = (tag, details) => {
       details.service = 'Imports2';
       details.eventTime = (new Date()).toISOString();
@@ -118,13 +117,9 @@ class ISS extends EventEmitter {
         source_id: uuid.v4(),
         uuid: uuid.v4()
       });
-      const headers = {
-        'persistent': 'true',
-        'suppress-content-length': true
-      };
 
-      logger.info(`Sending ISS ${conf.amq.outName} --> ${headers} ${message}`);
-      client.publish(conf.amq.outName, message, headers);
+      logger.info(`Sending ISS ${message}`);
+      amq.send(message);
     };
   }
 

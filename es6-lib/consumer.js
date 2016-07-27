@@ -1,8 +1,9 @@
-import Stomp from 'stomp-client';
+import stompit from 'stompit';
 import Spatial from './services/spatial';
 import logger from './util/logger';
 import async from 'async';
 import _ from 'underscore';
+import EventEmitter from 'events';
 
 function consumer(config, zookeeper, metrics, onStarted) {
   const hosts = config.amq.host
@@ -15,41 +16,95 @@ function consumer(config, zookeeper, metrics, onStarted) {
     delay: config.amq.reconnectDelayMs
   };
 
-  var thunks = hosts.map(([host, port]) => {
-    return (cb) => {
-      logger.info(`Attempting to connect to stomp://${host}:${port}`);
-      var amq = new Stomp(
-        host,
-        port,
-        config.amq.user,
-        config.amq.pass,
-        "1.0",
-        null,
-        reconnectOpts
-      );
-      amq.connect((sessionId) => {
-        logger.info(`Connected to amq with ${sessionId}`);
-        const spatialConsumer = new Spatial(zookeeper, amq);
-        cb(null, spatialConsumer);
-      });
 
-      amq.on('reconnecting', () => {
-        logger.warn('Attempting to reconnect to AMQ');
-      });
-      amq.on('reconnect', (sessionId) => {
-        logger.warn(`AMQ reconnected ${sessionId}`);
-      });
-      amq.on('error', (reason) => {
-        logger.error(`AMQ Disconnected, ${reason.message}`);
-        logger.error(`Reached ${config.amq.reconnectAttempts} reconnect attempts. Going to exit. Maybe it will be brought back up and AMQ will be available.`);
-        process.exit();
+  const amqInterface = (amq) => {
+    let send = (message) => {
+      let headers = {
+        'persistent': true,
+        'suppress-content-length': true,
+        'destination': config.amq.outName
+      };
+      let frame = amq.send(headers);
+      frame.write(message);
+      frame.end();
+    };
+
+    let subscribe = (callback) => {
+      let headers = {
+        'destination': config.amq.inName
+      };
+      amq.subscribe(headers, (error, message) => {
+        if(error) {
+          return logger.error(`Failed to subscribe to ${config.amq.inName}`);
+        }
+
+        message.readString('utf-8', (error, body) => {
+          if(error) {
+            return logger.error(`Failed to read message ${message}`);
+          }
+
+          callback(body);
+        });
       });
     };
+
+    let disconnect = () => {
+      amq.disconnect();
+    };
+
+    return {send, subscribe, disconnect};
+  };
+
+  const ee = new EventEmitter();
+  hosts.forEach(([host, port]) => {
+    var reconnectAttempts = 0;
+
+    var attemptReconnect = () => {
+      reconnectAttempts++;
+      if(reconnectAttempts < config.amq.reconnectAttempts) {
+        setTimeout(connect, config.amq.reconnectDelayMs);
+      } else {
+        logger.error(`Reached ${config.amq.reconnectAttempts}, exiting...`);
+        process.exit();
+      }
+    };
+
+    var connect = () => {
+      logger.info(`Attempting to connect to stomp://${host}:${port} ${reconnectAttempts} / ${config.amq.reconnectAttempts}`);
+      stompit.connect({
+        host,
+        port,
+        connectHeaders : {
+          host: '/',
+          login: config.amq.user,
+          passcode: config.amq.pass,
+          'heart-beat': '5000,5000'
+        }
+      }, (error, amq) => {
+        if(error) {
+          logger.error(`Failed to connect to amq ${error}`);
+          return attemptReconnect();
+        }
+
+        reconnectAttempts = 0;
+        logger.info(`Connected to stomp://${host}:${port}`);
+
+
+        const spatialConsumer = new Spatial(zookeeper, amqInterface(amq));
+
+        amq.once('error', () => {
+          ee.emit('remove', spatialConsumer);
+          attemptReconnect();
+        });
+
+        ee.emit('append', spatialConsumer);
+      });
+    };
+
+    connect();
   });
 
-  async.parallel(thunks, (_err, closeables) => {
-    onStarted(closeables);
-  });
+  return ee;
 }
 
 export
