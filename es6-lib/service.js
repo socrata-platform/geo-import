@@ -6,6 +6,7 @@ import conf from './config';
 import logger from './util/logger';
 import Metrics from './util/metrics';
 import async from 'async';
+import _ from 'underscore';
 
 function service(zk, options, ready) {
   if (!zk) throw new Error('http service needs a zookeeper service');
@@ -21,8 +22,12 @@ function service(zk, options, ready) {
     logger.info(`Service started an listening on ${config.port}`);
 
 
-    consumer(config, zk, metrics, (consumers) => {
-      closeables = closeables.concat(consumers);
+    consumer(config, zk, metrics)
+    .on('append', (consumer) => {
+      closeables.push(consumer);
+    })
+    .on('remove', (consumer) => {
+      closeables = _.without(closeables, consumer);
     });
 
     app = app

@@ -48,11 +48,10 @@ class SpatialService {
       logger.info('No jobs in progress...');
     };
     this._amq = amq;
-    logger.info(`Connected and listening to queue: ${conf.amq.inName}`);
-    this._amq.subscribe(conf.amq.inName, this._onMessage.bind(this));
+    amq.subscribe(this._onMessage.bind(this));
   }
 
-  _onMessage(message, headers) {
+  _onMessage(message) {
     const saneMessage = parseAMQMessage(message);
     logger.info(`Got a message ${JSON.stringify(saneMessage)}`);
 
@@ -400,7 +399,7 @@ class SpatialService {
 
   close(cb) {
     logger.info("SpatialService is supposed to close");
-    this._amq.unsubscribe(conf.amq.inName);
+    this._amq.disconnect();
 
     this._onComplete = () => {
       logger.info(`Spatial service received a close, exiting in ${conf.shutdownDrainMs}ms`);
