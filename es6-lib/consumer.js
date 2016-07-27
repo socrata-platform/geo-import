@@ -64,8 +64,8 @@ function consumer(config, zookeeper, metrics, onStarted) {
       if(reconnectAttempts < config.amq.reconnectAttempts) {
         setTimeout(connect, config.amq.reconnectDelayMs);
       } else {
-        logger.error(`Reached ${config.amq.reconnectAttempts}, exiting...`);
-        process.exit();
+        logger.error(`Reached ${config.amq.reconnectAttempts}, giving up...`);
+        // process.exit();
       }
     };
 
