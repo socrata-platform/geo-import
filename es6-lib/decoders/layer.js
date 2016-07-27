@@ -25,6 +25,7 @@ from '../soql/mapper';
 import logger from '../util/logger';
 import LDJson from './ldjson';
 import WGS84Reprojector from './wgs84-reprojector';
+import ProjectionTracker from './projection-tracker';
 import DevNull from '../util/devnull';
 import config from '../config';
 const conf = config();
@@ -50,9 +51,14 @@ class Layer extends Duplex {
 
     this.columns = columns;
     this._count = 0;
-    this._crsMap = {};
-    this._crsCache = {};
+
     this._wgs84Reprojector = new WGS84Reprojector(columns);
+    this._projectionTracker = new ProjectionTracker();
+
+    this._projectionTracker.on('error', (error) => {
+      this.emit('error', error);
+    });
+
     this._spec = spec || {};
 
     if (disk) {
@@ -120,15 +126,15 @@ class Layer extends Duplex {
   }
 
   set defaultCrs(urn) {
-    this._defaultCrs = srs.parse(urn);
+    this._projectionTracker.setDefaultCrs(urn);
   }
 
   get defaultCrs() {
-    return this._defaultCrs || this._wgs84Reprojector.projection;
+    return this._projectionTracker.getDefaultCrs();
   }
 
   get projections() {
-    return Object.values(this._crsMap);
+    return this._projectionTracker.all();
   }
 
   /**
@@ -202,7 +208,7 @@ class Layer extends Duplex {
    * @return {[type]}           [description]
    */
   write(crs, soqlRow, throwaway, done) {
-    if (crs) this._crsMap[this._count] = crs;
+    this._projectionTracker.tell(this._count, crs);
 
     this._updateColumnTypes(soqlRow);
     this._count++;
@@ -245,38 +251,24 @@ class Layer extends Duplex {
     return this._count;
   }
 
-  /**
-   * Returns the projection for the row at index
-   */
-  _getProjectionFor(index) {
-    if (!this._crsMap[index]) return this.defaultCrs;
-    var unparsed = this._crsMap[index];
-    if (!this._crsCache[unparsed]) {
-      this._crsCache[unparsed] = srs.parse(unparsed);
-    }
-    return this._crsCache[unparsed];
-  }
+
 
   _startPushing() {
     this._isPushing = true;
     var projectTo = this._projectTo;
     var writeIndex = 0;
-    var prjIndex = 0;
     var self = this;
     this.push(jsonPrologue);
     fs.createReadStream(this._outName)
       .pipe(new LDJson())
-      .pipe(es.mapSync((row) => {
-        var thing = [this._getProjectionFor(prjIndex), row];
-        prjIndex++;
-        return thing;
-      }))
+      .pipe(this._projectionTracker)
       .pipe(this._wgs84Reprojector)
       .pipe(es.through(function write(rowString) {
         var sep = self._jsonSeparator(writeIndex);
-        var ep = '';
         writeIndex++;
-        if (writeIndex === self._count) ep = jsonEpilogue;
+
+        var ep = '';
+        if(writeIndex === self.count) ep = jsonEpilogue;
 
         if (!self.push(sep + rowString + ep)) {
           this.pause();
@@ -290,6 +282,7 @@ class Layer extends Duplex {
           self._readableState.pipes.once('drain', this.resume.bind(this));
         }
       }, function end() {
+        // self.push(jsonEpilogue);
         self.push(null);
       }));
   }

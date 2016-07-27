@@ -57,9 +57,6 @@ describe('merger', () => {
         const [layer] = layers;
 
         layer.pipe(new DevNull()).on('finish', () => {
-
-
-
           layer.bbox.minx.should.be.approximately(-113.71250, 0.0001);
           layer.bbox.miny.should.be.approximately(53.39732, 0.0001);
           layer.bbox.maxx.should.be.approximately(-113.29525, 0.0001);
@@ -101,6 +98,26 @@ describe('merger', () => {
           res.emit('finish');
           onDone();
         });
+      });
+  });
+
+
+  it('should emit an error for an unknown projection', function(onDone) {
+    const disk = new Disk(res);
+    const decoder = new Shapefile(disk);
+    const merger = new Merger(disk);
+
+    fixture('smoke/zona.zip')
+      .pipe(decoder)
+      .pipe(merger)
+      .on('end', (layers) => {
+        const [layer] = layers;
+
+        layer.on('error', (error) => {
+          error.serialize().key.should.eql('invalid_projection');
+          error.serialize().parameters.input.should.exist;
+          onDone();
+        }).pipe(new DevNull());
       });
   });
 

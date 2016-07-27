@@ -28,7 +28,6 @@ class LDJson extends Transform {
     //_buf = a0
     //tokens = [a1, b0, c0]
     var tokens = buf.toString('utf-8').split('\n');
-
     //rest = c0
     //tokens  = [a0, b0]
     var rest = tokens.pop();
