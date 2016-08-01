@@ -24,6 +24,10 @@ class Auth {
   get cookie() {
     return this._underlying.cookie;
   }
+
+  get basic() {
+    return this._underlying.auth;
+  }
 }
 
 
@@ -42,6 +46,7 @@ class GenClient {
 
   _headers() {
     return {
+      'Authorization': this._auth.basic,
       'X-App-Token': this._auth.appToken,
       'X-Socrata-Host': this._auth.host,
       'X-Socrata-RequestId': this._auth.reqId,

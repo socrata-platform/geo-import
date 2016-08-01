@@ -22,13 +22,8 @@ function service(zk, options, ready) {
     logger.info(`Service started an listening on ${config.port}`);
 
 
-    consumer(config, zk, metrics)
-    .on('append', (consumer) => {
-      closeables.push(consumer);
-    })
-    .on('remove', (consumer) => {
-      closeables = _.without(closeables, consumer);
-    });
+    let closeable = consumer(zk, metrics);
+    closeables.push(closeable);
 
     app = app
       .listen(config.port)

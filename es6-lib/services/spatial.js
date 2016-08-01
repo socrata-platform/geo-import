@@ -53,7 +53,7 @@ class SpatialService {
 
   _onMessage(message) {
     const saneMessage = parseAMQMessage(message);
-    logger.info(`Got a message ${JSON.stringify(saneMessage)}`);
+    logger.info(_.extend({msg: `Got a message`}, saneMessage));
 
     const iss = new ISS(this._amq);
     const activity = iss.activity(saneMessage);

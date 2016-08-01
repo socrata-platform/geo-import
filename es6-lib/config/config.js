@@ -16,6 +16,10 @@ default {
 
   socketTimeoutMs: 60 * 1000,
 
+  //this doesn't apply to upserts, but it can take minutes?? to do
+  //ddl... ;_;
+  upstreamTimeoutMs: 2 * 60 * 1000,
+
   //number of rows to buffer in object mode feature streams
   rowBufferSize: 2,
 
@@ -48,6 +52,7 @@ default {
     user: 'admin',
     pass: 'admin',
     reconnectAttempts: 100,
-    reconnectDelayMs: 500
+    reconnectDelayMs: 500,
+    heartbeat: 20 * 1000
   }
 };
