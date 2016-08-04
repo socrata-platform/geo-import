@@ -2,39 +2,20 @@ import request from 'request';
 import reduceStream from 'stream-reduce';
 import logger from '../util/logger';
 import Layer from '../decoders/layer';
-
-class CoreAuth {
-  constructor(request) {
-    this.req = request;
-    this._headers = request.headers;
-  }
-
-  get reqId() {
-    return this._headers['x-socrata-requestid'];
-  }
-
-  get authToken() {
-    return this._headers['authorization']; //jshint ignore:line
-  }
-
-  get appToken() {
-    return this._headers['x-app-token'];
-  }
-
-  get host() {
-    return this._headers['x-socrata-host'];
-  }
-
-  get cookie() {
-    return this._headers.cookie;
-  }
+import {
+  GenClient
 }
+from './client';
+import _ from 'underscore';
+import config from '../config';
+
+const timeout = config().upstreamTimeoutMs;
 
 
-class Core {
+class Core extends GenClient {
   constructor(auth, zookeeper) {
-    if (!auth || !zookeeper) throw new Error("Core-Client needs auth and zookeeper");
-    this._auth = auth;
+    super(auth, zookeeper);
+    if (!zookeeper) throw new Error("Core-Client needs zookeeper");
     this._zk = zookeeper;
   }
 
@@ -42,26 +23,11 @@ class Core {
     return this._zk.getCore(cb);
   }
 
-  _log(msg) {
-    this._auth.req.log.info({host: this._auth.host}, msg);
-  }
-
-  _headers() {
-    return {
-      'Authorization': this._auth.authToken,
-      'X-App-Token': this._auth.appToken,
-      'X-Socrata-Host': this._auth.host,
-      'X-Socrata-RequestId': this._auth.reqId,
-      'Cookie': this._auth.cookie,
-      'Content-Type': 'application/json',
-      'User-Agent': 'geo-import'
-    };
-  }
-
   //partial to buffer a response
   bufferResponse(onBuffered) {
     return (response) => {
       if (!response.pipe) {
+        logger.error(`Request failed ${response.code}`);
         //this is so gross.
         //the error even will emit both error responses
         //(shouldn't 'response' do that?) as well as regular
@@ -77,8 +43,8 @@ class Core {
       }
 
       response.pipe(reduceStream((acc, data) => {
-          return acc + data.toString('utf-8');
-        }, ''))
+        return acc + data.toString('utf-8');
+      }, ''))
         .on('data', (buf) => {
           try {
             response.body = JSON.parse(buf);
@@ -98,9 +64,9 @@ class Core {
   }
 
   _onErrorResponse(onComplete) {
-    return this.bufferResponse((response) => {
+    return _.once(this.bufferResponse((response) => {
       return onComplete(response, false);
-    });
+    }));
   }
 
   destroy(layer, onComplete) {
@@ -108,17 +74,18 @@ class Core {
       if (err) return onComplete(err);
       this._log('DeleteDataset');
       request.del({
-          url: `${url}/views/${layer.uid}`,
-          headers: this._headers(),
-          json: true
-        })
+        url: `${url}/views/${layer.uid}`,
+        timeout,
+        headers: this._headers(),
+        json: true
+      })
         .on('response', this._onResponseStart(onComplete))
         .on('error', this._onErrorResponse(onComplete));
     });
   }
 
-  create(layer, onComplete) {
-    if(layer.uid !== Layer.EMPTY) {
+  create(parentUid, layer, onComplete) {
+    if (layer.uid !== Layer.EMPTY) {
       logger.warn(`Layer uid is not empty, layer uid is ${layer.uid}, cannot create layer in datastore!`);
     }
     return this._url((err, url) => {
@@ -126,13 +93,19 @@ class Core {
 
       this._log(`CreateDataset request to core`);
       request.post({
-          url: `${url}/views?nbe=true`,
-          headers: this._headers(),
-          body: {
-            name: layer.name
-          },
-          json: true
-        })
+        url: `${url}/views?nbe=true`,
+        timeout,
+        headers: this._headers(),
+        body: {
+          name: layer.name,
+          displayType: 'geoRows',
+          privateMetadata: {
+            isNbe: true,
+            parentUid
+          }
+        },
+        json: true
+      })
         .on('response', this._onResponseStart(onComplete))
         .on('error', this._onErrorResponse(onComplete));
     });
@@ -143,15 +116,72 @@ class Core {
     return this._url((err, url) => {
       if (err) return onComplete(err);
 
-      this._log(`CopySchema request for new layer to core`);
+      this._log(`CopySchema request for new layer to core ${layer.uid}`);
       request.post({
-          url: `${url}/views/${layer.uid}/publication?method=copySchema`,
-          headers: this._headers()
-        })
+        url: `${url}/views/${layer.uid}/publication?method=copySchema`,
+        timeout,
+        headers: this._headers()
+      })
         .on('response', this._onResponseStart(onComplete))
         .on('error', this._onErrorResponse(onComplete));
     });
   }
+
+  publish(layer, onComplete) {
+    return this._url((err, url) => {
+      if (err) return onComplete(err);
+
+      this._log(`Publishing layer ${layer.uid}`);
+      request.post({
+        url: `${url}/views/${layer.uid}/publication`,
+        timeout,
+        headers: this._headers(),
+      })
+        .on('response', this._onResponseStart(onComplete))
+        .on('error', this._onErrorResponse(onComplete));
+    });
+  }
+
+
+  // "namespace" -> NewBackEnd.resourceName(parent),
+  // "owsUrl" -> s"/api/geospatial/${parent.getUid}",
+  // "layers" -> publishedLayers.map { v => v.getUid }.mkString(","),
+  // "isNbe" -> true,
+  // "bboxCrs" -> defaultCrsCode,
+  // "featureIdAttribute" -> "_SocrataID",
+  // "bbox" -> bbox.toString
+  updateMetadata(fourfour, layers, bbox, onComplete) {
+    return this._url((err, url) => {
+      if (err) return onComplete(err);
+
+      this._log(`Updating metadata for layer ${fourfour}`);
+      request.put({
+        url: `${url}/views/${fourfour}`,
+        timeout,
+        headers: this._headers(),
+        json: true,
+        body: {
+          metadata: {
+            geo: {
+              owsUrl: `/api/geospatial/${fourfour}`,
+              layers: layers.map(l => l.uid).join(','),
+              isNbe: true,
+              bboxCrs: 'EPSG:4326',
+              namespace: `_${fourfour}`,
+              featureIdAttribute: '_SocrataID',
+              bbox: bbox.toString()
+            }
+          },
+          privateMetadata: {
+            childViews: layers.map(l => l.uid)
+          }
+        }
+      })
+        .on('response', this._onResponseStart(onComplete))
+        .on('error', this._onErrorResponse(onComplete));
+    });
+  }
+
 
   addColumn(colSpec, onComplete) {
     var [fourfour, column] = colSpec;
@@ -162,6 +192,7 @@ class Core {
 
       return request.post({
           url: `${url}/views/${fourfour}/columns`,
+          timeout,
           headers: this._headers(),
           body: column.toJSON(),
           json: true
@@ -177,6 +208,7 @@ class Core {
 
       return request.get({
           url: `${url}/views/${layer.uid}/columns`,
+          timeout,
           headers: this._headers()
         })
         .on('response', this._onResponseStart(onComplete))
@@ -193,6 +225,7 @@ class Core {
 
       return request.del({
           url: `${url}/views/${viewId}/columns/${colId}`,
+          timeout,
           headers: this._headers()
         })
         .on('response', this._onResponseStart(onComplete))
@@ -215,8 +248,26 @@ class Core {
       return onOpened(false, [layer, upsertOpener]);
     });
   }
+
+  getBlob(blobId, onOpened) {
+    return this._url((err, url) => {
+      if (err) return onOpened(err);
+
+      const uri = `${url}/file_data/${blobId}`;
+      this._log(`Getting blob: ${uri} from core`);
+      var stream = request.get({
+        url: uri,
+        timeout,
+        encoding: null,
+        headers: _.extend(
+          this._headers(), {}
+        )
+      });
+      return onOpened(false, stream);
+    });
+  }
+
 }
 
-export {
-  Core as Core, CoreAuth as CoreAuth
-};
+export
+default Core;

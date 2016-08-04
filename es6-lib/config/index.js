@@ -10,14 +10,18 @@
 
 import _ from 'underscore';
 import test from './test';
+import merge from 'deepmerge';
 
 var env = process.env.GEO_IMPORT_ENV;
 if (!env) throw new Error('No GEO_IMPORT_ENV environment set! Please specify one.');
 
 var baseConfig = require('./config');
 
+const conf = merge(baseConfig, require(`./${env}`));
+
 function config() {
-  return _.extend(baseConfig, require(`./${env}`));
+  return conf;
 }
 
-export default config;
+export
+default config;

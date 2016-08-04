@@ -13,6 +13,9 @@ appease_jenkins: lib
 	tar -zcvf lib.tar lib/
 
 
+node_modules/node-srs:
+
+
 node_modules:
 	npm i
 
@@ -20,5 +23,4 @@ clean:
 	rm -rf lib
 	rm -rf test
 	rm -f lib.tar
-
 .PHONY: clean test

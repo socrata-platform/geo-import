@@ -10,7 +10,7 @@ class ArityChecker extends Transform {
   constructor() {
     super({
       objectMode: true
-    })
+    });
   }
 
   _transform(row, _encoding, done) {
@@ -20,6 +20,15 @@ class ArityChecker extends Transform {
   }
 }
 
-export {
-  ArityChecker
+
+//Get the bits out of a message that are deterministic
+function messageDetails(message) {
+  var deets = message.details;
+  delete deets.eventId;
+  delete deets.eventTime;
+  return deets;
 }
+
+export {
+  ArityChecker, messageDetails
+};

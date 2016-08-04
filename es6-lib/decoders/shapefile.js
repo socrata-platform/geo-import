@@ -95,6 +95,9 @@ class Shapefile extends Duplex {
   static canDecode() {
     return ['application/zip', 'application/octet-stream'];
   }
+  static canDecodeExtensions() {
+    return ['.zip'];
+  }
 
   _fileGroup(extension, name) {
     name = name ? name.toLowerCase() : 'shapefile';
@@ -131,13 +134,13 @@ class Shapefile extends Duplex {
     }
 
     if (!this.push(geoJsToSoQL(record, projection))) {
-          //our reader has gone away, this kills the stream.
-          //so end the stream with a null and flush anything
-          //that's buffered into oblivion
-          if (!this._readableState.pipes) {
-            this.push(null);
-            return this.pipe(new DevNull());
-          }
+      //our reader has gone away, this kills the stream.
+      //so end the stream with a null and flush anything
+      //that's buffered into oblivion
+      if (!this._readableState.pipes) {
+        this.push(null);
+        return this.pipe(new DevNull());
+      }
 
       this._readableState.pipes.once('drain', readNext);
     } else {
@@ -238,14 +241,14 @@ class Shapefile extends Duplex {
     yauzl.open(this._zName, (err, zipFile) => {
       if (err) return onErr(err);
       zipFile.on('entry', (entry) => {
-          //We only want top level shape files
-          if (path.dirname(entry.fileName).split(path.sep).length !== 1) return;
-          onFile(entry, zipFile);
-        })
-        //this is a terrible hack. close gets called when the stream is closed, not when
-        //it is flushed. fix would be to fork the yauzl library and make it emit close
-        //when all readstreams that are opened with openReadStream emit 'finish'
-        .on('close', () => setTimeout(onClose, 50))
+        //We only want top level shape files
+        if (path.dirname(entry.fileName).split(path.sep).length !== 1) return;
+        onFile(entry, zipFile);
+      })
+      //this is a terrible hack. close gets called when the stream is closed, not when
+      //it is flushed. fix would be to fork the yauzl library and make it emit close
+      //when all readstreams that are opened with openReadStream emit 'finish'
+      .on('close', () => setTimeout(onClose, 50))
         .on('error', onErr);
     });
   }
@@ -254,6 +257,7 @@ class Shapefile extends Duplex {
    * TODO: This has an extra copy, could be sped up probably
    */
   _onBuffered() {
+    logger.debug('Shapefile _onBuffered');
     var extracted = [];
     this._walk(
       (err) => {
@@ -328,4 +332,5 @@ class Shapefile extends Duplex {
 
 }
 
-export default Shapefile;
+export
+default Shapefile;

@@ -1,4 +1,5 @@
-export default {
+export
+default {
   port: 6665,
 
   //abbreviate summaries at 50kb
@@ -6,7 +7,10 @@ export default {
 
   zk: ["localhost:2181"],
   log: {
-    level: 'error',
+    level: 'critical',
     name: 'geo-import'
+  },
+  amq: {
+    host: 'stomp://localhost:61613,stomp://localhost:61613'
   }
 };

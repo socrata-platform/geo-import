@@ -1,4 +1,3 @@
-
 const MIN_LONGITUDE = -180;
 const MAX_LONGITUDE = 180;
 const MIN_LATITUDE = -90;
@@ -16,6 +15,13 @@ class BBox {
 
   toJSON() {
     return this._coords;
+  }
+
+  toString() {
+    const {
+      minx, miny, maxx, maxy
+    } = this.toJSON();
+    return `${minx},${miny},${maxx},${maxy}`;
   }
 
   get maxx() {
@@ -51,7 +57,7 @@ class BBox {
   }
 
   expand(coord) {
-    if(!this._isValid(coord)) return this;
+    if (!this._isValid(coord)) return this;
 
     var [x, y] = coord;
 
@@ -65,4 +71,5 @@ class BBox {
   }
 }
 
-export default BBox;
+export
+default BBox;

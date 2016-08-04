@@ -1,8 +1,13 @@
-export default {
-  zk : ['localhost:2181'],
+export
+default {
+  zk: ['localhost:2181'],
 
-  log : {
+  log: {
     level: 'debug',
-    name : 'geo-import'
+    name: 'geo-import'
+  },
+
+  amq: {
+    host: 'stomp://localhost:61613,stomp://localhost:61613'
   }
 };

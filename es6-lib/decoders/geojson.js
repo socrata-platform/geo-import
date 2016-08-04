@@ -32,17 +32,21 @@ class GeoJSON extends Transform {
     var err = this._onError.bind(this);
 
     this._featureParser = new Parser('features.*')
-    .on('error', err)
-    .on('data', this._onFeature.bind(this));
+      .on('error', err)
+      .on('data', this._onFeature.bind(this));
     this._crsParser = new Parser('crs.properties.name')
-    .on('error', err)
-    .on('data', this._onCrs.bind(this));
+      .on('error', err)
+      .on('data', this._onCrs.bind(this));
   }
 
 
 
   static canDecode() {
     return ['application/json'];
+  }
+
+  static canDecodeExtensions() {
+    return ['.json', '.geojson'];
   }
 
   _onError(err) {
@@ -75,4 +79,5 @@ class GeoJSON extends Transform {
   }
 }
 
-export default GeoJSON;
+export
+default GeoJSON;

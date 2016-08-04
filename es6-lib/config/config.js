@@ -1,5 +1,6 @@
-export default {
-  port: 4444,
+export
+default {
+  port: 4445,
 
   //gate at which the service will not read the whole file to generate
   //a detailed summary. for files over this limit, an abbreviated summary
@@ -13,10 +14,11 @@ export default {
   //in memory.
   spillRowsToDiskAfter: 20,
 
-  //an hour is totally absurd. but until we have the import status service,
-  //geo-import needs to keep requests from core open until upsert completes,
-  //which can take a long time.
-  socketTimeoutMs: 60 * 60 * 1000,
+  socketTimeoutMs: 60 * 1000,
+
+  //this doesn't apply to upserts, but it can take minutes?? to do
+  //ddl... ;_;
+  upstreamTimeoutMs: 2 * 60 * 1000,
 
   //number of rows to buffer in object mode feature streams
   rowBufferSize: 2,
@@ -24,13 +26,33 @@ export default {
   //maximum number of points to allow through the importer per row
   maxVerticesPerRow: 1000000,
 
-  metrics:  {
+  metrics: {
     heapMonitorInterval: 500,
   },
   heapDumpOut: '.',
 
-  log : {
+  emitProgressEvery: 200,
+  //don't send more than 1 ISS progress event within this time window
+  debounceProgressMs: 2000,
+
+  //wait this long before process.exit()
+  //need this because we need to wait for ISS messages to
+  //get sent, and the best we can do is give them time to get
+  //sent becuase there's no callback on them to indicate completion
+  shutdownDrainMs: 5000,
+
+  log: {
     level: 'info',
-    name : 'geo-import'
+    name: 'geo-import'
+  },
+
+  amq: {
+    inName: '/queue/GeoImports',
+    outName: '/queue/eurybates.import-status-events',
+    user: 'admin',
+    pass: 'admin',
+    reconnectAttempts: 100,
+    reconnectDelayMs: 500,
+    heartbeat: 20 * 1000
   }
 };

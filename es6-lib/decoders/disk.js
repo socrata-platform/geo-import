@@ -3,11 +3,12 @@ import logger from '../util/logger';
 
 
 class Disk {
-  constructor(response) {
-    this._response = response;
+  constructor(scope) {
+    this._scope = scope;
 
     this._allocations = [];
-    this._response.on('finish', this._cleanup.bind(this));
+
+    this._scope.once('finish', this._cleanup.bind(this));
   }
 
   _cleanup() {
