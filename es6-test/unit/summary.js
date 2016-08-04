@@ -209,7 +209,7 @@ describe('summary service', () => {
           name: 'the_geom',
           dataTypeName: 'line'
         }, {
-          fieldName: 'a_string',
+          fieldName: '__a_string',
           name: 'A_STRING',
           dataTypeName: 'text'
         }]);

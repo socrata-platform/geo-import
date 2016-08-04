@@ -46,8 +46,6 @@ describe('shapefile ingress', () => {
     app.close();
   });
 
-
-
   it('should be able to do a ~12mb SHP summary', function(onDone) {
     this.timeout(80000);
 
