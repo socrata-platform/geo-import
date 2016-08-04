@@ -16,6 +16,8 @@ class SoQL {
   _launderName(name) {
     name = name.trim();
     var start = name[0];
+    //_.isNumber(NaN) === true...so that's what i'm not using
+    //it here
     var isNumber = !_.isNaN(parseInt(start));
     var isUpper = start.toUpperCase() === start;
 
