@@ -4,107 +4,135 @@ import logger from './util/logger';
 import async from 'async';
 import _ from 'underscore';
 import EventEmitter from 'events';
+import conf from './config';
 
-function consumer(config, zookeeper, metrics, onStarted) {
-  const hosts = config.amq.host
-    .replace(/stomp:\/\//g, '')
-    .split(',')
-    .map(hostAndPort => hostAndPort.split(':'));
+const config = conf();
 
-  const reconnectOpts = {
-    retries: config.amq.reconnectAttempts,
-    delay: config.amq.reconnectDelayMs
-  };
+class QueueManager extends EventEmitter {
 
+  constructor() {
+    super();
+    this._underlying = [];
+  }
 
-  const amqInterface = (amq) => {
-    let send = (message) => {
-      let headers = {
-        'persistent': true,
-        'suppress-content-length': true,
-        'destination': config.amq.outName
-      };
-      let frame = amq.send(headers);
-      frame.write(message);
-      frame.end();
-    };
-
-    let subscribe = (callback) => {
-      let headers = {
-        'destination': config.amq.inName
-      };
-      amq.subscribe(headers, (error, message) => {
-        if(error) {
-          return logger.error(`Failed to subscribe to ${config.amq.inName}`);
-        }
-
-        message.readString('utf-8', (error, body) => {
-          if(error) {
-            return logger.error(`Failed to read message ${message}`);
-          }
-
-          callback(body);
-        });
-      });
-    };
-
-    let disconnect = () => {
-      amq.disconnect();
-    };
-
-    return {send, subscribe, disconnect};
-  };
-
-  const ee = new EventEmitter();
-  hosts.forEach(([host, port]) => {
+  connect(host, port) {
     var reconnectAttempts = 0;
-
     var attemptReconnect = () => {
       reconnectAttempts++;
-      if(reconnectAttempts < config.amq.reconnectAttempts) {
-        setTimeout(connect, config.amq.reconnectDelayMs);
+      if (reconnectAttempts < config.amq.reconnectAttempts) {
+        setTimeout(() => this.connect(host, port), config.amq.reconnectDelayMs);
+
       } else {
         logger.error(`Reached ${config.amq.reconnectAttempts}, giving up...`);
         // process.exit();
       }
     };
 
-    var connect = () => {
-      logger.info(`Attempting to connect to stomp://${host}:${port} ${reconnectAttempts} / ${config.amq.reconnectAttempts}`);
-      stompit.connect({
-        host,
-        port,
-        connectHeaders : {
-          host: '/',
-          login: config.amq.user,
-          passcode: config.amq.pass,
-          'heart-beat': '5000,5000'
-        }
-      }, (error, amq) => {
-        if(error) {
-          logger.error(`Failed to connect to amq ${error}`);
-          return attemptReconnect();
-        }
+    logger.info(`Attempting to connect to stomp://${host}:${port} ${reconnectAttempts} / ${config.amq.reconnectAttempts}`);
+    stompit.connect({
+      host,
+      port,
+      connectHeaders: {
+        host: '/',
+        login: config.amq.user,
+        passcode: config.amq.pass,
+        'heart-beat': `${config.amq.heartbeat},${config.amq.heartbeat}`
+      }
+    }, (error, amq) => {
+      if (error) {
+        logger.error(`Failed to connect to amq ${error}`);
+        return attemptReconnect();
+      }
 
-        reconnectAttempts = 0;
-        logger.info(`Connected to stomp://${host}:${port}`);
+      reconnectAttempts = 0;
+      logger.info(`Connected to stomp://${host}:${port}`);
 
 
-        const spatialConsumer = new Spatial(zookeeper, amqInterface(amq));
-
-        amq.once('error', () => {
-          ee.emit('remove', spatialConsumer);
-          attemptReconnect();
-        });
-
-        ee.emit('append', spatialConsumer);
+      amq.once('error', (e) => {
+        this._underlying = _.without(this._underlying, amq);
+        logger.error(e);
+        attemptReconnect();
       });
+
+      this._underlying.push(amq);
+
+      let headers = {
+        'destination': config.amq.inName
+      };
+      amq.subscribe(headers, (error, message) => {
+        if (error) {
+          return logger.error(`Failed to subscribe to ${config.amq.inName}`);
+        }
+
+        message.readString('utf-8', (error, body) => {
+          if (error) {
+            return logger.error(`Failed to read message ${message}`);
+          }
+
+          this.emit('message', body);
+        });
+      });
+      this.emit('connected', amq);
+    });
+  }
+
+  send(message) {
+    const doSend = (amq) => {
+      var received = false;
+      let headers = {
+        'persistent': true,
+        'suppress-content-length': true,
+        'destination': config.amq.outName
+      };
+      let frame = amq.send(headers, {
+        onReceipt: () => {
+          logger.info(`Receipt of ${message} confirmed`);
+          received = true;
+        }
+      });
+      frame.write(message);
+      frame.end();
+      setTimeout(() => {
+        if (!received) {
+          logger.error(`Never got receipt for message: ${message}`);
+        }
+      }, 3000);
     };
 
-    connect();
+    const amq = _.sample(this._underlying);
+    if(!amq) {
+      return this.once('connected', doSend);
+    }
+    doSend(amq);
+
+
+
+  }
+
+  subscribe(callback) {
+    this.on('message', callback);
+  }
+
+  disconnect() {
+    this._underlying.forEach((amq) => amq.disconnect());
+  }
+}
+
+
+function consumer(zookeeper, metrics) {
+  const hosts = config.amq.host
+    .replace(/stomp:\/\//g, '')
+    .split(',')
+    .map(hostAndPort => hostAndPort.split(':'));
+
+  const manager = new QueueManager();
+  const spatialConsumer = new Spatial(zookeeper, manager);
+
+  hosts.forEach(([host, port]) => {
+    manager.connect(host, port);
   });
 
-  return ee;
+  return spatialConsumer;
 }
 
 export

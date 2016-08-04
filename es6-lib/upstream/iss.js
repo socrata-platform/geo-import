@@ -110,15 +110,15 @@ class ISS extends EventEmitter {
       details.eventTime = (new Date()).toISOString();
       details.eventId = uuid.v4();
 
-
-      const message = JSON.stringify({
+      const obj = {
         tag,
         details,
         source_id: uuid.v4(),
         uuid: uuid.v4()
-      });
+      };
+      const message = JSON.stringify(obj);
 
-      logger.info(`Sending ISS ${message}`);
+      logger.info(_.extend({msg: `Sending ISS`}, obj));
       amq.send(message);
     };
   }

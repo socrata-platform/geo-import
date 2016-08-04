@@ -7,7 +7,9 @@ import {
 }
 from './client';
 import _ from 'underscore';
+import config from '../config';
 
+const timeout = config().upstreamTimeoutMs;
 
 
 class Core extends GenClient {
@@ -25,6 +27,7 @@ class Core extends GenClient {
   bufferResponse(onBuffered) {
     return (response) => {
       if (!response.pipe) {
+        logger.error(`Request failed ${response.code}`);
         //this is so gross.
         //the error even will emit both error responses
         //(shouldn't 'response' do that?) as well as regular
@@ -61,9 +64,9 @@ class Core extends GenClient {
   }
 
   _onErrorResponse(onComplete) {
-    return this.bufferResponse((response) => {
+    return _.once(this.bufferResponse((response) => {
       return onComplete(response, false);
-    });
+    }));
   }
 
   destroy(layer, onComplete) {
@@ -72,6 +75,7 @@ class Core extends GenClient {
       this._log('DeleteDataset');
       request.del({
         url: `${url}/views/${layer.uid}`,
+        timeout,
         headers: this._headers(),
         json: true
       })
@@ -90,6 +94,7 @@ class Core extends GenClient {
       this._log(`CreateDataset request to core`);
       request.post({
         url: `${url}/views?nbe=true`,
+        timeout,
         headers: this._headers(),
         body: {
           name: layer.name,
@@ -114,6 +119,7 @@ class Core extends GenClient {
       this._log(`CopySchema request for new layer to core ${layer.uid}`);
       request.post({
         url: `${url}/views/${layer.uid}/publication?method=copySchema`,
+        timeout,
         headers: this._headers()
       })
         .on('response', this._onResponseStart(onComplete))
@@ -128,6 +134,7 @@ class Core extends GenClient {
       this._log(`Publishing layer ${layer.uid}`);
       request.post({
         url: `${url}/views/${layer.uid}/publication`,
+        timeout,
         headers: this._headers(),
       })
         .on('response', this._onResponseStart(onComplete))
@@ -150,6 +157,7 @@ class Core extends GenClient {
       this._log(`Updating metadata for layer ${fourfour}`);
       request.put({
         url: `${url}/views/${fourfour}`,
+        timeout,
         headers: this._headers(),
         json: true,
         body: {
@@ -184,6 +192,7 @@ class Core extends GenClient {
 
       return request.post({
           url: `${url}/views/${fourfour}/columns`,
+          timeout,
           headers: this._headers(),
           body: column.toJSON(),
           json: true
@@ -199,6 +208,7 @@ class Core extends GenClient {
 
       return request.get({
           url: `${url}/views/${layer.uid}/columns`,
+          timeout,
           headers: this._headers()
         })
         .on('response', this._onResponseStart(onComplete))
@@ -215,6 +225,7 @@ class Core extends GenClient {
 
       return request.del({
           url: `${url}/views/${viewId}/columns/${colId}`,
+          timeout,
           headers: this._headers()
         })
         .on('response', this._onResponseStart(onComplete))
@@ -246,6 +257,7 @@ class Core extends GenClient {
       this._log(`Getting blob: ${uri} from core`);
       var stream = request.get({
         url: uri,
+        timeout,
         encoding: null,
         headers: _.extend(
           this._headers(), {}
