@@ -104,4 +104,36 @@ describe('merger', () => {
       });
   });
 
+
+
+  it('co parcels', function(onDone) {
+    this.timeout(100000);
+
+    const disk = new Disk(res);
+    const decoder = new Shapefile(disk);
+    const merger = new Merger(disk);
+
+    fixture('smoke/co-parcels.zip')
+      .pipe(decoder)
+      .pipe(merger)
+      .on('end', (layers) => {
+        const [layer] = layers;
+
+        layer.pipe(new DevNull()).on('finish', () => {
+          const cols = layer.columns.map(c => c.toJSON());
+
+          const dbf = _.find(cols, c => c.name === 'invalid_the_geom');
+          const shp = _.find(cols, c => c.name === 'the_geom');
+
+          expect(dbf).to.be.defined;
+          expect(shp).to.be.defined;
+          expect(shp.dataTypeName).to.eql('multipolygon');
+          expect(dbf.dataTypeName).to.eql('text');
+
+          onDone();
+        });
+      });
+  });
+
+
 });
