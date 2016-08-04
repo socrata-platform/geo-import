@@ -6,6 +6,7 @@ import _ from 'underscore';
 import SoQLNull from '../soql/null';
 import logger from '../util/logger';
 
+const GEOM_NAME = 'the_geom';
 /**
   Turn the feature into a SoQLType. If no mapping exists, it will get filtered
   out of the pipe
@@ -45,18 +46,32 @@ function propToSoQL(name, value) {
     logger.warn(`Invalid property ${name} type: ${typeof value} ${value}`);
     return false;
   }
+
+  // HACK for EN-4531
+  // cartoDB seems to take invalid geometries and put them in
+  // an attribute column as text. it then names this column `the_geom`
+  // which works in shapefiles because we have a .dbf file
+  // file which can have a column named `the_geom` and .shp file,
+  // which only gets renamed to `the_geom` when we merge the .shp and
+  // .dbf files together. but that causes a clash. So this next
+  // bit prohibits calling an attribute `the_geom` because we're
+  // going to call the actual geometry that
+  if(name.toLowerCase() === GEOM_NAME) {
+    name = `invalid_${GEOM_NAME}`;
+  }
+
   return new t(name, value);
 }
 
 function geomToSoQL(geom) {
-  if (geom === null) return new SoQLNull('the_geom');
+  if (geom === null) return new SoQLNull(GEOM_NAME);
   var ctype = geom.type.toLowerCase();
   var t = types[ctype];
   if (!t) {
     logger.warn(`Invalid geom property, ${typeof value} ${value}`);
     return false;
   }
-  return new t("the_geom", geom);
+  return new t(GEOM_NAME, geom);
 }
 
 function toRow(geometry, geomToSoQL, properties, propToSoQL, crs) {
