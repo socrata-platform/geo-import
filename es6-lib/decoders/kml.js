@@ -20,6 +20,7 @@ import {
 }
 from './transform';
 import config from '../config';
+import {XMLParseError} from '../errors';
 
 
 //kml has no facilities for name the geometry
@@ -308,7 +309,7 @@ class KML extends Transform {
     };
 
     this._parser.on('error', (error) => {
-      this.emit('error', new Error(`XML Parse error: ${error} ${error.stack}`));
+      this.emit('error', new XMLParseError(error, state.path.join('.')));
     });
 
     events.forEach((ev) => {

@@ -469,7 +469,7 @@ describe('spatial service', function() {
     mockAmq.importFixture('points_and_lines_multigeom.kml', names);
   });
 
-  it('will emit a failure to ISS when zk is dead', function(onDone) {
+  it('will emit a failure to ISS when zk error', function(onDone) {
     mockZk.enableErrors();
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
@@ -483,13 +483,12 @@ describe('spatial service', function() {
     mockAmq.importFixture('simple_points.json', []);
   });
 
-  it('will emit a failure to ISS when core is dead', function(onDone) {
+  it('will emit a failure to ISS when core throws an error', function(onDone) {
     mockCore.close();
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (startMessage) => {}, (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
-
         //TODO: hopefully we can plumb better errors into this ISS event?
         expect(finishMessage.details.status).to.eql('Failure');
       }

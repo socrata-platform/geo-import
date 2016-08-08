@@ -20,7 +20,8 @@ describe('kml decoder', function() {
     fixture('malformed_kml.kml')
       .pipe(new KML())
       .on('error', (err) => {
-        expect(err.toString()).to.contain("XML Parse error");
+        expect(err.toJSON().error.reason).to.equal('xmlparse_error');
+        expect(err.toJSON().error.english).to.equal('Failed to parse XML node due to mismatched tag near kml.document.folder.schema');
         onDone();
       });
   });

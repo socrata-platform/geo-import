@@ -13,6 +13,8 @@ describe('geojson decoder', function() {
     fixture('malformed_geojson.json')
     .pipe(new GeoJSON())
     .once('error', (err) => {
+      expect(err.toJSON().error.english).to.equal("Failed to parse JSON at line 13 column 7 token } because Error: Bad array");
+      expect(err.toJSON().error.reason).to.equal('jsonparse_error');
       onDone();
     });
   });

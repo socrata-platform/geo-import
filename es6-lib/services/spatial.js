@@ -25,7 +25,10 @@ import Layer from '../decoders/layer';
 import config from '../config';
 import logger from '../util/logger';
 import ISS from '../upstream/iss';
-
+import {
+  UpsertError
+}
+from '../errors';
 //TODO: resource scope?
 import EventEmitter from 'events';
 
@@ -53,7 +56,9 @@ class SpatialService {
 
   _onMessage(message) {
     const saneMessage = parseAMQMessage(message);
-    logger.info(_.extend({msg: `Got a message`}, saneMessage));
+    logger.info(_.extend({
+      msg: `Got a message`
+    }, saneMessage));
 
     const iss = new ISS(this._amq);
     const activity = iss.activity(saneMessage);
@@ -96,10 +101,10 @@ class SpatialService {
 
   _createLayers(activity, core, layers) {
     async.mapLimit(layers, MAX_PARALLEL, _.partial(core.create, activity.view).bind(core), (err, datasetResponses) => {
-      if (err) return this._onError(activity, err.body || err.toString());
+      if (err) return this._onError(activity, err);
       logger.info(`Successfully created ${layers.length} layers`);
       _.zip(layers, datasetResponses)
-        .forEach(([layer, response]) => layer.uid = response.body.id);
+        .forEach(([layer, response]) => layer.uid = response.id);
       return this._createColumns(activity, core, layers);
     });
   }
@@ -135,7 +140,7 @@ class SpatialService {
           var replacements = _.flatten(
             _.zip(layers, responses)
             .map(([layer, [response, isReplace]]) => {
-              var newUid = response.body.id;
+              var newUid = response.id;
               if (isReplace) {
                 logger.info(`Going to replace ${layer.uid} with new copy ${newUid}`);
               }
@@ -153,7 +158,7 @@ class SpatialService {
         if (err) return cb(err);
         var colSpecs = _.flatten(
           _.zip(replacements, responses).map(([layer, response]) => {
-            return response.body.map((col) => [layer.uid, col.id]);
+            return response.map((col) => [layer.uid, col.id]);
           }), true);
         cb(false, colSpecs);
       });
@@ -167,7 +172,7 @@ class SpatialService {
     };
 
     async.seq(createOrReplace, flatColumns, deleteColumns)(layers, (err, newLayers) => {
-      if (err) return this._onError(activity, err.toString());
+      if (err) return this._onError(activity, err);
       return this._createColumns(activity, core, newLayers);
     });
   }
@@ -179,7 +184,7 @@ class SpatialService {
     return async.mapLimit(colSpecs, MAX_PARALLEL, core.addColumn.bind(core), (err, colResponses) => {
       if (err) {
         return this._destroyLayers(layers, core, () => {
-          return this._onError(activity, err.body || err.toString());
+          return this._onError(activity, err);
         });
       }
       logger.info(`Successfully created ${colResponses.length} columns`);
@@ -223,58 +228,45 @@ class SpatialService {
     //return to the finish callback a list of *open* requests, rather than completed
     //requests, as well as the corresponding layer. Then we need to pipe the
     //layer's scratch file to the open request
-    return async.map(layers, core.upsert.bind(core), (err, upsert) => {
+    return async.map(layers, core.upsert.bind(core), (err, upserts) => {
+      if (err) return fail(err);
       logger.info(`Created upsert requests`);
-      if (err) return fail(err.toString());
 
-      return async.map(upsert, ([layer, upsertBuilder], cb) => {
-        cb = _.once(cb);
+      return async.map(upserts, ([layer, startUpsert], onUpsertComplete) => {
+        onUpsertComplete = _.once(onUpsertComplete);
 
         logger.info(`Starting upsert to ${layer.uid}`);
-        var upsertRequest = upsertBuilder();
+        var upsertRequest = startUpsert();
         layer
           .pipe(es.map(function(datum, callback) {
             callback(null, datum);
             totalRowsUpserted++;
-            if(totalRowsUpserted % conf.emitProgressEvery === 0) {
-              sendProgress();
-            }
+            sendProgress();
           }))
           .pipe(upsertRequest)
-          .on('response', (upsertResponse) => {
-            logger.info(`Got upsert response ${upsertResponse.statusCode}`);
-            //bb hack to match the rest of the flow
-            core.bufferResponse((bufferedResponse) => {
-              logger.info(`Finished upsert response ${upsertResponse.statusCode}`);
-              if (bufferedResponse.statusCode > 300) {
-                logger.error(`Core returned upsert error: ${bufferedResponse}`);
-                return cb({
-                  reason: "Upstream Error",
-                  layer: layer
-                });
-              }
-              return cb(false, [layer, bufferedResponse]);
-            })(upsertResponse);
-          })
-          .on('error', (err) => {
+          .on('response', core.bufferResponse(
+            (error, body) => {
+              if(error) return onUpsertComplete(error);
+              return onUpsertComplete(false, [layer, body]);
+            },
+            UpsertError
+          ))
+          .on('error', (error) => {
             //The underlying stream will throw an error if
             //  * we can't parse the scratch file
             //  * some IO error happens
-            //
-            //It's important to munge this error so core doesn't
-            //get blamed for a local exception
-            logger.error(err.toString());
+            logger.error({error: error.toJSON()});
             upsertRequest.abort();
-            return cb({
-              reason: "Internal Error",
-              layer: layer
-            });
+            return onUpsertComplete(error);
           });
 
       }, (err, upsertResponses) => {
         if (err) {
-          logger.error(`Upsert failed for layer ${err.layer.name} ${err.layer.uid} with ${JSON.stringify(err.reason)} in ${err.layer.scratchName}`);
-          return fail(err.reason);
+          logger.error({
+            msg: `Upsert failed`,
+            error: err.toJSON()
+          });
+          return fail(err);
         }
 
         const layers = upsertResponses.map(([layer, _]) => layer);
@@ -288,13 +280,13 @@ class SpatialService {
     return async.mapLimit(layers, MAX_PARALLEL, core.publish.bind(core), (err, publications) => {
       if (err) {
         return this._destroyLayers(layers, core, () => {
-          return this._onError(activity, err.body);
+          return this._onError(activity, err);
         });
       }
       logger.info(`Successfully published ${layers.map(l => l.uid)}`);
       const publishedLayers = _.zip(layers, publications).map(([layer, response]) => {
-        logger.info(`Publication resulted in ${layer.uid} --> ${response.body.id}`);
-        layer.uid = response.body.id;
+        logger.info(`Publication resulted in ${layer.uid} --> ${response.id}`);
+        layer.uid = response.id;
         return layer;
       });
       return this._updateParentMetadata(activity, core, publishedLayers);
@@ -308,10 +300,10 @@ class SpatialService {
     core.updateMetadata(activity.getParentUid(), layers, bbox, (err, resp) => {
       if (err) {
         return this._destroyLayers(layers, core, () => {
-          return this._onError(activity, err.body);
+          return this._onError(activity, err);
         });
       }
-      logger.info(`Updated metadata for ${activity.getParentUid()} : ${resp.body}`);
+      logger.info(`Updated metadata for ${activity.getParentUid()} : ${resp}`);
       activity.onSuccess(warnings, totalRows);
 
       return this._endProgress();
@@ -338,7 +330,7 @@ class SpatialService {
 
     //If we can't get a decoder, then the user tried to import
     //an unsupported file, or set the content type incorrectly
-    // on their header
+    //on their header
     var [decoderErr, decoder] = getDecoderForExtension(message.filename, disk);
     if (decoderErr) return this._onError(activity, decoderErr.toString());
 
@@ -368,13 +360,14 @@ class SpatialService {
   }
 
   _onError(activity, reason) {
+    // console.log(reason.toJSON())
     activity.onError(reason);
     this._endProgress();
   }
 
   _endProgress() {
-    if(this._inFlight > 0) this._inFlight--;
-    if(this._inFlight === 0) this._onComplete();
+    if (this._inFlight > 0) this._inFlight--;
+    if (this._inFlight === 0) this._onComplete();
   }
 
   _startProgress() {
@@ -405,7 +398,7 @@ class SpatialService {
       logger.info(`Spatial service received a close, exiting in ${conf.shutdownDrainMs}ms`);
       setTimeout(cb, conf.shutdownDrainMs);
     };
-    if(this._inFlight === 0) this._onComplete();
+    if (this._inFlight === 0) this._onComplete();
   }
 
 

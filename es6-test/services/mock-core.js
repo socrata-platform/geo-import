@@ -49,6 +49,13 @@ class CoreMock {
       const valid = hasHeaders(req, res);
       if (!valid) return;
 
+      if (req.query.method !== 'copySchema' && this.failPublication) {
+        return res.status(this.failPublication).send('failColumns');
+      }
+
+      if (req.query.method === 'copySchema' && this.failWorkingCopy) {
+        return res.status(this.failWorkingCopy).send('failColumns');
+      }
 
       var view = {
         "id": "qs32-qpt8",

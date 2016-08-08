@@ -29,7 +29,8 @@
     "heapdump": "0.3.7",
     "ofe": "0.5.0",
     "gc-stats": "1.0.0",
-    "deepmerge": "0.2.10"
+    "deepmerge": "0.2.10",
+    "js-yaml": "3.6.1"
   },
   "devDependencies": {
     "chai": "*",
@@ -39,7 +40,6 @@
     "should": "latest"
   },
   "scripts": {
-    "test": "make test",
-    "postinstall": "scripts/postinstall.sh"
+    "test": "make test"
   }
 }
