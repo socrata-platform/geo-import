@@ -4,18 +4,9 @@ import changeCase from 'change-case';
 
 function launderName(name) {
   name = name.trim();
-  //_.isNumber(NaN) === true...so that's what i'm not using it here
+  //_.isNumber(NaN) === true...so that's why i'm not using it here
   var isNumber = !_.isNaN(parseInt(name[0]));
 
-  // Suppose we have columns in one layer
-  // called `NAME` and `name`, snakecase itself will convert
-  // these to `name` and `name`. So we need to convert them
-  // to `__name` and `name` so they don't collide.
-  // Why the double underscore?
-  // Suppose we have columns in one layer
-  // called 'ID'. Single underscore would be converted
-  // to `_id` which is reserved. So a double underscore fixes
-  // this ;_;
   var l = name;
   name = changeCase.snakeCase(name);
   if (isNumber) {
