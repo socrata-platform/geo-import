@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          102.0,
+          0.5
+        ]
+      },
+      "properties": {
+        "a_string": "first string",
+        "A_STRING": "second string",
+        "A_string": "third string",
+        "a_String": "fourth string"
+      }
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 import SoQL from './soql';
 
 class SoQLText extends SoQL {
-  constructor(name, value) {
-    super(name, value);
+  constructor(name, value, prohibitedNames) {
+    super(name, value, prohibitedNames);
     /**
      * Underlying shapefile parser gives back
      * '\u0000' for null values in text columns

@@ -615,4 +615,22 @@ describe('merging feature streams to layers', function() {
         onDone();
       });
   });
+
+  it('will dedupe column names that end up the same after laundering', function(onDone) {
+    var [merger, response] = makeMerger();
+    fixture('simple_points_dup_columns.json')
+      .pipe(new GeoJSON())
+      .pipe(merger)
+      .on('end', ([layer]) => {
+        layer.pipe(jsbuf()).on('end', ([row]) => {
+
+          expect(row.a_string).to.equal('first string');
+          expect(row.a_string_1).to.equal('second string');
+          expect(row.a_string_2).to.equal('third string');
+          expect(row.a_string_3).to.equal('fourth string');
+
+          onDone();
+        })
+      });
+  });
 });

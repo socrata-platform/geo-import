@@ -16,7 +16,7 @@ import {
 }
 from '../soql/mapper';
 import {
-  toRow, geomToSoQL, propToSoQL
+  toRow, geomToSoQL
 }
 from './transform';
 import config from '../config';

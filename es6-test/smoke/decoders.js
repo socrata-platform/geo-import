@@ -223,15 +223,15 @@ describe('decoders', () => {
     var [decoder, res] = kmzDecoder();
     var rows = [];
     var expected = ['the_geom',
-      '__objectid',
-      '__area',
-      '__perimeter',
-      '__patternc',
-      '__patternc_i',
-      '__districtc',
-      '__square_mil',
-      '__shape_leng',
-      '__shape_area'
+      'objectid',
+      'area',
+      'perimeter',
+      'patternc',
+      'patternc_i',
+      'districtc',
+      'square_mil',
+      'shape_leng',
+      'shape_area'
     ].sort();
 
     fixture('smoke/police_beats_patternc.kmz')
