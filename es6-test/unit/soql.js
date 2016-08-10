@@ -20,13 +20,13 @@ describe('layer', function() {
     expect(t.name).to.equal('foo_bar');
 
     var t = new SoQLText('FOOBAR', 'some text')
-    expect(t.name).to.equal('__foobar');
+    expect(t.name).to.equal('foobar');
 
     var t = new SoQLText('         foobar', 'some text')
     expect(t.name).to.equal('foobar');
 
     var t = new SoQLText('FooBar', 'some text')
-    expect(t.name).to.equal('__foo_bar');
+    expect(t.name).to.equal('foo_bar');
 
   });
 

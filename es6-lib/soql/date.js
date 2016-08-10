@@ -2,8 +2,8 @@ import _ from 'underscore';
 import SoQL from './soql';
 
 class SoQLDate extends SoQL {
-  constructor(name, value) {
-    super(name, value);
+  constructor(name, value, prohibitedNames) {
+    super(name, value, prohibitedNames);
     if(_.isDate(value)) {
       this.value = value.toISOString();
     }

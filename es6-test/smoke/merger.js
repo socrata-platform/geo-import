@@ -70,31 +70,31 @@ describe('merger', () => {
             name: 'the_geom',
             dataTypeName: 'line'
           }, {
-            fieldName: '__facility',
+            fieldName: 'facility',
             name: 'FACILITY',
             dataTypeName: 'text'
           }, {
-            fieldName: '__type',
+            fieldName: 'type',
             name: 'TYPE',
             dataTypeName: 'text'
           }, {
-            fieldName: '__year_const',
+            fieldName: 'year_const',
             name: 'YEAR_CONST',
             dataTypeName: 'number'
           }, {
-            fieldName: '__nghbrhd',
+            fieldName: 'nghbrhd',
             name: 'NGHBRHD',
             dataTypeName: 'text'
           }, {
-            fieldName: '__nghbrhd_id',
+            fieldName: 'nghbrhd_id',
             name: 'NGHBRHD_ID',
             dataTypeName: 'text'
           }, {
-            fieldName: '__ward',
+            fieldName: 'ward',
             name: 'WARD',
             dataTypeName: 'text'
           }, {
-            fieldName: '__str_ave',
+            fieldName: 'str_ave',
             name: 'STR_AVE',
             dataTypeName: 'text'
           }]);
