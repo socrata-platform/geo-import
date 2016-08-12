@@ -17,7 +17,8 @@ import {
   GetColumnError,
   DeleteColumnError,
   UpdateMetadataError
-} from '../errors';
+}
+from '../errors';
 
 const timeout = config().upstreamTimeoutMs;
 
@@ -60,7 +61,7 @@ class Core extends GenClient {
             return onBuffered(new errorType(503, buf));
           }
 
-          if(response.statusCode > 300) {
+          if (response.statusCode > 300) {
             return onBuffered(new errorType(response.statusCode, body));
           }
           return onBuffered(false, body);

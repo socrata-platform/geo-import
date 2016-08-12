@@ -26,7 +26,8 @@ import config from '../config';
 import logger from '../util/logger';
 import ISS from '../upstream/iss';
 import {
-  UpsertError
+  UpsertError,
+  ConnectionError
 }
 from '../errors';
 //TODO: resource scope?
@@ -241,31 +242,33 @@ class SpatialService {
           .pipe(es.map(function(datum, callback) {
             callback(null, datum);
             totalRowsUpserted++;
-            sendProgress();
+            if ((totalRowsUpserted % conf.emitProgressEvery) === 0) {
+              sendProgress();
+            }
           }))
           .pipe(upsertRequest)
           .on('response', core.bufferResponse(
             (error, body) => {
-              if(error) return onUpsertComplete(error);
+              if (error) {
+                return onUpsertComplete(error);
+              }
               return onUpsertComplete(false, [layer, body]);
             },
             UpsertError
           ))
           .on('error', (error) => {
+            const response = new ConnectionError(`Core: ${error.code}`);
             //The underlying stream will throw an error if
             //  * we can't parse the scratch file
             //  * some IO error happens
-            logger.error({error: error.toJSON()});
+            logger.error(response.toJSON());
             upsertRequest.abort();
-            return onUpsertComplete(error);
+            return onUpsertComplete(response);
           });
 
       }, (err, upsertResponses) => {
         if (err) {
-          logger.error({
-            msg: `Upsert failed`,
-            error: err.toJSON()
-          });
+          logger.error(err.toJSON(), 'Upsert Failed!');
           return fail(err);
         }
 
@@ -360,14 +363,17 @@ class SpatialService {
   }
 
   _onError(activity, reason) {
-    // console.log(reason.toJSON())
     activity.onError(reason);
     this._endProgress();
   }
 
   _endProgress() {
-    if (this._inFlight > 0) this._inFlight--;
-    if (this._inFlight === 0) this._onComplete();
+    if (this._inFlight > 0) {
+      this._inFlight--;
+    }
+    if (this._inFlight === 0) {
+      this._onComplete();
+    }
   }
 
   _startProgress() {
@@ -398,7 +404,9 @@ class SpatialService {
       logger.info(`Spatial service received a close, exiting in ${conf.shutdownDrainMs}ms`);
       setTimeout(cb, conf.shutdownDrainMs);
     };
-    if (this._inFlight === 0) this._onComplete();
+    if (this._inFlight === 0) {
+      this._onComplete();
+    }
   }
 
 

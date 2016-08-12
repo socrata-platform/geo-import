@@ -53,7 +53,9 @@ class Zookeeper extends EventEmitter {
       var chosen = children[Math.floor(Math.random() * children.length)];
       var instance = path.join(CORE_PATH, chosen);
       this._client.getData(instance, (err, buf) => {
-        if (err) return cb(new ZKError('Error getting data from zookeeper'));
+        if (err) {
+          return cb(new ZKError('Error getting data from zookeeper'));
+        }
         try {
           let entry = JSON.parse(buf.toString('utf-8'));
           //scheme isn't in the zk entry? what happens if we go ssl ¯\_(ツ)_/¯

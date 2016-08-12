@@ -58,7 +58,7 @@ describe('summary service', () => {
             reason: 'incomplete_shapefile_error',
             english: 'Your shapefile archive is incomplete. It must contain a .dbf, .shp, and .prj file for every layer. Expected it to contain the following files, which were actually missing: SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf.',
             params: {
-              missing: ['SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf']
+              missing: 'SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf'
             }
           }
         });

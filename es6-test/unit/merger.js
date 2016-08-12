@@ -624,21 +624,21 @@ describe('merging feature streams to layers', function() {
       .on('end', (layers) => {
         response.emit('finish');
         expect(layers.length).to.equal(1);
-
         var [layer] = layers;
 
         layer.on('error', (error) => {
+          const brokenRow = JSON.stringify([{
+            "type": "Point",
+            "coordinates": [
+              103.0
+            ]
+          }, 'second value', 2, 2.2, true])
           expect(error.toJSON()).to.eql({
             error: {
               reason: 'invalid_arity_error',
-              english: 'One of the points in the following row did not have 2 coordinates {geom}',
+              english: `One of the points in the following row did not have 2 coordinates ${brokenRow}`,
               params: {
-                row: [{
-                  "type": "Point",
-                  "coordinates": [
-                    103.0
-                  ]
-                }, 'second value', 2, 2.2, true]
+                row: brokenRow
               }
             }
           });

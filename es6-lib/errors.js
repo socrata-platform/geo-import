@@ -213,12 +213,12 @@ class InvalidArityError extends ImportError {
 
   params() {
     return {
-      row: this._row
+      row: JSON.stringify(this._row)
     };
   }
 
   static template() {
-    return 'One of the points in the following row did not have 2 coordinates {geom}';
+    return 'One of the points in the following row did not have 2 coordinates {row}';
   }
 }
 
@@ -244,6 +244,12 @@ class UpstreamError extends ImportError {
       response: this._response,
       status: this._upstreamStatus
     };
+  }
+}
+
+class ConnectionError extends IOError {
+  static template() {
+    return 'Failed to connect to that service: {reason}';
   }
 }
 
@@ -308,5 +314,6 @@ default {
   InvalidArityError,
   CorruptShapefileError,
   IncompleteShapefileError,
-  DecodeFiletypeError
+  DecodeFiletypeError,
+  ConnectionError
 };
