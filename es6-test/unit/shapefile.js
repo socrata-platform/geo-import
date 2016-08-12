@@ -80,7 +80,7 @@ describe('shapefile decoder', function() {
     fixture('dates.zip')
       .pipe(decoder)
       .pipe(es.mapSync(function(feature) {
-        var [date, gpsDate] = feature.columns.filter((c) => (c.name === '__gps_date') || (c.name === '__date'));
+        var [date, gpsDate] = feature.columns.filter((c) => (c.name === 'gps_date') || (c.name === 'date'));
         //just check that the date is ISO8601 parsable
         expect(Date.parse(date.value).toString()).to.not.equal('Invalid Date');
         expect(Date.parse(gpsDate.value).toString()).to.not.equal('Invalid Date');

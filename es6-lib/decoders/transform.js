@@ -71,12 +71,11 @@ function geomToSoQL(geom) {
     logger.warn(`Invalid geom property, ${typeof value} ${value}`);
     return false;
   }
-  return new t(GEOM_NAME, geom);
+  return new t(GEOM_NAME, geom, {});
 }
 
 function toRow(geometry, geomToSoQL, properties, propToSoQL, crs) {
   var soqlGeom = geomToSoQL(geometry);
-
   var soqlProps = [];
   if (properties) {
     for (var k in properties) {

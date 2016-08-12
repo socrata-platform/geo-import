@@ -632,7 +632,7 @@ describe('merging feature streams to layers', function() {
             "coordinates": [
               103.0
             ]
-          }, 'second value', 2, 2.2, true])
+          }, 'second value', 2, 2.2, true]);
           expect(error.toJSON()).to.eql({
             error: {
               reason: 'invalid_arity_error',
@@ -646,6 +646,24 @@ describe('merging feature streams to layers', function() {
         });
 
         layer.pipe(jsbuf());
+      });
+  });
+
+  it('will dedupe column names that end up the same after laundering', function(onDone) {
+    var [merger, response] = makeMerger();
+    fixture('simple_points_dup_columns.json')
+      .pipe(new GeoJSON())
+      .pipe(merger)
+      .on('end', ([layer]) => {
+        layer.pipe(jsbuf()).on('end', ([row]) => {
+
+          expect(row.a_string).to.equal('first string');
+          expect(row.a_string_1).to.equal('second string');
+          expect(row.a_string_2).to.equal('third string');
+          expect(row.a_string_3).to.equal('fourth string');
+
+          onDone();
+        });
       });
   });
 });

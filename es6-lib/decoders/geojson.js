@@ -7,7 +7,7 @@
 import es from 'event-stream';
 import _ from 'underscore';
 import {
-  toRow, geomToSoQL, propToSoQL, geoJsToSoQL
+  geoJsToSoQL
 }
 from './transform';
 import {

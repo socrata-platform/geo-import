@@ -39,6 +39,50 @@ const jsonEpilogue = "]";
 
 
 
+/**
+ * This renames columns that have the different names in the
+ * input format (foo_bar, FOO_BAR) that are then the same
+ * once we launder them in order to put them in socrata.
+ * we need to launder the column names to not have upper
+ * case letters, among other things. So that means the
+ * laundering process can cause two columns to collide,
+ * which is not allowed.
+ *
+ * This function ensures that the columns as represented
+ * in the layer never have name collisions.
+ *
+ * If we have
+ * [
+ *   SoQLText("foo_bar": "hi"),
+ *   SoQLText("FOO_BAR": "hello"),
+ *   SoQLText("FOO_bar": "sup")
+ * ]
+ *
+ * then this function would turn that into
+ * [
+ *   SoQLText("foo_bar": "hi"),
+ *   SoQLText("foo_bar_1": "hello"),
+ *   SoQLText("foo_bar_2": "sup")
+ * ]
+ */
+function renameColumns(columns) {
+  var prohibitedNames = {};
+  return columns.map(c => {
+    var index = 0;
+    var name = c.name;
+    while (prohibitedNames[name]) {
+      var orig = _.first(name.split(/_\d+$/));
+      if (orig) {
+        name = orig;
+        index++;
+      }
+      name = `${name}_${index}`;
+    }
+    prohibitedNames[name] = true;
+    return c.setName(name);
+  });
+}
+
 class Layer extends Duplex {
   static get EMPTY() {
     return '__empty__';
@@ -49,11 +93,11 @@ class Layer extends Duplex {
     super();
     this._position = position;
 
-    this.columns = columns;
+    this.columns = renameColumns(columns);
     this._count = 0;
     this._crsMap = {};
     this._crsCache = {};
-    this._wgs84Reprojector = new WGS84Reprojector(columns);
+    this._wgs84Reprojector = new WGS84Reprojector();
     this._spec = spec || {};
 
     if (disk) {
@@ -182,7 +226,7 @@ class Layer extends Duplex {
 
     if (toAdd.length === 0) return;
 
-    this.columns = this.columns.map((col) => {
+    this.columns = renameColumns(this.columns.map((col) => {
       var valCol = _.find(toAdd, (newCol) => newCol.rawName === col.rawName);
       var newCol;
       if (valCol) {
@@ -190,7 +234,7 @@ class Layer extends Duplex {
         logger.debug(`Replacing old undefined column ${valCol.rawName} with new ${valCol.constructor.name} column`);
       }
       return newCol || col;
-    });
+    }));
   }
 
   /**
@@ -267,8 +311,14 @@ class Layer extends Duplex {
     this.push(jsonPrologue);
     fs.createReadStream(this._outName)
       .pipe(new LDJson())
-      .pipe(es.mapSync((row) => {
-        var thing = [this._getProjectionFor(prjIndex), row];
+      .pipe(es.mapSync((textRow) => {
+        const soqlRow = renameColumns(
+          _.zip(this.columns, textRow).map(([column, value]) => {
+            return new types[column.ctype](column.rawName, value);
+          })
+        );
+
+        var thing = [this._getProjectionFor(prjIndex), soqlRow];
         prjIndex++;
         return thing;
       }))
@@ -279,7 +329,6 @@ class Layer extends Duplex {
         var ep = '';
         writeIndex++;
         if (writeIndex === self._count) ep = jsonEpilogue;
-
         if (!self.push(sep + rowString + ep)) {
           this.pause();
           //our reader has gone away, this kills the stream.

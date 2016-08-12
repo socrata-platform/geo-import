@@ -17,12 +17,11 @@ const WGS84 = '+proj=longlat +ellps=WGS84 +no_defs';
 
 class WGS84Reprojector extends Transform {
 
-  constructor(columns) {
+  constructor() {
     super({
       objectMode: true,
       highWaterMark: config().rowBufferSize
     });
-    this._columns = columns;
     this._projectTo = srs.parse(WGS84);
     this._bbox = new BBox();
   }
@@ -45,8 +44,7 @@ class WGS84Reprojector extends Transform {
 
   _transform([projection, row], _encoding, done) {
     try {
-      var reprojected = _.zip(this._columns, row).map(([column, value]) => {
-        var soql = new types[column.ctype](column.rawName, value);
+      var reprojected = row.map((soql) => {
         if (soql.isGeometry) {
           if (!soql.isCorrectArity()) {
             logger.error(`Found invalid arity with geom ${soql}`);

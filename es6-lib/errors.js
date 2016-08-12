@@ -213,7 +213,7 @@ class InvalidArityError extends ImportError {
 
   params() {
     return {
-      row: JSON.stringify(this._row)
+      row: JSON.stringify(this._row.map(column => column.value))
     };
   }
 
