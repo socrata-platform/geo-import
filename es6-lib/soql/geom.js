@@ -17,7 +17,8 @@ class SoQLGeom extends SoQL {
   }
 
   isCorrectArity() {
-    return _.every(this.mapCoordinates((coord) => coord.length === 2), (isTwo) => isTwo);
+    const wrap = (thing) => _.isArray(thing)? thing: [thing];
+    return _.every(wrap(this.mapCoordinates((coord) => coord.length === 2)));
   }
 
   fixSemantics() {

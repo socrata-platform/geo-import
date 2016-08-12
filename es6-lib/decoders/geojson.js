@@ -20,6 +20,7 @@ import {
 from 'stream';
 import Parser from '../util/parser';
 import config from '../config';
+import {JSONParseError} from '../errors';
 
 class GeoJSON extends Transform {
 
@@ -49,8 +50,8 @@ class GeoJSON extends Transform {
     return ['.json', '.geojson'];
   }
 
-  _onError(err) {
-    this.emit('error', err);
+  _onError({reason, line, column, token}) {
+    this.emit('error', new JSONParseError(reason, line, column, token));
   }
 
   _onFeature(feature) {

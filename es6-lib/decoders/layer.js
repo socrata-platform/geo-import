@@ -27,6 +27,7 @@ import LDJson from './ldjson';
 import WGS84Reprojector from './wgs84-reprojector';
 import DevNull from '../util/devnull';
 import config from '../config';
+import {VertexTooComplexError} from '../errors';
 const conf = config();
 const scratchPrologue = "";
 const scratchSeparator = "\n";
@@ -258,7 +259,7 @@ class Layer extends Duplex {
     var geom = _.find(soqlRow, (r) => r.isGeometry);
     if (geom && geom.vertexCount > conf.maxVerticesPerRow) {
       logger.warn(`Counted ${geom.vertexCount} vertices in ${this._count} row of layer ${this.name}`);
-      throw new Error(`Number of vertices exceeds max count of ${conf.maxVerticesPerRow}. Please simplify your import and try again.`);
+      this.emit('error', new VertexTooComplexError(geom.vertexCount, this._count));
     }
 
     this._out.write(
@@ -322,6 +323,7 @@ class Layer extends Duplex {
         return thing;
       }))
       .pipe(this._wgs84Reprojector)
+      .on('error', (e) => this.emit('error', e))
       .pipe(es.through(function write(rowString) {
         var sep = self._jsonSeparator(writeIndex);
         var ep = '';

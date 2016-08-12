@@ -8,6 +8,17 @@ import {
 from './client';
 import _ from 'underscore';
 import config from '../config';
+import {
+  ZKError,
+  CreateDatasetError,
+  CreateWorkingCopyError,
+  CreateColumnError,
+  PublicationError,
+  GetColumnError,
+  DeleteColumnError,
+  UpdateMetadataError
+}
+from '../errors';
 
 const timeout = config().upstreamTimeoutMs;
 
@@ -24,7 +35,7 @@ class Core extends GenClient {
   }
 
   //partial to buffer a response
-  bufferResponse(onBuffered) {
+  bufferResponse(onBuffered, errorType) {
     return (response) => {
       if (!response.pipe) {
         logger.error(`Request failed ${response.code}`);
@@ -36,37 +47,34 @@ class Core extends GenClient {
         //a failure to open a connection
         //so we munge the error to resemble an upstream
         //response error
-        return onBuffered({
-          body: response.code,
-          statusCode: 503
-        });
+        return onBuffered(new errorType(503, response.code));
       }
 
       response.pipe(reduceStream((acc, data) => {
         return acc + data.toString('utf-8');
       }, ''))
         .on('data', (buf) => {
+          var body = {};
           try {
-            response.body = JSON.parse(buf);
+            body = JSON.parse(buf);
           } catch (e) {
-            response.body = buf;
+            return onBuffered(new errorType(503, buf));
           }
-          onBuffered(response);
+
+          if (response.statusCode > 300) {
+            return onBuffered(new errorType(response.statusCode, body));
+          }
+          return onBuffered(false, body);
         });
     };
   }
 
-  _onResponseStart(onComplete) {
-    return this.bufferResponse((response) => {
-      if (response.statusCode > 300) return onComplete(response);
-      return onComplete(false, response);
-    });
+  _onResponseStart(onComplete, errorType) {
+    return this.bufferResponse(onComplete, errorType);
   }
 
-  _onErrorResponse(onComplete) {
-    return _.once(this.bufferResponse((response) => {
-      return onComplete(response, false);
-    }));
+  _onErrorResponse(onComplete, errorType) {
+    return _.once(this.bufferResponse(onComplete, errorType));
   }
 
   destroy(layer, onComplete) {
@@ -106,8 +114,8 @@ class Core extends GenClient {
         },
         json: true
       })
-        .on('response', this._onResponseStart(onComplete))
-        .on('error', this._onErrorResponse(onComplete));
+        .on('response', this._onResponseStart(onComplete, CreateDatasetError))
+        .on('error', this._onErrorResponse(onComplete, CreateDatasetError));
     });
   }
 
@@ -122,8 +130,8 @@ class Core extends GenClient {
         timeout,
         headers: this._headers()
       })
-        .on('response', this._onResponseStart(onComplete))
-        .on('error', this._onErrorResponse(onComplete));
+        .on('response', this._onResponseStart(onComplete, CreateWorkingCopyError))
+        .on('error', this._onErrorResponse(onComplete, CreateWorkingCopyError));
     });
   }
 
@@ -137,8 +145,8 @@ class Core extends GenClient {
         timeout,
         headers: this._headers(),
       })
-        .on('response', this._onResponseStart(onComplete))
-        .on('error', this._onErrorResponse(onComplete));
+        .on('response', this._onResponseStart(onComplete, PublicationError))
+        .on('error', this._onErrorResponse(onComplete, PublicationError));
     });
   }
 
@@ -177,8 +185,8 @@ class Core extends GenClient {
           }
         }
       })
-        .on('response', this._onResponseStart(onComplete))
-        .on('error', this._onErrorResponse(onComplete));
+        .on('response', this._onResponseStart(onComplete, UpdateMetadataError))
+        .on('error', this._onErrorResponse(onComplete, UpdateMetadataError));
     });
   }
 
@@ -197,8 +205,8 @@ class Core extends GenClient {
           body: column.toJSON(),
           json: true
         })
-        .on('response', this._onResponseStart(onComplete))
-        .on('error', this._onErrorResponse(onComplete));
+        .on('response', this._onResponseStart(onComplete, CreateColumnError))
+        .on('error', this._onErrorResponse(onComplete, CreateColumnError));
     });
   }
 
@@ -211,8 +219,8 @@ class Core extends GenClient {
           timeout,
           headers: this._headers()
         })
-        .on('response', this._onResponseStart(onComplete))
-        .on('error', this._onErrorResponse(onComplete));
+        .on('response', this._onResponseStart(onComplete, GetColumnError))
+        .on('error', this._onErrorResponse(onComplete, GetColumnError));
     });
   }
 
@@ -228,8 +236,8 @@ class Core extends GenClient {
           timeout,
           headers: this._headers()
         })
-        .on('response', this._onResponseStart(onComplete))
-        .on('error', this._onErrorResponse(onComplete));
+        .on('response', this._onResponseStart(onComplete, DeleteColumnError))
+        .on('error', this._onErrorResponse(onComplete, DeleteColumnError));
     });
   }
 

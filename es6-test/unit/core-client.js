@@ -120,7 +120,7 @@ describe('core client', function() {
     var core = new Core(auth, mockZk);
 
     core.create('ffff-ffff', 'my_layer', (err, res) => {
-      expect(err.statusCode).to.equal(400);
+      expect(err.status()).to.equal(502);
       onDone();
     });
   });
@@ -139,10 +139,7 @@ describe('core client', function() {
     var core = new Core(auth, mockZk);
 
     core.create('pare-ntid', 'my_layer', (err, res) => {
-      if (err) throw new Error(`Got invalid status ${err.statusCode}`);
-
-      expect(res.statusCode).to.equal(200);
-      expect(res.body.id).to.equal('qs32-qpt7');
+      expect(res.id).to.equal('qs32-qpt7');
       onDone();
     });
   });
@@ -160,9 +157,7 @@ describe('core client', function() {
     var core = new Core(auth, mockZk);
 
     core.replace('my_layer', (err, res) => {
-      if (err) throw new Error(`Got invalid status ${err.statusCode}`);
-
-      expect(res.statusCode).to.equal(200);
+      expect(res.id).to.equal('qs32-qpt8');
       onDone();
     });
   });

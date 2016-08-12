@@ -33,6 +33,10 @@ import async from 'async';
 import logger from '../util/logger';
 import config from '../config';
 import DevNull from '../util/devnull';
+import {
+  CorruptShapefileError, IncompleteShapefileError
+}
+from '../errors';
 
 const DEFAULT_PROJECTION = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
@@ -151,7 +155,9 @@ class Shapefile extends Duplex {
   _emitFeatures(emitter, reader, projection) {
     var readNext = () => {
       reader.readRecord((err, record) => {
-        if (err) return emitter.emit('error', new Error(`Failed to read feature ${err}`));
+        if (err) {
+          return emitter.emit('error', new CorruptShapefileError(err.toString()));
+        }
         if (record === shapefile.end) return emitter.emit('end');
         return emitter.emit('record', record);
       });
@@ -193,13 +199,14 @@ class Shapefile extends Duplex {
   _hasRequiredComponents(components) {
     var groups = this._groupComponents(components);
     return _.reduce(groups, (errors, [shp, _prj, dbf]) => {
-      //if the shp or dbf are undefined, then record the error. prj
-      //is technically optional
+      //if the shp or dbf are undefined, then record the error
       if (!shp) {
-        errors.push(new Error('Missing spatial (.shp) file.'));
+        const basename = path.basename(dbf, '.dbf');
+        errors.push(`${basename}.shp`);
       }
       if (!dbf) {
-        errors.push(new Error('Missing attributes (.dbf) file.'));
+        const basename = path.basename(shp, '.shp');
+        errors.push(`${basename}.dbf`);
       }
       return errors;
     }, []);
@@ -249,7 +256,7 @@ class Shapefile extends Duplex {
       //it is flushed. fix would be to fork the yauzl library and make it emit close
       //when all readstreams that are opened with openReadStream emit 'finish'
       .on('close', () => setTimeout(onClose, 50))
-        .on('error', onErr);
+      .on('error', onErr);
     });
   }
 
@@ -259,13 +266,14 @@ class Shapefile extends Duplex {
   _onBuffered() {
     logger.debug('Shapefile _onBuffered');
     var extracted = [];
+    var names = [];
     this._walk(
       (err) => {
         this.emit('error', err);
       }, (entry, zipFile) => {
         zipFile.openReadStream(entry, (err, fstream) => {
           if (err) return this.emit('error', err);
-
+          names.push(entry.fileName);
           var ext = path.extname(entry.fileName);
           var basename = path.basename(entry.fileName, ext);
           var extractedName = this._fileGroup(ext, basename);
@@ -278,11 +286,9 @@ class Shapefile extends Duplex {
 
       }, () => {
         this._components = extracted;
-
-        logger.debug(`${this._components.join(', ')} are now readable`);
-        var fileErrors = this._hasRequiredComponents(this._components);
-        if (fileErrors.length) {
-          this.emit('error', new Error(fileErrors.map((err) => err.toString()).join(', ')));
+        var missingFiles = this._hasRequiredComponents(names);
+        if (missingFiles.length) {
+          this.emit('error', new IncompleteShapefileError(missingFiles));
         } else {
           this.emit('readable');
         }

@@ -11,6 +11,7 @@ from '../soql/mapper';
 import srs from 'node-srs';
 import BBox from '../util/bbox';
 import logger from '../util/logger';
+import {InvalidArityError} from '../errors';
 
 const WGS84 = '+proj=longlat +ellps=WGS84 +no_defs';
 
@@ -47,10 +48,7 @@ class WGS84Reprojector extends Transform {
         if (soql.isGeometry) {
           if (!soql.isCorrectArity()) {
             logger.error(`Found invalid arity with geom ${soql}`);
-            throw new Error({
-              message: "Invalid arity",
-              row: row
-            });
+            throw new InvalidArityError(row);
           }
 
           let geom = soql

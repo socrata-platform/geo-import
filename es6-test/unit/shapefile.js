@@ -13,7 +13,10 @@ import {
 }
 from 'events';
 import DevNull from '../../lib/util/devnull';
-import {ArityChecker} from '../util';
+import {
+  ArityChecker
+}
+from '../util';
 var expect = chai.expect;
 var res;
 
@@ -36,7 +39,15 @@ describe('shapefile decoder', function() {
     fixture('corrupt_shapefile.zip')
       .pipe(decoder)
       .on('error', (err) => {
-        expect(err.toString()).to.contain("Failed to read feature");
+        expect(err.toJSON()).to.eql({
+          error: {
+            reason: 'corrupt_shapefile_error',
+            english: 'Failed to read the shapefile: Error: unsupported shape type: 16473',
+            params: {
+              reason: 'Error: unsupported shape type: 16473'
+            }
+          }
+        });
         onDone();
       })
       .pipe(es.mapSync(() => {}));
@@ -76,22 +87,38 @@ describe('shapefile decoder', function() {
       })).on('end', onDone);
   });
 
-  it('can deal with a missing DBF', function(onDone) {
+  it('will emit an error for a missing DBF', function(onDone) {
     var [decoder, res] = shpDecoder();
     fixture('missing_dbf.zip')
       .pipe(decoder)
       .on('error', (err) => {
-        expect(err.toString()).to.contain('Missing attributes');
+        expect(err.toJSON()).to.eql({
+          error: {
+            reason: 'incomplete_shapefile_error',
+            english: 'Your shapefile archive is incomplete. It must contain a .dbf, .shp, and .prj file for every layer. Expected it to contain the following files, which were actually missing: SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf.',
+            params: {
+              missing: 'SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf'
+            }
+          }
+        });
         onDone();
       }).pipe(new DevNull());
   });
 
-  it('can deal with a missing SHP', function(onDone) {
+  it('will emit an error for a missing SHP', function(onDone) {
     var [decoder, res] = shpDecoder();
     fixture('missing_shp.zip')
       .pipe(decoder)
       .on('error', (err) => {
-        expect(err.toString()).to.contain('Missing spatial');
+        expect(err.toJSON()).to.eql({
+          error: {
+            reason: 'incomplete_shapefile_error',
+            english: 'Your shapefile archive is incomplete. It must contain a .dbf, .shp, and .prj file for every layer. Expected it to contain the following files, which were actually missing: SIGNIFICANT_ECOLOGICAL_AREA_(SEA).shp.',
+            params: {
+              missing: 'SIGNIFICANT_ECOLOGICAL_AREA_(SEA).shp'
+            }
+          }
+        });
         onDone();
       }).pipe(new DevNull());
   });

@@ -1,4 +1,4 @@
-lib: es6-lib node_modules
+lib: es6-lib node_modules node_modules/node-srs
 	mkdir -p lib
 	node_modules/.bin/babel es6-lib --out-dir lib
 
@@ -12,15 +12,24 @@ test: lib
 appease_jenkins: lib
 	tar -zcvf lib.tar lib/
 
-
-node_modules/node-srs:
-
+translations: lib
+	mkdir -p translations
+	node lib/tasks/translations.js > translations/en.yml
 
 node_modules:
+	npm set progress=false # this makes npm twice as fast ;_;
 	npm i
+
+node_modules/node-srs:
+	mkdir -p node_modules/node-srs
+	git clone https://github.com/rozap/node-srs node_modules/node-srs
+	cd node_modules/node-srs && CC=gcc CXX=g++ npm install && cd ../..
+	cd ../..
 
 clean:
 	rm -rf lib
 	rm -rf test
 	rm -f lib.tar
-.PHONY: clean test
+	rm -rf translations
+
+.PHONY: clean test translations

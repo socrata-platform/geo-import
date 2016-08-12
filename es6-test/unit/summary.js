@@ -39,6 +39,60 @@ describe('summary service', () => {
   };
 
 
+  it('can make a summary error for incomplete shape archives', (onDone) => {
+    var fx = 'missing_dbf.zip';
+    bufferJs(fixture(fx)
+      .pipe(request.post({
+        url: url + '/summary',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/zip',
+          'Content-Length': sizeOf(fx),
+          'X-Blob-Length': sizeOf(fx)
+        }
+      })).on('error', () => {}), (res, buffered) => {
+        expect(buffered).to.eql({
+          error: {
+            reason: 'incomplete_shapefile_error',
+            english: 'Your shapefile archive is incomplete. It must contain a .dbf, .shp, and .prj file for every layer. Expected it to contain the following files, which were actually missing: SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf.',
+            params: {
+              missing: 'SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf'
+            }
+          }
+        });
+        onDone();
+      });
+  });
+
+  it('can make a summary error for corrupt shape archives', (onDone) => {
+    var fx = 'corrupt_shapefile.zip';
+    bufferJs(fixture(fx)
+      .pipe(request.post({
+        url: url + '/summary',
+        headers: {
+          'Authorization': 'test-auth',
+          'X-App-Token': 'app-token',
+          'X-Socrata-Host': 'localhost:6668',
+          'Content-Type': 'application/zip',
+          'Content-Length': sizeOf(fx),
+          'X-Blob-Length': sizeOf(fx)
+        }
+      })).on('error', () => {}), (res, buffered) => {
+        expect(buffered).to.eql({
+          error: {
+            reason: 'corrupt_shapefile_error',
+            english: 'Failed to read the shapefile: Error: unsupported shape type: 16473',
+            params: {
+              reason: 'Error: unsupported shape type: 16473'
+            }
+          }
+        });
+        onDone();
+      });
+  });
+
   it('can make an abbreviated summary for large geojsons', (onDone) => {
     var fx = 'simple_points_large.json';
     bufferJs(fixture(fx)

@@ -11,6 +11,7 @@ from 'stream';
 import logger from '../util/logger';
 import config from '../config';
 import DevNull from '../util/devnull';
+import {ArchiveError} from '../errors';
 
 
 /**
@@ -58,7 +59,7 @@ class KMZ extends Duplex {
   _onOpenKmlStream(kmlStream) {
     return kmlStream
       .pipe(new KML())
-      .on('error', this._onError.bind(this))
+      .on('error', (err) => this.emit('error', err))
       .on('data', (data) => {
         if (this._readableState.ended) return;
         if (!this.push(data)) {
@@ -81,10 +82,6 @@ class KMZ extends Duplex {
       });
   }
 
-  _onError(err) {
-    this.emit('error', err);
-  }
-
   _startPushing() {
     this._isPushing = true;
     var hasOpened = false;
@@ -92,10 +89,13 @@ class KMZ extends Duplex {
     yauzl.open(this._zName, {
       lazyEntries: true
     }, (err, zipFile) => {
-      if (err) return this.emit('error', err);
+
+      if (err) return this.emit('error', new ArchiveError(err.toString()));
 
       zipFile
-        .on('error', this._onError.bind(this))
+        .on('error', (err) => {
+          this.emit('error', new ArchiveError(err.toString()));
+        })
         .on('entry', (entry) => {
           logger.info(`Checking KMZ entry ${entry.fileName}`);
           if (path.extname(entry.fileName) !== '.kml') return zipFile.readEntry();

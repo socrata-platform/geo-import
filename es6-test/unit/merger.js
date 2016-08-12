@@ -611,8 +611,41 @@ describe('merging feature streams to layers', function() {
       .pipe(merger)
       .on('error', (err) => {
         conf.maxVerticesPerRow = oldMax;
-        expect(err.toString()).to.contain('Number of vertices exceeds')
+        expect(err.toJSON().error.english).to.contain('There were 10 vertices in row 1, the max is');
         onDone();
+      });
+  });
+
+  it('will emit an error if a row has invalid arity', function(onDone) {
+    var [merger, response] = makeMerger();
+    fixture('simple_points_invalid_arity.json')
+      .pipe(new GeoJSON())
+      .pipe(merger)
+      .on('end', (layers) => {
+        response.emit('finish');
+        expect(layers.length).to.equal(1);
+        var [layer] = layers;
+
+        layer.on('error', (error) => {
+          const brokenRow = JSON.stringify([{
+            "type": "Point",
+            "coordinates": [
+              103.0
+            ]
+          }, 'second value', 2, 2.2, true]);
+          expect(error.toJSON()).to.eql({
+            error: {
+              reason: 'invalid_arity_error',
+              english: `One of the points in the following row did not have 2 coordinates ${brokenRow}`,
+              params: {
+                row: brokenRow
+              }
+            }
+          });
+          onDone();
+        });
+
+        layer.pipe(jsbuf());
       });
   });
 
@@ -630,7 +663,7 @@ describe('merging feature streams to layers', function() {
           expect(row.a_string_3).to.equal('fourth string');
 
           onDone();
-        })
+        });
       });
   });
 });

@@ -25,12 +25,12 @@ class SummaryService {
     //;_; see the note in service/spatial for why
     //this exists
     var onErr = _.once((err) => {
-      req.log.error(err.stack);
-      return res.status(400).send(err.toString());
+      req.log.error(err.toJSON(), "Failed to generate summary");
+      return res.status(err.status()).send(err.toJSON());
     });
 
     var [err, decoder] = getDecoderForContentType(req, disk);
-    if (err) return res.status(400).send(err.toString());
+    if (err) return onErr(err);
 
     var ok = (layers) => {
       res.status(200).send(JSON.stringify({
@@ -52,7 +52,7 @@ class SummaryService {
 
     } else if (!decoder.canSummarizeQuickly()) {
       decoder.summarize((err, summary) => {
-        if (err) return res.status(400).send(JSON.stringify(err));
+        if (err) return onErr(err);
         return ok(summary);
       });
     } else {
@@ -63,7 +63,7 @@ class SummaryService {
         .once('data', (_datum) => {
           decoder.pause();
           decoder.summarize((err, summary) => {
-            if (err) return res.status(400).send(JSON.stringify(err));
+            if (err) return onErr(err);
             return ok(summary);
           });
         })

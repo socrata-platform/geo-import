@@ -17,13 +17,13 @@ var expect = chai.expect;
 var res;
 
 function kmzDecoder() {
-  res = new EventEmitter()
+  res = new EventEmitter();
   return new KMZ(new Disk(res));
 }
 
 afterEach(function() {
-  res && res.emit('finish');
-})
+  if (res) res.emit('finish');
+});
 
 
 describe('kmz decoder', function() {
@@ -32,7 +32,15 @@ describe('kmz decoder', function() {
     fixture('corrupt_kmz.kmz')
       .pipe(kmzDecoder())
       .on('error', (err) => {
-        expect(err.toString()).to.contain("invalid central directory");
+        expect(err.toJSON()).to.eql({
+          error: {
+            reason: 'archive_error',
+            english: 'Failed to open the zip archive: Error: invalid central directory file header signature: 0x80000',
+            params: {
+              reason: "Error: invalid central directory file header signature: 0x80000"
+            }
+          }
+        });
         onDone();
       })
       .pipe(es.mapSync(() => {}));
@@ -43,7 +51,8 @@ describe('kmz decoder', function() {
     fixture('malformed_kmz.kmz')
       .pipe(kmzDecoder())
       .on('error', (err) => {
-        expect(err.toString()).to.contain("XML Parse error");
+        expect(err.toJSON().error.reason).to.equal('xmlparse_error');
+        expect(err.toJSON().error.english).to.equal('Failed to parse XML node due to mismatched tag near kml.document.folder.schema');
         onDone();
       })
       .pipe(es.mapSync(() => {}));

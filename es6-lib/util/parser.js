@@ -174,7 +174,13 @@ class Parser extends Transform {
   }
 
   _onerror(e) {
-    this.emit('error', e);
+    // This is gross - clarinet emits a useless error
+    this.emit('error', {
+      reason: e.toString().split('\n')[0],
+      line: this._underlying.line,
+      column: this._underlying.column,
+      token: this._underlying.c
+    });
   }
 
   _write(chunk, encoding, cb) {
