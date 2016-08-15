@@ -229,7 +229,7 @@ class Shapefile extends Duplex {
 
     async.mapSeries(groups, ([shp, proj, _dbf], cb) => {
       logger.debug(`Building shapestream based on ${shp}`);
-      this._shapeStream(shapefile.reader(shp), proj)
+      this._shapeStream(shapefile.reader(shp, 'utf-8'), proj)
         .on('error', (err) => {
           return cb(err);
         })

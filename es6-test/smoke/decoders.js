@@ -150,6 +150,102 @@ describe('decoders', () => {
       });
   });
 
+  it('should decode municipios correctly', function(onDone) {
+    var municipios = [];
+    var [decoder, res] = shpDecoder();
+
+    var expectedNames = ['Adjuntas',
+      'Aguada',
+      'Aguadilla',
+      'Aguas Buenas',
+      'Aibonito',
+      'Arecibo',
+      'Arroyo',
+      'Añasco',
+      'Barceloneta',
+      'Barranquitas',
+      'Bayamón',
+      'Cabo Rojo',
+      'Caguas',
+      'Camuy',
+      'Canóvanas',
+      'Carolina',
+      'Cataño',
+      'Cayey',
+      'Ceiba',
+      'Ciales',
+      'Cidra',
+      'Coamo',
+      'Comerío',
+      'Corozal',
+      'Culebra',
+      'Dorado',
+      'Fajardo',
+      'Florida',
+      'Guayama',
+      'Guayanilla',
+      'Guaynabo',
+      'Gurabo',
+      'Guánica',
+      'Hatillo',
+      'Hormigueros',
+      'Humacao',
+      'Isabela',
+      'Jayuya',
+      'Juana Díaz',
+      'Juncos',
+      'Lajas',
+      'Lares',
+      'Las Marías',
+      'Las Piedras',
+      'Loíza',
+      'Luquillo',
+      'Manatí',
+      'Maricao',
+      'Maunabo',
+      'Mayagüez',
+      'Moca',
+      'Morovis',
+      'Naguabo',
+      'Naranjito',
+      'Orocovis',
+      'Patillas',
+      'Peñuelas',
+      'Ponce',
+      'Quebradillas',
+      'Rincón',
+      'Río Grande',
+      'Sabana Grande',
+      'Salinas',
+      'San Germán',
+      'San Juan',
+      'San Lorenzo',
+      'San Sebastián',
+      'Santa Isabel',
+      'Toa Alta',
+      'Toa Baja',
+      'Trujillo Alto',
+      'Utuado',
+      'Vega Alta',
+      'Vega Baja',
+      'Vieques',
+      'Villalba',
+      'Yabucoa',
+      'Yauco'
+    ].sort();
+
+    fixture('smoke/municipios.zip')
+      .pipe(decoder)
+      .pipe(new ArityChecker())
+      .pipe(es.mapSync(row => {
+        municipios.push(_.find(row.columns, (col) => col.name === 'municipio').value);
+      }))
+      .on('end', () => {
+        expect(expectedNames).to.eql(municipios.sort());
+        onDone();
+      });
+  });
+
 
   it('should handle real multi chunk kml', function(onDone) {
     this.timeout(100000);
@@ -211,7 +307,7 @@ describe('decoders', () => {
           "the_geom",
           "name",
           "descriptio"
-        ].sort())
+        ].sort());
       }))
       .on('end', () => {
         res.emit('finish');
@@ -241,7 +337,7 @@ describe('decoders', () => {
       .on('end', () => {
         rows.map((r) => r.columns.map((c) => c.name)).forEach((colNames) => {
           expect(colNames.sort()).to.eql(expected);
-        })
+        });
         onDone();
       });
   });
@@ -284,7 +380,7 @@ describe('decoders', () => {
         cs.forEach((coord) => {
           if (t !== 'LineString') return;
 
-          chai.assert(coord.length === 2, `${name}::${t} is an invalid linestring ${JSON.stringify(cs, null, 2)}`)
+          chai.assert(coord.length === 2, `${name}::${t} is an invalid linestring ${JSON.stringify(cs, null, 2)}`);
         });
         return row;
       }))
@@ -309,12 +405,12 @@ describe('decoders', () => {
                 } = row;
                 if (t !== 'LineString') return;
                 cs.forEach((coord) => {
-                  chai.assert(coord.length === 2, `${row.name}::${t} is an invalid linestring ${JSON.stringify(cs, null, 2)}`)
+                  chai.assert(coord.length === 2, `${row.name}::${t} is an invalid linestring ${JSON.stringify(cs, null, 2)}`);
                 });
               });
 
               cb();
-            })
+            });
         }, onDone);
       });
   });
