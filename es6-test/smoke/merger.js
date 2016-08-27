@@ -43,6 +43,36 @@ describe('merger', () => {
   });
 
 
+  it('broken geojson', function(onDone) {
+
+    const disk = new Disk(res);
+    const decoder = new GeoJSON(disk);
+    const merger = new Merger(disk);
+    var rows = [];
+    fixture('smoke/private_public.geojson')
+      .pipe(decoder)
+      .pipe(merger)
+      .on('end', (layers) => {
+        const [layer] = layers;
+
+        layer
+          .on('error', (e) => {
+            expect(e.toJSON()).to.eql({
+              error: {
+                reason: 'invalid_arity_error',
+                english: 'One of the points in the following row did not have 2 coordinates [{"type":"Point","coordinates":{}},"City Feature","Common Name","Address","Latitude","Location","Icon","Website","Benefit"]',
+                params: {
+                  row: '[{"type":"Point","coordinates":{}},"City Feature","Common Name","Address","Latitude","Location","Icon","Website","Benefit"]'
+                }
+              }
+            });
+            onDone();
+          })
+          .pipe(new DevNull());
+      });
+  });
+
+
   it('should be able to handle a mostly null shp', function(onDone) {
     this.timeout(100000);
 

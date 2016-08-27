@@ -239,6 +239,7 @@ class SpatialService {
         logger.info(`Starting upsert to ${layer.uid}`);
         var upsertRequest = startUpsert();
         layer
+          .on('error', fail)
           .pipe(es.map(function(datum, callback) {
             callback(null, datum);
             totalRowsUpserted++;

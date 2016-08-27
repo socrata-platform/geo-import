@@ -277,7 +277,6 @@ describe('decoders', () => {
       });
   });
 
-
   it('many many chunks of kml should end up with numbers', function(onDone) {
     this.timeout(100000);
     var count = 0;

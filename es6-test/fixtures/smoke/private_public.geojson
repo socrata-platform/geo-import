@@ -1,0 +1,447 @@
+{
+   "type": "FeatureCollection",
+   "features": [
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  { }
+    },
+    "properties": {
+    "FIELD1":"City Feature",
+    "FIELD2":"Common Name",
+    "FIELD3":"Address",
+    "FIELD5":"Latitude",
+    "FIELD6":"Location",
+    "FIELD7":"Icon",
+    "FIELD8":"Website",
+    "FIELD9":"Benefit"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33319,-122.33319 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Idx Tower",
+    "FIELD3":"925 4th Ave",
+    "FIELD5":"47.60549",
+    "FIELD6":"(47.60549, -122.33319)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Hillclimb, setback and atrium"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33871,-122.33871 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Westin Building",
+    "FIELD3":"2001 6th Ave",
+    "FIELD5":"47.61438",
+    "FIELD6":"(47.61438, -122.33871)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Plaza"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33511,-122.33511 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"1000 2nd Avenue",
+    "FIELD3":"1000 2nd Ave",
+    "FIELD5":"47.60567",
+    "FIELD6":"(47.60567, -122.33511)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Plaza"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33611,-122.33611 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Washington Mutual Tower",
+    "FIELD3":"1201 3rd Ave",
+    "FIELD5":"47.60723",
+    "FIELD6":"(47.60723, -122.33611)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Plaza"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33212,-122.33212 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Crowne Plaza Hotel",
+    "FIELD3":"1113 6th Ave",
+    "FIELD5":"47.60809",
+    "FIELD6":"(47.60809, -122.33212)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Plaza and arcade"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33388,-122.33388 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Safeco Plaza",
+    "FIELD3":"1001 4th Ave",
+    "FIELD5":"47.60615",
+    "FIELD6":"(47.60615, -122.33388)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Plaza and retail space"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33969,-122.33969 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Sixth & Lenora Building",
+    "FIELD3":"2033 6th Ave",
+    "FIELD5":"47.61481",
+    "FIELD6":"(47.61481, -122.33969)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Plaza, arcade and setback"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.32988,-122.32988 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Seattle Municipal Tower",
+    "FIELD3":"700 5th Ave",
+    "FIELD5":"47.60501",
+    "FIELD6":"(47.60501, -122.32988)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Plazas and retail space"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.32932,-122.32932 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Horizon House",
+    "FIELD3":"900 University St",
+    "FIELD5":"47.61088",
+    "FIELD6":"(47.61088, -122.32932)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Property setback"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.3343,-122.3343 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"1600 Qwest Plaza",
+    "FIELD3":"1600 7th Ave",
+    "FIELD5":"47.61316",
+    "FIELD6":"(47.61316, -122.3343)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Setback and plazas"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33028,-122.33028 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Bank Of America Fifth Avenue Plaza",
+    "FIELD3":"800 5th Ave",
+    "FIELD5":"47.60573",
+    "FIELD6":"(47.60573, -122.33028)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Shopping arcade and plaza"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33206,-122.33206 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"One Union Square/Two Union Square",
+    "FIELD3":"621 Union St",
+    "FIELD5":"47.61043",
+    "FIELD6":"(47.61043, -122.33206)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Shopping arcade and plazas"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33745,-122.33745 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Century Square Tower",
+    "FIELD3":"1501 4th Ave",
+    "FIELD5":"47.61022",
+    "FIELD6":"(47.61022, -122.33745)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Shopping corridor"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33466,-122.33466 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"City Centre Building",
+    "FIELD3":"1420 5th Ave",
+    "FIELD5":"47.61054",
+    "FIELD6":"(47.61054, -122.33466)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Shopping corridor and atrium"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33167,-122.33167 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Washington State Convention Center",
+    "FIELD3":"701 Pike St",
+    "FIELD5":"47.61195",
+    "FIELD6":"(47.61195, -122.33167)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Shopping corridor and plazas"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33934,-122.33934 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Four Seasons Hotel",
+    "FIELD3":"99 Union St",
+    "FIELD5":"47.60773",
+    "FIELD6":"(47.60773, -122.33934)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Union St. plaza and stairs to Western Avenue"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33485,-122.33485 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"720 Olive Way",
+    "FIELD3":"720 Olive Way",
+    "FIELD5":"47.61418",
+    "FIELD6":"(47.61418, -122.33485)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Wedge plaza"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33202,-122.33202 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Park Place",
+    "FIELD3":"1200 6th Ave",
+    "FIELD5":"47.60909",
+    "FIELD6":"(47.60909, -122.33202)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Arcade and plaza"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33725,-122.33725 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Plaza 600 Building",
+    "FIELD3":"600 Stewart St",
+    "FIELD5":"47.61391",
+    "FIELD6":"(47.61391, -122.33725)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Arcade and setback"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33072,-122.33072 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Columbia Center",
+    "FIELD3":"701 5th Ave",
+    "FIELD5":"47.60454",
+    "FIELD6":"(47.60454, -122.33072)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Atrium, shopping court and plazas"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33908,-122.33908 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Enso",
+    "FIELD3":"2201 9th Ave",
+    "FIELD5":"47.61811",
+    "FIELD6":"(47.61811, -122.33908)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Green street, plaza and pedestrian improvements"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33427,-122.33427 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Wells Fargo Center",
+    "FIELD3":"999 3rd Ave",
+    "FIELD5":"47.60505",
+    "FIELD6":"(47.60505, -122.33427)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Hillclimb and atrium"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33717,-122.33717 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Benaroya Hall",
+    "FIELD3":"200 University St",
+    "FIELD5":"47.60794",
+    "FIELD6":"(47.60794, -122.33717)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Hillclimb, atrium and transit tunnel access"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33533,-122.33533 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"1111 Third Avenue Building",
+    "FIELD3":"1111 3rd Ave",
+    "FIELD5":"47.60655",
+    "FIELD6":"(47.60655, -122.33533)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Arcade, plaza and retail space"
+    }
+  },
+  {
+    "type": "Feature",
+    "geometry": {
+       "type": "Point",
+       "coordinates":  [ -122.33777,-122.33777 ]
+    },
+    "properties": {
+    "FIELD1":"Public Spaces",
+    "FIELD2":"Seattle Art Museum",
+    "FIELD3":"1300 1st Ave",
+    "FIELD5":"47.6074",
+    "FIELD6":"(47.6074, -122.33777)",
+    "FIELD7":"https://data.seattle.gov/views/zzzz-zzzz/files/LwwFAzJ0czL_XmGwm4X6zcDU_HEXZB2LABmV0EA3hDA",
+    "FIELD8":"<a target=\"_blank\" href=\"http://www.seattle.gov/DPD/cityplanning/completeprojectslist/privatelyownedpublicspaces/whatwhy/default.htm\">View Website</a>",
+    "FIELD9":"Hillclimb at University Street"
+    }
+  }
+]
+}
