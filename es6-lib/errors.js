@@ -293,6 +293,11 @@ class UpsertError extends UpstreamError {
     return 'Failed to upsert the dataset';
   }
 }
+class CleanupError extends UpstreamError {
+  static template() {
+    return 'Encountered an error, but encountered another error rolling back';
+  }
+}
 
 export
 default {
@@ -305,6 +310,7 @@ default {
   DeleteColumnError,
   UpdateMetadataError,
   UpsertError,
+  CleanupError,
   VertexTooComplexError,
   ShapefileHeaderError,
   ShapefileRowError,

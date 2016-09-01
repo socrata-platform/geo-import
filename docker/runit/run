@@ -4,7 +4,7 @@ set -ev
 unset HTTP_PROXY
 unset http_proxy
 
-exec su socrata -c 'node --max_old_space_size=1024 ${ROOT_DIR}/lib/index.js'
+exec su socrata -c 'node --max_old_space_size=512 ${ROOT_DIR}/lib/index.js'
 RES=$?
 
 cp heapdump* /mnt/mesos/sandbox
