@@ -16,7 +16,8 @@ import {
   PublicationError,
   GetColumnError,
   DeleteColumnError,
-  UpdateMetadataError
+  UpdateMetadataError,
+  CleanupError
 }
 from '../errors';
 
@@ -87,8 +88,8 @@ class Core extends GenClient {
         headers: this._headers(),
         json: true
       })
-        .on('response', this._onResponseStart(onComplete))
-        .on('error', this._onErrorResponse(onComplete));
+        .on('response', this._onResponseStart(onComplete, CleanupError))
+        .on('error', this._onErrorResponse(onComplete, CleanupError));
     });
   }
 
@@ -150,14 +151,6 @@ class Core extends GenClient {
     });
   }
 
-
-  // "namespace" -> NewBackEnd.resourceName(parent),
-  // "owsUrl" -> s"/api/geospatial/${parent.getUid}",
-  // "layers" -> publishedLayers.map { v => v.getUid }.mkString(","),
-  // "isNbe" -> true,
-  // "bboxCrs" -> defaultCrsCode,
-  // "featureIdAttribute" -> "_SocrataID",
-  // "bbox" -> bbox.toString
   updateMetadata(fourfour, layers, bbox, onComplete) {
     return this._url((err, url) => {
       if (err) return onComplete(err);
@@ -169,6 +162,7 @@ class Core extends GenClient {
         headers: this._headers(),
         json: true,
         body: {
+          displayType: 'map',
           metadata: {
             geo: {
               owsUrl: `/api/geospatial/${fourfour}`,
