@@ -59,7 +59,7 @@ class Core extends GenClient {
           try {
             body = JSON.parse(buf);
           } catch (e) {
-            return onBuffered(new errorType(503, buf));
+            body = buf;
           }
 
           if (response.statusCode > 300) {
