@@ -163,4 +163,88 @@ describe('core client', function() {
   });
 
 
+  it("can make an updateMetadata request to core", function(onDone) {
+    const message = mockAmq.messageFor(
+      'four-four',
+      'simple_points.json', ['foo'],
+      'test-host',
+      'test-token',
+      'test-cookie',
+      'test-reqid'
+    )
+    const auth = new Auth(parseAMQMessage(message));
+    var core = new Core(auth, mockZk);
+
+    const layers = [{
+      "bbox": {
+        "maxx": 102,
+        "maxy": 0.5,
+        "minx": 102,
+        "miny": 0.5
+      },
+      "columns": [
+        {
+          "dataTypeName": "multipoint",
+          "fieldName": "the_geom",
+          "name": "the_geom"
+        },
+        {
+          "dataTypeName": "text",
+          "fieldName": "a_string",
+          "name": "a_string"
+        }
+      ],
+      "uid": "aaaa-aaaa",
+      "count": 1,
+      "geometry": "multipoint",
+      "name": "some points",
+      "projection": "WGS 84"
+    },
+    {
+      "bbox": {
+        "maxx": 101,
+        "maxy": 1,
+        "minx": 101,
+        "miny": 0
+      },
+      "columns": [
+        {
+          "dataTypeName": "multiline",
+          "fieldName": "the_geom",
+          "name": "the_geom"
+        },
+        {
+          "dataTypeName": "text",
+          "fieldName": "a_string",
+          "name": "a_string"
+        }
+      ],
+      "uid": "bbbb-bbbb",
+      "count": 1,
+      "geometry": "multiline",
+      "name": "some lines",
+      "projection": "WGS 84"
+    }
+  ]
+    const bbox = JSON.stringify({"minx":101,"miny":0,"maxx":102,"maxy":1})
+
+    core.updateMetadata('four-four', layers, bbox, (err, res) => {
+      expect(res).to.deep.eql({
+        displayType: 'map',
+        metadata: {
+          geo: {
+            owsUrl: '/api/geospatial/four-four',
+            layers: 'aaaa-aaaa,bbbb-bbbb',
+            isNbe: true,
+            bboxCrs: 'EPSG:4326',
+            namespace: '_four-four',
+            featureIdAttribute: '_SocrataID',
+            bbox: '{"minx":101,"miny":0,"maxx":102,"maxy":1}'
+        }
+      },
+      privateMetadata: { foo: 'bar', childViews: [ 'aaaa-aaaa', 'bbbb-bbbb' ] } })
+      onDone();
+    });
+  });
+
 });
