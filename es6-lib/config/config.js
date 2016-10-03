@@ -31,7 +31,7 @@ default {
   },
   heapDumpOut: '.',
 
-  emitProgressEvery: 200,
+  emitProgressEveryRows: 20,
   //don't send more than 1 ISS progress event within this time window
   debounceProgressMs: 2000,
 

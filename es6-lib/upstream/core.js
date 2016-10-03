@@ -155,32 +155,47 @@ class Core extends GenClient {
     return this._url((err, url) => {
       if (err) return onComplete(err);
 
-      this._log(`Updating metadata for layer ${fourfour}`);
-      request.put({
+      request.get({
         url: `${url}/views/${fourfour}`,
         timeout,
         headers: this._headers(),
-        json: true,
-        body: {
-          displayType: 'map',
-          metadata: {
-            geo: {
-              owsUrl: `/api/geospatial/${fourfour}`,
-              layers: layers.map(l => l.uid).join(','),
-              isNbe: true,
-              bboxCrs: 'EPSG:4326',
-              namespace: `_${fourfour}`,
-              featureIdAttribute: '_SocrataID',
-              bbox: bbox.toString()
-            }
-          },
-          privateMetadata: {
-            childViews: layers.map(l => l.uid)
-          }
-        }
+        json: true
       })
+      .on('response', this._onResponseStart((err, body) => {
+
+        const metadata = _.extend({}, body.metadata, {
+          geo: {
+            owsUrl: `/api/geospatial/${fourfour}`,
+            layers: layers.map(l => l.uid).join(','),
+            isNbe: true,
+            bboxCrs: 'EPSG:4326',
+            namespace: `_${fourfour}`,
+            featureIdAttribute: '_SocrataID',
+            bbox: bbox.toString()
+          }
+        });
+
+        const privateMetadata = _.extend({}, body.privateMetadata, {
+          childViews: layers.map(l => l.uid)
+        });
+
+        this._log(`Updating metadata for layer ${fourfour}`);
+        request.put({
+          url: `${url}/views/${fourfour}`,
+          timeout,
+          headers: this._headers(),
+          json: true,
+          body: {
+            displayType: 'map',
+            metadata,
+            privateMetadata
+          }
+        })
         .on('response', this._onResponseStart(onComplete, UpdateMetadataError))
         .on('error', this._onErrorResponse(onComplete, UpdateMetadataError));
+
+      }, UpdateMetadataError))
+      .on('error', this._onErrorResponse(onComplete, UpdateMetadataError));
     });
   }
 

@@ -311,6 +311,7 @@ describe('spatial service', function() {
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/id/qs32-qpt7.json'],
           ['POST', '/views/qs32-qpt7/publication'],
+          ['GET', '/views/qs32-qpt7'],
           ['PUT', '/views/qs32-qpt7']
         ]);
       }
@@ -345,6 +346,7 @@ describe('spatial service', function() {
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/id/qs32-qpt7.json'],
           ['POST', '/views/qs32-qpt7/publication'],
+          ['GET', '/views/qs32-qpt7'],
           ['PUT', '/views/qs32-qpt7']
         ]);
       }
