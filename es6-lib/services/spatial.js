@@ -243,7 +243,7 @@ class SpatialService {
           .pipe(es.map(function(datum, callback) {
             callback(null, datum);
             totalRowsUpserted++;
-            if ((totalRowsUpserted % conf.emitProgressEvery) === 0) {
+            if ((totalRowsUpserted % conf.emitProgressEveryRows) === 0) {
               sendProgress();
             }
           }))
