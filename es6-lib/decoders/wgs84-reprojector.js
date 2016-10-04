@@ -10,20 +10,20 @@ import {
 from '../soql/mapper';
 import srs from 'node-srs';
 import BBox from '../util/bbox';
-import logger from '../util/logger';
 import {InvalidArityError} from '../errors';
 
 const WGS84 = '+proj=longlat +ellps=WGS84 +no_defs';
 
 class WGS84Reprojector extends Transform {
 
-  constructor() {
+  constructor(logger) {
     super({
       objectMode: true,
       highWaterMark: config().rowBufferSize
     });
     this._projectTo = srs.parse(WGS84);
     this._bbox = new BBox();
+    this.log = logger;
   }
 
   get projection() {
@@ -47,7 +47,7 @@ class WGS84Reprojector extends Transform {
       var reprojected = row.map((soql) => {
         if (soql.isGeometry) {
           if (!soql.isCorrectArity()) {
-            logger.error(`Found invalid arity with geom ${soql}`);
+            this.log.error(`Found invalid arity with geom ${soql}`);
             throw new InvalidArityError(row);
           }
 

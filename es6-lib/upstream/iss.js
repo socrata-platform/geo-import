@@ -5,61 +5,12 @@ import uuid from 'uuid';
 import logger from '../util/logger';
 const conf = config();
 
-
-const senders = {
-  getParentUid: function(message) {
-    return message.view;
-  },
-
-  onSuccess: function(message, warnings, totalRows) {
-    this._onEnd({
-      activityId: message.id,
-      status: 'Success',
-      info: {
-        warnings: warnings,
-        totalRows: totalRows
-      },
-    });
-  },
-
-  onError: function(message, reason) {
-    this._onEnd({
-      activityId: message.id,
-      status: 'Failure',
-      eventType: 'generic',
-      info: {
-        'message': reason,
-        'type': 'generic'
-      }
-    });
-  },
-
-  onProgress: function(message, rowsComplete, totalRows) {
-    this._onProgress({
-      activityId: message.id,
-      status: 'InProgress',
-      eventType: 'row-progress',
-      info: {
-        rowsComplete, totalRows
-      }
-    });
-  },
-
-  onStart: function(message) {
-    this._onProgress({
-      activityId: message.id,
-      status: 'InProgress',
-      eventType: 'row-progress',
-      info: {
-        rowsComplete: 0, totalRows: 0
-      }
-    });
-  }
-};
-
 class ISS extends EventEmitter {
-  constructor(amq) {
+  constructor(amq, message) {
     super();
+
+    this._message = message;
+
     this.send = (tag, details) => {
       details.service = 'Imports2';
       details.eventTime = (new Date()).toISOString();
@@ -76,6 +27,8 @@ class ISS extends EventEmitter {
       logger.info(obj, 'Sending ISS a message');
       amq.send(message);
     };
+
+    logger.decorateActivity(this);
   }
 
   _onStart(details) {
@@ -91,12 +44,59 @@ class ISS extends EventEmitter {
     this.send('IMPORT_ACTIVITY_EVENT', details);
   }
 
-
-  activity(message) {
-    return _.extend(this, _.mapObject(senders, (func) => {
-      return _.partial(func, message).bind(this);
-    }));
+  getParentUid() {
+    return this._message.view;
   }
+
+  getActivityId() {
+    return this._message.id;
+  }
+
+  onSuccess(warnings, totalRows) {
+    this._onEnd({
+      activityId: this._message.id,
+      status: 'Success',
+      info: {
+        warnings: warnings,
+        totalRows: totalRows
+      },
+    });
+  }
+
+  onError(reason) {
+    this._onEnd({
+      activityId: this._message.id,
+      status: 'Failure',
+      eventType: 'generic',
+      info: {
+        'message': reason,
+        'type': 'generic'
+      }
+    });
+  }
+
+  onProgress(rowsComplete, totalRows) {
+    this._onProgress({
+      activityId: this._message.id,
+      status: 'InProgress',
+      eventType: 'row-progress',
+      info: {
+        rowsComplete, totalRows
+      }
+    });
+  }
+
+  onStart() {
+    this._onProgress({
+      activityId: this._message.id,
+      status: 'InProgress',
+      eventType: 'row-progress',
+      info: {
+        rowsComplete: 0, totalRows: 0
+      }
+    });
+  }
+
 }
 
 export

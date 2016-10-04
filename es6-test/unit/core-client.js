@@ -17,6 +17,10 @@ import {
 }
 from '../fixture';
 import {
+  NoopLogger
+}
+from '../util';
+import {
   parseAMQMessage
 }
 from '../../lib/util/hacks';
@@ -63,7 +67,7 @@ describe('core client', function() {
       'test-reqid'
     )
     const auth = new Auth(parseAMQMessage(message));
-    const core = new Core(auth, mockZk);
+    const core = new Core(auth, mockZk, NoopLogger);
 
     core.getBlob('simple_points.json', (err, res) => {
       bufferJs(res, (err, result) => {
@@ -117,7 +121,7 @@ describe('core client', function() {
       'test-reqid'
     )
     const auth = new Auth(parseAMQMessage(message));
-    var core = new Core(auth, mockZk);
+    var core = new Core(auth, mockZk, NoopLogger);
 
     core.create('ffff-ffff', 'my_layer', (err, res) => {
       expect(err.status()).to.equal(502);
@@ -136,7 +140,7 @@ describe('core client', function() {
       'test-reqid'
     )
     const auth = new Auth(parseAMQMessage(message));
-    var core = new Core(auth, mockZk);
+    var core = new Core(auth, mockZk, NoopLogger);
 
     core.create('pare-ntid', 'my_layer', (err, res) => {
       expect(res.id).to.equal('qs32-qpt7');
@@ -154,7 +158,7 @@ describe('core client', function() {
       'test-reqid'
     )
     const auth = new Auth(parseAMQMessage(message));
-    var core = new Core(auth, mockZk);
+    var core = new Core(auth, mockZk, NoopLogger);
 
     core.replace('my_layer', (err, res) => {
       expect(res.id).to.equal('qs32-qpt8');
@@ -173,7 +177,7 @@ describe('core client', function() {
       'test-reqid'
     )
     const auth = new Auth(parseAMQMessage(message));
-    var core = new Core(auth, mockZk);
+    var core = new Core(auth, mockZk, NoopLogger);
 
     const layers = [{
       "bbox": {

@@ -25,28 +25,32 @@ import {
   Transform
 }
 from 'stream';
+import {
+  NoopLogger
+}
+from '../util';
 
 var res;
 var expect = chai.expect;
 
 function kmzDecoder() {
   res = new EventEmitter();
-  return [new KMZ(new Disk(res)), res];
+  return [new KMZ(new Disk(res, NoopLogger)), res];
 }
 
 function shpDecoder() {
   res = new EventEmitter();
-  return [new Shapefile(new Disk(res)), res];
+  return [new Shapefile(new Disk(res, NoopLogger)), res];
 }
 
 function kmlDecoder() {
   res = new EventEmitter();
-  return [new KML(new Disk(res)), res];
+  return [new KML(new Disk(res, NoopLogger)), res];
 }
 
 function geojsonDecoder() {
   res = new EventEmitter();
-  return [new GeoJSON(new Disk(res)), res];
+  return [new GeoJSON(new Disk(res, NoopLogger)), res];
 }
 
 class SlowConsumer extends Transform {
@@ -199,10 +203,10 @@ describe('flow control', () => {
     var count = 0;
 
     var res = new EventEmitter();
-    var disk = new Disk(res);
+    var disk = new Disk(res, NoopLogger);
 
     var decoder = new Shapefile(disk);
-    var merger = new Merger(disk, []);
+    var merger = new Merger(disk, [], false, NoopLogger);
 
     fixture('smoke/wards.zip')
       .pipe(decoder)
@@ -229,9 +233,9 @@ describe('flow control', () => {
     this.timeout(10000);
 
     var res = new EventEmitter();
-    var disk = new Disk(res);
+    var disk = new Disk(res, NoopLogger);
     var decoder = new Shapefile(disk);
-    var merger = new Merger(disk, []);
+    var merger = new Merger(disk, [], false, NoopLogger);
     var slowConsumer = new SlowConsumer();
 
     fixture('smoke/wards.zip')

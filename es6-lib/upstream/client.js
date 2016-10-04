@@ -37,10 +37,12 @@ class GenClient {
     this._auth = auth;
   }
 
-  _log(msg) {
-    logger.info({
-      host: this._headers().host
-    }, msg);
+
+  logMeta() {
+    return {
+      host: this._auth.host,
+      request_id: this._auth.reqId
+    };
   }
 
 

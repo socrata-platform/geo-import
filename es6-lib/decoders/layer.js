@@ -22,7 +22,6 @@ import {
   types
 }
 from '../soql/mapper';
-import logger from '../util/logger';
 import LDJson from './ldjson';
 import WGS84Reprojector from './wgs84-reprojector';
 import DevNull from '../util/devnull';
@@ -88,7 +87,7 @@ class Layer extends Duplex {
     return '__empty__';
   }
 
-  constructor(columns, position, disk, spec) {
+  constructor(columns, position, disk, spec, logger) {
     if (position === undefined) throw new Error("Need a layer index!");
     super();
     this._position = position;
@@ -97,8 +96,9 @@ class Layer extends Duplex {
     this._count = 0;
     this._crsMap = {};
     this._crsCache = {};
-    this._wgs84Reprojector = new WGS84Reprojector();
+    this._wgs84Reprojector = new WGS84Reprojector(logger);
     this._spec = spec || {};
+    this._logger = logger;
 
     if (disk) {
       this._outName = '/tmp/import_' + uuid.v4() + '.ldjson';
@@ -231,7 +231,7 @@ class Layer extends Duplex {
       var newCol;
       if (valCol) {
         newCol = new valCol.constructor(valCol.rawName);
-        logger.debug(`Replacing old undefined column ${valCol.rawName} with new ${valCol.constructor.name} column`);
+        this._logger.debug(`Replacing old undefined column ${valCol.rawName} with new ${valCol.constructor.name} column`);
       }
       return newCol || col;
     }));
@@ -258,7 +258,7 @@ class Layer extends Duplex {
 
     var geom = _.find(soqlRow, (r) => r.isGeometry);
     if (geom && geom.vertexCount > conf.maxVerticesPerRow) {
-      logger.warn(`Counted ${geom.vertexCount} vertices in ${this._count} row of layer ${this.name}`);
+      this._logger.warn(`Counted ${geom.vertexCount} vertices in ${this._count} row of layer ${this.name}`);
       this.emit('error', new VertexTooComplexError(geom.vertexCount, this._count));
     }
 

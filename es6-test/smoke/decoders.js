@@ -22,7 +22,8 @@ import GeoJSON from '../../lib/decoders/geojson';
 import Disk from '../../lib/decoders/disk';
 import Merger from '../../lib/decoders/merger';
 import {
-  ArityChecker
+  ArityChecker,
+  NoopLogger
 }
 from '../util';
 
@@ -32,30 +33,32 @@ var conf = config();
 
 function kmzDecoder() {
   res = new EventEmitter();
-  return [new KMZ(new Disk(res)), res];
+  return [new KMZ(new Disk(res, NoopLogger)), res];
 }
 
 function shpDecoder() {
   res = new EventEmitter();
-  return [new Shapefile(new Disk(res)), res];
+  return [new Shapefile(new Disk(res, NoopLogger)), res];
 }
 
 function kmlDecoder() {
   res = new EventEmitter();
-  return [new KML(new Disk(res)), res];
+  return [new KML(new Disk(res, NoopLogger)), res];
 }
 
 function geojsonDecoder() {
   res = new EventEmitter();
-  return [new GeoJSON(new Disk(res)), res];
+  return [new GeoJSON(new Disk(res, NoopLogger)), res];
 }
 
 function makeMerger(res) {
   res = res || new EventEmitter();
   return [
     new Merger(
-      new Disk(res), [],
-      false
+      new Disk(res, NoopLogger),
+      [],
+      false,
+      NoopLogger
     ),
     res
   ];

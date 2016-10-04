@@ -47,17 +47,15 @@ class Metrics {
     this._state.http.status[status] = {count: current.count + 1};
   }
 
-  _bindRequest(req, res, next) {
-    var start = Date.now();
-    res.on('finish', () => {
-      var latency = Date.now() - start;
-      this.countRequest(req.method, req.path, res.statusCode, latency);
-    });
-    next();
-  }
-
-  request() {
-    return this._bindRequest.bind(this);
+  decorateRequest() {
+    return (req, res, next) => {
+      var start = Date.now();
+      res.on('finish', () => {
+        var latency = Date.now() - start;
+        this.countRequest(req.method, req.path, res.statusCode, latency);
+      });
+      next();
+    };
   }
 
   heapdump(req, res) {

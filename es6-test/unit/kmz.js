@@ -12,13 +12,18 @@ from 'events';
 
 import KMZ from '../../lib/decoders/kmz';
 import Disk from '../../lib/decoders/disk';
+import {
+  NoopLogger
+}
+from '../util';
+
 var expect = chai.expect;
 
 var res;
 
 function kmzDecoder() {
   res = new EventEmitter();
-  return new KMZ(new Disk(res));
+  return new KMZ(new Disk(res, NoopLogger));
 }
 
 afterEach(function() {

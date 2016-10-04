@@ -15,7 +15,7 @@ describe('iss client', function() {
 
   beforeEach(function() {
     amq = new AmqMock();
-    issClient = new ISS(amq);
+    issClient = new ISS(amq, {id: 'activity-id'});
   });
 
   it('can emit a success event', function(onDone) {
@@ -32,9 +32,7 @@ describe('iss client', function() {
       onDone();
     });
 
-    issClient.activity({
-      id: 'activity-id'
-    }).onSuccess(['i am a warning'], 42);
+    issClient.onSuccess(['i am a warning'], 42);
   });
 
   it('can emit a failure event', function(onDone) {
@@ -52,9 +50,7 @@ describe('iss client', function() {
       onDone();
     });
 
-    issClient.activity({
-      id: 'activity-id'
-    }).onError(
+    issClient.onError(
       'something broke'
     );
   });

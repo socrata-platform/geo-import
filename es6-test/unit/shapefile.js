@@ -14,7 +14,8 @@ import {
 from 'events';
 import DevNull from '../../lib/util/devnull';
 import {
-  ArityChecker
+  ArityChecker,
+  NoopLogger
 }
 from '../util';
 var expect = chai.expect;
@@ -22,7 +23,7 @@ var res;
 
 function shpDecoder() {
   res = new EventEmitter();
-  return [new Shapefile(new Disk(res)), res];
+  return [new Shapefile(new Disk(res, NoopLogger)), res];
 }
 
 

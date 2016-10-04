@@ -15,6 +15,9 @@ import {
   fixture
 }
 from '../fixture';
+import {
+  NoopLogger
+} from '../util';
 import through from 'through';
 import GeoJSON from '../../lib/decoders/geojson';
 import Merger from '../../lib/decoders/merger';
@@ -39,8 +42,10 @@ function makeMerger(maxVerticesPerRow) {
   var res = new EventEmitter();
   return [
     new Merger(
-      new Disk(res), [],
-      false
+      new Disk(res, NoopLogger),
+      [],
+      false,
+      NoopLogger
     ),
     res
   ];

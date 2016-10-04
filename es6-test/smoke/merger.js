@@ -22,6 +22,7 @@ import GeoJSON from '../../lib/decoders/geojson';
 import Disk from '../../lib/decoders/disk';
 import Merger from '../../lib/decoders/merger';
 import {
+  NoopLogger,
   ArityChecker
 }
 from '../util';
@@ -45,9 +46,9 @@ describe('merger', () => {
 
   it('broken geojson', function(onDone) {
 
-    const disk = new Disk(res);
+    const disk = new Disk(res, NoopLogger);
     const decoder = new GeoJSON(disk);
-    const merger = new Merger(disk);
+    const merger = new Merger(disk, [], false, NoopLogger);
     var rows = [];
     fixture('smoke/private_public.geojson')
       .pipe(decoder)
@@ -76,9 +77,9 @@ describe('merger', () => {
   it('should be able to handle a mostly null shp', function(onDone) {
     this.timeout(100000);
 
-    const disk = new Disk(res);
+    const disk = new Disk(res, NoopLogger);
     const decoder = new Shapefile(disk);
-    const merger = new Merger(disk);
+    const merger = new Merger(disk, [], false, NoopLogger);
 
     fixture('smoke/CATCH_BASIN_LEAD_POLY.zip')
       .pipe(decoder)
@@ -139,9 +140,9 @@ describe('merger', () => {
   it('co parcels', function(onDone) {
     this.timeout(100000);
 
-    const disk = new Disk(res);
+    const disk = new Disk(res, NoopLogger);
     const decoder = new Shapefile(disk);
-    const merger = new Merger(disk);
+    const merger = new Merger(disk, [], false, NoopLogger);
 
     fixture('smoke/co-parcels.zip')
       .pipe(decoder)
