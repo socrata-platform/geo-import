@@ -44,7 +44,7 @@ class Core extends GenClient {
         //the error even will emit both error responses
         //(shouldn't 'response' do that?) as well as regular
         //errors. why? because. so this case handles a "response"
-        //which is not actually a response, but something like
+        //which is not actually a response, but someqthing like
         //a failure to open a connection
         //so we munge the error to resemble an upstream
         //response error
@@ -261,11 +261,11 @@ class Core extends GenClient {
 
 
   upsert(layer, onOpened) {
-    this.log(`Upsert to core ${layer.uid}`);
     return this._url((err, url) => {
       if (err) return onOpened(err);
 
       var upsertOpener = () => {
+        this.log(`Upsert to core ${layer.uid}`);
         return request.post({
           url: `${url}/id/${layer.uid}.json`,
           headers: this._headers()

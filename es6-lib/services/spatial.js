@@ -57,9 +57,7 @@ class SpatialService {
 
   _onMessage(message) {
     const saneMessage = parseAMQMessage(message);
-    logger.info(_.extend({
-      msg: `Got a message`
-    }, saneMessage));
+    logger.info(saneMessage, 'Picked up an AMQ message');
 
     const activity = new ISS(this._amq, saneMessage);
     // const activity = iss.activity(saneMessage);
@@ -223,7 +221,7 @@ class SpatialService {
     const totalRows = totalLayerRows(layers);
 
     const sendProgress = _.throttle(() => {
-      activitiy.log.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
+      activity.log.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
       activity.onProgress(totalRowsUpserted, totalRows);
     }, conf.debounceProgressMs);
 
@@ -254,6 +252,7 @@ class SpatialService {
           .on('response', core.bufferResponse(
             (error, body) => {
               if (error) {
+                activity.log.error(error);
                 return onUpsertComplete(error);
               }
               return onUpsertComplete(false, [layer, body]);
@@ -261,13 +260,14 @@ class SpatialService {
             UpsertError
           ))
           .on('error', (error) => {
-            const response = new ConnectionError(`Core: ${error.code}`);
+            const connectError = new ConnectionError(`Core: ${error.code}`);
             //The underlying stream will throw an error if
             //  * we can't parse the scratch file
             //  * some IO error happens
-            activity.log.error(response.toJSON());
+            activity.log.error(connectError.toJSON());
             upsertRequest.abort();
-            return onUpsertComplete(response);
+
+            return onUpsertComplete(connectError);
           });
 
       }, (err, upsertResponses) => {
@@ -335,16 +335,14 @@ class SpatialService {
     //need to do *something* on all of them. so we bind
     //with `.on` with a method that noops after one call
     var onErr = _.once((err) => {
-      //TODO: this shouldn't be hardcoded as a 400, errors should carry their
-      //own reponse code
-      return this._onError(activity, err.toString());
+      return this._onError(activity, err);
     });
 
     //If we can't get a decoder, then the user tried to import
     //an unsupported file, or set the content type incorrectly
     //on their header
     var [decoderErr, decoder] = getDecoderForExtension(message.filename, disk);
-    if (decoderErr) return this._onError(activity, decoderErr.toString());
+    if (decoderErr) return this._onError(activity, decoderErr);
 
     core.getBlob(message.blobId, (err, stream) => {
       if (err) return onErr(err);
@@ -353,7 +351,9 @@ class SpatialService {
       activity.log.info(`Create layers according to ${JSON.stringify(specs)}`);
 
       stream
-        .on('error', onErr)
+        .on('error', (error) => {
+          onErr(new ConnectionError(`Core: ${error.code}`));
+        })
         .pipe(decoder)
         .on('error', onErr)
         .pipe(new Merger(disk, specs, false, activity.log))

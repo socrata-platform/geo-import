@@ -50,9 +50,9 @@ describe('iss client', function() {
       onDone();
     });
 
-    issClient.onError(
-      'something broke'
-    );
+    issClient.onError({
+      toJSON: () => 'something broke'
+    });
   });
 
 });

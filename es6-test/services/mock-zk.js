@@ -22,13 +22,15 @@ class MockZKClient extends EventEmitter {
 
   _err(message) {
     return {
-      statusCode: 503,
-      body: message
+        toJSON : () => ({
+        statusCode: 503,
+        body: message
+      })
     };
   }
 
   getCore(cb) {
-    if(!this._isConnected) return cb("zk not yet connected");
+    if(!this._isConnected) return cb(this._err("zk not yet connected"));
     if(this._broken) return cb(this._err("zk connection is dead"));
     return cb(false, `http://localhost:${this.corePort}`);
   }

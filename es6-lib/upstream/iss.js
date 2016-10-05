@@ -69,7 +69,7 @@ class ISS extends EventEmitter {
       status: 'Failure',
       eventType: 'generic',
       info: {
-        'message': reason,
+        'message': reason.toJSON(),
         'type': 'generic'
       }
     });
