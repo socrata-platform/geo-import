@@ -28,7 +28,7 @@ class Core extends GenClient {
     super(auth, zookeeper);
     if (!zookeeper) throw new Error("Core-Client needs zookeeper");
     this._zk = zookeeper;
-    this._logger = logger;
+    this.log = logger;
   }
 
   _url(cb) {
@@ -39,12 +39,12 @@ class Core extends GenClient {
   bufferResponse(onBuffered, errorType) {
     return (response) => {
       if (!response.pipe) {
-        this.logError(`Request failed ${response.code}`);
+        this.error(`Request failed ${response.code}`);
         //this is so gross.
         //the error even will emit both error responses
         //(shouldn't 'response' do that?) as well as regular
         //errors. why? because. so this case handles a "response"
-        //which is not actually a response, but someqthing like
+        //which is not actually a response, but something like
         //a failure to open a connection
         //so we munge the error to resemble an upstream
         //response error
@@ -78,18 +78,18 @@ class Core extends GenClient {
     return _.once(this.bufferResponse(onComplete, errorType));
   }
 
-  log(message) {
-    this._logger.info(this.logMeta(), message);
+  info(message) {
+    this.log.info(this.logMeta(), message);
   }
 
-  logError(message) {
-    this._logger.error(this.logMeta(), message);
+  error(message) {
+    this.log.error(this.logMeta(), message);
   }
 
   destroy(layer, onComplete) {
     return this._url((err, url) => {
       if (err) return onComplete(err);
-      this.log('DeleteDataset');
+      this.info('DeleteDataset');
       request.del({
         url: `${url}/views/${layer.uid}`,
         timeout,
@@ -103,11 +103,11 @@ class Core extends GenClient {
 
   create(parentUid, layer, onComplete) {
     if (layer.uid !== Layer.EMPTY) {
-      this.logError(`Layer uid is not empty, layer uid is ${layer.uid}, cannot create layer in datastore!`);
+      this.error(`Layer uid is not empty, layer uid is ${layer.uid}, cannot create layer in datastore!`);
     }
     return this._url((err, url) => {
       if (err) return onComplete(err);
-      this.log('CreateDataset request to core');
+      this.info('CreateDataset request to core');
 
       request.post({
         url: `${url}/views?nbe=true`,
@@ -132,7 +132,7 @@ class Core extends GenClient {
   replace(layer, onComplete) {
     return this._url((err, url) => {
       if (err) return onComplete(err);
-      this.log(`CopySchema request for new layer to core ${layer.uid}`);
+      this.info(`CopySchema request for new layer to core ${layer.uid}`);
 
       request.post({
         url: `${url}/views/${layer.uid}/publication?method=copySchema`,
@@ -148,7 +148,7 @@ class Core extends GenClient {
     return this._url((err, url) => {
       if (err) return onComplete(err);
 
-      this.log(`Publishing layer ${layer.uid}`);
+      this.info(`Publishing layer ${layer.uid}`);
       request.post({
         url: `${url}/views/${layer.uid}/publication`,
         timeout,
@@ -187,7 +187,7 @@ class Core extends GenClient {
           childViews: layers.map(l => l.uid)
         });
 
-        this.log(`Updating metadata for layer ${fourfour}`);
+        this.info(`Updating metadata for layer ${fourfour}`);
         request.put({
           url: `${url}/views/${fourfour}`,
           timeout,
@@ -210,7 +210,7 @@ class Core extends GenClient {
 
   addColumn(colSpec, onComplete) {
     var [fourfour, column] = colSpec;
-    this.log(`Add column ${fourfour} ${JSON.stringify(column.toJSON())} to core`);
+    this.info(`Add column ${fourfour} ${JSON.stringify(column.toJSON())} to core`);
 
     return this._url((err, url) => {
       if (err) return onComplete(err);
@@ -230,7 +230,7 @@ class Core extends GenClient {
   getColumns(layer, onComplete) {
     return this._url((err, url) => {
       if (err) return onComplete(err);
-      this.log(`Getting columns`);
+      this.info(`Getting columns`);
 
       return request.get({
           url: `${url}/views/${layer.uid}/columns`,
@@ -244,7 +244,7 @@ class Core extends GenClient {
 
   deleteColumn(colSpec, onComplete) {
     var [viewId, colId] = colSpec;
-    this.log(`Delete column ${viewId} ${colId} from core`);
+    this.info(`Delete column ${viewId} ${colId} from core`);
 
     return this._url((err, url) => {
       if (err) return onComplete(err);
@@ -265,7 +265,7 @@ class Core extends GenClient {
       if (err) return onOpened(err);
 
       var upsertOpener = () => {
-        this.log(`Upsert to core ${layer.uid}`);
+        this.info(`Upsert to core ${layer.uid}`);
         return request.post({
           url: `${url}/id/${layer.uid}.json`,
           headers: this._headers()
@@ -280,7 +280,7 @@ class Core extends GenClient {
       if (err) return onOpened(err);
 
       const uri = `${url}/file_data/${blobId}`;
-      this.log(`Getting blob: ${uri} from core`);
+      this.info(`Getting blob: ${uri} from core`);
       var stream = request.get({
         url: uri,
         timeout,

@@ -44,7 +44,7 @@ class Merger extends Transform {
     this._layers = [];
     this._defaultCrs = DEFAULT_CRS;
     this._rowsComplete = 0;
-    this._logger = logger;
+    this.log = logger;
 
     this.once('finish', this._onFinish);
 
@@ -65,7 +65,7 @@ class Merger extends Transform {
           t = types.string;
         }
         return new t(soqlValue.rawName);
-      }), this._layers.length, disk, spec, this._logger);
+      }), this._layers.length, disk, spec, this.log);
       this._layers.push(layer);
     }
     return layer;

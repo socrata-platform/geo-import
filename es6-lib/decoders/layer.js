@@ -98,7 +98,7 @@ class Layer extends Duplex {
     this._crsCache = {};
     this._wgs84Reprojector = new WGS84Reprojector(logger);
     this._spec = spec || {};
-    this._logger = logger;
+    this.log = logger;
 
     if (disk) {
       this._outName = '/tmp/import_' + uuid.v4() + '.ldjson';
@@ -231,7 +231,7 @@ class Layer extends Duplex {
       var newCol;
       if (valCol) {
         newCol = new valCol.constructor(valCol.rawName);
-        this._logger.debug(`Replacing old undefined column ${valCol.rawName} with new ${valCol.constructor.name} column`);
+        this.log.debug(`Replacing old undefined column ${valCol.rawName} with new ${valCol.constructor.name} column`);
       }
       return newCol || col;
     }));
@@ -258,7 +258,7 @@ class Layer extends Duplex {
 
     var geom = _.find(soqlRow, (r) => r.isGeometry);
     if (geom && geom.vertexCount > conf.maxVerticesPerRow) {
-      this._logger.warn(`Counted ${geom.vertexCount} vertices in ${this._count} row of layer ${this.name}`);
+      this.log.warn(`Counted ${geom.vertexCount} vertices in ${this._count} row of layer ${this.name}`);
       this.emit('error', new VertexTooComplexError(geom.vertexCount, this._count));
     }
 
