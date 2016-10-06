@@ -6,7 +6,7 @@ import Summary from './services/summary';
 import Metrics from './util/metrics';
 import logger from './util/logger';
 
-function js(req, res, next) {
+function acceptJson(req, res, next) {
   if (!req.accepts('json')) {
     req.log.warn("Request does not accept application/json!");
   }
@@ -19,12 +19,18 @@ function js(req, res, next) {
 function router(app, zookeeper, metrics) {
   var summary = new Summary();
 
-  app.post('/summary', app.logger.request(), js, metrics.request(), summary.post.bind(summary));
+  app.post(
+    '/summary',
+    app.logger.decorateRequest(),
+    acceptJson,
+    metrics.decorateRequest(),
+    summary.post.bind(summary)
+  );
 
   //meta
-  app.get('/version', app.logger.request(), js, version.get);
-  app.get('/metrics', app.logger.request(), js, metrics.metrics.bind(metrics));
-  app.get('/heapdump', app.logger.request(), metrics.heapdump);
+  app.get('/version', app.logger.decorateRequest(), acceptJson, version.get);
+  app.get('/metrics', app.logger.decorateRequest(), acceptJson, metrics.metrics.bind(metrics));
+  app.get('/heapdump', app.logger.decorateRequest(), metrics.heapdump);
 
 }
 

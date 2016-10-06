@@ -57,12 +57,10 @@ class SpatialService {
 
   _onMessage(message) {
     const saneMessage = parseAMQMessage(message);
-    logger.info(_.extend({
-      msg: `Got a message`
-    }, saneMessage));
+    logger.info(saneMessage, 'Picked up an AMQ message');
 
-    const iss = new ISS(this._amq);
-    const activity = iss.activity(saneMessage);
+    const activity = new ISS(this._amq, saneMessage);
+    // const activity = iss.activity(saneMessage);
     //Send iss a start message
     activity.onStart();
 
@@ -94,16 +92,19 @@ class SpatialService {
     }), true);
   }
 
-  _destroyLayers(layers, core, cb) {
-    return async.map(layers, core.destroy.bind(core), (err, destroyResponses) => {
-      return cb(err, destroyResponses);
-    });
+  _destroyLayers(activity, layers, core, cb) {
+    return async.map(
+      layers,
+      core.destroy.bind(core),
+      (err, destroyResponses) => {
+        return cb(err, destroyResponses);
+      });
   }
 
   _createLayers(activity, core, layers) {
     async.mapLimit(layers, MAX_PARALLEL, _.partial(core.create, activity.view).bind(core), (err, datasetResponses) => {
       if (err) return this._onError(activity, err);
-      logger.info(`Successfully created ${layers.length} layers`);
+      activity.log.info(`Successfully created ${layers.length} layers`);
       _.zip(layers, datasetResponses)
         .forEach(([layer, response]) => layer.uid = response.id);
       return this._createColumns(activity, core, layers);
@@ -143,7 +144,7 @@ class SpatialService {
             .map(([layer, [response, isReplace]]) => {
               var newUid = response.id;
               if (isReplace) {
-                logger.info(`Going to replace ${layer.uid} with new copy ${newUid}`);
+                activity.log.info(`Going to replace ${layer.uid} with new copy ${newUid}`);
               }
               layer.uid = newUid;
               return [layer, isReplace];
@@ -184,11 +185,11 @@ class SpatialService {
     //only make MAX_PARALLEL requests in parallel. core will die if we do a bunch.
     return async.mapLimit(colSpecs, MAX_PARALLEL, core.addColumn.bind(core), (err, colResponses) => {
       if (err) {
-        return this._destroyLayers(layers, core, () => {
+        return this._destroyLayers(activity, layers, core, () => {
           return this._onError(activity, err);
         });
       }
-      logger.info(`Successfully created ${colResponses.length} columns`);
+      activity.log.info(`Successfully created ${colResponses.length} columns`);
       return this._upsertLayers(activity, core, layers);
     });
   }
@@ -211,7 +212,7 @@ class SpatialService {
 
   _upsertLayers(activity, core, layers) {
     var fail = _.once((reason) => {
-      this._destroyLayers(layers, core, () => {
+      this._destroyLayers(activity, layers, core, () => {
         this._onError(activity, reason);
       });
     });
@@ -220,7 +221,7 @@ class SpatialService {
     const totalRows = totalLayerRows(layers);
 
     const sendProgress = _.throttle(() => {
-      logger.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
+      activity.log.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
       activity.onProgress(totalRowsUpserted, totalRows);
     }, conf.debounceProgressMs);
 
@@ -231,12 +232,12 @@ class SpatialService {
     //layer's scratch file to the open request
     return async.map(layers, core.upsert.bind(core), (err, upserts) => {
       if (err) return fail(err);
-      logger.info(`Created upsert requests`);
+      activity.log.info(`Created upsert requests`);
 
       return async.map(upserts, ([layer, startUpsert], onUpsertComplete) => {
         onUpsertComplete = _.once(onUpsertComplete);
 
-        logger.info(`Starting upsert to ${layer.uid}`);
+        activity.log.info(`Starting upsert to ${layer.uid}`);
         var upsertRequest = startUpsert();
         layer
           .on('error', fail)
@@ -251,6 +252,7 @@ class SpatialService {
           .on('response', core.bufferResponse(
             (error, body) => {
               if (error) {
+                activity.log.error(error);
                 return onUpsertComplete(error);
               }
               return onUpsertComplete(false, [layer, body]);
@@ -258,43 +260,49 @@ class SpatialService {
             UpsertError
           ))
           .on('error', (error) => {
-            const response = new ConnectionError(`Core: ${error.code}`);
+            const connectError = new ConnectionError(`Core: ${error.code}`);
             //The underlying stream will throw an error if
             //  * we can't parse the scratch file
             //  * some IO error happens
-            logger.error(response.toJSON());
+            activity.log.error(connectError.toJSON());
             upsertRequest.abort();
-            return onUpsertComplete(response);
+
+            return onUpsertComplete(connectError);
           });
 
       }, (err, upsertResponses) => {
         if (err) {
-          logger.error(err.toJSON(), 'Upsert Failed!');
+          activity.log.error(err.toJSON(), 'Upsert Failed!');
           return fail(err);
         }
 
         const layers = upsertResponses.map(([layer, _]) => layer);
-        logger.info(`Successfully upserted ${layers.map((l) => l.uid)}`);
+        activity.log.info(`Successfully upserted ${layers.map((l) => l.uid)}`);
         this._publishLayers(activity, core, layers);
       });
     });
   }
 
   _publishLayers(activity, core, layers) {
-    return async.mapLimit(layers, MAX_PARALLEL, core.publish.bind(core), (err, publications) => {
-      if (err) {
-        return this._destroyLayers(layers, core, () => {
-          return this._onError(activity, err);
+    return async.mapLimit(
+      layers,
+      MAX_PARALLEL,
+      core.publish.bind(core),
+      (err, publications) => {
+        if (err) {
+          return this._destroyLayers(activity, layers, core, () => {
+            return this._onError(activity, err);
+          });
+        }
+        activity.log.info(`Successfully published ${layers.map(l => l.uid)}`);
+        const publishedLayers = _.zip(layers, publications).map(([layer, response]) => {
+          activity.log.info(`Publication resulted in ${layer.uid} --> ${response.id}`);
+          layer.uid = response.id;
+          return layer;
         });
+        return this._updateParentMetadata(activity, core, publishedLayers);
       }
-      logger.info(`Successfully published ${layers.map(l => l.uid)}`);
-      const publishedLayers = _.zip(layers, publications).map(([layer, response]) => {
-        logger.info(`Publication resulted in ${layer.uid} --> ${response.id}`);
-        layer.uid = response.id;
-        return layer;
-      });
-      return this._updateParentMetadata(activity, core, publishedLayers);
-    });
+    );
   }
 
   _updateParentMetadata(activity, core, layers) {
@@ -303,11 +311,11 @@ class SpatialService {
     const totalRows = totalLayerRows(layers);
     core.updateMetadata(activity.getParentUid(), layers, bbox, (err, resp) => {
       if (err) {
-        return this._destroyLayers(layers, core, () => {
+        return this._destroyLayers(activity, layers, core, () => {
           return this._onError(activity, err);
         });
       }
-      logger.info(`Updated metadata for ${activity.getParentUid()} : ${resp}`);
+      activity.log.info(`Updated metadata for ${activity.getParentUid()} : ${resp}`);
       activity.onSuccess(warnings, totalRows);
 
       return this._endProgress();
@@ -316,8 +324,8 @@ class SpatialService {
 
   _readShapeBlob(activity, message, onEnd) {
     const auth = new Auth(message);
-    const core = new Core(auth, this._zk);
-    const disk = new Disk(activity);
+    const core = new Core(auth, this._zk, activity.log);
+    const disk = new Disk(activity, activity.log);
 
     //;_;
     //Because node's error handling is just wtf, we need
@@ -327,28 +335,28 @@ class SpatialService {
     //need to do *something* on all of them. so we bind
     //with `.on` with a method that noops after one call
     var onErr = _.once((err) => {
-      //TODO: this shouldn't be hardcoded as a 400, errors should carry their
-      //own reponse code
-      return this._onError(activity, err.toString());
+      return this._onError(activity, err);
     });
 
     //If we can't get a decoder, then the user tried to import
     //an unsupported file, or set the content type incorrectly
     //on their header
     var [decoderErr, decoder] = getDecoderForExtension(message.filename, disk);
-    if (decoderErr) return this._onError(activity, decoderErr.toString());
+    if (decoderErr) return this._onError(activity, decoderErr);
 
     core.getBlob(message.blobId, (err, stream) => {
       if (err) return onErr(err);
 
       var specs = this._toLayerSpecs(message.script);
-      logger.info(`Create layers according to ${JSON.stringify(specs)}`);
+      activity.log.info(`Create layers according to ${JSON.stringify(specs)}`);
 
       stream
-        .on('error', onErr)
+        .on('error', (error) => {
+          onErr(new ConnectionError(`Core: ${error.code}`));
+        })
         .pipe(decoder)
         .on('error', onErr)
-        .pipe(new Merger(disk, specs, false))
+        .pipe(new Merger(disk, specs, false, activity.log))
         .on('error', onErr)
         .on('end', (layers) => onEnd(core, layers));
     });
@@ -384,7 +392,7 @@ class SpatialService {
   create(activity, message) {
     this._startProgress();
     this._readShapeBlob(activity, message, (core, layers) => {
-      logger.info("Done reading shape blob, starting create");
+      activity.log.info("Done reading shape blob, starting create");
       this._createLayers(activity, core, layers);
     });
   }
@@ -392,7 +400,7 @@ class SpatialService {
   replace(activity, message) {
     this._startProgress();
     this._readShapeBlob(activity, message, (core, layers) => {
-      logger.info("Done reading shape blob, starting replace");
+      activity.log.info("Done reading shape blob, starting replace");
       this._replaceLayers(activity, core, layers);
     });
   }

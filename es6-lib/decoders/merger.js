@@ -22,7 +22,6 @@ import {
 }
 from 'stream';
 import Disk from './disk';
-import logger from '../util/logger';
 import async from 'async';
 import config from '../config';
 const conf = config();
@@ -31,18 +30,22 @@ const DEFAULT_CRS = "urn:ogc:def:crs:OGC:1.3:CRS84";
 
 
 class Merger extends Transform {
-  constructor(disk, specs, throwaway) {
+  constructor(disk, specs, throwaway, logger) {
     super({
       objectMode: true,
       highWaterMark: config().rowBufferSize
     });
     if (!disk) throw new Error("Merger needs a disk");
+    if (!logger) throw new Error("Merger needs a logger");
+
     this._specs = specs || [];
     this._throwaway = throwaway;
     this._disk = disk;
     this._layers = [];
     this._defaultCrs = DEFAULT_CRS;
     this._rowsComplete = 0;
+    this.log = logger;
+
     this.once('finish', this._onFinish);
 
     this._onProgress = _.debounce(() => {
@@ -62,7 +65,7 @@ class Merger extends Transform {
           t = types.string;
         }
         return new t(soqlValue.rawName);
-      }), this._layers.length, disk, spec);
+      }), this._layers.length, disk, spec, this.log);
       this._layers.push(layer);
     }
     return layer;

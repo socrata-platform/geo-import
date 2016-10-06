@@ -3,6 +3,7 @@ import {
   Transform
 }
 from 'stream';
+import _ from 'underscore';
 var res;
 var expect = chai.expect;
 
@@ -29,6 +30,14 @@ function messageDetails(message) {
   return deets;
 }
 
+const NoopLogger = {
+  debug: _.noop,
+  info: _.noop,
+  warn: _.noop,
+  error: _.noop,
+  critical: _.noop
+}
+
 export {
-  ArityChecker, messageDetails
+  ArityChecker, messageDetails, NoopLogger
 };
