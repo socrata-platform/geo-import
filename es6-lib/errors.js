@@ -283,6 +283,11 @@ class DeleteColumnError extends UpstreamError {
     return 'Failed to delete a column of that dataset';
   }
 }
+class SetBlobError extends UpstreamError {
+  static template() {
+    return 'Failed to set the file data attribute of that dataset';
+  }
+}
 class UpdateMetadataError extends UpstreamError {
   static template() {
     return 'Failed to update the metadata on the partent dataset';
@@ -321,5 +326,6 @@ default {
   CorruptShapefileError,
   IncompleteShapefileError,
   DecodeFiletypeError,
-  ConnectionError
+  ConnectionError,
+  SetBlobError
 };

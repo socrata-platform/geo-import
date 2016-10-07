@@ -310,9 +310,10 @@ describe('spatial service', function() {
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/id/qs32-qpt7.json'],
-          ['POST', '/views/qs32-qpt7/publication'],
           ['GET', '/views/qs32-qpt7'],
-          ['PUT', '/views/qs32-qpt7']
+          ['PUT', '/views/qs32-qpt7'],
+          ['PUT', '/views/qs32-qpt7?method=setBlob&blobId=simple_points.kml&blobName=simple_points.kml'],
+          ['POST', '/views/qs32-qpt7/publication']
         ]);
       }
     ], onDone));
@@ -345,9 +346,10 @@ describe('spatial service', function() {
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/id/qs32-qpt7.json'],
-          ['POST', '/views/qs32-qpt7/publication'],
           ['GET', '/views/qs32-qpt7'],
-          ['PUT', '/views/qs32-qpt7']
+          ['PUT', '/views/qs32-qpt7'],
+          ['PUT', '/views/qs32-qpt7?method=setBlob&blobId=simple_points.kmz&blobName=simple_points.kmz'],
+          ['POST', '/views/qs32-qpt7/publication']
         ]);
       }
     ], onDone));
@@ -522,14 +524,17 @@ describe('spatial service', function() {
     mockAmq.importFixture('simple_points.json', []);
   });
 
-  it('will not delete any replacement layers when an error is encountered getting column info', function(onDone) {
+  it('will clean up any working copy layers when an error is encountered getting column info', function(onDone) {
     mockCore.failGetColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (_finishMessage) => {
-        var colInfo = _.last(mockCore.history);
-
-        expect(colInfo.method).to.equal('GET');
-        expect(colInfo.url).to.equal('/views/qs32-qpt8/columns');
+        const trace = mockCore.history.map(r => [r.method, r.url]);
+        expect(trace).to.eql([
+          ["POST", "/views/qs32-qpt7/publication?method=copySchema"],
+          ["GET", "/views/qs32-qpt8/columns"],
+          // clean up the working copy
+          ["DELETE", "/views/qs32-qpt8"]
+        ]);
       }
     ], onDone));
     mockAmq.replaceFixture(
@@ -540,14 +545,20 @@ describe('spatial service', function() {
     );
   });
 
-  it('will not delete any created layers when an error is encountered in delete columns', function(onDone) {
+  it('will cleanup the working copy when an error is encountered in delete columns', function(onDone) {
     mockCore.failDeleteColumns = 503;
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (_finishMessage) => {
-        var deleteColumn = _.last(mockCore.history);
-        expect(deleteColumn.method).to.equal('DELETE');
-        expect(deleteColumn.url).to.equal('/views/qs32-qpt8/columns/3416');
+        const trace = mockCore.history.map(r => [r.method, r.url]);
+        expect(trace).to.eql([
+          ["POST", "/views/qs32-qpt7/publication?method=copySchema"],
+          ["GET", "/views/qs32-qpt8/columns"],
+          ["DELETE", "/views/qs32-qpt8/columns/3415"],
+          ["DELETE", "/views/qs32-qpt8/columns/3416"],
+          // clean up the working copy
+          ["DELETE", "/views/qs32-qpt8"]
+        ]);
       }
     ], onDone));
 
@@ -571,6 +582,70 @@ describe('spatial service', function() {
     ], onDone));
 
     mockAmq.importFixture('simple_points.json', []);
+  });
+
+
+  it('if setting the blob fails during a replace, layers, metadata, and blob gets rolled back', function(onDone) {
+    mockCore.failSetBlob = 503;
+
+    mockAmq.on('/queue/eurybates.import-status-events', sequencer([
+      (startMessage) => {}, (finishMessage) => {
+        finishMessage = JSON.parse(finishMessage);
+
+        expect(messageDetails(finishMessage)).to.eql({
+          "activityId": "e7b813c8-d68e-4c8a-b1bc-61c709816fc3",
+          "eventType": "generic",
+          "info": {
+            "message": {
+              "error": {
+                "english": "Failed to set the file data attribute of that dataset",
+                "params": {},
+                "reason": "set_blob_error"
+              },
+              "upstream": {
+                "response": "failSetBlob",
+                "status": 503
+              }
+            },
+            "type": "generic"
+          },
+          "service": "Imports2",
+          "status": "Failure"
+        });
+
+        const trace = mockCore.history.map(r => [r.method, r.url]);
+        expect(trace).to.eql([
+          ["POST", "/views/qs32-qpt7/publication?method=copySchema"],
+          ["GET", "/views/qs32-qpt8/columns"],
+          ["DELETE", "/views/qs32-qpt8/columns/3415"],
+          ["DELETE", "/views/qs32-qpt8/columns/3416"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/id/qs32-qpt8.json"],
+          ["GET", "/views/ffff-ffff"],
+          ["PUT", "/views/ffff-ffff"],
+          ["PUT", "/views/ffff-ffff?method=setBlob&blobId=simple_points.json&blobName=simple_points.json"],
+          //delete the working copy
+          ["DELETE", "/views/qs32-qpt8"],
+          //update the parent metadata to what it was
+          ["PUT", "/views/ffff-ffff"],
+          //update the blob to what it was
+          ["PUT", "/views/ffff-ffff?method=setBlob&blobId=qs32-blob-id&blobName=foo.zip"]
+        ]);
+      }
+    ], onDone));
+
+    mockAmq.replaceFixture(
+      'simple_points.json', [{
+        name: 'foo',
+        replacingUid: 'qs32-qpt7'
+      }],
+    );
+
+    // mockAmq.importFixture('simple_points.kmz', ['bar'], 'qs32-qpt7');
   });
 
   it('will give a 400 on complex shapes', function(onDone) {

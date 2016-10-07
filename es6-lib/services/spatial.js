@@ -30,8 +30,6 @@ import {
   ConnectionError
 }
 from '../errors';
-//TODO: resource scope?
-import EventEmitter from 'events';
 
 
 var conf = config();
@@ -72,13 +70,21 @@ class SpatialService {
 
 
   _createOrReplace(activity, core, layer, cb) {
+    const rollbackWorkingCopy = (resp) => {
+      activity.appendRollback("WorkingCopyRollback", (onRollback) => {
+        core.destroy({uid: resp.id}, onRollback);
+      });
+    };
+
     if (layer.uid === Layer.EMPTY) {
       return core.create(activity.view, layer, (err, resp) => {
+        if(!err) rollbackWorkingCopy(resp);
         cb(err, [resp, false]);
       });
     }
     return core.replace(layer, (err, resp) => {
-      cb(err, [resp, true]);
+        if(!err) rollbackWorkingCopy(resp);
+        cb(err, [resp, true]);
     });
   }
 
@@ -103,7 +109,14 @@ class SpatialService {
 
   _createLayers(activity, core, layers) {
     async.mapLimit(layers, MAX_PARALLEL, _.partial(core.create, activity.view).bind(core), (err, datasetResponses) => {
-      if (err) return this._onError(activity, err);
+      activity.appendRollback("CreateLayers", (onRollback) => {
+        this._destroyLayers(activity, layers, core, onRollback);
+      });
+
+      if (err) {
+        return this._onError(activity, err);
+      }
+
       activity.log.info(`Successfully created ${layers.length} layers`);
       _.zip(layers, datasetResponses)
         .forEach(([layer, response]) => layer.uid = response.id);
@@ -185,9 +198,7 @@ class SpatialService {
     //only make MAX_PARALLEL requests in parallel. core will die if we do a bunch.
     return async.mapLimit(colSpecs, MAX_PARALLEL, core.addColumn.bind(core), (err, colResponses) => {
       if (err) {
-        return this._destroyLayers(activity, layers, core, () => {
-          return this._onError(activity, err);
-        });
+        return this._onError(activity, err);
       }
       activity.log.info(`Successfully created ${colResponses.length} columns`);
       return this._upsertLayers(activity, core, layers);
@@ -212,9 +223,7 @@ class SpatialService {
 
   _upsertLayers(activity, core, layers) {
     var fail = _.once((reason) => {
-      this._destroyLayers(activity, layers, core, () => {
-        this._onError(activity, reason);
-      });
+      this._onError(activity, reason);
     });
 
     var totalRowsUpserted = 0;
@@ -278,8 +287,66 @@ class SpatialService {
 
         const layers = upsertResponses.map(([layer, _]) => layer);
         activity.log.info(`Successfully upserted ${layers.map((l) => l.uid)}`);
-        this._publishLayers(activity, core, layers);
+        this._updateParentMetadata(activity, core, layers);
       });
+    });
+  }
+
+  _updateParentMetadata(activity, core, layers) {
+    const bbox = this._expandBbox(layers);
+    core.getView(activity.getParentUid(), (err, view) => {
+      if (err) {
+        return this._onError(activity, err);
+      }
+
+      const ogMetadata = view.metadata;
+      const ogPrivateMetadata = view.privateMetadata;
+
+      activity.appendRollback("UpdateMetadata", (cb) => {
+        core.updateMetadata(activity.getParentUid(), ogMetadata, ogPrivateMetadata, cb);
+      });
+
+      const metadata = _.extend({}, ogMetadata, {
+        geo: {
+          owsUrl: `/api/geospatial/${activity.getParentUid()}`,
+          layers: layers.map(l => l.uid).join(','),
+          isNbe: true,
+          bboxCrs: 'EPSG:4326',
+          namespace: `_${activity.getParentUid()}`,
+          featureIdAttribute: '_SocrataID',
+          bbox: bbox.toString()
+        }
+      });
+
+      const privateMetadata = _.extend({}, ogPrivateMetadata, {
+        childViews: layers.map(l => l.uid)
+      });
+
+      core.updateMetadata(activity.getParentUid(), metadata, privateMetadata, (err, resp) => {
+        if (err) {
+          return this._onError(activity, err);
+        }
+
+        activity.log.info(`Updated metadata for ${activity.getParentUid()} : ${JSON.stringify(resp)}`);
+        this._updateBlob(activity, core, view, layers);
+      });
+    });
+  }
+
+  _updateBlob(activity, core, ogView, layers) {
+    activity.appendRollback("SetBlob", (cb) => {
+      core.setBlob(activity.getParentUid(), ogView.blobId, ogView.blobFilename, cb);
+    });
+
+    activity.log.info(`Updating blob for ${activity.getParentUid()}`);
+
+    core.setBlob(activity.getParentUid(), activity.getBlobId(), activity.getBlobName(), (err, response) => {
+      if (err) {
+        activity.log.error(`Failed to set blob ${err.toString()}`);
+        return this._onError(activity, err);
+      }
+
+      this._publishLayers(activity, core, layers);
     });
   }
 
@@ -290,9 +357,7 @@ class SpatialService {
       core.publish.bind(core),
       (err, publications) => {
         if (err) {
-          return this._destroyLayers(activity, layers, core, () => {
-            return this._onError(activity, err);
-          });
+          return this._onError(activity, err);
         }
         activity.log.info(`Successfully published ${layers.map(l => l.uid)}`);
         const publishedLayers = _.zip(layers, publications).map(([layer, response]) => {
@@ -300,27 +365,13 @@ class SpatialService {
           layer.uid = response.id;
           return layer;
         });
-        return this._updateParentMetadata(activity, core, publishedLayers);
+        const totalRows = totalLayerRows(layers);
+        activity.onSuccess([], totalRows);
+        return this._endProgress();
       }
     );
   }
 
-  _updateParentMetadata(activity, core, layers) {
-    const bbox = this._expandBbox(layers);
-    const warnings = [];
-    const totalRows = totalLayerRows(layers);
-    core.updateMetadata(activity.getParentUid(), layers, bbox, (err, resp) => {
-      if (err) {
-        return this._destroyLayers(activity, layers, core, () => {
-          return this._onError(activity, err);
-        });
-      }
-      activity.log.info(`Updated metadata for ${activity.getParentUid()} : ${resp}`);
-      activity.onSuccess(warnings, totalRows);
-
-      return this._endProgress();
-    });
-  }
 
   _readShapeBlob(activity, message, onEnd) {
     const auth = new Auth(message);
@@ -344,7 +395,7 @@ class SpatialService {
     var [decoderErr, decoder] = getDecoderForExtension(message.filename, disk);
     if (decoderErr) return this._onError(activity, decoderErr);
 
-    core.getBlob(message.blobId, (err, stream) => {
+    core.getBlob(activity.getBlobId(), (err, stream) => {
       if (err) return onErr(err);
 
       var specs = this._toLayerSpecs(message.script);
@@ -372,8 +423,10 @@ class SpatialService {
   }
 
   _onError(activity, reason) {
-    activity.onError(reason);
-    this._endProgress();
+    activity.rollback(() => {
+      activity.onError(reason);
+      this._endProgress();
+    });
   }
 
   _endProgress() {

@@ -15,6 +15,7 @@ import {
   PublicationError,
   GetColumnError,
   DeleteColumnError,
+  SetBlobError,
   UpdateMetadataError,
   CleanupError
 }
@@ -159,9 +160,12 @@ class Core extends GenClient {
     });
   }
 
-  updateMetadata(fourfour, layers, bbox, onComplete) {
+
+  getView(fourfour, onComplete) {
     return this._url((err, url) => {
       if (err) return onComplete(err);
+
+      this.info(`Getting the view: ${fourfour}`);
 
       request.get({
         url: `${url}/views/${fourfour}`,
@@ -169,40 +173,28 @@ class Core extends GenClient {
         headers: this._headers(),
         json: true
       })
-      .on('response', this._onResponseStart((err, body) => {
+      .on('response', this._onResponseStart(onComplete, UpdateMetadataError))
+      .on('error', this._onErrorResponse(onComplete, UpdateMetadataError));
+    });
+  }
 
-        const metadata = _.extend({}, body.metadata, {
-          geo: {
-            owsUrl: `/api/geospatial/${fourfour}`,
-            layers: layers.map(l => l.uid).join(','),
-            isNbe: true,
-            bboxCrs: 'EPSG:4326',
-            namespace: `_${fourfour}`,
-            featureIdAttribute: '_SocrataID',
-            bbox: bbox.toString()
-          }
-        });
+  updateMetadata(fourfour, metadata, privateMetadata, onComplete) {
+    return this._url((err, url) => {
+      if (err) return onComplete(err);
 
-        const privateMetadata = _.extend({}, body.privateMetadata, {
-          childViews: layers.map(l => l.uid)
-        });
-
-        this.info(`Updating metadata for layer ${fourfour}`);
-        request.put({
-          url: `${url}/views/${fourfour}`,
-          timeout,
-          headers: this._headers(),
-          json: true,
-          body: {
-            displayType: 'map',
-            metadata,
-            privateMetadata
-          }
-        })
-        .on('response', this._onResponseStart(onComplete, UpdateMetadataError))
-        .on('error', this._onErrorResponse(onComplete, UpdateMetadataError));
-
-      }, UpdateMetadataError))
+      this.info(`Updating metadata for layer ${fourfour}`);
+      request.put({
+        url: `${url}/views/${fourfour}`,
+        timeout,
+        headers: this._headers(),
+        json: true,
+        body: {
+          displayType: 'map',
+          metadata,
+          privateMetadata
+        }
+      })
+      .on('response', this._onResponseStart(onComplete, UpdateMetadataError))
       .on('error', this._onErrorResponse(onComplete, UpdateMetadataError));
     });
   }
@@ -284,12 +276,28 @@ class Core extends GenClient {
       var stream = request.get({
         url: uri,
         timeout,
-        encoding: null,
         headers: _.extend(
           this._headers(), {}
         )
       });
       return onOpened(false, stream);
+    });
+  }
+
+  setBlob(viewId, blobId, blobName, onComplete) {
+    return this._url((err, url) => {
+      if (err) return onOpened(err);
+
+      const uri = `${url}/views/${viewId}?method=setBlob&blobId=${blobId}&blobName=${blobName}`;
+      this.info(`Setting blob on ${uri} ${viewId} to ${blobId}`);
+      request.put({
+        url: uri,
+        headers: this._headers(),
+        timeout,
+        json: true
+      })
+      .on('response', this._onResponseStart(onComplete, SetBlobError))
+      .on('error', this._onErrorResponse(onComplete, SetBlobError));
     });
   }
 
