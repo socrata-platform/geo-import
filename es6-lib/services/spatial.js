@@ -70,7 +70,7 @@ class SpatialService {
 
 
   _createOrReplace(activity, core, layer, cb) {
-    const rollbackWorkingCopy = (resp) => {
+    const addRollbackToHistory = (resp) => {
       activity.appendRollback("WorkingCopyRollback", (onRollback) => {
         core.destroy({uid: resp.id}, onRollback);
       });
@@ -78,12 +78,12 @@ class SpatialService {
 
     if (layer.uid === Layer.EMPTY) {
       return core.create(activity.view, layer, (err, resp) => {
-        if(!err) rollbackWorkingCopy(resp);
+        if(!err) addRollbackToHistory(resp);
         cb(err, [resp, false]);
       });
     }
     return core.replace(layer, (err, resp) => {
-        if(!err) rollbackWorkingCopy(resp);
+        if(!err) addRollbackToHistory(resp);
         cb(err, [resp, true]);
     });
   }

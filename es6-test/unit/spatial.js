@@ -644,8 +644,6 @@ describe('spatial service', function() {
         replacingUid: 'qs32-qpt7'
       }],
     );
-
-    // mockAmq.importFixture('simple_points.kmz', ['bar'], 'qs32-qpt7');
   });
 
   it('will give a 400 on complex shapes', function(onDone) {
