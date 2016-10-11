@@ -594,20 +594,13 @@ describe('spatial service', function() {
 
         expect(messageDetails(finishMessage)).to.eql({
           "activityId": "e7b813c8-d68e-4c8a-b1bc-61c709816fc3",
-          "eventType": "generic",
+          "eventType": "set-blob-error",
           "info": {
-            "message": {
-              "error": {
-                "english": "Failed to set the file data attribute of that dataset",
-                "params": {},
-                "reason": "set_blob_error"
-              },
-              "upstream": {
-                "response": "failSetBlob",
-                "status": 503
-              }
-            },
-            "type": "generic"
+            "english": "Failed to set the file data attribute of that dataset",
+            "upstream": {
+              "response": "failSetBlob",
+              "status": 503
+            }
           },
           "service": "Imports2",
           "status": "Failure"

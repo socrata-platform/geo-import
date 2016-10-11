@@ -67,14 +67,14 @@ describe('spatial service failures', function() {
   }
 
   function reason(m) {
-    return JSON.parse(m).details.info.message.error.reason;
+    return JSON.parse(m).details.eventType;
   }
 
   it('will emit a CreateDatasetError when core request to create dataset fails', function(onDone) {
     mockCore.failCreate = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (m) => {
-        expect(reason(m)).to.equal('create_dataset_error');
+        expect(reason(m)).to.equal('create-dataset-error');
       }
     ], onDone));
     mockAmq.importFixture('simple_points.json', []);
@@ -84,7 +84,7 @@ describe('spatial service failures', function() {
     mockCore.failColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (m) => {
-        expect(reason(m)).to.equal('create_column_error');
+        expect(reason(m)).to.equal('create-column-error');
       }
     ], onDone));
     mockAmq.importFixture('simple_points.json', []);
@@ -94,7 +94,7 @@ describe('spatial service failures', function() {
     mockCore.failGetColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (m) => {
-        expect(reason(m)).to.equal('get_column_error');
+        expect(reason(m)).to.equal('get-column-error');
       }
     ], onDone));
     mockAmq.replaceFixture('simple_points.json', [{
@@ -107,7 +107,7 @@ describe('spatial service failures', function() {
     mockCore.failPublication = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (m) => {
-        expect(reason(m)).to.equal('publication_error');
+        expect(reason(m)).to.equal('publication-error');
       }
     ], onDone));
     mockAmq.replaceFixture('simple_points.json', [{
@@ -120,7 +120,7 @@ describe('spatial service failures', function() {
     mockCore.failWorkingCopy = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (m) => {
-        expect(reason(m)).to.equal('create_working_copy_error');
+        expect(reason(m)).to.equal('create-working-copy-error');
       }
     ], onDone));
     mockAmq.replaceFixture('simple_points.json', [{
@@ -133,7 +133,7 @@ describe('spatial service failures', function() {
     mockCore.failDeleteColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (m) => {
-        expect(reason(m)).to.equal('delete_column_error');
+        expect(reason(m)).to.equal('delete-column-error');
       }
     ], onDone));
     mockAmq.replaceFixture('simple_points.json', [{
@@ -146,7 +146,7 @@ describe('spatial service failures', function() {
     mockCore.failDeleteColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (m) => {
-        expect(reason(m)).to.equal('delete_column_error');
+        expect(reason(m)).to.equal('delete-column-error');
       }
     ], onDone));
     mockAmq.replaceFixture('simple_points.json', [{
@@ -159,7 +159,7 @@ describe('spatial service failures', function() {
     mockCore.failUpsert = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (_) => {}, (m) => {
-        expect(reason(m)).to.equal('upsert_error');
+        expect(reason(m)).to.equal('upsert-error');
       }
     ], onDone));
     mockAmq.replaceFixture('simple_points.json', [{
