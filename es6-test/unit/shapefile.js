@@ -41,12 +41,10 @@ describe('shapefile decoder', function() {
       .pipe(decoder)
       .on('error', (err) => {
         expect(err.toJSON()).to.eql({
-          error: {
-            reason: 'corrupt_shapefile_error',
+          eventType: 'corrupt-shapefile-error',
+          info: {
             english: 'Failed to read the shapefile: Error: unsupported shape type: 16473',
-            params: {
-              reason: 'Error: unsupported shape type: 16473'
-            }
+            reason: 'Error: unsupported shape type: 16473'
           }
         });
         onDone();
@@ -94,12 +92,10 @@ describe('shapefile decoder', function() {
       .pipe(decoder)
       .on('error', (err) => {
         expect(err.toJSON()).to.eql({
-          error: {
-            reason: 'incomplete_shapefile_error',
+          eventType: 'incomplete-shapefile-error',
+          info: {
             english: 'Your shapefile archive is incomplete. It must contain a .dbf, .shp, and .prj file for every layer. Expected it to contain the following files, which were actually missing: SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf.',
-            params: {
-              missing: 'SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf'
-            }
+            missing: 'SIGNIFICANT_ECOLOGICAL_AREA_(SEA).dbf'
           }
         });
         onDone();
@@ -112,12 +108,10 @@ describe('shapefile decoder', function() {
       .pipe(decoder)
       .on('error', (err) => {
         expect(err.toJSON()).to.eql({
-          error: {
-            reason: 'incomplete_shapefile_error',
+          eventType: 'incomplete-shapefile-error',
+          info: {
             english: 'Your shapefile archive is incomplete. It must contain a .dbf, .shp, and .prj file for every layer. Expected it to contain the following files, which were actually missing: SIGNIFICANT_ECOLOGICAL_AREA_(SEA).shp.',
-            params: {
-              missing: 'SIGNIFICANT_ECOLOGICAL_AREA_(SEA).shp'
-            }
+            missing: 'SIGNIFICANT_ECOLOGICAL_AREA_(SEA).shp'
           }
         });
         onDone();

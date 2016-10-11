@@ -38,12 +38,10 @@ describe('kmz decoder', function() {
       .pipe(kmzDecoder())
       .on('error', (err) => {
         expect(err.toJSON()).to.eql({
-          error: {
-            reason: 'archive_error',
+          eventType: 'archive-error',
+          info: {
             english: 'Failed to open the zip archive: Error: invalid central directory file header signature: 0x80000',
-            params: {
-              reason: "Error: invalid central directory file header signature: 0x80000"
-            }
+            reason: "Error: invalid central directory file header signature: 0x80000"
           }
         });
         onDone();
@@ -56,8 +54,8 @@ describe('kmz decoder', function() {
     fixture('malformed_kmz.kmz')
       .pipe(kmzDecoder())
       .on('error', (err) => {
-        expect(err.toJSON().error.reason).to.equal('xmlparse_error');
-        expect(err.toJSON().error.english).to.equal('Failed to parse XML node due to mismatched tag near kml.document.folder.schema');
+        expect(err.toJSON().eventType).to.equal('xmlparse-error');
+        expect(err.toJSON().info.english).to.equal('Failed to parse XML node due to mismatched tag near kml.document.folder.schema');
         onDone();
       })
       .pipe(es.mapSync(() => {}));

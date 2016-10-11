@@ -93,15 +93,12 @@ class ISS extends EventEmitter {
   }
 
   onError(reason) {
-    this._onEnd({
+    this._onEnd(_.extend({
       activityId: this._message.id,
       status: 'Failure',
       eventType: 'generic',
-      info: {
-        'message': reason.toJSON(),
-        'type': 'generic'
-      }
-    });
+      info: {}
+    }, reason.toJSON()));
   }
 
   onProgress(rowsComplete, totalRows) {

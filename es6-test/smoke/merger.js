@@ -59,12 +59,10 @@ describe('merger', () => {
         layer
           .on('error', (e) => {
             expect(e.toJSON()).to.eql({
-              error: {
-                reason: 'invalid_arity_error',
+              eventType: 'invalid-arity-error',
+              info: {
                 english: 'One of the points in the following row did not have 2 coordinates [{"type":"Point","coordinates":{}},"City Feature","Common Name","Address","Latitude","Location","Icon","Website","Benefit"]',
-                params: {
-                  row: '[{"type":"Point","coordinates":{}},"City Feature","Common Name","Address","Latitude","Location","Icon","Website","Benefit"]'
-                }
+                row: '[{"type":"Point","coordinates":{}},"City Feature","Common Name","Address","Latitude","Location","Icon","Website","Benefit"]'
               }
             });
             onDone();
