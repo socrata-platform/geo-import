@@ -39,19 +39,24 @@ describe('iss client', function() {
     amq.on('/queue/eurybates.import-status-events', (message) => {
       expect(messageDetails(JSON.parse(message))).to.eql({
         activityId: 'activity-id',
+        service: 'Imports2',
         eventType: 'generic',
         info: {
-          message: 'something broke',
-          type: 'generic'
+          english: 'something broke',
         },
-        service: 'Imports2',
         status: 'Failure'
       });
       onDone();
     });
 
     issClient.onError({
-      toJSON: () => 'something broke'
+      toJSON: () => {
+        return {
+          info: {
+            english: 'something broke'
+          }
+        }
+      }
     });
   });
 

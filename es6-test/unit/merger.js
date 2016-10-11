@@ -616,7 +616,7 @@ describe('merging feature streams to layers', function() {
       .pipe(merger)
       .on('error', (err) => {
         conf.maxVerticesPerRow = oldMax;
-        expect(err.toJSON().error.english).to.contain('There were 10 vertices in row 1, the max is');
+        expect(err.toJSON().info.english).to.contain('There were 10 vertices in row 1, the max is');
         onDone();
       });
   });
@@ -639,12 +639,10 @@ describe('merging feature streams to layers', function() {
             ]
           }, 'second value', 2, 2.2, true]);
           expect(error.toJSON()).to.eql({
-            error: {
-              reason: 'invalid_arity_error',
+            eventType: 'invalid-arity-error',
+            info: {
               english: `One of the points in the following row did not have 2 coordinates ${brokenRow}`,
-              params: {
-                row: brokenRow
-              }
+              row: brokenRow
             }
           });
           onDone();

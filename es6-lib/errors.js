@@ -14,16 +14,19 @@ class ImportError extends Error {
   }
 
   static reason() {
-    return changeCase.snakeCase(this.name);
+    return changeCase.paramCase(this.name);
+  }
+
+  static title() {
+    return changeCase.titleCase(this.reason());
   }
 
   toJSON() {
     return {
-      error: {
-        reason: this.constructor.reason(),
+      eventType: this.constructor.reason(),
+      info: _.extend({
         english: this.english(),
-        params: this.params()
-      }
+      }, this.params())
     };
   }
 
@@ -235,7 +238,7 @@ class UpstreamError extends ImportError {
 
   toJSON() {
     var js = super.toJSON();
-    js.upstream = this.upstream();
+    js.info.upstream = this.upstream();
     return js;
   }
 
