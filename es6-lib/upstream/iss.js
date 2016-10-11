@@ -3,6 +3,8 @@ import _ from 'underscore';
 import EventEmitter from 'events';
 import uuid from 'uuid';
 import logger from '../util/logger';
+import async from 'async';
+
 const conf = config();
 
 class ISS extends EventEmitter {
@@ -10,6 +12,7 @@ class ISS extends EventEmitter {
     super();
 
     this._message = message;
+    this._rollbacks = [];
 
     this.send = (tag, details) => {
       details.service = 'Imports2';
@@ -50,6 +53,32 @@ class ISS extends EventEmitter {
 
   getActivityId() {
     return this._message.id;
+  }
+
+  getBlobId() {
+    return this._message.blobId;
+  }
+
+  getBlobName() {
+    return this._message.filename;
+  }
+
+  appendRollback(tag, func) {
+    this._rollbacks.push((onRolledback) => {
+      this.log.warn(`Starting rollback of ${tag}`);
+      func(onRolledback);
+    });
+  }
+
+  rollback(onRolledback) {
+    async.series(this._rollbacks, (err, results) => {
+      if(err) {
+        this.log.error(`Failed to roll back from failed job! ${err}`);
+        return onRolledback(err);
+      }
+      this.log.info('Successfully rolled back failed job.');
+      return onRolledback(false, results);
+    });
   }
 
   onSuccess(warnings, totalRows) {

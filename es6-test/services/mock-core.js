@@ -32,6 +32,8 @@ const view = (name) => ({
   "id": "qs32-qpt7",
   "name": name,
   "averageRating": 0,
+  "blobId": "qs32-blob-id",
+  "blobFilename": "foo.zip",
   "createdAt": 1446152737,
   "downloadCount": 0,
   "newBackend": false,
@@ -236,6 +238,10 @@ class CoreMock {
     app.put('/views/:fourfour', function(req, res) {
       this._history.push(req);
 
+      if (this.failSetBlob && req.query.method === 'setBlob') {
+        return res.status(this.failSetBlob).send('failSetBlob');
+      }
+
       req.bufferedRows = '';
       req.pipe(es.map((thing, cb) => {
         req.bufferedRows += thing.toString('utf-8');
@@ -267,6 +273,23 @@ class CoreMock {
       const absPath = path.resolve(`${__dirname}/../fixtures/${req.params.blobId}`);
       res.sendFile(absPath);
     });
+
+    app.put('/id/:fourfour', function(req, res) {
+      this._history.push(req);
+
+      if (this.failUpsert) {
+        return res.status(this.failUpsert).send('failUpsert');
+      }
+
+      req.bufferedRows = '';
+      req.pipe(es.map((thing, cb) => {
+        req.bufferedRows += thing.toString('utf-8');
+      }));
+
+      req.on('end', () => {
+        res.status(200).send('{}');
+      });
+    }.bind(this));
 
     this._app = app.listen(port);
   }
