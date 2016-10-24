@@ -5,14 +5,14 @@ import {
   fixture
 }
 from '../fixture';
-import Shapefile from '../../lib/decoders/shapefile';
+import Shapefile from '../../es6-lib/decoders/shapefile';
 import srs from 'node-srs';
-import Disk from '../../lib/decoders/disk';
+import Disk from '../../es6-lib/decoders/disk';
 import {
   EventEmitter
 }
 from 'events';
-import DevNull from '../../lib/util/devnull';
+import DevNull from '../../es6-lib/util/devnull';
 import {
   ArityChecker,
   NoopLogger

@@ -7,10 +7,10 @@ while inotifywait -r -e modify ./es6-lib ./es6-test; do
   if [ -z "$1" ]
   then
     echo "Running unit tests"
-    make clean && make && GEO_IMPORT_ENV=test ./node_modules/.bin/mocha es6-test/unit --compilers js:babel/register
+    GEO_IMPORT_ENV=test ./node_modules/.bin/mocha es6-test/unit --compilers js:babel/register
   else
     echo "Running tests that match $1"
-    make clean && make && GEO_IMPORT_ENV=test ./node_modules/.bin/mocha es6-test/unit es6-test/smoke --grep "$1" --compilers js:babel/register
+    GEO_IMPORT_ENV=test ./node_modules/.bin/mocha es6-test/unit es6-test/smoke --grep "$1" --compilers js:babel/register
   fi
   jshint es6-lib
 done

@@ -13,20 +13,20 @@ import {
   EventEmitter
 }
 from 'events';
-import config from '../../lib/config';
-import service from '../../lib/service';
-import Shapefile from '../../lib/decoders/shapefile';
-import KMZ from '../../lib/decoders/kmz';
-import KML from '../../lib/decoders/kml';
-import GeoJSON from '../../lib/decoders/geojson';
-import Disk from '../../lib/decoders/disk';
-import Merger from '../../lib/decoders/merger';
+import config from '../../es6-lib/config';
+import service from '../../es6-lib/service';
+import Shapefile from '../../es6-lib/decoders/shapefile';
+import KMZ from '../../es6-lib/decoders/kmz';
+import KML from '../../es6-lib/decoders/kml';
+import GeoJSON from '../../es6-lib/decoders/geojson';
+import Disk from '../../es6-lib/decoders/disk';
+import Merger from '../../es6-lib/decoders/merger';
 import {
   NoopLogger,
   ArityChecker
 }
 from '../util';
-import DevNull from '../../lib/util/devnull';
+import DevNull from '../../es6-lib/util/devnull';
 
 
 var res;

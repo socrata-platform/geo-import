@@ -19,21 +19,21 @@ import {
   NoopLogger
 } from '../util';
 import through from 'through';
-import GeoJSON from '../../lib/decoders/geojson';
-import Merger from '../../lib/decoders/merger';
-import Disk from '../../lib/decoders/disk';
+import GeoJSON from '../../es6-lib/decoders/geojson';
+import Merger from '../../es6-lib/decoders/merger';
+import Disk from '../../es6-lib/decoders/disk';
 
-import SoQLPoint from '../../lib/soql/point';
-import SoQLLine from '../../lib/soql/line';
-import SoQLPolygon from '../../lib/soql/polygon';
-import SoQLMultiPoint from '../../lib/soql/multipoint';
-import SoQLMultiLine from '../../lib/soql/multiline';
-import SoQLMultiPolygon from '../../lib/soql/multipolygon';
-import SoQLText from '../../lib/soql/text';
-import SoQLBoolean from '../../lib/soql/boolean';
-import SoQLNumber from '../../lib/soql/number';
-import SoQLArray from '../../lib/soql/array';
-import config from '../../lib/config';
+import SoQLPoint from '../../es6-lib/soql/point';
+import SoQLLine from '../../es6-lib/soql/line';
+import SoQLPolygon from '../../es6-lib/soql/polygon';
+import SoQLMultiPoint from '../../es6-lib/soql/multipoint';
+import SoQLMultiLine from '../../es6-lib/soql/multiline';
+import SoQLMultiPolygon from '../../es6-lib/soql/multipolygon';
+import SoQLText from '../../es6-lib/soql/text';
+import SoQLBoolean from '../../es6-lib/soql/boolean';
+import SoQLNumber from '../../es6-lib/soql/number';
+import SoQLArray from '../../es6-lib/soql/array';
+import config from '../../es6-lib/config';
 
 var conf = config();
 var expect = chai.expect;

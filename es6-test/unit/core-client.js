@@ -6,12 +6,12 @@ import should from 'should';
 import CoreService from '../services/mock-core';
 import MockZKClient from '../services/mock-zk';
 import AmqMock from '../services/mock-amq';
-import config from '../../lib/config';
-import Core from '../../lib/upstream/core';
+import config from '../../es6-lib/config';
+import Core from '../../es6-lib/upstream/core';
 import {
   Auth
 }
-from '../../lib/upstream/client';
+from '../../es6-lib/upstream/client';
 import {
   bufferJs
 }
@@ -23,7 +23,7 @@ from '../util';
 import {
   parseAMQMessage
 }
-from '../../lib/util/hacks';
+from '../../es6-lib/util/hacks';
 
 describe('core client', function() {
   var mockCore;

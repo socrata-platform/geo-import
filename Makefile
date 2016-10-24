@@ -2,12 +2,8 @@ lib: es6-lib node_modules node_modules/node-srs
 	mkdir -p lib
 	node_modules/.bin/babel es6-lib --out-dir lib
 
-test: lib
-	mkdir -p test
-	node_modules/.bin/babel es6-test --out-dir test
-	rm -f test/fixtures
-	ln -sf $(CURDIR)/es6-test/fixtures  test/fixtures
-	GEO_IMPORT_ENV=test ./node_modules/.bin/mocha test/unit test/smoke && jshint es6-lib
+test:
+	GEO_IMPORT_ENV=test ./node_modules/.bin/mocha es6-test/unit es6-test/smoke --compilers js:babel/register && jshint es6-lib
 
 appease_jenkins: lib
 	tar -zcvf lib.tar lib/

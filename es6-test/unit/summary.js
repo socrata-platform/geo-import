@@ -13,8 +13,8 @@ import {
   EventEmitter
 }
 from 'events';
-import config from '../../lib/config';
-import service from '../../lib/service';
+import config from '../../es6-lib/config';
+import service from '../../es6-lib/service';
 
 var expect = chai.expect;
 

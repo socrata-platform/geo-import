@@ -9,14 +9,14 @@ from '../fixture';
 import request from 'request';
 import CoreMock from '../services/mock-core';
 import AmqMock from '../services/mock-amq';
-import ISS from '../../lib/upstream/iss';
+import ISS from '../../es6-lib/upstream/iss';
 import MockZKClient from '../services/mock-zk';
 import {
   EventEmitter
 }
 from 'events';
-import config from '../../lib/config';
-import SpatialService from '../../lib/services/spatial';
+import config from '../../es6-lib/config';
+import SpatialService from '../../es6-lib/services/spatial';
 import qs from 'querystring';
 import {
   messageDetails

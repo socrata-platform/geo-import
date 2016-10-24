@@ -5,7 +5,7 @@ import {
   fixture
 }
 from '../fixture';
-import GeoJSON from '../../lib/decoders/geojson';
+import GeoJSON from '../../es6-lib/decoders/geojson';
 var expect = chai.expect;
 
 describe('geometry transforms', function() {

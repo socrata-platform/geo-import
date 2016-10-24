@@ -2,7 +2,7 @@ import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
 import AmqMock from '../services/mock-amq';
-import ISS from '../../lib/upstream/iss';
+import ISS from '../../es6-lib/upstream/iss';
 import {
   messageDetails
 }

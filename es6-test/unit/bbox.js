@@ -2,7 +2,7 @@ import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
 import {fixture} from '../fixture';
-import BBox from '../../lib/util/bbox';
+import BBox from '../../es6-lib/util/bbox';
 var expect = chai.expect;
 
 describe('bounding box', function() {

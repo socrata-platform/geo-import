@@ -5,7 +5,7 @@ import {
   fixture
 }
 from '../fixture';
-import Parser from '../../lib/util/parser';
+import Parser from '../../es6-lib/util/parser';
 var expect = chai.expect;
 
 describe('streaming js parser', function() {

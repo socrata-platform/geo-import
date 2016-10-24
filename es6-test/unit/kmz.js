@@ -10,8 +10,8 @@ import {
 }
 from 'events';
 
-import KMZ from '../../lib/decoders/kmz';
-import Disk from '../../lib/decoders/disk';
+import KMZ from '../../es6-lib/decoders/kmz';
+import Disk from '../../es6-lib/decoders/disk';
 import {
   NoopLogger
 }

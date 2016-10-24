@@ -1,9 +1,9 @@
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
-import Layer from '../../lib/decoders/layer';
+import Layer from '../../es6-lib/decoders/layer';
 
-import SoQLText from '../../lib/soql/text';
+import SoQLText from '../../es6-lib/soql/text';
 
 var expect = chai.expect;
 

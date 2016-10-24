@@ -13,14 +13,14 @@ import {
   EventEmitter
 }
 from 'events';
-import config from '../../lib/config';
-import service from '../../lib/service';
-import Shapefile from '../../lib/decoders/shapefile';
-import KMZ from '../../lib/decoders/kmz';
-import KML from '../../lib/decoders/kml';
-import GeoJSON from '../../lib/decoders/geojson';
-import Merger from '../../lib/decoders/merger';
-import Disk from '../../lib/decoders/disk';
+import config from '../../es6-lib/config';
+import service from '../../es6-lib/service';
+import Shapefile from '../../es6-lib/decoders/shapefile';
+import KMZ from '../../es6-lib/decoders/kmz';
+import KML from '../../es6-lib/decoders/kml';
+import GeoJSON from '../../es6-lib/decoders/geojson';
+import Merger from '../../es6-lib/decoders/merger';
+import Disk from '../../es6-lib/decoders/disk';
 import {
   Transform
 }
@@ -63,7 +63,7 @@ class SlowConsumer extends Transform {
   _transform(chunk, encoding, done) {
     setTimeout(() => {
       done(false, chunk);
-    }, 50);
+    }, 5);
   }
 }
 
@@ -227,6 +227,36 @@ describe('flow control', () => {
       });
   });
 
+
+  // it('edmonton will not overwhelm merger stream consumer', function(onDone) {
+  //   this.timeout(100000);
+  //   var count = 0;
+
+  //   var res = new EventEmitter();
+  //   var disk = new Disk(res, NoopLogger);
+
+  //   var decoder = new Shapefile(disk);
+  //   var merger = new Merger(disk, [], false, NoopLogger);
+
+  //   fixture('smoke/edmonton.zip')
+  //     .pipe(decoder)
+  //     // .pipe(merger)
+  //     .on('end', (layers) => {
+  //       console.log("layers", layers)
+  //       // layers.map((layer) => {
+  //       //   layer
+  //       //     .pipe(new SlowConsumer())
+  //       //     .pipe(es.mapSync((thing) => {
+  //       //       expect(layer._readableState.length).to.be.at.most(20000);
+  //       //       return thing;
+  //       //     }))
+  //       //     .on('end', () => {
+  //       //       res.emit('finish');
+  //       //       onDone();
+  //       //     });
+  //       // });
+  //     });
+  // });
 
   it('will stop flowing when a layer consumer is unpiped', function(onDone) {
     //for jankins

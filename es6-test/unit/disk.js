@@ -15,8 +15,8 @@
 //   EventEmitter
 // }
 // from 'events';
-// import config from '../lib/config';
-// import service from '../lib/service';
+// import config from '../es6-lib/config';
+// import service from '../es6-lib/service';
 // import fs from 'fs';
 
 // var expect = chai.expect;

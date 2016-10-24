@@ -5,7 +5,7 @@ import {
   fixture
 }
 from '../fixture';
-import KML from '../../lib/decoders/kml';
+import KML from '../../es6-lib/decoders/kml';
 import {
   ArityChecker
 }
