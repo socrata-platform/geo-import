@@ -21,6 +21,7 @@ import KML from '../../es6-lib/decoders/kml';
 import GeoJSON from '../../es6-lib/decoders/geojson';
 import Merger from '../../es6-lib/decoders/merger';
 import Disk from '../../es6-lib/decoders/disk';
+
 import {
   Transform
 }
@@ -226,37 +227,6 @@ describe('flow control', () => {
         });
       });
   });
-
-
-  // it('edmonton will not overwhelm merger stream consumer', function(onDone) {
-  //   this.timeout(100000);
-  //   var count = 0;
-
-  //   var res = new EventEmitter();
-  //   var disk = new Disk(res, NoopLogger);
-
-  //   var decoder = new Shapefile(disk);
-  //   var merger = new Merger(disk, [], false, NoopLogger);
-
-  //   fixture('smoke/edmonton.zip')
-  //     .pipe(decoder)
-  //     // .pipe(merger)
-  //     .on('end', (layers) => {
-  //       console.log("layers", layers)
-  //       // layers.map((layer) => {
-  //       //   layer
-  //       //     .pipe(new SlowConsumer())
-  //       //     .pipe(es.mapSync((thing) => {
-  //       //       expect(layer._readableState.length).to.be.at.most(20000);
-  //       //       return thing;
-  //       //     }))
-  //       //     .on('end', () => {
-  //       //       res.emit('finish');
-  //       //       onDone();
-  //       //     });
-  //       // });
-  //     });
-  // });
 
   it('will stop flowing when a layer consumer is unpiped', function(onDone) {
     //for jankins

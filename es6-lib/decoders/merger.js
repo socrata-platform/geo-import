@@ -55,17 +55,16 @@ class Merger extends Transform {
   }
 
   _getOrCreateLayer(soqlRow, disk, spec) {
-    var columns = soqlRow.columns;
-    var layer = _.find(this._layers, (layer) => layer.belongsIn(columns));
+    var layer = _.find(this._layers, (layer) => layer.belongsIn(soqlRow));
     if (!layer) {
-      layer = new Layer(columns.map((soqlValue) => {
+      layer = new Layer(soqlRow.columns.map((soqlValue) => {
         let t = types[soqlValue.ctype];
         if (!t) {
           logger.warn(`No SoQLType found for ${soqlValue.ctype}, falling back to SoQLText`);
           t = types.string;
         }
         return new t(soqlValue.rawName);
-      }), this._layers.length, disk, spec, this.log);
+      }), soqlRow.crs, this._layers.length, disk, spec, this.log);
       this._layers.push(layer);
     }
     return layer;
@@ -74,12 +73,13 @@ class Merger extends Transform {
   _transform(chunk, encoding, done) {
     if (chunk && chunk.defaultCrs) {
       this._defaultCrs = chunk.defaultCrs;
+
       return done();
     }
     var spec = this._specs[this._layers.length];
     var layer = this._getOrCreateLayer(chunk, this._disk, spec);
     try {
-      layer.write(chunk.crs, chunk.columns, this._throwaway, done);
+      layer.write(chunk.columns, this._throwaway, done);
       this._onProgress();
     } catch (e) {
       done(e);
@@ -88,8 +88,10 @@ class Merger extends Transform {
 
   _onFinish() {
     this._layers.forEach((layer) => {
-      layer.defaultCrs = this._defaultCrs;
+      layer.setDefaultCrs(this._defaultCrs);
     });
+
+
     async.each(this._layers, (l, cb) => l.close(cb), (err) => {
       if (err) return this.emit('error', err);
       this.emit('end', this.layers);

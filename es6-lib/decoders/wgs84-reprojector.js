@@ -30,6 +30,10 @@ class WGS84Reprojector extends Transform {
     return this._projectTo;
   }
 
+  get projectionString() {
+    return WGS84;
+  }
+
   get bbox() {
     return this._bbox;
   }
