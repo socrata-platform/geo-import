@@ -84,7 +84,7 @@ describe('flow control', () => {
       .pipe(new SlowConsumer())
       .pipe(es.mapSync(() => {
         //length of things that are being buffered in the decoder
-        expect(decoder._readableState.length).to.be.at.most(20);
+        expect(decoder._readableState.length).to.be.at.most(30);
         count++;
       }))
       .on('end', () => {
@@ -102,7 +102,7 @@ describe('flow control', () => {
       .pipe(decoder)
       .pipe(new SlowConsumer())
       .pipe(es.mapSync(() => {
-        expect(decoder._readableState.length).to.be.at.most(20);
+        expect(decoder._readableState.length).to.be.at.most(30);
         count++;
       }))
       .on('end', () => {
@@ -120,7 +120,7 @@ describe('flow control', () => {
       .pipe(decoder)
       .pipe(new SlowConsumer())
       .pipe(es.mapSync(() => {
-        expect(decoder._readableState.length).to.be.at.most(20);
+        expect(decoder._readableState.length).to.be.at.most(30);
         count++;
       }))
       .on('end', () => {
@@ -163,7 +163,7 @@ describe('flow control', () => {
       .pipe(decoder)
       .pipe(new SlowConsumer())
       .pipe(es.mapSync(() => {
-        expect(decoder._readableState.length).to.be.at.most(20);
+        expect(decoder._readableState.length).to.be.at.most(30);
         count++;
       }))
       .on('end', () => {
