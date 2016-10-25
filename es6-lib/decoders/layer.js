@@ -87,17 +87,19 @@ class Layer extends Duplex {
     return '__empty__';
   }
 
-  constructor(columns, position, disk, spec, logger) {
+  constructor(columns, crs, position, disk, spec, logger) {
     if (position === undefined) throw new Error("Need a layer index!");
     super();
     this._position = position;
 
     this.columns = renameColumns(columns);
     this._count = 0;
-    this._crsMap = {};
-    this._crsCache = {};
     this._wgs84Reprojector = new WGS84Reprojector(logger);
     this._spec = spec || {};
+
+    this._crs = crs && srs.parse(crs);
+    this._crsString = crs;
+
     this.log = logger;
 
     if (disk) {
@@ -110,7 +112,7 @@ class Layer extends Duplex {
   toJSON() {
     return {
       count: this.count,
-      projection: this.defaultCrs.name,
+      projection: this.crs.name,
       name: this.name,
       geometry: this.geomType,
       bbox: this.bbox.toJSON(),
@@ -140,13 +142,13 @@ class Layer extends Duplex {
   }
 
   belongsIn(soqlRow) {
-    if (soqlRow.length !== this.columns.length) {
+    if (soqlRow.columns.length !== this.columns.length) {
       return false;
     }
 
     for (var i = 0; i < this.columns.length; i++) {
       let column = this.columns[i];
-      let soqlValue = soqlRow[i];
+      let soqlValue = soqlRow.columns[i];
 
       let nameMatch = column.rawName === soqlValue.rawName;
       if (!nameMatch) return false;
@@ -155,7 +157,9 @@ class Layer extends Duplex {
       let isEmpty = (column.ctype === 'null' || soqlValue.ctype === 'null');
       if (!typeMatch && !isEmpty) return false;
     }
-    return true;
+
+
+    return soqlRow.crs === this.crsString;
   }
 
   get geomType() {
@@ -164,16 +168,19 @@ class Layer extends Duplex {
     return geom.dataTypeName;
   }
 
-  set defaultCrs(urn) {
-    this._defaultCrs = srs.parse(urn);
+  get crs() {
+    return this._crs || this._defaultCrs;
   }
 
-  get defaultCrs() {
-    return this._defaultCrs || this._wgs84Reprojector.projection;
+  get crsString() {
+    return this._crsString || this._defaultCrsString;
   }
 
-  get projections() {
-    return Object.values(this._crsMap);
+
+  setDefaultCrs(str) {
+    str = str || this._wgs84Reprojector.projectionString;
+    this._defaultCrs = srs.parse(str);
+    this._defaultCrsString = str;
   }
 
   /**
@@ -241,14 +248,11 @@ class Layer extends Duplex {
    * Write the soqlRow with a given crs to the layer.
    * This will only be called if belongsIn returned true for the soqlRow and this layer.
    * See the note above on the confusing mutate-y  bits.
-   * @param  {[type]} crs       [description]
    * @param  {[type]} soqlRow   [description]
    * @param  {[type]} throwaway [description]
    * @return {[type]}           [description]
    */
-  write(crs, soqlRow, throwaway, done) {
-    if (crs) this._crsMap[this._count] = crs;
-
+  write(soqlRow, throwaway, done) {
     this._updateColumnTypes(soqlRow);
     this._count++;
     if (throwaway) {
@@ -292,23 +296,10 @@ class Layer extends Duplex {
     return this._count;
   }
 
-  /**
-   * Returns the projection for the row at index
-   */
-  _getProjectionFor(index) {
-    if (!this._crsMap[index]) return this.defaultCrs;
-    var unparsed = this._crsMap[index];
-    if (!this._crsCache[unparsed]) {
-      this._crsCache[unparsed] = srs.parse(unparsed);
-    }
-    return this._crsCache[unparsed];
-  }
-
   _startPushing() {
     this._isPushing = true;
     var projectTo = this._projectTo;
     var writeIndex = 0;
-    var prjIndex = 0;
     var self = this;
     this.push(jsonPrologue);
     fs.createReadStream(this._outName)
@@ -319,10 +310,7 @@ class Layer extends Duplex {
             return new types[column.ctype](column.rawName, value);
           })
         );
-
-        var thing = [this._getProjectionFor(prjIndex), soqlRow];
-        prjIndex++;
-        return thing;
+        return [self.crs, soqlRow];
       }))
       .pipe(this._wgs84Reprojector)
       .on('error', (e) => this.emit('error', e))

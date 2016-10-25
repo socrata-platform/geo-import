@@ -21,7 +21,7 @@ default {
   upstreamTimeoutMs: 2 * 60 * 1000,
 
   //number of rows to buffer in object mode feature streams
-  rowBufferSize: 2,
+  rowBufferSize: 20,
 
   //maximum number of points to allow through the importer per row
   maxVerticesPerRow: 1000000,
