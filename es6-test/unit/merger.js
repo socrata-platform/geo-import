@@ -157,7 +157,7 @@ describe('merging feature streams to layers', function() {
   });
 
 
-  it('will handle homogenous points, homogenous crs', function(onDone) {
+  it('will handle homogenous points, heterogenous crs', function(onDone) {
     var [merger, response] = makeMerger();
 
     fixture('multi_crs.json')
