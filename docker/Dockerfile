@@ -1,4 +1,12 @@
-FROM socrata/runit-nodejs
+FROM socrata/base
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y install nodejs npm
+RUN npm install -g n
+RUN n 5.12.0
+RUN n use 5.12.0
+
+# LABEL must be last for proper base image discoverability
+LABEL repository.socrata/nodejs=""
 
 ENV GEO_IMPORT_ENV=prod
 ENV BABEL_DISABLE_CACHE=1
