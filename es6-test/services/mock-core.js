@@ -5,16 +5,15 @@ import _ from 'underscore';
 import es from 'event-stream';
 
 function hasHeaders(req, res) {
-  const hasHeaders = _.every(['x-app-token', 'x-socrata-host'], (key) => {
+  const present = _.every(['x-app-token', 'x-socrata-host'], (key) => {
     return !_.isUndefined(req.headers[key]) && (req.headers[key] !== 'null');
   })
-  if (!hasHeaders) {
-    console.warn("Missing", req.headers)
+  if (!present) {
     res.status(400).send(JSON.stringify({
       error: 'headers'
     }));
   }
-  return hasHeaders
+  return present
 }
 
 
@@ -89,6 +88,13 @@ class CoreMock {
     app.use('/views/:fourfour/rows', enforceUA, bodyParser.raw());
     app.use(/\/views$/, enforceUA, bodyParser.json());
     app.use(/.*columns$/, enforceUA, bodyParser.json());
+
+    app.post('/authenticate', (req, res) => {
+      this._history.push(req);
+      return res.status(200)
+        .header('set-cookie', 'monster')
+        .send('ok')
+    })
 
     app.post('/views/:uid/publication', function(req, res) {
       this._history.push(req);

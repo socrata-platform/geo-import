@@ -293,7 +293,7 @@ class SetBlobError extends UpstreamError {
 }
 class UpdateMetadataError extends UpstreamError {
   static template() {
-    return 'Failed to update the metadata on the partent dataset';
+    return 'Failed to update the metadata on the parent dataset';
   }
 }
 class UpsertError extends UpstreamError {
@@ -306,7 +306,11 @@ class CleanupError extends UpstreamError {
     return 'Encountered an error, but encountered another error rolling back';
   }
 }
-
+class AuthenticationError extends UpstreamError {
+  static template() {
+    return 'Encountered an while authenticating';
+  }
+}
 export
 default {
   ZKError,
@@ -330,5 +334,6 @@ default {
   IncompleteShapefileError,
   DecodeFiletypeError,
   ConnectionError,
-  SetBlobError
+  SetBlobError,
+  AuthenticationError
 };

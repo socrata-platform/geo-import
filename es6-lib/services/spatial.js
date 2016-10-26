@@ -5,10 +5,7 @@ from '../decoders';
 import Merger from '../decoders/merger';
 import Disk from '../decoders/disk';
 import Core from '../upstream/core';
-import {
-  Auth
-}
-from '../upstream/client';
+import Auth from '../upstream/auth';
 import async from 'async';
 import _ from 'underscore';
 import * as es from 'event-stream';
@@ -378,10 +375,6 @@ class SpatialService {
 
 
   _readShapeBlob(activity, message, onEnd) {
-    const auth = new Auth(message);
-    const core = new Core(auth, this._zk, activity.log);
-    const disk = new Disk(activity, activity.log);
-
     //;_;
     //Because node's error handling is just wtf, we need
     //to bind to error events or else an error is thrown,
@@ -393,27 +386,34 @@ class SpatialService {
       return this._onError(activity, err);
     });
 
+    const disk = new Disk(activity, activity.log);
     //If we can't get a decoder, then the user tried to import
     //an unsupported file, or set the content type incorrectly
     //on their header
-    var [decoderErr, decoder] = getDecoderForExtension(message.filename, disk);
+    const [decoderErr, decoder] = getDecoderForExtension(message.filename, disk);
     if (decoderErr) return this._onError(activity, decoderErr);
 
-    core.getBlob(activity.getBlobId(), (err, stream) => {
-      if (err) return onErr(err);
+    const auth = new Auth(message, this._zk, activity.log);
+    auth.spoof((err) => {
+      if(err) return onErr(err);
 
-      var specs = this._toLayerSpecs(message.script);
-      activity.log.info(`Create layers according to ${JSON.stringify(specs)}`);
+      const core = new Core(auth, this._zk, activity.log);
+      core.getBlob(activity.getBlobId(), (err, stream) => {
+        if (err) return onErr(err);
 
-      stream
-        .on('error', (error) => {
-          onErr(new ConnectionError(`Core: ${error.code}`));
-        })
-        .pipe(decoder)
-        .on('error', onErr)
-        .pipe(new Merger(disk, specs, false, activity.log))
-        .on('error', onErr)
-        .on('end', (layers) => onEnd(core, layers));
+        var specs = this._toLayerSpecs(message.script);
+        activity.log.info(`Create layers according to ${JSON.stringify(specs)}`);
+
+        stream
+          .on('error', (error) => {
+            onErr(new ConnectionError(`Core: ${error.code}`));
+          })
+          .pipe(decoder)
+          .on('error', onErr)
+          .pipe(new Merger(disk, specs, false, activity.log))
+          .on('error', onErr)
+          .on('end', (layers) => onEnd(core, layers));
+      });
     });
   }
 
