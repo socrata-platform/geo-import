@@ -1,4 +1,4 @@
-FROM socrata/base
+FROM socrata/runit
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y install nodejs npm
 RUN npm install -g n
