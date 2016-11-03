@@ -26,7 +26,8 @@ ADD scripts ${ROOT_DIR}/scripts
 ADD lib.tar ${ROOT_DIR}
 
 # Add geo-import specific metrics
-COPY collectd-nodejs.conf /etc/collectd/conf.d/nodejs.conf
+# This next thing is broken, but only in fedramp-prod
+# COPY collectd-nodejs.conf /etc/collectd/conf.d/nodejs.conf
 
 
 # Passing --production prevents node-srs from installing.
