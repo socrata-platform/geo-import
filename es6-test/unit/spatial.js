@@ -311,9 +311,12 @@ describe('spatial service', function() {
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/id/qs32-qpt7.json'],
           ['GET', '/views/qs32-qpt7'],
-          ['PUT', '/views/qs32-qpt7'],
+          // blob update
           ['PUT', '/views/qs32-qpt7?method=setBlob&blobId=simple_points.kml&blobName=simple_points.kml'],
-          ['POST', '/views/qs32-qpt7/publication']
+          // publication
+          ['POST', '/views/qs32-qpt7/publication'],
+          // parent view metadata update
+          ['PUT', '/views/qs32-qpt7'],
         ]);
       }
     ], onDone));
@@ -347,9 +350,12 @@ describe('spatial service', function() {
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/id/qs32-qpt7.json'],
           ['GET', '/views/qs32-qpt7'],
-          ['PUT', '/views/qs32-qpt7'],
+          // blob update
           ['PUT', '/views/qs32-qpt7?method=setBlob&blobId=simple_points.kmz&blobName=simple_points.kmz'],
-          ['POST', '/views/qs32-qpt7/publication']
+          // publication
+          ['POST', '/views/qs32-qpt7/publication'],
+          // update the parent metadata
+          ['PUT', '/views/qs32-qpt7'],
         ]);
       }
     ], onDone));
@@ -619,14 +625,9 @@ describe('spatial service', function() {
           ["POST", "/views/qs32-qpt8/columns"],
           ["POST", "/id/qs32-qpt8.json"],
           ["GET", "/views/ffff-ffff"],
-          ["PUT", "/views/ffff-ffff"],
           ["PUT", "/views/ffff-ffff?method=setBlob&blobId=simple_points.json&blobName=simple_points.json"],
           //delete the working copy
-          ["DELETE", "/views/qs32-qpt8"],
-          //update the parent metadata to what it was
-          ["PUT", "/views/ffff-ffff"],
-          //update the blob to what it was
-          ["PUT", "/views/ffff-ffff?method=setBlob&blobId=qs32-blob-id&blobName=foo.zip"]
+          ["DELETE", "/views/qs32-qpt8"]
         ]);
       }
     ], onDone));
