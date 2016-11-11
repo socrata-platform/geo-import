@@ -287,70 +287,35 @@ class SpatialService {
 
         const layers = upsertResponses.map(([layer, _]) => layer);
         activity.log.info(`Successfully upserted ${layers.map((l) => l.uid)}`);
-        this._updateParentMetadata(activity, core, layers);
+        this._updateBlob(activity, core, layers);
       });
     });
   }
 
-  _updateParentMetadata(activity, core, layers) {
-    const bbox = this._expandBbox(layers);
+
+  _updateBlob(activity, core, layers) {
     core.getView(activity.getParentUid(), (err, view) => {
-      if (err) {
-        return this._onError(activity, err);
-      }
+      if (err) return this._onError(activity, err);
 
-      const ogMetadata = view.metadata;
-      const ogPrivateMetadata = view.privateMetadata;
-
-      activity.appendRollback("UpdateMetadata", (cb) => {
-        core.updateMetadata(activity.getParentUid(), ogMetadata, ogPrivateMetadata, cb);
-      });
-
-      const metadata = _.extend({}, ogMetadata, {
-        geo: {
-          owsUrl: `/api/geospatial/${activity.getParentUid()}`,
-          layers: layers.map(l => l.uid).join(','),
-          isNbe: true,
-          bboxCrs: 'EPSG:4326',
-          namespace: `_${activity.getParentUid()}`,
-          featureIdAttribute: '_SocrataID',
-          bbox: bbox.toString()
-        }
-      });
-
-      const privateMetadata = _.extend({}, ogPrivateMetadata, {
-        childViews: layers.map(l => l.uid)
-      });
-
-      core.updateMetadata(activity.getParentUid(), metadata, privateMetadata, (err, resp) => {
+      activity.log.info(`Updating blob for ${activity.getParentUid()}`);
+      core.setBlob(activity.getParentUid(), activity.getBlobId(), activity.getBlobName(), (err, response) => {
         if (err) {
+          activity.log.error(`Failed to set blob ${err.toString()}`);
           return this._onError(activity, err);
         }
 
-        activity.log.info(`Updated metadata for ${activity.getParentUid()} : ${JSON.stringify(resp)}`);
-        this._updateBlob(activity, core, view, layers);
+        // if the blob mutation has succeeded, ad a rollback step so we
+        // can undo if downstream things fail
+        activity.appendRollback("SetBlob", (cb) => {
+          core.setBlob(activity.getParentUid(), view.blobId, view.blobFilename, cb);
+        });
+
+        this._publishLayers(activity, core, layers, view);
       });
     });
   }
 
-  _updateBlob(activity, core, ogView, layers) {
-    activity.appendRollback("SetBlob", (cb) => {
-      core.setBlob(activity.getParentUid(), ogView.blobId, ogView.blobFilename, cb);
-    });
-
-    activity.log.info(`Updating blob for ${activity.getParentUid()}`);
-
-    core.setBlob(activity.getParentUid(), activity.getBlobId(), activity.getBlobName(), (err, response) => {
-      if (err) {
-        activity.log.error(`Failed to set blob ${err.toString()}`);
-        return this._onError(activity, err);
-      }
-
-      this._publishLayers(activity, core, layers);
-    });
-  }
-
-  _publishLayers(activity, core, layers) {
+  _publishLayers(activity, core, layers, view) {
     return async.mapLimit(
       layers,
       MAX_PARALLEL,
@@ -365,12 +330,51 @@ class SpatialService {
           layer.uid = response.id;
           return layer;
         });
-        const totalRows = totalLayerRows(layers);
-        activity.onSuccess([], totalRows);
-        return this._endProgress();
+
+        this._updateParentMetadata(activity, core, publishedLayers, view);
       }
     );
   }
+
+  _updateParentMetadata(activity, core, layers, view) {
+    const bbox = this._expandBbox(layers);
+
+    const ogMetadata = view.metadata;
+    const ogPrivateMetadata = view.privateMetadata;
+
+    activity.appendRollback("UpdateMetadata", (cb) => {
+      core.updateMetadata(activity.getParentUid(), ogMetadata, ogPrivateMetadata, cb);
+    });
+
+    const metadata = _.extend({}, ogMetadata, {
+      geo: {
+        owsUrl: `/api/geospatial/${activity.getParentUid()}`,
+        layers: layers.map(l => l.uid).join(','),
+        isNbe: true,
+        bboxCrs: 'EPSG:4326',
+        namespace: `_${activity.getParentUid()}`,
+        featureIdAttribute: '_SocrataID',
+        bbox: bbox.toString()
+      }
+    });
+
+    const privateMetadata = _.extend({}, ogPrivateMetadata, {
+      childViews: layers.map(l => l.uid)
+    });
+
+    core.updateMetadata(activity.getParentUid(), metadata, privateMetadata, (err, resp) => {
+      if (err) {
+        return this._onError(activity, err);
+      }
+
+      activity.log.info(`Updated metadata for ${activity.getParentUid()} : ${JSON.stringify(resp)}`);
+
+      const totalRows = totalLayerRows(layers);
+      activity.onSuccess([], totalRows);
+      return this._endProgress();
+    });
+  }
+
 
 
   _readShapeBlob(activity, message, onEnd) {
