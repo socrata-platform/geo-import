@@ -250,12 +250,12 @@ class SpatialService {
         var upsertRequest = startUpsert();
         layer
           .on('error', fail)
-          .pipe(es.map(function(datum, callback) {
-            callback(null, datum);
+          .pipe(es.mapSync(function(datum) {
             totalRowsUpserted++;
             if ((totalRowsUpserted % conf.emitProgressEveryRows) === 0) {
               sendProgress();
             }
+            return datum;
           }))
           .pipe(upsertRequest)
           .on('response', core.bufferResponse(
