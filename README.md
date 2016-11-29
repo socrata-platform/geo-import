@@ -77,7 +77,7 @@ Imports and replaces are passed on AMQ from core to geo-import
 | ------ | ---------- | ------- | ------------ |  ----------------------- | -------- |
 | `GET`  | `/version` | `none`  | `anything `  | get the service version  | version as json |
 | `POST` | `/summary` | `shapeblob` | must correspond to payload | create a summary of the blob | summary as json |
-
+| `GET`  | `/heapdump`| `none` | `anything` | get a heap dump of the service | a heap dump to load into the chrome profiler |
 ## tasks
 
 ### translations
