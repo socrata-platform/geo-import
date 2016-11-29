@@ -14,7 +14,10 @@ into soda-fountain
 ## setup
 
 ### use the correct node version
-You'll either need system wide node >= 3.3 or use something like [nvm](https://github.com/creationix/nvm) and invoke `nvm install 5.1` and then `nvm use 5.1` when you run geo-import.
+
+Ensure that you have the correct version of Node.js, specified at `.node-version`, installed.
+
+Use `n` or `nvm` to make this easy. `bin/start.sh` will automatically do this step for you.
 
 ### install dependencies
 
