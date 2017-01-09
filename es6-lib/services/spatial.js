@@ -77,7 +77,7 @@ class SpatialService {
     };
 
     if (layer.uid === Layer.EMPTY) {
-      return core.create(activity.view, layer, (err, resp) => {
+      return core.create(activity.getParentUid(), layer, (err, resp) => {
         if(!err) addRollbackToHistory(resp);
         cb(err, [resp, false]);
       });
@@ -108,7 +108,7 @@ class SpatialService {
   }
 
   _createLayers(activity, core, layers) {
-    async.mapLimit(layers, MAX_PARALLEL, _.partial(core.create, activity.view).bind(core), (err, datasetResponses) => {
+    async.mapLimit(layers, MAX_PARALLEL, _.partial(core.create, activity.getParentUid()).bind(core), (err, datasetResponses) => {
       activity.appendRollback("CreateLayers", (onRollback) => {
         this._destroyLayers(activity, layers, core, onRollback);
       });
