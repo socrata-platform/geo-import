@@ -91,7 +91,9 @@ describe('spatial service', function() {
           displayType: 'geoRows',
           privateMetadata: {
             isNbe: true,
-            parentUid: 'ffff-ffff'
+            geo: {
+              parentUid: 'ffff-ffff'
+            }
           }
         });
 
@@ -385,7 +387,9 @@ describe('spatial service', function() {
           displayType: 'geoRows',
           privateMetadata: {
             isNbe: true,
-            parentUid: 'ffff-ffff'
+            geo: {
+              parentUid: 'ffff-ffff'
+            }
           }
         });
 

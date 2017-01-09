@@ -119,7 +119,9 @@ class Core extends GenClient {
           displayType: 'geoRows',
           privateMetadata: {
             isNbe: true,
-            parentUid
+            geo: {
+              parentUid
+            }
           }
         },
         json: true
