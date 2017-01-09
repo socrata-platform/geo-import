@@ -108,7 +108,7 @@ class Core extends GenClient {
     }
     return this._url((err, url) => {
       if (err) return onComplete(err);
-      this.info('CreateDataset request to core');
+      this.info(`CreateDataset request to core to make child view of ${parentUid}`);
 
       request.post({
         url: `${url}/views?nbe=true`,

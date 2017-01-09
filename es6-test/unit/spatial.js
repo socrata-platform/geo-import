@@ -90,7 +90,8 @@ describe('spatial service', function() {
           name: 'A layer named foo',
           displayType: 'geoRows',
           privateMetadata: {
-            isNbe: true
+            isNbe: true,
+            parentUid: 'ffff-ffff'
           }
         });
 
@@ -383,7 +384,8 @@ describe('spatial service', function() {
           name: 'A layer named foo',
           displayType: 'geoRows',
           privateMetadata: {
-            isNbe: true
+            isNbe: true,
+            parentUid: 'ffff-ffff'
           }
         });
 
