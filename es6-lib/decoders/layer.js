@@ -12,7 +12,7 @@ import {
   EventEmitter
 }
 from 'events';
-import srs from 'node-srs';
+import srs from 'srs';
 import BBox from '../util/bbox';
 import {
   Duplex

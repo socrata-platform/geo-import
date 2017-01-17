@@ -6,7 +6,7 @@ import {
 }
 from '../fixture';
 import Shapefile from '../../es6-lib/decoders/shapefile';
-import srs from 'node-srs';
+import srs from 'srs';
 import Disk from '../../es6-lib/decoders/disk';
 import {
   EventEmitter

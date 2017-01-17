@@ -8,7 +8,7 @@ import {
   types
 }
 from '../soql/mapper';
-import srs from 'node-srs';
+import srs from 'srs';
 import BBox from '../util/bbox';
 import {InvalidArityError} from '../errors';
 
