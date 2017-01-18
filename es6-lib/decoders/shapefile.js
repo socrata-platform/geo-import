@@ -23,7 +23,7 @@ import concat from 'concat-stream';
 import yauzl from 'yauzl';
 import path from 'path';
 import fs from 'fs';
-import srs from 'node-srs';
+import srs from 'srs';
 import uuid from 'uuid';
 import {
   EventEmitter

@@ -30,7 +30,8 @@
     "ofe": "0.5.0",
     "gc-stats": "1.0.0",
     "deepmerge": "0.2.10",
-    "js-yaml": "3.6.1"
+    "js-yaml": "3.6.1",
+    "srs": "1.2.0"
   },
   "devDependencies": {
     "chai": "*",

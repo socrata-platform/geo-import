@@ -110,6 +110,47 @@ describe('spatial service', function() {
     mockAmq.importFixture('simple_points.json', names);
   });
 
+  it('can deal with empty coordinate lists', function(onDone) {
+    const names = ['A layer named foo'];
+    mockAmq.on('/queue/eurybates.import-status-events', sequencer([
+      (startMessage) => {
+        startMessage = JSON.parse(startMessage);
+
+        expect(messageDetails(startMessage)).to.eql({
+          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
+          eventType: 'row-progress',
+          info: {
+            rowsComplete: 0,
+            totalRows: 0
+          },
+          status: 'InProgress',
+          service: 'Imports2'
+        });
+      }, (finishMessage) => {
+        finishMessage = JSON.parse(finishMessage);
+
+        var createRequest = _.first(mockCore.history);
+        expect(createRequest.body).to.eql({
+          name: 'A layer named foo',
+          displayType: 'geoRows',
+          privateMetadata: {
+            isNbe: true,
+            geo: {
+              parentUid: 'ffff-ffff'
+            }
+          }
+        });
+
+        const [_createView, geomCol, strCol] = mockCore.history.map(r => r.body);
+        expect(geomCol.dataTypeName).to.eql('line');
+        expect(strCol.dataTypeName).to.eql('text');
+
+      }
+    ], onDone));
+    mockAmq.importFixture('empty_coords.json', names);
+  });
+
+
   it('can put a Replace geojson message and it will make a replace dataset request to core', function(onDone) {
     const names = [{
       name: 'A new layer name',

@@ -1,8 +1,8 @@
-lib: es6-lib node_modules node_modules/node-srs
+lib: es6-lib node_modules
 	mkdir -p lib
 	node_modules/.bin/babel es6-lib --out-dir lib
 
-test:
+test: lib
 	GEO_IMPORT_ENV=test ./node_modules/.bin/mocha es6-test/unit es6-test/smoke --compilers js:babel/register && jshint es6-lib
 
 appease_jenkins: lib
@@ -15,12 +15,6 @@ translations: lib
 node_modules:
 	npm set progress=false # this makes npm twice as fast ;_;
 	npm i
-
-node_modules/node-srs:
-	mkdir -p node_modules/node-srs
-	git clone https://github.com/rozap/node-srs node_modules/node-srs
-	cd node_modules/node-srs && CC=gcc CXX=g++ npm install && cd ../..
-	cd ../..
 
 clean:
 	rm -rf lib

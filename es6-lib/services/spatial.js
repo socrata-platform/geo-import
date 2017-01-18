@@ -427,6 +427,15 @@ class SpatialService {
   }
 
   _onError(activity, reason) {
+    // Hack because everything about error handling/propagation in js
+    // is a dumpsterfire made up of smaller dumpsterfires
+    const getStackTrace = () => {
+        let stack = new Error().stack || '';
+        stack = stack.split('\n').map((line) => line.trim());
+        return stack.splice(stack[0] == 'Error' ? 2 : 1).join('\n');
+    };
+    activity.log.error(getStackTrace());
+
     activity.rollback(() => {
       activity.onError(reason);
       this._endProgress();

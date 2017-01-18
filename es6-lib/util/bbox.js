@@ -37,7 +37,11 @@ class BBox {
     return this._coords.miny;
   }
 
-  _isValid([x, y]) {
+  _isValid(coord) {
+    if (!coord) return false;
+    if (coord.length !== 2) return false;
+
+    const [x, y] = coord;
     var validMinX = x >= MIN_LONGITUDE;
     var validMaxX = x <= MAX_LONGITUDE;
 
