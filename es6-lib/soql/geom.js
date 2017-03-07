@@ -31,7 +31,6 @@ class SoQLGeom extends SoQL {
   }
 
   get value() {
-    var n = this.ctype;
     return {
       'type': this._type,
       coordinates: this._value
