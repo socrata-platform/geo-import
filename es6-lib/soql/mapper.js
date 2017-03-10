@@ -4,7 +4,7 @@ import _ from 'underscore';
 var SoQLNull = require('./null');
 
 var soqls = [
-  nullIfNoCoords(require('./point')),
+  require('./point'),
   nullIfNoCoords(require('./line')),
   nullIfNoCoords(require('./polygon')),
   require('./multipoint'),

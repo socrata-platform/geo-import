@@ -44,7 +44,7 @@ describe('merger', () => {
   });
 
 
-  it('broken geojson', function(onDone) {
+  it('should be able to give a useful error for broken geojson', function(onDone) {
 
     const disk = new Disk(res, NoopLogger);
     const decoder = new GeoJSON(disk);
@@ -58,14 +58,18 @@ describe('merger', () => {
 
         layer
           .on('error', (e) => {
-            expect(e.toJSON()).to.eql({
-              eventType: 'invalid-arity-error',
-              info: {
-                english: 'One of the points in the following row did not have 2 coordinates [{"type":"Point","coordinates":{}},"City Feature","Common Name","Address","Latitude","Location","Icon","Website","Benefit"]',
-                row: '[{"type":"Point","coordinates":{}},"City Feature","Common Name","Address","Latitude","Location","Icon","Website","Benefit"]'
-              }
-            });
-            onDone();
+            try {
+              expect(e.toJSON()).to.eql({
+                eventType: 'invalid-arity-error',
+                info: {
+                  english: 'One of the points in the following row did not have 2 coordinates [{"type":"Point","coordinates":[]},"City Feature","Common Name","Address","Latitude","Location","Icon","Website","Benefit"]',
+                  row: '[{"type":"Point","coordinates":[]},"City Feature","Common Name","Address","Latitude","Location","Icon","Website","Benefit"]'
+                }
+              });
+              onDone();
+            } catch (e) {
+              onDone(e);
+            }
           })
           .pipe(new DevNull());
       });
