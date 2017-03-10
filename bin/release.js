@@ -90,7 +90,9 @@ function doRelease() {
           throw pErr;
         }
 
-        if (pResult.doPush.toLowerCase() === 'y') {
+        var doPush = pResult.doPush.toLowerCase() || 'y';
+
+        if (doPush === 'y') {
           console.log('pushing changes...');
           childProcess.execSync('git push', {stdio: 'inherit'});
           childProcess.execSync('git push --tags', {stdio: 'inherit'});
