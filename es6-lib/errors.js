@@ -258,7 +258,7 @@ class UpstreamError extends ImportError {
 
 class ConnectionError extends IOError {
   static template() {
-    return 'Failed to connect to that service{message}';
+    return 'Failed to connect to that service {reason}';
   }
 }
 
