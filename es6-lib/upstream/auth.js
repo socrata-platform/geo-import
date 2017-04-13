@@ -64,7 +64,7 @@ class Auth extends CoreClient {
         },
         json: true
       }, (err, response, {email}) => {
-        if(err)
+        if(err) return onComplete(err);
         this.log.info(`Authenticating as ${email} using ${username}`);
 
         request({

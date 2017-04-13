@@ -308,7 +308,7 @@ class CleanupError extends UpstreamError {
 }
 class AuthenticationError extends UpstreamError {
   static template() {
-    return 'Encountered an while authenticating';
+    return 'Encountered an error while authenticating';
   }
 }
 export
