@@ -8,7 +8,9 @@ function launderName(name) {
   var isNumber = !_.isNaN(parseInt(name[0]));
 
   var l = name;
-  name = changeCase.snakeCase(name);
+  if (!changeCase.isLowerCase(name)) {
+    name = changeCase.snakeCase(name);
+  }
   if (isNumber) {
     name = '_' + name;
   }
@@ -47,7 +49,7 @@ class SoQL {
 
   toJSON() {
     return {
-      fieldName: this.name,
+      fieldName: launderName(this.name),
       name: this.rawName,
       dataTypeName: this.dataTypeName
     };
