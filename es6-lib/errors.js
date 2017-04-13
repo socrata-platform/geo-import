@@ -236,6 +236,12 @@ class UpstreamError extends ImportError {
     return 502;
   }
 
+  params() {
+    return {
+      message: this.upstream().response.message? `: ${this.upstream().response.message}` : ''
+    }
+  }
+
   toJSON() {
     var js = super.toJSON();
     js.info.upstream = this.upstream();
@@ -252,58 +258,58 @@ class UpstreamError extends ImportError {
 
 class ConnectionError extends IOError {
   static template() {
-    return 'Failed to connect to that service: {reason}';
+    return 'Failed to connect to that service {reason}';
   }
 }
 
 class CreateDatasetError extends UpstreamError {
   static template() {
-    return 'Failed to create a dataset';
+    return 'Failed to create a dataset{message}';
   }
 }
 class CreateWorkingCopyError extends UpstreamError {
   static template() {
-    return 'Failed to create a working copy';
+    return 'Failed to create a working copy{message}';
   }
 }
 class PublicationError extends UpstreamError {
   static template() {
-    return 'Failed to publish that dataset';
+    return 'Failed to publish that dataset{message}';
   }
 }
 class CreateColumnError extends UpstreamError {
   static template() {
-    return 'Failed to create a dataset';
+    return 'Failed to create a dataset{message}';
   }
 }
 class GetColumnError extends UpstreamError {
   static template() {
-    return 'Failed to get the columns of that dataset';
+    return 'Failed to get the columns of that dataset{message}';
   }
 }
 class DeleteColumnError extends UpstreamError {
   static template() {
-    return 'Failed to delete a column of that dataset';
+    return 'Failed to delete a column of that dataset{message}';
   }
 }
 class SetBlobError extends UpstreamError {
   static template() {
-    return 'Failed to set the file data attribute of that dataset';
+    return 'Failed to set the file data attribute of that dataset{message}';
   }
 }
 class UpdateMetadataError extends UpstreamError {
   static template() {
-    return 'Failed to update the metadata on the partent dataset';
+    return 'Failed to update the metadata on the partent dataset{message}';
   }
 }
 class UpsertError extends UpstreamError {
   static template() {
-    return 'Failed to upsert the dataset';
+    return 'Failed to upsert the dataset{message}';
   }
 }
 class CleanupError extends UpstreamError {
   static template() {
-    return 'Encountered an error, but encountered another error rolling back';
+    return 'Encountered an error, but encountered another error rolling back{message}';
   }
 }
 
