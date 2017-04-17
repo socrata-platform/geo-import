@@ -185,8 +185,8 @@ describe('shapefile decoder', function() {
   it('can turn simple lines to SoQLLine', function(onDone) {
     var expectedValues = [
       [{
-          "type": "LineString",
-          "coordinates": [
+          "type": "MultiLineString",
+          "coordinates": [[
             [
               100.0,
               0.0
@@ -195,13 +195,13 @@ describe('shapefile decoder', function() {
               101.0,
               1.0
             ]
-          ]
+          ]]
         },
         "first value"
       ],
       [{
-          "type": "LineString",
-          "coordinates": [
+          "type": "MultiLineString",
+          "coordinates": [[
             [
               101.0,
               0.0
@@ -210,7 +210,7 @@ describe('shapefile decoder', function() {
               101.0,
               1.0
             ]
-          ]
+          ]]
         },
         "second value"
       ]
@@ -223,7 +223,7 @@ describe('shapefile decoder', function() {
       .pipe(es.mapSync(function(row) {
         let columns = row.columns;
         expect(columns.map((c) => c.constructor.name)).to.eql([
-          'SoQLLine',
+          'SoQLMultiLine',
           'SoQLText'
         ]);
         expect(columns.map((c) => c.value)).to.eql(expectedValues[count]);
