@@ -35,4 +35,9 @@ describe('layer', function() {
     expect(t.name).to.equal('_1_foo');
   });
 
+  it.only('can launder multiple times', function() {
+    var t = new SoQLText('_1_foo', 'some text')
+    expect(t.name).to.equal('_1_foo');
+  });
+
 });
