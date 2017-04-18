@@ -136,6 +136,13 @@ class Shapefile extends Duplex {
         record.geometry.coordinates = [record.geometry.coordinates];
       }
     }
+    if (record.geometry.type === 'LineString') {
+      record.geometry.type = 'MultiLineString';
+      if (record.geometry.coordinates.length) {
+        record.geometry.coordinates = [record.geometry.coordinates];
+      }
+    }
+
 
     if (!this.push(geoJsToSoQL(record, projection))) {
       //our reader has gone away, this kills the stream.

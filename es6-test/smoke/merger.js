@@ -44,6 +44,8 @@ describe('merger', () => {
   });
 
 
+
+
   it('should be able to give a useful error for broken geojson', function(onDone) {
 
     const disk = new Disk(res, NoopLogger);
@@ -101,7 +103,7 @@ describe('merger', () => {
           expect(layer.columns.map(c => c.toJSON())).to.eql([{
             fieldName: 'the_geom',
             name: 'the_geom',
-            dataTypeName: 'line'
+            dataTypeName: 'multiline'
           }, {
             fieldName: 'facility',
             name: 'FACILITY',
@@ -167,6 +169,4 @@ describe('merger', () => {
         });
       });
   });
-
-
 });
