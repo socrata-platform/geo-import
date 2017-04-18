@@ -41,6 +41,12 @@ default {
   //sent becuase there's no callback on them to indicate completion
   shutdownDrainMs: 5000,
 
+  soda: {
+    appToken: 'nope',
+    username: 'nope',
+    password: 'nope'
+  },
+
   log: {
     level: 'info',
     name: 'geo-import'

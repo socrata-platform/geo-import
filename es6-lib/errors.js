@@ -312,7 +312,11 @@ class CleanupError extends UpstreamError {
     return 'Encountered an error, but encountered another error rolling back{message}';
   }
 }
-
+class AuthenticationError extends UpstreamError {
+  static template() {
+    return 'Encountered an error while authenticating';
+  }
+}
 export
 default {
   ZKError,
@@ -336,5 +340,6 @@ default {
   IncompleteShapefileError,
   DecodeFiletypeError,
   ConnectionError,
-  SetBlobError
+  SetBlobError,
+  AuthenticationError
 };

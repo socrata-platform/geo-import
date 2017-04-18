@@ -8,10 +8,7 @@ import MockZKClient from '../services/mock-zk';
 import AmqMock from '../services/mock-amq';
 import config from '../../es6-lib/config';
 import Core from '../../es6-lib/upstream/core';
-import {
-  Auth
-}
-from '../../es6-lib/upstream/client';
+import Auth from '../../es6-lib/upstream/auth';
 import {
   bufferJs
 }
@@ -66,7 +63,7 @@ describe('core client', function() {
       'test-cookie',
       'test-reqid'
     )
-    const auth = new Auth(parseAMQMessage(message));
+    const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     const core = new Core(auth, mockZk, NoopLogger);
 
     core.getBlob('simple_points.json', (err, res) => {
@@ -110,17 +107,19 @@ describe('core client', function() {
     });
   });
 
-
   it('passes headers through to core', function(onDone) {
     const message = mockAmq.messageFor(
+      'replace',
       'four-four',
-      'simple_points.json', ['foo'],
+      'simple_points.json',
+      ['foo'],
       'test-host',
       null,
       'test-cookie',
       'test-reqid'
     )
-    const auth = new Auth(parseAMQMessage(message));
+
+    const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
     core.create('ffff-ffff', 'my_layer', (err, res) => {
@@ -132,6 +131,7 @@ describe('core client', function() {
 
   it("can make a create request to core", function(onDone) {
     const message = mockAmq.messageFor(
+      'replace',
       'four-four',
       'simple_points.json', ['foo'],
       'test-host',
@@ -139,7 +139,7 @@ describe('core client', function() {
       'test-cookie',
       'test-reqid'
     )
-    const auth = new Auth(parseAMQMessage(message));
+    const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
     core.create('pare-ntid', 'my_layer', (err, res) => {
@@ -157,7 +157,7 @@ describe('core client', function() {
       'test-cookie',
       'test-reqid'
     )
-    const auth = new Auth(parseAMQMessage(message));
+    const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
     core.replace('my_layer', (err, res) => {
@@ -176,7 +176,7 @@ describe('core client', function() {
       'test-cookie',
       'test-reqid'
     )
-    const auth = new Auth(parseAMQMessage(message));
+    const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
     const metadata = {

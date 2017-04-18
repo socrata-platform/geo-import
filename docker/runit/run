@@ -4,6 +4,15 @@ set -ev
 unset HTTP_PROXY
 unset http_proxy
 
+
+if [ -r /dev/shm/geo_import_amq.secrets ]; then
+  echo "Sourcing secrets to environment."
+  . /dev/shm/geo_import_amq.secrets
+else
+  echo "No secrets found in /dev/shm/geo_import_amq.secrets."
+fi
+
+
 exec su socrata -c 'node --max_old_space_size=1024 ${ROOT_DIR}/lib/index.js'
 RES=$?
 

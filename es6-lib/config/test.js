@@ -10,6 +10,13 @@ default {
     level: 'critical',
     name: 'geo-import'
   },
+
+  soda: {
+    appToken: 'test-app-token',
+    username: 'test-admin@test.com',
+    password: 'test-pass'
+  },
+
   amq: {
     host: 'stomp://localhost:61613,stomp://localhost:61613'
   }

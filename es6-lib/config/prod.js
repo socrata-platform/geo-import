@@ -2,6 +2,7 @@ var zkEnsemble;
 const envZk = process.env.ZOOKEEPER_ENSEMBLE;
 const amqUrl = process.env.AMQ_URL;
 
+
 try {
   zkEnsemble = JSON.parse(envZk);
 } catch (e) {
@@ -16,6 +17,10 @@ export default {
   log: {
     level: 'debug',
     name: 'geo-import'
+  },
+  soda: {
+    username: process.env.SOCRATA_USER,
+    password: process.env.SOCRATA_PASSWORD
   },
   heapDumpOut: '/app',
   amq: {
