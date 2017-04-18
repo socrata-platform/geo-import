@@ -8,7 +8,7 @@ function launderName(name) {
   var isNumber = !_.isNaN(parseInt(name[0]));
 
   var l = name;
-  if (!changeCase.isLowerCase(name)) {
+  if (!changeCase.isLowerCase(name) || (name.indexOf(' ') !== -1)) {
     name = changeCase.snakeCase(name);
   }
   if (isNumber) {

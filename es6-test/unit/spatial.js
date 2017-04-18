@@ -85,7 +85,7 @@ describe('spatial service', function() {
       }, (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
-        var createRequest = _.first(mockCore.history);
+        var createRequest = mockCore.history[1];
         expect(createRequest.body).to.eql({
           name: 'A layer named foo',
           displayType: 'geoRows',
@@ -97,7 +97,7 @@ describe('spatial service', function() {
           }
         });
 
-        const [geomCol, strCol, numCol, floatCol, boolCol] = mockCore.history.slice(1, 6).map(r => r.body);
+        const [geomCol, strCol, numCol, floatCol, boolCol] = mockCore.history.slice(2, 7).map(r => r.body);
 
         expect(geomCol.dataTypeName).to.eql('point');
         expect(strCol.dataTypeName).to.eql('text');
@@ -129,7 +129,7 @@ describe('spatial service', function() {
       }, (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
-        var createRequest = _.first(mockCore.history);
+        var createRequest = mockCore.history[1];
         expect(createRequest.body).to.eql({
           name: 'A layer named foo',
           displayType: 'geoRows',
@@ -141,7 +141,7 @@ describe('spatial service', function() {
           }
         });
 
-        const [_createView, geomCol, strCol] = mockCore.history.map(r => r.body);
+        const [_createView, geomCol, strCol] = mockCore.history.slice(1).map(r => r.body);
         expect(geomCol.dataTypeName).to.eql('line');
         expect(strCol.dataTypeName).to.eql('text');
 
@@ -175,7 +175,7 @@ describe('spatial service', function() {
       }, (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
-        var [replaceRequest, getColReq, delColReq0, delColReq1, geom, aString, aNum, aFloat, aBool] = mockCore.history;
+        var [_auth, replaceRequest, getColReq, delColReq0, delColReq1, geom, aString, aNum, aFloat, aBool] = mockCore.history;
         expect(replaceRequest.url).to.equal(
           '/views/qs32-qpt7/publication?method=copySchema'
         );
@@ -251,7 +251,7 @@ describe('spatial service', function() {
       }, (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
-        var [createRequest, geom, aString, aNum, aFloat, aBool] = mockCore.history;
+        var [_auth, createRequest, geom, aString, aNum, aFloat, aBool] = mockCore.history;
         expect(createRequest.url).to.equal(
           '/views?nbe=true'
         );
@@ -316,7 +316,7 @@ describe('spatial service', function() {
         });
       }, (_) => {
 
-        var [replaceRequest, createRequest] = mockCore.history;
+        var [_auth, replaceRequest, createRequest] = mockCore.history;
 
         expect(replaceRequest.url).to.equal(
           '/views/qs32-qpt7/publication?method=copySchema'
@@ -347,6 +347,7 @@ describe('spatial service', function() {
         const trace = mockCore.history.map(r => [r.method, r.url]);
 
         expect(trace).to.eql([
+          ["POST", "/authenticate"],
           ['POST', '/views?nbe=true'],
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/views/qs32-qpt7/columns'],
@@ -386,6 +387,7 @@ describe('spatial service', function() {
         const trace = mockCore.history.map(r => [r.method, r.url]);
 
         expect(trace).to.eql([
+          ["POST", "/authenticate"],
           ['POST', '/views?nbe=true'],
           ['POST', '/views/qs32-qpt7/columns'],
           ['POST', '/views/qs32-qpt7/columns'],
@@ -422,7 +424,7 @@ describe('spatial service', function() {
           service: 'Imports2'
         });
       }, (finishMessage) => {
-        var createRequest = _.first(mockCore.history);
+        var createRequest = mockCore.history[1];
         expect(createRequest.body).to.eql({
           name: 'A layer named foo',
           displayType: 'geoRows',
@@ -434,7 +436,7 @@ describe('spatial service', function() {
           }
         });
 
-        const [geom, aString, aNum, aFloat, aBool] = mockCore.history.slice(1, 6);
+        const [geom, aString, aNum, aFloat, aBool] = mockCore.history.slice(2, 7);
 
         expect(geom.body).to.eql({
           fieldName: "the_geom",
@@ -476,7 +478,7 @@ describe('spatial service', function() {
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
       (startMessage) => {}, (finishMessage) => {
-        var [upsert] = mockCore.history.slice(6);
+        var [upsert] = mockCore.history.slice(7);
 
         //check the request body that was actuall sent to core
         expect(JSON.parse(upsert.bufferedRows)).to.eql(
@@ -515,7 +517,7 @@ describe('spatial service', function() {
         expect(finishMessage.details.status).to.eql('Success');
 
         //get the 2 upserts, which will be requests 6 and 7
-        const [upsertPoints, upsertLines] = mockCore.history.slice(6, 8).map(r => {
+        const [upsertPoints, upsertLines] = mockCore.history.slice(7, 9).map(r => {
           return JSON.parse(r.bufferedRows);
         });
 
@@ -533,19 +535,6 @@ describe('spatial service', function() {
       (startMessage) => {}, (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
-        //TODO: hopefully we can plumb better errors into this ISS event?
-        expect(finishMessage.details.status).to.eql('Failure');
-      }
-    ], onDone));
-    mockAmq.importFixture('simple_points.json', []);
-  });
-
-  it('will emit a failure to ISS when core throws an error', function(onDone) {
-    mockCore.close();
-
-    mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {}, (finishMessage) => {
-        finishMessage = JSON.parse(finishMessage);
         //TODO: hopefully we can plumb better errors into this ISS event?
         expect(finishMessage.details.status).to.eql('Failure');
       }
@@ -583,6 +572,7 @@ describe('spatial service', function() {
       (_) => {}, (_finishMessage) => {
         const trace = mockCore.history.map(r => [r.method, r.url]);
         expect(trace).to.eql([
+          ["POST", "/authenticate"],
           ["POST", "/views/qs32-qpt7/publication?method=copySchema"],
           ["GET", "/views/qs32-qpt8/columns"],
           // clean up the working copy
@@ -605,6 +595,7 @@ describe('spatial service', function() {
       (_) => {}, (_finishMessage) => {
         const trace = mockCore.history.map(r => [r.method, r.url]);
         expect(trace).to.eql([
+          ["POST", "/authenticate"],
           ["POST", "/views/qs32-qpt7/publication?method=copySchema"],
           ["GET", "/views/qs32-qpt8/columns"],
           ["DELETE", "/views/qs32-qpt8/columns/3415"],
@@ -650,6 +641,7 @@ describe('spatial service', function() {
           "eventType": "set-blob-error",
           "info": {
             "english": "Failed to set the file data attribute of that dataset",
+            "message": "",
             "upstream": {
               "response": "failSetBlob",
               "status": 503
@@ -661,6 +653,7 @@ describe('spatial service', function() {
 
         const trace = mockCore.history.map(r => [r.method, r.url]);
         expect(trace).to.eql([
+          ["POST", "/authenticate"],
           ["POST", "/views/qs32-qpt7/publication?method=copySchema"],
           ["GET", "/views/qs32-qpt8/columns"],
           ["DELETE", "/views/qs32-qpt8/columns/3415"],

@@ -115,8 +115,8 @@ describe('core client', function() {
       ['foo'],
       'test-host',
       null,
-      'test-cookie',
-      'test-reqid'
+      null,
+      null
     )
 
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
@@ -131,7 +131,7 @@ describe('core client', function() {
 
   it("can make a create request to core", function(onDone) {
     const message = mockAmq.messageFor(
-      'replace',
+      'create',
       'four-four',
       'simple_points.json', ['foo'],
       'test-host',
@@ -150,6 +150,7 @@ describe('core client', function() {
 
   it("can make a replace request to core", function(onDone) {
     const message = mockAmq.messageFor(
+      'replace',
       'four-four',
       'simple_points.json', ['foo'],
       'test-host',
