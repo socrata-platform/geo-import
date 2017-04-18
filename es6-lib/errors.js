@@ -239,7 +239,7 @@ class UpstreamError extends ImportError {
   params() {
     return {
       message: this.upstream().response.message? `: ${this.upstream().response.message}` : ''
-    }
+    };
   }
 
   toJSON() {

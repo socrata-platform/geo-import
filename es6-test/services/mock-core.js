@@ -5,7 +5,7 @@ import _ from 'underscore';
 import es from 'event-stream';
 
 function hasHeaders(req, res) {
-  const present = _.every(['x-app-token', 'x-socrata-host'], (key) => {
+  const present = _.every(['x-socrata-requestid', 'x-socrata-host'], (key) => {
     return !_.isUndefined(req.headers[key]) && (req.headers[key] !== 'null');
   })
   if (!present) {
