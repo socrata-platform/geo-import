@@ -1,6 +1,4 @@
 #!/bin/bash
-set -ev
-
 unset HTTP_PROXY
 unset http_proxy
 
