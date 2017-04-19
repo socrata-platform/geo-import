@@ -5,11 +5,11 @@ unset HTTP_PROXY
 unset http_proxy
 
 
-if [ -r /dev/shm/geo_import_amq.secrets ]; then
+if [ -r /dev/shm/geo_import_amq.sh ]; then
   echo "Sourcing secrets to environment."
-  . /dev/shm/geo_import_amq.secrets
+  . /dev/shm/geo_import_amq.sh
 else
-  echo "No secrets found in /dev/shm/geo_import_amq.secrets."
+  echo "No secrets found in /dev/shm/geo_import_amq.sh."
 fi
 
 
