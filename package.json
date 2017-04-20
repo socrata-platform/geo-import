@@ -1,6 +1,6 @@
 {
   "name": "geo-import",
-  "version": "0.1.75-SNAPSHOT",
+  "version": "0.1.75",
   "private": true,
   "dependencies": {
     "clarinet": "0.11.0",
