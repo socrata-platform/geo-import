@@ -21,5 +21,6 @@ clean:
 	rm -rf test
 	rm -f lib.tar
 	rm -rf translations
+	rm -rf node_modules
 
 .PHONY: clean test translations
