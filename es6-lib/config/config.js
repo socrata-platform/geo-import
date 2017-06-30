@@ -5,7 +5,7 @@ default {
   //gate at which the service will not read the whole file to generate
   //a detailed summary. for files over this limit, an abbreviated summary
   //will be returned, which is much faster, but less helpful
-  abbreviateSummarySize: 500 * 1000, //500kb
+  abbreviateSummarySize: 10 * 1000 * 1000000, //a lot of bytes
 
   //when the merger writes to layers, the layer will spill rows to the .ldjson
   //scratch file after this amount. note that this is per layer!
