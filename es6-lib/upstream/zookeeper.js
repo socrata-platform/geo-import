@@ -56,16 +56,17 @@ class Zookeeper extends EventEmitter {
         if (err) {
           return cb(new ZKError('Error getting data from zookeeper'));
         }
+        let url;
         try {
           let entry = JSON.parse(buf.toString('utf-8'));
           //scheme isn't in the zk entry? what happens if we go ssl ¯\_(ツ)_/¯
           let scheme = 'http';
-          let url = `${scheme}://${entry.address}:${entry.port}`;
+          url = `${scheme}://${entry.address}:${entry.port}`;
           logger.debug(`Core lives at ${url}`);
-          return cb(false, url);
         } catch (err) {
           return cb(new ZKError('Zookeeper data was malformed'));
         }
+        return cb(false, url);
       });
     });
   }
