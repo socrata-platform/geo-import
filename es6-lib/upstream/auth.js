@@ -63,8 +63,9 @@ class Auth extends CoreClient {
           'X-Socrata-Host': this.host
         },
         json: true
-      }, (err, response, {email}) => {
+      }, (err, response, result) => {
         if(err) return onComplete(err);
+        const email = result.email;
         this.log.info(`Authenticating as ${email} using ${username}`);
 
         request({
