@@ -241,8 +241,7 @@ class Core extends CoreClient {
   setBlob(viewId, blobId, blobName, onComplete) {
     return this.url((err, url) => {
       if (err) return onOpened(err);
-
-      const uri = `${url}/views/${viewId}?method=setBlob&blobId=${blobId}&blobName=${blobName}`;
+      const uri = `${url}/views/${viewId}?method=setBlob&blobId=${blobId}&blobName=${encodeURI(blobName)}`;
       this.info(`Setting blob on ${uri} ${viewId} to ${blobId}`);
       request.put({
         url: uri,
