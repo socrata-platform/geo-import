@@ -1,4 +1,10 @@
+if (!process.env.SOCRATA_LOCAL_USER) {
+  throw new Error('No SOCRATA_LOCAL_USER environment variable set! Please set it and SOCRATA_LOCAL_PASS.');
+}
 
+if (!process.env.SOCRATA_LOCAL_PASS) {
+  throw new Error('No SOCRATA_LOCAL_PASS environment variable set! Please set it.');
+}
 
 export default {
   zk: ['localhost:2181'],
