@@ -48,8 +48,9 @@ make
 ```
 then run the development configuration using
 ```
-GEO_IMPORT_ENV=dev node lib/index.js
+SOCRATA_LOCAL_USER=<username> SOCRATA_LOCAL_PASS=<password> GEO_IMPORT_ENV=dev node lib/index.js
 ```
+(where the username and password are for a Superadmin-enabled user account in Core Server)
 
 To run it as es5
 
