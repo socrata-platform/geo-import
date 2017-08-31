@@ -54,7 +54,6 @@ class CoreClient {
             body = buf;
           }
 
-          response.statusCode === 403 && console.log("Got 403, retrying...", retry)
           if (response.statusCode === 403 && retry) {
             return this.auth.spoof(() => {
               return retry();
