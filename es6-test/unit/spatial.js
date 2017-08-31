@@ -680,6 +680,43 @@ describe('spatial service', function() {
     );
   });
 
+  it('if setting the blob fails with a 403, it is retried', function(onDone) {
+    mockCore.failSetBlob = 403;
+
+    mockAmq.on('/queue/eurybates.import-status-events', sequencer([
+      (startMessage) => {}, (finishMessage) => {
+
+        const trace = mockCore.history.map(r => [r.method, r.url]);
+        expect(trace).to.eql([
+          ["POST", "/authenticate"],
+          ["POST", "/views/qs32-qpt7/publication?method=copySchema"],
+          ["GET", "/views/qs32-qpt8/columns"],
+          ["DELETE", "/views/qs32-qpt8/columns/3415"],
+          ["DELETE", "/views/qs32-qpt8/columns/3416"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/views/qs32-qpt8/columns"],
+          ["POST", "/id/qs32-qpt8.json"],
+          ["GET", "/views/ffff-ffff"],
+          ["PUT", "/views/ffff-ffff?method=setBlob&blobId=simple_points.json&blobName=simple_points.json"],
+          ["POST", "/authenticate"], // this is the re-auth request
+          ["PUT", "/views/ffff-ffff?method=setBlob&blobId=simple_points.json&blobName=simple_points.json"], // this is the retry
+          //delete the working copy
+          ["DELETE", "/views/qs32-qpt8"]
+        ]);
+      }
+    ], onDone));
+
+    mockAmq.replaceFixture(
+      'simple_points.json', [{
+        name: 'foo',
+        replacingUid: 'qs32-qpt7'
+      }],
+    );
+  });
+
   it('will give a 400 on complex shapes', function(onDone) {
     var oldMax = conf.maxVerticesPerRow;
     conf.maxVerticesPerRow = 1;

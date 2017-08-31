@@ -28,7 +28,7 @@ class CoreClient {
   }
 
   //partial to buffer a response
-  bufferResponse(onBuffered, errorType) {
+  bufferResponse(onBuffered, errorType, retry) {
     return (response) => {
       if (!response.pipe) {
         this.error(`Request failed ${response.code}`);
@@ -54,6 +54,13 @@ class CoreClient {
             body = buf;
           }
 
+          response.statusCode === 403 && console.log("Got 403, retrying...", retry)
+          if (response.statusCode === 403 && retry) {
+            return this.auth.spoof(() => {
+              return retry();
+            });
+          }
+
           if (response.statusCode > 300) {
             return onBuffered(new errorType(response.statusCode, body));
           }
@@ -62,12 +69,12 @@ class CoreClient {
     };
   }
 
-  _onResponseStart(onComplete, errorType) {
-    return this.bufferResponse(onComplete, errorType);
+  _onResponseStart(onComplete, errorType, retry) {
+    return this.bufferResponse(onComplete, errorType, retry);
   }
 
-  _onErrorResponse(onComplete, errorType) {
-    return _.once(this.bufferResponse(onComplete, errorType));
+  _onErrorResponse(onComplete, errorType, retry) {
+    return _.once(this.bufferResponse(onComplete, errorType, retry));
   }
 }
 
