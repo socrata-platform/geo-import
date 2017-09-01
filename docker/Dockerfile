@@ -1,9 +1,4 @@
-FROM socrata/runit
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y install nodejs npm
-RUN npm install -g n
-RUN n 6.9.1
-RUN n use 6.9.1
+FROM socrata/runit-nodejs
 
 # LABEL must be last for proper base image discoverability
 LABEL repository.socrata/nodejs=""
@@ -25,20 +20,15 @@ ADD package.json ${ROOT_DIR}/
 ADD scripts ${ROOT_DIR}/scripts
 ADD lib.tar ${ROOT_DIR}
 
-# Add geo-import specific metrics
-# This next thing is broken, but only in fedramp-prod
-# COPY collectd-nodejs.conf /etc/collectd/conf.d/nodejs.conf
-
-
 # Passing --production prevents node-srs from installing.
 # We will set it up sans symlinks in the next step
 RUN npm install --production
 
 # Do the annoying node-srs thing
-WORKDIR ${ROOT_DIR}/node_modules
-RUN git clone https://github.com/rozap/node-srs
-WORKDIR ${ROOT_DIR}/node_modules/node-srs
-RUN CC=gcc CXX=g++ npm install
+# WORKDIR ${ROOT_DIR}/node_modules
+# RUN git clone https://github.com/rozap/node-srs
+# WORKDIR ${ROOT_DIR}/node_modules/node-srs
+# RUN CC=gcc CXX=g++ npm install
 
 WORKDIR ${ROOT_DIR}
 

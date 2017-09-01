@@ -22,4 +22,11 @@ clean:
 	rm -f lib.tar
 	rm -rf translations
 
-.PHONY: clean test translations
+docker: appease_jenkins
+	cp lib.tar docker/
+	cp package.json docker/
+	cp scripts -r docker/
+	cd docker && sudo docker build .
+
+
+.PHONY: clean test translations docker
