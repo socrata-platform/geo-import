@@ -24,22 +24,24 @@ class Core extends CoreClient {
   constructor(auth, zk, log) {
     super(zk, log);
     if (!auth) throw new Error("Client needs an auth object");
-    this._auth = auth;
+    this.auth = auth;
   }
 
   get host() {
-    return this._auth.host;
+    return this.auth.host;
   }
 
   get reqId() {
-    return this._auth.reqId;
+    return this.auth.reqId;
   }
 
   headers() {
-    return this._auth.headers();
+    return this.auth.headers();
   }
 
-  destroy(layer, onComplete) {
+  destroy(layer, onComplete, retried) {
+    const retry = () => !retried && this.destroy(layer, onComplete, true);
+
     return this.url((err, url) => {
       if (err) return onComplete(err);
       this.info('DeleteDataset');
@@ -49,15 +51,18 @@ class Core extends CoreClient {
         headers: this.headers(),
         json: true
       })
-      .on('response', this._onResponseStart(onComplete, CleanupError))
-      .on('error', this._onErrorResponse(onComplete, CleanupError));
+      .on('response', this._onResponseStart(onComplete, CleanupError, retry))
+      .on('error', this._onErrorResponse(onComplete, CleanupError, retry));
     });
   }
 
-  create(parentUid, layer, onComplete) {
+  create(parentUid, layer, onComplete, retried) {
     if (layer.uid !== Layer.EMPTY) {
       this.error(`Layer uid is not empty, layer uid is ${layer.uid}, cannot create layer in datastore!`);
     }
+
+    const retry = !retried && () => this.create(parentUid, layer, onComplete, true);
+
     return this.url((err, url) => {
       if (err) return onComplete(err);
       this.info(`CreateDataset request to core to make child view of ${parentUid}`);
@@ -78,13 +83,14 @@ class Core extends CoreClient {
         },
         json: true
       })
-      .on('response', this._onResponseStart(onComplete, CreateDatasetError))
-      .on('error', this._onErrorResponse(onComplete, CreateDatasetError));
+      .on('response', this._onResponseStart(onComplete, CreateDatasetError, retry))
+      .on('error', this._onErrorResponse(onComplete, CreateDatasetError, retry));
     });
   }
 
+  replace(layer, onComplete, retried) {
+    const retry = !retried && () => this.replace(layer, onComplete, true);
 
-  replace(layer, onComplete) {
     return this.url((err, url) => {
       if (err) return onComplete(err);
       this.info(`CopySchema request for new layer to core ${layer.uid}`);
@@ -95,11 +101,13 @@ class Core extends CoreClient {
         headers: this.headers()
       })
       .on('response', this._onResponseStart(onComplete, CreateWorkingCopyError))
-      .on('error', this._onErrorResponse(onComplete, CreateWorkingCopyError));
+      .on('error', this._onErrorResponse(onComplete, CreateWorkingCopyError, retry));
     });
   }
 
-  publish(layer, onComplete) {
+  publish(layer, onComplete, retried) {
+    const retry = !retried && () => this.publish(layer, onComplete, true);
+
     return this.url((err, url) => {
       if (err) return onComplete(err);
 
@@ -109,13 +117,15 @@ class Core extends CoreClient {
         timeout,
         headers: this.headers(),
       })
-      .on('response', this._onResponseStart(onComplete, PublicationError))
-      .on('error', this._onErrorResponse(onComplete, PublicationError));
+      .on('response', this._onResponseStart(onComplete, PublicationError, retry))
+      .on('error', this._onErrorResponse(onComplete, PublicationError, retry));
     });
   }
 
 
-  getView(fourfour, onComplete) {
+  getView(fourfour, onComplete, retried) {
+    const retry = !retried && () => this.getView(layer, onComplete, true);
+
     return this.url((err, url) => {
       if (err) return onComplete(err);
 
@@ -127,12 +137,14 @@ class Core extends CoreClient {
         headers: this.headers(),
         json: true
       })
-      .on('response', this._onResponseStart(onComplete, UpdateMetadataError))
-      .on('error', this._onErrorResponse(onComplete, UpdateMetadataError));
+      .on('response', this._onResponseStart(onComplete, UpdateMetadataError, retry))
+      .on('error', this._onErrorResponse(onComplete, UpdateMetadataError, retry));
     });
   }
 
-  updateMetadata(fourfour, metadata, privateMetadata, onComplete) {
+  updateMetadata(fourfour, metadata, privateMetadata, onComplete, retried) {
+    const retry = !retried && () => this.updateMetadata(fourfour, metadata, privateMetadata, onComplete, true);
+
     return this.url((err, url) => {
       if (err) return onComplete(err);
 
@@ -148,13 +160,15 @@ class Core extends CoreClient {
           privateMetadata
         }
       })
-      .on('response', this._onResponseStart(onComplete, UpdateMetadataError))
-      .on('error', this._onErrorResponse(onComplete, UpdateMetadataError));
+      .on('response', this._onResponseStart(onComplete, UpdateMetadataError, retry))
+      .on('error', this._onErrorResponse(onComplete, UpdateMetadataError, retry));
     });
   }
 
 
-  addColumn(colSpec, onComplete) {
+  addColumn(colSpec, onComplete, retried) {
+    const retry = !retried && () => this.addColumn(colSpec, onComplete, true);
+
     var [fourfour, column] = colSpec;
     this.info(`Add column ${fourfour} ${JSON.stringify(column.toJSON())} to core`);
 
@@ -168,12 +182,14 @@ class Core extends CoreClient {
           body: column.toJSON(),
           json: true
         })
-        .on('response', this._onResponseStart(onComplete, CreateColumnError))
-        .on('error', this._onErrorResponse(onComplete, CreateColumnError));
+        .on('response', this._onResponseStart(onComplete, CreateColumnError, retry))
+        .on('error', this._onErrorResponse(onComplete, CreateColumnError, retry));
     });
   }
 
-  getColumns(layer, onComplete) {
+  getColumns(layer, onComplete, retried) {
+    const retry = !retried && () => this.getColumns(layer, onComplete, true);
+
     return this.url((err, url) => {
       if (err) return onComplete(err);
       this.info(`Getting columns`);
@@ -183,12 +199,14 @@ class Core extends CoreClient {
           timeout,
           headers: this.headers()
         })
-        .on('response', this._onResponseStart(onComplete, GetColumnError))
-        .on('error', this._onErrorResponse(onComplete, GetColumnError));
+        .on('response', this._onResponseStart(onComplete, GetColumnError, retry))
+        .on('error', this._onErrorResponse(onComplete, GetColumnError, retry));
     });
   }
 
-  deleteColumn(colSpec, onComplete) {
+  deleteColumn(colSpec, onComplete, retried) {
+    const retry = !retried && () => this.deleteColumn(colSpec, onComplete, true);
+
     var [viewId, colId] = colSpec;
     this.info(`Delete column ${viewId} ${colId} from core`);
 
@@ -200,8 +218,8 @@ class Core extends CoreClient {
           timeout,
           headers: this.headers()
         })
-        .on('response', this._onResponseStart(onComplete, DeleteColumnError))
-        .on('error', this._onErrorResponse(onComplete, DeleteColumnError));
+        .on('response', this._onResponseStart(onComplete, DeleteColumnError, retry))
+        .on('error', this._onErrorResponse(onComplete, DeleteColumnError, retry));
     });
   }
 
@@ -238,7 +256,9 @@ class Core extends CoreClient {
     });
   }
 
-  setBlob(viewId, blobId, blobName, onComplete) {
+  setBlob(viewId, blobId, blobName, onComplete, retried) {
+    const retry = !retried && () => this.setBlob(viewId, blobId, blobName, onComplete, true);
+
     return this.url((err, url) => {
       if (err) return onOpened(err);
       const uri = `${url}/views/${viewId}?method=setBlob&blobId=${blobId}&blobName=${encodeURI(blobName)}`;
@@ -249,8 +269,8 @@ class Core extends CoreClient {
         timeout,
         json: true
       })
-      .on('response', this._onResponseStart(onComplete, SetBlobError))
-      .on('error', this._onErrorResponse(onComplete, SetBlobError));
+      .on('response', this._onResponseStart(onComplete, SetBlobError, retry))
+      .on('error', this._onErrorResponse(onComplete, SetBlobError, retry));
     });
   }
 

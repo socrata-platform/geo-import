@@ -160,8 +160,8 @@ describe('merger', () => {
           const dbf = _.find(cols, c => c.name === 'invalid_the_geom');
           const shp = _.find(cols, c => c.name === 'the_geom');
 
-          expect(dbf).to.be.defined;
-          expect(shp).to.be.defined;
+          expect(!!dbf).to.be.true
+          expect(!!shp).to.be.true
           expect(shp.dataTypeName).to.eql('multipolygon');
           expect(dbf.dataTypeName).to.eql('text');
 
