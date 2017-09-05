@@ -17,18 +17,11 @@ WORKDIR ${ROOT_DIR}
 
 # Add the stuff that makes up the base node app
 ADD package.json ${ROOT_DIR}/
-ADD scripts ${ROOT_DIR}/scripts
 ADD lib.tar ${ROOT_DIR}
 
 # Passing --production prevents node-srs from installing.
 # We will set it up sans symlinks in the next step
 RUN npm install --production
-
-# Do the annoying node-srs thing
-# WORKDIR ${ROOT_DIR}/node_modules
-# RUN git clone https://github.com/rozap/node-srs
-# WORKDIR ${ROOT_DIR}/node_modules/node-srs
-# RUN CC=gcc CXX=g++ npm install
 
 WORKDIR ${ROOT_DIR}
 

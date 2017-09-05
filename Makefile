@@ -25,7 +25,6 @@ clean:
 docker: appease_jenkins
 	cp lib.tar docker/
 	cp package.json docker/
-	cp scripts -r docker/
 	cd docker && sudo docker build .
 
 
