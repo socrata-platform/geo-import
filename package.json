@@ -39,8 +39,5 @@
     "jsonfile": "*",
     "prompt": "*",
     "should": "latest"
-  },
-  "scripts": {
-    "test": "make test"
   }
 }
