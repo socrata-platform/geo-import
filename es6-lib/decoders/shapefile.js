@@ -46,17 +46,17 @@ function isHidden(parsedPath) {
 
 function isProjection(fileName) {
   var p = path.parse(fileName);
-  return !isHidden(p) && p.ext === '.prj';
+  return !isHidden(p) && p.ext && p.ext.toLowerCase() === '.prj';
 }
 
 function isShp(fileName) {
   var p = path.parse(fileName);
-  return !isHidden(p) && p.ext === '.shp';
+  return !isHidden(p) && p.ext && p.ext.toLowerCase() === '.shp';
 }
 
 function isDbf(fileName) {
   var p = path.parse(fileName);
-  return !isHidden(p) && p.ext === '.dbf';
+  return !isHidden(p) && p.ext && p.ext.toLowerCase() === '.dbf';
 }
 
 /**
