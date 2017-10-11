@@ -25,8 +25,24 @@ class SummaryService {
     //;_; see the note in service/spatial for why
     //this exists
     var onErr = _.once((err) => {
-      req.log.error(err.toJSON(), "Failed to generate summary");
-      return res.status(err.status()).send(err.toJSON());
+      var msg;
+      var status;
+      if (typeof err.toJSON === 'function') {
+        msg = err.toJSON();
+        status = err.status();
+      } else {
+        logger.warn("Encountered an error that could not be jsonified.")
+        if (typeof err.toString === 'function') {
+          logger.error(err.toString())
+        } else {
+          console.log(err)
+        }
+        msg = "Internal Error";
+        status = 500;
+      }
+
+      req.log.error(msg, "Failed to generate summary");
+      return res.status(status).send(msg);
     });
 
     var [err, decoder] = getDecoderForContentType(req, disk);

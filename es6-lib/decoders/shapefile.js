@@ -105,6 +105,7 @@ class Shapefile extends Duplex {
 
   _fileGroup(extension, name) {
     name = name ? name.toLowerCase() : 'shapefile';
+    extension = typeof extension === 'string' ? extension.toLowerCase() : '';
     return `/tmp/${name}_${this._fgroup}${extension}`;
   }
 
