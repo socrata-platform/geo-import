@@ -31,11 +31,11 @@ class SummaryService {
         msg = err.toJSON();
         status = err.status();
       } else {
-        logger.warn("Encountered an error that could not be jsonified.")
+        logger.warn("Encountered an error that could not be jsonified.");
         if (typeof err.toString === 'function') {
-          logger.error(err.toString())
+          logger.error(err.toString());
         } else {
-          console.log(err)
+          console.log(err);
         }
         msg = "Internal Error";
         status = 500;
