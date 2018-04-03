@@ -73,7 +73,7 @@ describe('spatial service failures', function() {
   it('will emit a CreateDatasetError when core request to create dataset fails', function(onDone) {
     mockCore.failCreate = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (m) => {
+      (m) => {
         expect(reason(m)).to.equal('create-dataset-error');
       }
     ], onDone));
@@ -83,7 +83,7 @@ describe('spatial service failures', function() {
   it('will emit a CreateColumnError when core request to create a column fails', function(onDone) {
     mockCore.failColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (m) => {
+      (m) => {
         expect(reason(m)).to.equal('create-column-error');
       }
     ], onDone));
@@ -93,7 +93,7 @@ describe('spatial service failures', function() {
   it('will emit a GetColumnError when core request to get columns fails', function(onDone) {
     mockCore.failGetColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (m) => {
+      (m) => {
         expect(reason(m)).to.equal('get-column-error');
       }
     ], onDone));
@@ -106,7 +106,7 @@ describe('spatial service failures', function() {
   it('will emit a PublicationError when core request to publish fails', function(onDone) {
     mockCore.failPublication = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (m) => {
+      (m) => {
         expect(reason(m)).to.equal('publication-error');
       }
     ], onDone));
@@ -119,7 +119,7 @@ describe('spatial service failures', function() {
   it('will emit a CreateWorkingCopyError when core request to make a working copy fails', function(onDone) {
     mockCore.failWorkingCopy = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (m) => {
+      (m) => {
         expect(reason(m)).to.equal('create-working-copy-error');
       }
     ], onDone));
@@ -132,7 +132,7 @@ describe('spatial service failures', function() {
   it('will emit a DeleteColumnError when core request to delete a column fails', function(onDone) {
     mockCore.failDeleteColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (m) => {
+      (m) => {
         expect(reason(m)).to.equal('delete-column-error');
       }
     ], onDone));
@@ -145,7 +145,7 @@ describe('spatial service failures', function() {
   it('will emit a UpdateMetadataError when core request to update metadata fails', function(onDone) {
     mockCore.failDeleteColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (m) => {
+      (m) => {
         expect(reason(m)).to.equal('delete-column-error');
       }
     ], onDone));
@@ -158,7 +158,7 @@ describe('spatial service failures', function() {
   it('will emit a UpsertError when core request to upsert fails', function(onDone) {
     mockCore.failUpsert = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (m) => {
+      (m) => {
         expect(reason(m)).to.equal('upsert-error');
       }
     ], onDone));

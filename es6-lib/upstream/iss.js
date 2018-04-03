@@ -9,7 +9,7 @@ const conf = config();
 
 function extractDomain(message = {}) {
   if (message['file-type'] && message['file-type'].auth) {
-    return message['file-type'].auth.host
+    return message['file-type'].auth.host;
   }
 }
 
