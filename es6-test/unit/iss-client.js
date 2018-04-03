@@ -22,6 +22,7 @@ describe('iss client', function() {
     amq.on('/queue/eurybates.import-status-events', (message) => {
       expect(messageDetails(JSON.parse(message))).to.eql({
         activityId: 'activity-id',
+        entityType: 'Dataset',
         info: {
           totalRows: 42,
           warnings: ['i am a warning']
@@ -39,6 +40,7 @@ describe('iss client', function() {
     amq.on('/queue/eurybates.import-status-events', (message) => {
       expect(messageDetails(JSON.parse(message))).to.eql({
         activityId: 'activity-id',
+        entityType: 'Dataset',
         service: 'Imports2',
         eventType: 'generic',
         info: {

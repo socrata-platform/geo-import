@@ -11,13 +11,20 @@ class ISS extends EventEmitter {
   constructor(amq, message) {
     super();
 
-    this._message = message;
+    this._message = message || {};
     this._rollbacks = [];
 
     this.send = (tag, details) => {
+      const currentTime = (new Date()).toISOString();
       details.service = 'Imports2';
-      details.eventTime = (new Date()).toISOString();
+      details.eventTime = currentTime;
+      details.createdAt = currentTime;
       details.eventId = uuid.v4();
+      details.entityType = 'Dataset';
+      details.entityId = this._message.view;
+      details.userId = this._message.user;
+      details.domain = (this._message['file-type'] && this._message['file-type'] && this._message['file-type'].auth) && this._message['file-type'].auth.host;
+      details.activityName = this._message.filename;
 
       const obj = {
         tag,

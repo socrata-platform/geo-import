@@ -27,6 +27,7 @@ function messageDetails(message) {
   var deets = message.details;
   delete deets.eventId;
   delete deets.eventTime;
+  delete deets.createdAt;
   return deets;
 }
 
