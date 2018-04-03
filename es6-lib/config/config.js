@@ -54,7 +54,7 @@ default {
 
   amq: {
     inName: '/queue/GeoImports',
-    outName: '/queue/eurybates.import-status-events',
+    outNames: ['/queue/eurybates.import-status-events', '/queue/eurybates.activity-log'],
     user: 'admin',
     pass: 'admin',
     reconnectAttempts: 100,

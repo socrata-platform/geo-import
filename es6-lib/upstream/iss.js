@@ -7,6 +7,12 @@ import async from 'async';
 
 const conf = config();
 
+function extractDomain(message = {}) {
+  if (message['file-type'] && message['file-type'].auth) {
+    return message['file-type'].auth.host
+  }
+}
+
 class ISS extends EventEmitter {
   constructor(amq, message) {
     super();
@@ -23,7 +29,7 @@ class ISS extends EventEmitter {
       details.entityType = 'Dataset';
       details.entityId = this._message.view;
       details.userId = this._message.user;
-      details.domain = (this._message['file-type'] && this._message['file-type'] && this._message['file-type'].auth) && this._message['file-type'].auth.host;
+      details.domain = extractDomain(this._message);
       details.activityName = this._message.filename;
 
       const obj = {
@@ -38,9 +44,10 @@ class ISS extends EventEmitter {
       amq.send(message);
     };
 
+
     logger.decorateActivity(this);
   }
-
+  
   _onStart(details) {
     this.send('IMPORT_ACTIVITY_START', details);
   }

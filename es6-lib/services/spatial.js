@@ -56,6 +56,7 @@ class SpatialService {
 
     const activity = new ISS(this._amq, saneMessage);
 
+    // do not send start message since the request to Imports2 will do that for us
     const kind = saneMessage.type.toLowerCase();
     if (kind === 'import') return this.create(activity, saneMessage);
     if (kind === 'replace') return this.replace(activity, saneMessage);
