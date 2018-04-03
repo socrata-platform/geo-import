@@ -55,10 +55,8 @@ class SpatialService {
     logger.info(saneMessage, 'Picked up an AMQ message');
 
     const activity = new ISS(this._amq, saneMessage);
-    // const activity = iss.activity(saneMessage);
-    //Send iss a start message
-    activity.onStart();
 
+    // do not send start message since the request to Imports2 will do that for us
     const kind = saneMessage.type.toLowerCase();
     if (kind === 'import') return this.create(activity, saneMessage);
     if (kind === 'replace') return this.replace(activity, saneMessage);
@@ -227,8 +225,7 @@ class SpatialService {
     const totalRows = totalLayerRows(layers);
 
     const sendProgress = _.throttle(() => {
-      activity.log.info(`Completed ${totalRowsUpserted} rows of ${totalRows}, sending ISS event`);
-      activity.onProgress(totalRowsUpserted, totalRows);
+      activity.log.info(`Completed ${totalRowsUpserted} rows of ${totalRows}`);
     }, conf.debounceProgressMs);
 
     //this is a little different than the two preceding core calls. core.upsert

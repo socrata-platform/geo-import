@@ -77,36 +77,42 @@ class QueueManager extends EventEmitter {
   }
 
   send(message) {
+    // need to write to both activity-feed and ISS queues since
+    // ISS is scheduled for deprecation and no longer tells
+    // activity-feed when geo-imports are completed.
     const doSend = (amq) => {
-      var received = false;
-      let headers = {
-        'persistent': true,
-        'suppress-content-length': true,
-        'destination': config.amq.outName
-      };
-      let frame = amq.send(headers, {
-        onReceipt: () => {
-          logger.info(`Receipt of ${message} confirmed`);
-          received = true;
-        }
-      });
-      frame.write(message);
-      frame.end();
-      setTimeout(() => {
-        if (!received) {
-          logger.error(`Never got receipt for message: ${message}`);
-        }
-      }, 3000);
+      config.amq.outNames.forEach(sendToQueue);
+
+      function sendToQueue(queue) {
+        var received = false;
+        let headers = {
+          'persistent': true,
+          'suppress-content-length': true,
+          'destination': queue
+        };
+        let frame = amq.send(headers, {
+          onReceipt: () => {
+            logger.info(`Receipt of ${message} confirmed`);
+            received = true;
+          }
+        });
+        frame.write(message);
+        frame.end();
+        setTimeout(() => {
+          if (!received) {
+            logger.error(`Never got receipt for message: ${message}`);
+          }
+        }, 3000);
+      }
     };
 
     const amq = _.sample(this._underlying);
+
     if(!amq) {
       return this.once('connected', doSend);
     }
+
     doSend(amq);
-
-
-
   }
 
   subscribe(callback) {

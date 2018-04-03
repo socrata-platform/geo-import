@@ -69,20 +69,7 @@ describe('spatial service', function() {
   it('can put an Import geojson message and it will make a create dataset request to core', function(onDone) {
     const names = ['A layer named foo'];
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {
-        startMessage = JSON.parse(startMessage);
-
-        expect(messageDetails(startMessage)).to.eql({
-          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          eventType: 'row-progress',
-          info: {
-            rowsComplete: 0,
-            totalRows: 0
-          },
-          status: 'InProgress',
-          service: 'Imports2'
-        });
-      }, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         var createRequest = mockCore.history[1];
@@ -113,20 +100,7 @@ describe('spatial service', function() {
   it('can deal with empty coordinate lists', function(onDone) {
     const names = ['A layer named foo'];
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {
-        startMessage = JSON.parse(startMessage);
-
-        expect(messageDetails(startMessage)).to.eql({
-          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          eventType: 'row-progress',
-          info: {
-            rowsComplete: 0,
-            totalRows: 0
-          },
-          status: 'InProgress',
-          service: 'Imports2'
-        });
-      }, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         var createRequest = mockCore.history[1];
@@ -158,21 +132,7 @@ describe('spatial service', function() {
     }];
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {
-        startMessage = JSON.parse(startMessage);
-
-        expect(startMessage.tag).to.eql('IMPORT_ACTIVITY_EVENT');
-        expect(messageDetails(startMessage)).to.eql({
-          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          eventType: 'row-progress',
-          info: {
-            rowsComplete: 0,
-            totalRows: 0
-          },
-          status: 'InProgress',
-          service: 'Imports2'
-        });
-      }, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         var [_auth, replaceRequest, getColReq, delColReq0, delColReq1, geom, aString, aNum, aFloat, aBool] = mockCore.history;
@@ -234,21 +194,7 @@ describe('spatial service', function() {
 
   it('can put geojson replace message with no metadata and it will make a replace dataset request to core', function(onDone) {
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {
-        startMessage = JSON.parse(startMessage);
-
-        expect(startMessage.tag).to.eql('IMPORT_ACTIVITY_EVENT');
-        expect(messageDetails(startMessage)).to.eql({
-          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          eventType: 'row-progress',
-          info: {
-            rowsComplete: 0,
-            totalRows: 0
-          },
-          status: 'InProgress',
-          service: 'Imports2'
-        });
-      }, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         var [_auth, createRequest, geom, aString, aNum, aFloat, aBool] = mockCore.history;
@@ -300,29 +246,7 @@ describe('spatial service', function() {
     }];
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {
-        startMessage = JSON.parse(startMessage);
-
-        expect(startMessage.tag).to.eql('IMPORT_ACTIVITY_EVENT');
-        expect(messageDetails(startMessage)).to.eql({
-          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          eventType: 'row-progress',
-          info: {
-            rowsComplete: 0,
-            totalRows: 0
-          },
-          status: 'InProgress',
-          service: 'Imports2'
-        });
-      }, (_) => {
-
-        var [_auth, replaceRequest, createRequest] = mockCore.history;
-
-        expect(replaceRequest.url).to.equal(
-          '/views/qs32-qpt7/publication?method=copySchema'
-        );
-        expect(replaceRequest.method).to.equal('POST');
-        expect(createRequest.url).to.equal('/views?nbe=true');
+      (_) => {
       }
     ], onDone));
 
@@ -331,17 +255,22 @@ describe('spatial service', function() {
 
   it('can post kml and it will do an upsert to core', function(onDone) {
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {}, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         expect(messageDetails(finishMessage)).to.eql({
           activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
+          activityName: "simple_points.kml",
+          domain: "localhost",
+          entityId: "qs32-qpt7",
+          entityType: "Dataset",
           status: 'Success',
           info: {
             warnings: [],
             totalRows: 2
           },
-          service: 'Imports2'
+          service: 'Imports2',
+          userId: "kacw-u8uj"
         });
 
         const trace = mockCore.history.map(r => [r.method, r.url]);
@@ -371,17 +300,22 @@ describe('spatial service', function() {
 
   it('can post kmz points and it will do an upsert to core', function(onDone) {
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {}, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         expect(messageDetails(finishMessage)).to.eql({
           activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
+          activityName: "simple_points.kmz",
+          domain: "localhost",
+          entityId: "qs32-qpt7",
+          entityType: "Dataset",
           status: 'Success',
           info: {
             warnings: [],
             totalRows: 2
           },
-          service: 'Imports2'
+          service: 'Imports2',
+          userId: "kacw-u8uj"
         });
 
         const trace = mockCore.history.map(r => [r.method, r.url]);
@@ -412,18 +346,7 @@ describe('spatial service', function() {
   it('can post geojson and it will make a create columns request to core', function(onDone) {
     const names = ['A layer named foo'];
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {
-        expect(messageDetails(JSON.parse(startMessage))).to.eql({
-          activityId: 'e7b813c8-d68e-4c8a-b1bc-61c709816fc3',
-          eventType: 'row-progress',
-          info: {
-            rowsComplete: 0,
-            totalRows: 0
-          },
-          status: 'InProgress',
-          service: 'Imports2'
-        });
-      }, (finishMessage) => {
+      (finishMessage) => {
         var createRequest = mockCore.history[1];
         expect(createRequest.body).to.eql({
           name: 'A layer named foo',
@@ -477,7 +400,7 @@ describe('spatial service', function() {
     const names = ['A layer named foo'];
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {}, (finishMessage) => {
+      (finishMessage) => {
         var [upsert] = mockCore.history.slice(7);
 
         //check the request body that was actuall sent to core
@@ -511,7 +434,7 @@ describe('spatial service', function() {
     const names = ['some points', 'some lines'];
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {}, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         expect(finishMessage.details.status).to.eql('Success');
@@ -532,7 +455,7 @@ describe('spatial service', function() {
     mockZk.enableErrors();
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {}, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         //TODO: hopefully we can plumb better errors into this ISS event?
@@ -544,7 +467,7 @@ describe('spatial service', function() {
 
   it('will emit an error for a corrupt shapefile', function(onDone) {
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {}, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         //TODO: hopefully we can plumb better errors into this ISS event?
@@ -557,7 +480,7 @@ describe('spatial service', function() {
   it('will delete any created layers when an error is encountered in column creation', function(onDone) {
     mockCore.failColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (_finishMessage) => {
+      (_finishMessage) => {
         var del = _.last(mockCore.history);
         expect(del.method).to.equal('DELETE');
         expect(del.url).to.equal('/views/qs32-qpt7');
@@ -569,7 +492,7 @@ describe('spatial service', function() {
   it('will clean up any working copy layers when an error is encountered getting column info', function(onDone) {
     mockCore.failGetColumns = 503;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (_finishMessage) => {
+      (_finishMessage) => {
         const trace = mockCore.history.map(r => [r.method, r.url]);
         expect(trace).to.eql([
           ["POST", "/authenticate"],
@@ -592,7 +515,7 @@ describe('spatial service', function() {
     mockCore.failDeleteColumns = 503;
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (_finishMessage) => {
+      (_finishMessage) => {
         const trace = mockCore.history.map(r => [r.method, r.url]);
         expect(trace).to.eql([
           ["POST", "/authenticate"],
@@ -618,7 +541,7 @@ describe('spatial service', function() {
     mockCore.failUpsert = 503;
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (_finishMessage) => {
+      (_finishMessage) => {
         var del = _.last(mockCore.history);
         expect(del.method).to.equal('DELETE');
         expect(del.url).to.equal('/views/qs32-qpt7');
@@ -633,11 +556,15 @@ describe('spatial service', function() {
     mockCore.failSetBlob = 503;
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {}, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         expect(messageDetails(finishMessage)).to.eql({
           "activityId": "e7b813c8-d68e-4c8a-b1bc-61c709816fc3",
+          "activityName": "simple_points.json",
+          "domain": "localhost",
+          "entityId": "ffff-ffff",
+          "entityType": "Dataset",
           "eventType": "set-blob-error",
           "info": {
             "english": "Failed to set the file data attribute of that dataset",
@@ -648,7 +575,8 @@ describe('spatial service', function() {
             }
           },
           "service": "Imports2",
-          "status": "Failure"
+          "status": "Failure",
+          "userId": "kacw-u8uj"
         });
 
         const trace = mockCore.history.map(r => [r.method, r.url]);
@@ -684,7 +612,7 @@ describe('spatial service', function() {
     mockCore.failSetBlob = 403;
 
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (startMessage) => {}, (finishMessage) => {
+      (finishMessage) => {
 
         const trace = mockCore.history.map(r => [r.method, r.url]);
         expect(trace).to.eql([
@@ -721,7 +649,7 @@ describe('spatial service', function() {
     var oldMax = conf.maxVerticesPerRow;
     conf.maxVerticesPerRow = 1;
     mockAmq.on('/queue/eurybates.import-status-events', sequencer([
-      (_) => {}, (finishMessage) => {
+      (finishMessage) => {
         finishMessage = JSON.parse(finishMessage);
 
         expect(finishMessage.details.status).to.eql('Failure');

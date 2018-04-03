@@ -61,11 +61,11 @@ class AmqMock extends EventEmitter {
   }
 
   subscribe(onMessage) {
-    this.on(conf.amq.inName, onMessage)
+    this.on(conf.amq.inName, onMessage);
   }
 
   send(message) {
-    this.emit(conf.amq.outName, message)
+    conf.amq.outNames.forEach(n => this.emit(n, message));
   }
 
 }
