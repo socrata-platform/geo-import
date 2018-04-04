@@ -52,7 +52,6 @@ class SpatialService {
 
   _onMessage(message) {
     const saneMessage = parseAMQMessage(message);
-    logger.info(saneMessage, 'Picked up an AMQ message');
 
     const activity = new ISS(this._amq, saneMessage);
 
