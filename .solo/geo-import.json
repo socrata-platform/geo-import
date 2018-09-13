@@ -1,0 +1,5 @@
+{
+  "start_process": "bin/start.sh",
+  "ports": [ 4445 ],
+  "http_check": "/version"
+}
