@@ -61,7 +61,7 @@ you will need core and the soda2 stack running
 
 ## testing
 
-do a single, full test run with `npm test`
+do a single, full test run with `make test`
 
 `./test.sh` will watch your tests and re-run the tests tagged as unit tests. If you want your tests to be run continuously, they need to be in the `test/unit` directory
 

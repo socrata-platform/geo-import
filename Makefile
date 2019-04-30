@@ -21,6 +21,7 @@ clean:
 	rm -rf test
 	rm -f lib.tar
 	rm -rf translations
+	rm -rf node_modules
 
 docker: appease_jenkins
 	cp lib.tar docker/
