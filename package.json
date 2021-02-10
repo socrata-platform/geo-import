@@ -14,7 +14,7 @@
     "node-expat": "2.3.12",
     "node-zookeeper-client": "0.2.2",
     "proj4": "2.3.12",
-    "request": "2.68.0",
+    "request": "2.88.2",
     "shapefile": "rozap/shapefile",
     "stompit": "0.23.0",
     "stream-reduce": "1.0.3",
