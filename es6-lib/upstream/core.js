@@ -61,7 +61,8 @@ class Core extends CoreClient {
       this.error(`Layer uid is not empty, layer uid is ${layer.uid}, cannot create layer in datastore!`);
     }
 
-    const retry = !retried && () => this.create(parentUid, layer, onComplete, true);
+    const doCreate = () => this.create(parentUid, layer, onComplete, true);
+    const retry = !retried && doCreate;
 
     return this.url((err, url) => {
       if (err) return onComplete(err);
@@ -89,7 +90,8 @@ class Core extends CoreClient {
   }
 
   replace(layer, onComplete, retried) {
-    const retry = !retried && () => this.replace(layer, onComplete, true);
+    const doReplace = () => this.replace(layer, onComplete, true);
+    const retry = !retried && doReplace;
 
     return this.url((err, url) => {
       if (err) return onComplete(err);
@@ -106,7 +108,8 @@ class Core extends CoreClient {
   }
 
   publish(layer, onComplete, retried) {
-    const retry = !retried && () => this.publish(layer, onComplete, true);
+    const doPublish = () => this.publish(layer, onComplete, true);
+    const retry = !retried && doPublish;
 
     return this.url((err, url) => {
       if (err) return onComplete(err);
@@ -124,7 +127,8 @@ class Core extends CoreClient {
 
 
   getView(fourfour, onComplete, retried) {
-    const retry = !retried && () => this.getView(layer, onComplete, true);
+    const doGetView = () => this.getView(layer, onComplete, true);
+    const retry = !retried && doGetView;
 
     return this.url((err, url) => {
       if (err) return onComplete(err);
@@ -143,7 +147,8 @@ class Core extends CoreClient {
   }
 
   updateMetadata(fourfour, metadata, privateMetadata, onComplete, retried) {
-    const retry = !retried && () => this.updateMetadata(fourfour, metadata, privateMetadata, onComplete, true);
+    const doUpdateMetadata = () => this.updateMetadata(fourfour, metadata, privateMetadata, onComplete, true);
+    const retry = !retried && doUpdateMetadata;
 
     return this.url((err, url) => {
       if (err) return onComplete(err);
@@ -167,7 +172,8 @@ class Core extends CoreClient {
 
 
   addColumn(colSpec, onComplete, retried) {
-    const retry = !retried && () => this.addColumn(colSpec, onComplete, true);
+    const doAddColumn = () => this.addColumn(colSpec, onComplete, true);
+    const retry = !retried && doAddColumn;
 
     var [fourfour, column] = colSpec;
     this.info(`Add column ${fourfour} ${JSON.stringify(column.toJSON())} to core`);
@@ -188,7 +194,8 @@ class Core extends CoreClient {
   }
 
   getColumns(layer, onComplete, retried) {
-    const retry = !retried && () => this.getColumns(layer, onComplete, true);
+    const doGetColumns = () => this.getColumns(layer, onComplete, true);
+    const retry = !retried && doGetColumns;
 
     return this.url((err, url) => {
       if (err) return onComplete(err);
@@ -205,7 +212,8 @@ class Core extends CoreClient {
   }
 
   deleteColumn(colSpec, onComplete, retried) {
-    const retry = !retried && () => this.deleteColumn(colSpec, onComplete, true);
+    const doDeleteColumns = () => this.deleteColumn(colSpec, onComplete, true);
+    const retry = !retried && doDeleteColumns;
 
     var [viewId, colId] = colSpec;
     this.info(`Delete column ${viewId} ${colId} from core`);
@@ -257,7 +265,8 @@ class Core extends CoreClient {
   }
 
   setBlob(viewId, blobId, blobName, onComplete, retried) {
-    const retry = !retried && () => this.setBlob(viewId, blobId, blobName, onComplete, true);
+    const doSetBlob = () => this.setBlob(viewId, blobId, blobName, onComplete, true);
+    const retry = !retried && doSetBlob;
 
     return this.url((err, url) => {
       if (err) return onOpened(err);
