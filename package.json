@@ -2,7 +2,6 @@
   "name": "geo-import",
   "version": "0.1.89-SNAPSHOT",
   "private": true,
-  "type": "module",
   "dependencies": {
     "async": "1.5.2",
     "babel": "^5.8.38",
