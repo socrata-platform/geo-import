@@ -12,7 +12,7 @@ class LogWrapper {
   }
 
   _proxy(identifiers) {
-    ['debug', 'info', 'warn', 'error', 'critical'].forEach((level) => {
+    ['debug', 'info', 'warn', 'error', 'fatal'].forEach((level) => {
       this[level] = (metadata, message) => {
         if(_.isObject(metadata)) {
           metadata = _.extend({}, metadata, identifiers);

@@ -7,7 +7,7 @@ default {
 
   zk: ["localhost:2181"],
   log: {
-    level: 'critical',
+    level: 'fatal',
     name: 'geo-import'
   },
 
