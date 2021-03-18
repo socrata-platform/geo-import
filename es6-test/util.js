@@ -36,7 +36,7 @@ const NoopLogger = {
   info: _.noop,
   warn: _.noop,
   error: _.noop,
-  critical: _.noop
+  fatal: _.noop
 }
 
 export {
