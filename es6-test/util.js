@@ -1,7 +1,5 @@
 import chai from 'chai';
-import {
-  Transform
-}
+import { Transform }
 from 'stream';
 import _ from 'underscore';
 var res;

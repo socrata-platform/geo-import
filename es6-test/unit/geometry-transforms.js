@@ -1,11 +1,8 @@
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
-import {
-  fixture
-}
-from '../fixture';
-import GeoJSON from '../../es6-lib/decoders/geojson';
+import { fixture } from '../fixture.js';
+import GeoJSON from '../../es6-lib/decoders/geojson.js';
 var expect = chai.expect;
 
 describe('geometry transforms', function() {
@@ -155,8 +152,6 @@ describe('geometry transforms', function() {
             ]
           ]
         ]);
-
-
         onDone();
       });
   });

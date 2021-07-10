@@ -1,9 +1,10 @@
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
-import {fixture} from '../fixture';
-import GeoJSON from '../../es6-lib/decoders/geojson';
-import {ArityChecker} from '../util';
+import { fixture } from '../fixture.js';
+import GeoJSON from '../../es6-lib/decoders/geojson.js';
+import { ArityChecker } from '../util.js';
+
 var expect = chai.expect;
 
 describe('geojson decoder', function() {
@@ -111,5 +112,4 @@ describe('geojson decoder', function() {
       ]);
     })).on('end', onDone);
   });
-
 });

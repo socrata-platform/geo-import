@@ -6,21 +6,12 @@
  */
 import es from 'event-stream';
 import _ from 'underscore';
-import {
-  geoJsToSoQL
-}
-from './transform';
-import {
-  types
-}
-from '../soql/mapper';
-import {
-  Transform
-}
-from 'stream';
-import Parser from '../util/parser';
-import config from '../config';
-import {JSONParseError} from '../errors';
+import { geoJsToSoQL } from './transform.js';
+import { types } from '../soql/mapper.js';
+import { Transform } from 'stream';
+import Parser from '../util/parser.js';
+import config from '../config/index.js';
+import JSONParseError from '../errors.js';
 
 class GeoJSON extends Transform {
 
@@ -80,5 +71,4 @@ class GeoJSON extends Transform {
   }
 }
 
-export
-default GeoJSON;
+export default GeoJSON;

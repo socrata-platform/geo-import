@@ -1,4 +1,8 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function fixture(name) {
   //ok, so in read streams, null === 'binary'
@@ -24,4 +28,4 @@ function bufferJs(source, cb) {
   })
 }
 
-export {fixture as fixture, bufferJs as bufferJs};
+export { fixture as fixture, bufferJs as bufferJs };

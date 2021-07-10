@@ -1,8 +1,12 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
 import path from 'path';
 import _ from 'underscore';
 import es from 'event-stream';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function hasHeaders(req, res) {
   const present = _.every(['x-socrata-requestid', 'x-socrata-host'], (key) => {
@@ -13,10 +17,8 @@ function hasHeaders(req, res) {
       error: 'headers'
     }));
   }
-  return present
+  return present;
 }
-
-
 
 function enforceUA(req, res, next) {
   if (req.headers['user-agent'] !== 'geo-import') {
@@ -320,11 +322,6 @@ class CoreMock {
       //already closed...heh
     }
   }
-
-
 }
 
-
-
-export
-default CoreMock;
+export default CoreMock;

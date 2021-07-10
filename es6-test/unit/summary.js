@@ -3,18 +3,15 @@ import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
 import fs from 'fs';
-import {
-  fixture, bufferJs
-}
-from '../fixture';
+import { fixture, bufferJs } from '../fixture.js';
 import request from 'request';
-import MockZKClient from '../services/mock-zk';
-import {
-  EventEmitter
-}
-from 'events';
-import config from '../../es6-lib/config';
-import service from '../../es6-lib/service';
+import MockZKClient from '../services/mock-zk.js';
+import config from '../../es6-lib/config/index.js';
+import service from '../../es6-lib/service.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 var expect = chai.expect;
 

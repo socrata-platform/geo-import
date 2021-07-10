@@ -1,5 +1,4 @@
-export
-default {
+export default {
   port: 6665,
 
   //abbreviate summaries at 50kb

@@ -1,10 +1,7 @@
-import {
-  types
-}
-from '../soql/mapper';
+import { types } from '../soql/mapper.js';
 import _ from 'underscore';
-import SoQLNull from '../soql/null';
-import logger from '../util/logger';
+import SoQLNull from '../soql/null.js';
+import logger from '../util/logger.js';
 
 const GEOM_NAME = 'the_geom';
 /**
@@ -89,6 +86,4 @@ function toRow(geometry, geomToSoQL, properties, propToSoQL, crs) {
   };
 }
 
-export {
-  toRow as toRow, geomToSoQL as geomToSoQL, propToSoQL as propToSoQL, geoJsToSoQL as geoJsToSoQL
-};
+export { toRow as toRow, geomToSoQL as geomToSoQL, propToSoQL as propToSoQL, geoJsToSoQL as geoJsToSoQL };

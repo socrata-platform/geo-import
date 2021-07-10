@@ -9,15 +9,9 @@
  */
 import es from 'event-stream';
 import _ from 'underscore';
-import {
-  geoJsToSoQL
-}
-from './transform';
-import {
-  Duplex
-}
-from 'stream';
-import BBox from '../util/bbox';
+import { geoJsToSoQL } from './transform.js';
+import { Duplex } from 'stream';
+import BBox from '../util/bbox.js';
 import shapefile from 'shapefile';
 import concat from 'concat-stream';
 import yauzl from 'yauzl';
@@ -25,18 +19,13 @@ import path from 'path';
 import fs from 'fs';
 import srs from 'srs';
 import uuid from 'uuid';
-import {
-  EventEmitter
-}
-from 'events';
+import { EventEmitter } from 'events';
 import async from 'async';
-import logger from '../util/logger';
-import config from '../config';
-import DevNull from '../util/devnull';
-import {
-  CorruptShapefileError, IncompleteShapefileError
-}
-from '../errors';
+import logger from '../util/logger.js';
+import config from '../config/index.js';
+import DevNull from '../util/devnull.js';
+import CorruptShapefileError from '../errors.js';
+import IncompleteShapefileError from '../errors.js';
 
 const DEFAULT_PROJECTION = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
@@ -346,5 +335,4 @@ class Shapefile extends Duplex {
 
 }
 
-export
-default Shapefile;
+export default Shapefile;

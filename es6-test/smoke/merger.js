@@ -2,31 +2,15 @@ import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
-import {
-  fixture, bufferJs
-}
-from '../fixture';
-import request from 'request';
-import CoreMock from '../services/mock-core';
-import MockZKClient from '../services/mock-zk';
-import {
-  EventEmitter
-}
-from 'events';
-import config from '../../es6-lib/config';
-import service from '../../es6-lib/service';
-import Shapefile from '../../es6-lib/decoders/shapefile';
-import KMZ from '../../es6-lib/decoders/kmz';
-import KML from '../../es6-lib/decoders/kml';
-import GeoJSON from '../../es6-lib/decoders/geojson';
-import Disk from '../../es6-lib/decoders/disk';
-import Merger from '../../es6-lib/decoders/merger';
-import {
-  NoopLogger,
-  ArityChecker
-}
-from '../util';
-import DevNull from '../../es6-lib/util/devnull';
+import { fixture } from '../fixture.js';
+import { EventEmitter } from 'events';
+import config from '../../es6-lib/config/index.js';
+import Shapefile from '../../es6-lib/decoders/shapefile.js';
+import GeoJSON from '../../es6-lib/decoders/geojson.js';
+import Disk from '../../es6-lib/decoders/disk.js';
+import Merger from '../../es6-lib/decoders/merger.js';
+import { NoopLogger } from '../util.js';
+import DevNull from '../../es6-lib/util/devnull.js';
 
 
 var res;

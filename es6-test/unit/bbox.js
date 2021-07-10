@@ -1,12 +1,10 @@
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
-import {fixture} from '../fixture';
-import BBox from '../../es6-lib/util/bbox';
+import BBox from '../../es6-lib/util/bbox.js';
 var expect = chai.expect;
 
 describe('bounding box', function() {
-
   it('can expand a bbox', function() {
     var a = new BBox()
     a.expand([3, 4])
@@ -75,8 +73,5 @@ describe('bounding box', function() {
       maxx: 3,
       maxy: 4
     })
-
   });
-
-
 });

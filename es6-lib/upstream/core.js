@@ -1,22 +1,19 @@
 import request from 'request';
-import Layer from '../decoders/layer';
-import logger from '../util/logger';
+import Layer from '../decoders/layer.js';
+import logger from '../util/logger.js';
 import _ from 'underscore';
-import config from '../config';
-import CoreClient from './core-client';
-import {
-  ZKError,
-  CreateDatasetError,
-  CreateWorkingCopyError,
-  CreateColumnError,
-  PublicationError,
-  GetColumnError,
-  DeleteColumnError,
-  SetBlobError,
-  UpdateMetadataError,
-  CleanupError
-}
-from '../errors';
+import config from '../config/index.js';
+import CoreClient from './core-client.js';
+import ZKError from '../errors.js';
+import CreateDatasetError from '../errors.js';
+import CreateWorkingCopyError from '../errors.js';
+import CreateColumnError from '../errors.js';
+import PublicationError from '../errors.js';
+import GetColumnError from '../errors.js';
+import DeleteColumnError from '../errors.js';
+import SetBlobError from '../errors.js';
+import UpdateMetadataError from '../errors.js';
+import CleanupError from '../errors.js';
 
 const timeout = config().upstreamTimeoutMs;
 
@@ -285,5 +282,4 @@ class Core extends CoreClient {
 
 }
 
-export
-default Core;
+export default Core;

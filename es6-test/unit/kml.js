@@ -1,15 +1,9 @@
 import chai from 'chai';
 import should from 'should';
 import * as es from 'event-stream';
-import {
-  fixture
-}
-from '../fixture';
-import KML from '../../es6-lib/decoders/kml';
-import {
-  ArityChecker
-}
-from '../util';
+import { fixture } from '../fixture.js';
+import KML from '../../es6-lib/decoders/kml.js';
+import { ArityChecker } from '../util.js';
 var expect = chai.expect;
 
 

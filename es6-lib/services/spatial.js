@@ -1,33 +1,20 @@
-import {
-  getDecoderForExtension
-}
-from '../decoders';
-import Merger from '../decoders/merger';
-import Disk from '../decoders/disk';
-import Core from '../upstream/core';
-import Auth from '../upstream/auth';
+import { getDecoderForExtension } from '../decoders/index.js';
+import Merger from '../decoders/merger.js';
+import Disk from '../decoders/disk.js';
+import Core from '../upstream/core.js';
+import Auth from '../upstream/auth.js';
 import async from 'async';
 import _ from 'underscore';
 import * as es from 'event-stream';
-import BBox from '../util/bbox';
-import {
-  parseAMQMessage
-}
-from '../util/hacks';
-import {
-  types
-}
-from '../soql/mapper';
-import Layer from '../decoders/layer';
-import config from '../config';
-import logger from '../util/logger';
-import ISS from '../upstream/iss';
-import {
-  UpsertError,
-  ConnectionError
-}
-from '../errors';
-
+import BBox from '../util/bbox.js';
+import { parseAMQMessage } from '../util/hacks.js';
+import { types } from '../soql/mapper.js';
+import Layer from '../decoders/layer.js';
+import config from '../config/index.js';
+import logger from '../util/logger.js';
+import ISS from '../upstream/iss.js';
+import UpsertError from '../errors.js';
+import ConnectionError from '../errors.js';
 
 var conf = config();
 const MAX_PARALLEL = 4;
@@ -483,5 +470,4 @@ class SpatialService {
 
 }
 
-export
-default SpatialService;
+export default SpatialService;

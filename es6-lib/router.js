@@ -1,10 +1,10 @@
 /**
  * Not much to see here. Just some routes.
  */
-import version from './services/version';
-import Summary from './services/summary';
-import Metrics from './util/metrics';
-import logger from './util/logger';
+import version from './services/version.js';
+import Summary from './services/summary.js';
+import Metrics from './util/metrics.js';
+import logger from './util/logger.js';
 
 function acceptJson(req, res, next) {
   if (!req.accepts('json')) {
@@ -34,5 +34,4 @@ function router(app, zookeeper, metrics) {
 
 }
 
-export
-default router;
+export default router;
