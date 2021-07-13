@@ -6,7 +6,6 @@
 
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
 import { EventEmitter } from 'events';
 import { fixture } from '../fixture.js';
 import { NoopLogger } from '../util.js';

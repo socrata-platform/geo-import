@@ -4,16 +4,17 @@ import logger from '../util/logger.js';
 import _ from 'underscore';
 import config from '../config/index.js';
 import CoreClient from './core-client.js';
-import ZKError from '../errors.js';
-import CreateDatasetError from '../errors.js';
-import CreateWorkingCopyError from '../errors.js';
-import CreateColumnError from '../errors.js';
-import PublicationError from '../errors.js';
-import GetColumnError from '../errors.js';
-import DeleteColumnError from '../errors.js';
-import SetBlobError from '../errors.js';
-import UpdateMetadataError from '../errors.js';
-import CleanupError from '../errors.js';
+import {
+  CreateDatasetError,
+  CreateWorkingCopyError,
+  CreateColumnError,
+  PublicationError,
+  GetColumnError,
+  DeleteColumnError,
+  SetBlobError,
+  UpdateMetadataError,
+  CleanupError
+} from '../errors.js';
 
 const timeout = config().upstreamTimeoutMs;
 

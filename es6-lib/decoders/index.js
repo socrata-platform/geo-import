@@ -4,7 +4,7 @@ import KML from './kml.js';
 import KMZ from './kmz.js';
 import Shapefile from './shapefile.js';
 import path from 'path';
-import DecodeFiletypeError from '../errors.js';
+import { DecodeFiletypeError } from '../errors.js';
 
 function getDecoderForContentType(req, disk) {
   var ctype = req.headers['content-type'];

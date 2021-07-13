@@ -7,7 +7,6 @@
  * TODO: if this functionality is needed at some point,
  * need to revisit it.
  */
-import es from 'event-stream';
 import _ from 'underscore';
 import { geoJsToSoQL } from './transform.js';
 import { Duplex } from 'stream';
@@ -24,8 +23,7 @@ import async from 'async';
 import logger from '../util/logger.js';
 import config from '../config/index.js';
 import DevNull from '../util/devnull.js';
-import CorruptShapefileError from '../errors.js';
-import IncompleteShapefileError from '../errors.js';
+import { CorruptShapefileError, IncompleteShapefileError } from '../errors.js';
 
 const DEFAULT_PROJECTION = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 

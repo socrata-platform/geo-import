@@ -4,14 +4,13 @@
  *
  * TODO: hierarchical CRS via geometry collections (;_;)
  */
-import es from 'event-stream';
 import _ from 'underscore';
 import { geoJsToSoQL } from './transform.js';
 import { types } from '../soql/mapper.js';
 import { Transform } from 'stream';
 import Parser from '../util/parser.js';
 import config from '../config/index.js';
-import JSONParseError from '../errors.js';
+import { JSONParseError } from '../errors.js';
 
 class GeoJSON extends Transform {
 

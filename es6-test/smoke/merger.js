@@ -1,7 +1,6 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
 import { fixture } from '../fixture.js';
 import { EventEmitter } from 'events';
 import config from '../../es6-lib/config/index.js';

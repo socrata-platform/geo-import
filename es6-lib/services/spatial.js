@@ -5,7 +5,7 @@ import Core from '../upstream/core.js';
 import Auth from '../upstream/auth.js';
 import async from 'async';
 import _ from 'underscore';
-import * as es from 'event-stream';
+import es from 'event-stream';
 import BBox from '../util/bbox.js';
 import { parseAMQMessage } from '../util/hacks.js';
 import { types } from '../soql/mapper.js';
@@ -13,8 +13,7 @@ import Layer from '../decoders/layer.js';
 import config from '../config/index.js';
 import logger from '../util/logger.js';
 import ISS from '../upstream/iss.js';
-import UpsertError from '../errors.js';
-import ConnectionError from '../errors.js';
+import { ConnectionError, UpsertError } from '../errors.js';
 
 var conf = config();
 const MAX_PARALLEL = 4;

@@ -1,7 +1,6 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
 import request from 'request';
 import MockZKClient from '../services/mock-zk.js';
 import config from '../../es6-lib/config/index.js';

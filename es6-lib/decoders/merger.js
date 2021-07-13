@@ -12,7 +12,6 @@
 
 import _ from 'underscore';
 import Layer from './layer.js';
-import * as es from 'event-stream';
 import { types } from '../soql/mapper.js';
 import { Transform } from 'stream';
 import Disk from './disk.js';

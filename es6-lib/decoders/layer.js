@@ -17,7 +17,7 @@ import LDJson from './ldjson.js';
 import WGS84Reprojector from './wgs84-reprojector.js';
 import DevNull from '../util/devnull.js';
 import config from '../config/index.js';
-import VertexTooComplexError from '../errors.js';
+import { VertexTooComplexError } from '../errors.js';
 const conf = config();
 const scratchPrologue = "";
 const scratchSeparator = "\n";

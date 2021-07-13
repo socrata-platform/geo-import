@@ -1,7 +1,6 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
 import fs from 'fs';
 import { fixture, bufferJs } from '../fixture.js';
 import request from 'request';

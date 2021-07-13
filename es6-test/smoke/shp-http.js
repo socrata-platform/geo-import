@@ -1,6 +1,5 @@
 import _ from 'underscore';
 import chai from 'chai';
-import * as es from 'event-stream';
 import { fixture, bufferJs } from '../fixture.js';
 import request from 'request';
 import CoreMock from '../services/mock-core.js';

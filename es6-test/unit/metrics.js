@@ -1,7 +1,6 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
 import fs from 'fs';
 import { fixture } from '../fixture.js';
 import CoreMock from '../services/mock-core.js';

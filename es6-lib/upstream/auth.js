@@ -1,6 +1,6 @@
 import CoreClient from './core-client.js';
 import request from 'request';
-import AuthenticationError from '../errors.js';
+import { AuthenticationError } from '../errors.js';
 import config from '../config/index.js';
 const conf = config();
 const timeout = conf.upstreamTimeoutMs;

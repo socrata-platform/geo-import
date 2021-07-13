@@ -6,12 +6,11 @@
  */
 import _ from 'underscore';
 import expat from 'node-expat';
-import es from 'event-stream';
 import { Transform } from 'stream';
 import { types } from '../soql/mapper.js';
 import { toRow, geomToSoQL } from './transform.js';
 import config from '../config/index.js';
-import XMLParseError from '../errors.js';
+import { XMLParseError } from '../errors.js';
 
 
 //kml has no facilities for name the geometry

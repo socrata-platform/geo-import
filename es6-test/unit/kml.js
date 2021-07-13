@@ -1,6 +1,6 @@
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
+import es from 'event-stream';
 import { fixture } from '../fixture.js';
 import KML from '../../es6-lib/decoders/kml.js';
 import { ArityChecker } from '../util.js';

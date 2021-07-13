@@ -1,7 +1,6 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
 import request from 'request';
 import CoreMock from '../services/mock-core.js';
 import AmqMock from '../services/mock-amq.js';

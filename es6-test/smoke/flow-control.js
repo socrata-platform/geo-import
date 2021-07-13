@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import chai from 'chai';
-import * as es from 'event-stream';
+import es from 'event-stream';
 import { fixture } from '../fixture.js';
 import { EventEmitter } from 'events';
 import Shapefile from '../../es6-lib/decoders/shapefile.js';

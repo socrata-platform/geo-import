@@ -4,7 +4,7 @@ import config from '../config/index.js';
 import { types } from '../soql/mapper.js';
 import srs from 'srs';
 import BBox from '../util/bbox.js';
-import InvalidArityError from '../errors.js';
+import { InvalidArityError } from '../errors.js';
 
 const WGS84 = '+proj=longlat +ellps=WGS84 +no_defs';
 

@@ -1,6 +1,5 @@
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
 import BBox from '../../es6-lib/util/bbox.js';
 var expect = chai.expect;
 
