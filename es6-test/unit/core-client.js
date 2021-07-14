@@ -49,7 +49,7 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    )
+    );
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     const core = new Core(auth, mockZk, NoopLogger);
 
@@ -88,9 +88,9 @@ describe('core client', function() {
               "a_bool": true
             }
           }]
-        })
+        });
         onDone();
-      })
+      });
     });
   });
 
@@ -104,7 +104,7 @@ describe('core client', function() {
       null,
       null,
       null
-    )
+    );
 
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
@@ -125,7 +125,7 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    )
+    );
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
@@ -144,7 +144,7 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    )
+    );
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
@@ -163,18 +163,17 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    )
+    );
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
     const metadata = {
       foo: 1,
       bar: 'baz'
-    }
+    };
     const privateMetadata = {
       secret: 'metadata'
-    }
-
+    };
 
     core.updateMetadata('four-four', metadata, privateMetadata, (err, res) => {
       expect(res).to.deep.eql({
@@ -186,7 +185,7 @@ describe('core client', function() {
         privateMetadata: {
           secret: 'metadata'
         }
-      })
+      });
       onDone();
     });
   });

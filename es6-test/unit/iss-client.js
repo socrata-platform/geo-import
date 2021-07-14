@@ -53,7 +53,7 @@ describe('iss client', function() {
           info: {
             english: 'something broke'
           }
-        }
+        };
       }
     });
   });

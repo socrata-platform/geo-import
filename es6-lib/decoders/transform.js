@@ -21,7 +21,7 @@ function geoJsToSoQL(feature, crs) {
 
   if (feature.crs && !crs) {
     if (feature.crs.href) {
-      logger.warn(`No support for linked CRS yet. Omitting feature: ${featre}`);
+      logger.warn(`No support for linked CRS yet. Omitting feature: ${feature}`);
       return false;
     }
     crs = feature.crs.properties.name;
@@ -65,7 +65,7 @@ function geomToSoQL(geom) {
   var ctype = geom.type.toLowerCase();
   var t = types[ctype];
   if (!t) {
-    logger.warn(`Invalid geom property, ${typeof value} ${value}`);
+    logger.warn(`Invalid geom property, ${geom} ${ctype}`);
     return false;
   }
   return new t(GEOM_NAME, geom, {});

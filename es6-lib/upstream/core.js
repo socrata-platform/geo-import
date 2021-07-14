@@ -125,7 +125,7 @@ class Core extends CoreClient {
 
 
   getView(fourfour, onComplete, retried) {
-    const doGetView = () => this.getView(layer, onComplete, true);
+    const doGetView = () => this.getView(fourfour, onComplete, true);
     const retry = !retried && doGetView;
 
     return this.url((err, url) => {
@@ -267,7 +267,7 @@ class Core extends CoreClient {
     const retry = !retried && doSetBlob;
 
     return this.url((err, url) => {
-      if (err) return onOpened(err);
+      if (err) return onComplete(err);
       const uri = `${url}/views/${viewId}?method=setBlob&blobId=${blobId}&blobName=${encodeURI(blobName)}`;
       this.info(`Setting blob on ${uri} ${viewId} to ${blobId}`);
       request.put({

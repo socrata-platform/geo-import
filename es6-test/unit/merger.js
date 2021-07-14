@@ -50,7 +50,7 @@ function jsbuf() {
   });
 }
 
-const FLOAT_DELTA = .000000001;
+const FLOAT_DELTA = 0.000000001;
 
 describe('merging feature streams to layers', function() {
 
@@ -131,13 +131,12 @@ describe('merging feature streams to layers', function() {
         var [epsg26915, epsg23700] = layers;
 
         epsg26915.pipe(jsbuf()).on('end', ([row]) => {
-          var [x, y] = row.the_geom.coordinates
+          var [x, y] = row.the_geom.coordinates;
           expect(x).to.be.closeTo(-97.48783007892, FLOAT_DELTA);
           expect(y).to.be.closeTo(0.00000450965,  FLOAT_DELTA);
 
           epsg23700.pipe(jsbuf()).on('end', ([row]) => {
-
-            var [x, y] = row.the_geom.coordinates
+            var [x, y] = row.the_geom.coordinates;
             expect(x).to.be.closeTo(10.7889673904, FLOAT_DELTA);
             expect(y).to.be.closeTo(45.0359670320,  FLOAT_DELTA);
             onDone();
@@ -170,13 +169,12 @@ describe('merging feature streams to layers', function() {
         var [epsg26915, crs84] = layers;
 
         epsg26915.pipe(jsbuf()).on('end', ([row]) => {
-
-          var [x, y] = row.the_geom.coordinates
+          var [x, y] = row.the_geom.coordinates;
           expect(x).to.be.closeTo(-97.48783007891072, FLOAT_DELTA);
           expect(y).to.be.closeTo(  0.00000450969282, FLOAT_DELTA);
 
           crs84.pipe(jsbuf()).on('end', ([row]) => {
-            var [x, y] = row.the_geom.coordinates
+            var [x, y] = row.the_geom.coordinates;
             expect(x).to.be.closeTo(103, FLOAT_DELTA);
             expect(y).to.be.closeTo(1.5, FLOAT_DELTA);
             onDone();

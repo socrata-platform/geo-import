@@ -10,8 +10,6 @@ import service from '../../es6-lib/service.js';
 var res;
 var expect = chai.expect;
 
-
-
 describe('shapefile ingress', () => {
   var mockZk;
   var mockCore;
@@ -74,7 +72,6 @@ describe('shapefile ingress', () => {
       });
   });
 
-
   it('missing files with garbage included SHP summary', function(onDone) {
     this.timeout(80000);
 
@@ -94,5 +91,4 @@ describe('shapefile ingress', () => {
         onDone();
       });
   });
-
 });

@@ -6,8 +6,8 @@ import MockZKClient from '../services/mock-zk.js';
 import config from '../../es6-lib/config/index.js';
 import service from '../../es6-lib/service.js';
 import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const pack = require("../../package.json")
+const requireJson = createRequire(import.meta.url);
+const pack = requireJson("../../package.json");
 
 var expect = chai.expect;
 

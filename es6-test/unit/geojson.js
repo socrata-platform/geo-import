@@ -8,18 +8,17 @@ import { ArityChecker } from '../util.js';
 var expect = chai.expect;
 
 describe('geojson decoder', function() {
-
   it('will emit an error for malformed json', function(onDone) {
-    var count = 0;
+    const geoJsonInstance = new GeoJSON();
+    geoJsonInstance.prependListener('error', (error) => {});
     fixture('malformed_geojson.json')
-    .pipe(new GeoJSON())
-    .once('error', (err) => {
-      expect(err.toJSON().info.english).to.equal("Failed to parse JSON at line 13 column 7 token } because Error: Bad array");
-      expect(err.toJSON().eventType).to.equal('jsonparse-error');
-      onDone();
-    });
+      .pipe(geoJsonInstance)
+      .once('error', (err) => {
+        expect(err.toJSON().info.english).to.equal("Failed to parse JSON at line 13 column 7 token } because Error: Bad array");
+        expect(err.toJSON().eventType).to.equal('jsonparse-error');
+        onDone();
+      });
   });
-
 
   it('geojs can turn simple points to SoQLPoint', function(onDone) {
     var count = 0;

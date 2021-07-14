@@ -1,6 +1,6 @@
 import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const pack = require("../../package.json")
+const requireJson = createRequire(import.meta.url);
+const pack = requireJson("../../package.json");
 
 var VersionService = {
   'get': function(req, res) {

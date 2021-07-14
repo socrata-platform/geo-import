@@ -15,7 +15,7 @@ describe('geometry transforms', function() {
         expect(line.value.coordinates).to.eql([
           [100.0, 0.0],
           [100.0, 0.0]
-        ])
+        ]);
       }))
       .on('end', onDone);
   });
@@ -28,7 +28,7 @@ describe('geometry transforms', function() {
         expect(line.value.coordinates).to.eql([[
           [100.0, 0.0],
           [100.0, 0.0]
-        ]])
+        ]]);
       }))
       .on('end', onDone);
   });

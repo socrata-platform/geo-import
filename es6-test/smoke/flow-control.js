@@ -49,8 +49,6 @@ class SlowConsumer extends Transform {
   }
 }
 
-
-
 describe('flow control', () => {
   afterEach(function() {
     if (res) res.emit('finish');

@@ -30,8 +30,6 @@ class GeoJSON extends Transform {
       .on('data', this._onCrs.bind(this));
   }
 
-
-
   static canDecode() {
     return ['application/json'];
   }

@@ -5,13 +5,13 @@ import _ from 'underscore';
 import es from 'event-stream';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const fileName = fileURLToPath(import.meta.url);
+const dirName = path.dirname(fileName);
 
 function hasHeaders(req, res) {
   const present = _.every(['x-socrata-requestid', 'x-socrata-host'], (key) => {
     return !_.isUndefined(req.headers[key]) && (req.headers[key] !== 'null');
-  })
+  });
   if (!present) {
     res.status(400).send(JSON.stringify({
       error: 'headers'
@@ -73,7 +73,7 @@ const view = (name) => ({
     "flags": ["admin"]
   },
   "flags": ["default"]
-})
+});
 
 class CoreMock {
   constructor(port) {
@@ -95,8 +95,8 @@ class CoreMock {
       this._history.push(req);
       return res.status(200)
         .header('set-cookie', 'monster')
-        .send('ok')
-    })
+        .send('ok');
+    });
 
     app.post('/views/:uid/publication', function(req, res) {
       this._history.push(req);
@@ -278,7 +278,7 @@ class CoreMock {
     }.bind(this));
 
     app.get('/file_data/:blobId', (req, res) => {
-      const absPath = path.resolve(`${__dirname}/../fixtures/${req.params.blobId}`);
+      const absPath = path.resolve(`${dirName}/../fixtures/${req.params.blobId}`);
       res.sendFile(absPath);
     });
 

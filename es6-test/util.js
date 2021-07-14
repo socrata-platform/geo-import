@@ -35,7 +35,7 @@ const NoopLogger = {
   warn: _.noop,
   error: _.noop,
   fatal: _.noop
-}
+};
 
 export {
   ArityChecker, messageDetails, NoopLogger

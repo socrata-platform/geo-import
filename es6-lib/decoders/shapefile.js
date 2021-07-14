@@ -136,7 +136,7 @@ class Shapefile extends Duplex {
       //our reader has gone away, this kills the stream.
       //so end the stream with a null and flush anything
       //that's buffered into oblivion
-      if (!this._readableState.pipes) {
+      if (_.isEmpty(this._readableState.pipes)) {
         this.push(null);
         return this.pipe(new DevNull());
       }

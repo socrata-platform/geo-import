@@ -53,7 +53,7 @@ class Merger extends Transform {
       layer = new Layer(soqlRow.columns.map((soqlValue) => {
         let t = types[soqlValue.ctype];
         if (!t) {
-          logger.warn(`No SoQLType found for ${soqlValue.ctype}, falling back to SoQLText`);
+          this.log.warn(`No SoQLType found for ${soqlValue.ctype}, falling back to SoQLText`);
           t = types.string;
         }
         return new t(soqlValue.rawName);

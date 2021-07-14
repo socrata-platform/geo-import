@@ -26,11 +26,7 @@ describe('merger', () => {
     if (res) res.emit('finish');
   });
 
-
-
-
   it('should be able to give a useful error for broken geojson', function(onDone) {
-
     const disk = new Disk(res, NoopLogger);
     const decoder = new GeoJSON(disk);
     const merger = new Merger(disk, [], false, NoopLogger);
@@ -40,7 +36,6 @@ describe('merger', () => {
       .pipe(merger)
       .on('end', (layers) => {
         const [layer] = layers;
-
         layer
           .on('error', (e) => {
             try {
@@ -59,7 +54,6 @@ describe('merger', () => {
           .pipe(new DevNull());
       });
   });
-
 
   it('should be able to handle a mostly null shp', function(onDone) {
     this.timeout(100000);
@@ -122,8 +116,6 @@ describe('merger', () => {
       });
   });
 
-
-
   it('co parcels', function(onDone) {
     this.timeout(100000);
 
@@ -143,8 +135,8 @@ describe('merger', () => {
           const dbf = _.find(cols, c => c.name === 'invalid_the_geom');
           const shp = _.find(cols, c => c.name === 'the_geom');
 
-          expect(!!dbf).to.be.true
-          expect(!!shp).to.be.true
+          expect(!!dbf).to.be.true;
+          expect(!!shp).to.be.true;
           expect(shp.dataTypeName).to.eql('multipolygon');
           expect(dbf.dataTypeName).to.eql('text');
 
