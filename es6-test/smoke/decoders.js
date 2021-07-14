@@ -15,6 +15,7 @@ import GeoJSON from '../../es6-lib/decoders/geojson.js';
 import Disk from '../../es6-lib/decoders/disk.js';
 import Merger from '../../es6-lib/decoders/merger.js';
 import { ArityChecker, NoopLogger } from '../util.js';
+import async from 'async';
 
 var res;
 var expect = chai.expect;
@@ -352,7 +353,6 @@ describe('decoders', () => {
 
   it('weird line bug where coordinate state was not being reset between elements', function(onDone) {
     var [merger, response] = makeMerger();
-    var async = require('async');
     var theRow;
 
     fixture('line_extra_dimension.kml')
