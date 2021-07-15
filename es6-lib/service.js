@@ -1,10 +1,10 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import router from './router';
-import consumer from './consumer';
-import conf from './config';
-import logger from './util/logger';
-import Metrics from './util/metrics';
+import router from './router.js';
+import consumer from './consumer.js';
+import conf from './config/index.js';
+import logger from './util/logger.js';
+import Metrics from './util/metrics.js';
 import async from 'async';
 import _ from 'underscore';
 
@@ -50,5 +50,4 @@ function service(zk, options, ready) {
   return this;
 }
 
-export
-default service;
+export default service;

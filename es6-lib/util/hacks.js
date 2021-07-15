@@ -19,6 +19,4 @@ function parseAMQMessage(message) {
   });
 }
 
-export {
-  parseAMQMessage
-};
+export { parseAMQMessage };

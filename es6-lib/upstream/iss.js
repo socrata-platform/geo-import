@@ -1,8 +1,8 @@
-import config from '../config';
+import config from '../config/index.js';
 import _ from 'underscore';
 import EventEmitter from 'events';
 import uuid from 'uuid';
-import logger from '../util/logger';
+import logger from '../util/logger.js';
 import async from 'async';
 
 const conf = config();
@@ -139,5 +139,4 @@ class ISS extends EventEmitter {
 
 }
 
-export
-default ISS;
+export default ISS;
