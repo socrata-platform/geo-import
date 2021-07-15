@@ -1,4 +1,4 @@
-import SoQLGeom from './geom';
+import SoQLGeom from './geom.js';
 
 class SoQLLine extends SoQLGeom {
   get _type() {
@@ -34,4 +34,4 @@ class SoQLLine extends SoQLGeom {
   }
 }
 
-module.exports = SoQLLine;
+export default SoQLLine;

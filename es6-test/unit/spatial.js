@@ -1,27 +1,15 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
-import {
-  fixture, bufferJs
-}
-from '../fixture';
 import request from 'request';
-import CoreMock from '../services/mock-core';
-import AmqMock from '../services/mock-amq';
-import ISS from '../../es6-lib/upstream/iss';
-import MockZKClient from '../services/mock-zk';
-import {
-  EventEmitter
-}
-from 'events';
-import config from '../../es6-lib/config';
-import SpatialService from '../../es6-lib/services/spatial';
+import CoreMock from '../services/mock-core.js';
+import AmqMock from '../services/mock-amq.js';
+import ISS from '../../es6-lib/upstream/iss.js';
+import MockZKClient from '../services/mock-zk.js';
+import config from '../../es6-lib/config/index.js';
+import SpatialService from '../../es6-lib/services/spatial.js';
 import qs from 'querystring';
-import {
-  messageDetails
-}
-from '../util';
+import { messageDetails } from '../util.js';
 
 const expect = chai.expect;
 

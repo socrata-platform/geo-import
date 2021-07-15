@@ -1,4 +1,4 @@
-import SoQLGeom from './geom';
+import SoQLGeom from './geom.js';
 
 class SoQLMultiPoint extends SoQLGeom {
   get _type() {
@@ -19,4 +19,4 @@ class SoQLMultiPoint extends SoQLGeom {
   }
 }
 
-module.exports = SoQLMultiPoint;
+export default SoQLMultiPoint;

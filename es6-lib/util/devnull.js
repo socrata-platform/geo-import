@@ -1,7 +1,4 @@
-import {
-  Duplex
-}
-from 'stream';
+import { Duplex } from 'stream';
 
 class DevNull extends Duplex {
   constructor() {

@@ -1,4 +1,4 @@
-import SoQL from './soql';
+import SoQL from './soql.js';
 
 class SoQLNull extends SoQL {
   static ctype() {
@@ -14,4 +14,4 @@ class SoQLNull extends SoQL {
   }
 }
 
-module.exports = SoQLNull;
+export default SoQLNull;

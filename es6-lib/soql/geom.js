@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import proj4 from 'proj4';
-import SoQL from './soql';
+import SoQL from './soql.js';
 
 class SoQLGeom extends SoQL {
   get isGeometry() {
