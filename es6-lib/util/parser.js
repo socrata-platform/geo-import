@@ -1,7 +1,10 @@
 import clarinet from 'clarinet';
-import { Transform } from 'stream';
+import {
+  Transform
+}
+from 'stream';
 import _ from 'underscore';
-import config from '../config/index.js';
+import config from '../config';
 
 
 class Parser extends Transform {

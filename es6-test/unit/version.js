@@ -1,13 +1,21 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
+import * as es from 'event-stream';
+import {
+  fixture, bufferJs
+}
+from '../fixture';
 import request from 'request';
-import MockZKClient from '../services/mock-zk.js';
-import config from '../../es6-lib/config/index.js';
-import service from '../../es6-lib/service.js';
-import { createRequire } from "module";
-const requireJson = createRequire(import.meta.url);
-const pack = requireJson("../../package.json");
+import CoreMock from '../services/mock-core';
+import MockZKClient from '../services/mock-zk';
+import {
+  EventEmitter
+}
+from 'events';
+import config from '../../es6-lib/config';
+import service from '../../es6-lib/service';
+import pack from '../../package.json';
 
 var expect = chai.expect;
 

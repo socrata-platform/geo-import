@@ -1,10 +1,10 @@
 import _ from 'underscore';
-import GeoJSON from './geojson.js';
-import KML from './kml.js';
-import KMZ from './kmz.js';
-import Shapefile from './shapefile.js';
+import GeoJSON from './geojson';
+import KML from './kml';
+import KMZ from './kmz';
+import Shapefile from './shapefile';
 import path from 'path';
-import { DecodeFiletypeError } from '../errors.js';
+import {DecodeFiletypeError} from '../errors';
 
 function getDecoderForContentType(req, disk) {
   var ctype = req.headers['content-type'];
@@ -23,4 +23,4 @@ function getDecoderForExtension(filename, disk) {
   return [false, new decoder(disk)];
 }
 
-export { getDecoderForContentType, getDecoderForExtension };
+export {getDecoderForContentType, getDecoderForExtension};
