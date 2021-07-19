@@ -1,6 +1,6 @@
-import service from './service.js';
-import config from './config/index.js';
-import ZKClient from './upstream/zookeeper.js';
+import service from './service';
+import config from './config';
+import ZKClient from './upstream/zookeeper';
 
 var conf = config();
 var zk = new ZKClient(conf);

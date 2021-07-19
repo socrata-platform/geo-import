@@ -12,4 +12,4 @@ else
   n $node_version
 fi
 
-GEO_IMPORT_ENV=dev ZOOKEEPER_ENSEMBLE="{}" node lib/index.js
+GEO_IMPORT_ENV=dev node lib/index.js

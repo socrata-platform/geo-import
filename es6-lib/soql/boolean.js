@@ -1,4 +1,4 @@
-import SoQL from './soql.js';
+import SoQL from './soql';
 
 class SoQLBoolean extends SoQL {
 
@@ -13,4 +13,4 @@ class SoQLBoolean extends SoQL {
 
 }
 
-export default SoQLBoolean;
+module.exports = SoQLBoolean;
