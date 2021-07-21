@@ -32,7 +32,7 @@
     "negotiator": "0.6.1",
     "node-expat": "2.3.18",
     "node-zookeeper-client": "0.2.2",
-    "npm": "7.6.3",
+    "npm": "7.20.0",
     "proj4": "2.3.12",
     "request": "2.88.2",
     "set-value": "2.0.1",
