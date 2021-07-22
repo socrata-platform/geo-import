@@ -1,4 +1,4 @@
-import SoQL from './soql';
+import SoQL from './soql.js';
 
 class SoQLText extends SoQL {
   constructor(name, value, prohibitedNames) {
@@ -18,4 +18,4 @@ class SoQLText extends SoQL {
   }
 }
 
-module.exports = SoQLText;
+export default SoQLText;

@@ -1,5 +1,5 @@
 import changeCase from 'change-case';
-import config from './config';
+import config from './config/index.js';
 import _ from 'underscore';
 
 const conf = config();
@@ -317,8 +317,7 @@ class AuthenticationError extends UpstreamError {
     return 'Encountered an error while authenticating';
   }
 }
-export
-default {
+export {
   ZKError,
   CreateDatasetError,
   CreateWorkingCopyError,

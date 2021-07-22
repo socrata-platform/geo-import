@@ -1,11 +1,8 @@
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
-import {
-  fixture
-}
-from '../fixture';
-import Parser from '../../es6-lib/util/parser';
+import es from 'event-stream';
+import { fixture } from '../fixture.js';
+import Parser from '../../es6-lib/util/parser.js';
 var expect = chai.expect;
 
 describe('streaming js parser', function() {

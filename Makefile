@@ -3,7 +3,7 @@ lib: es6-lib node_modules
 	node_modules/.bin/babel es6-lib --out-dir lib
 
 test: lib
-	GEO_IMPORT_ENV=test ./node_modules/.bin/mocha es6-test/unit es6-test/smoke --compilers js:babel/register && jshint es6-lib
+	GEO_IMPORT_ENV=test ./node_modules/.bin/mocha es6-test/unit es6-test/smoke --require @babel/register && jshint es6-lib
 
 appease_jenkins: lib
 	tar -zcvf lib.tar lib/
