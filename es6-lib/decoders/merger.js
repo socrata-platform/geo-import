@@ -11,19 +11,12 @@
  */
 
 import _ from 'underscore';
-import Layer from './layer';
-import * as es from 'event-stream';
-import {
-  types
-}
-from '../soql/mapper';
-import {
-  Transform
-}
-from 'stream';
-import Disk from './disk';
+import Layer from './layer.js';
+import { types } from '../soql/mapper.js';
+import { Transform } from 'stream';
+import Disk from './disk.js';
 import async from 'async';
-import config from '../config';
+import config from '../config/index.js';
 const conf = config();
 
 const DEFAULT_CRS = "urn:ogc:def:crs:OGC:1.3:CRS84";
@@ -60,7 +53,7 @@ class Merger extends Transform {
       layer = new Layer(soqlRow.columns.map((soqlValue) => {
         let t = types[soqlValue.ctype];
         if (!t) {
-          logger.warn(`No SoQLType found for ${soqlValue.ctype}, falling back to SoQLText`);
+          this.log.warn(`No SoQLType found for ${soqlValue.ctype}, falling back to SoQLText`);
           t = types.string;
         }
         return new t(soqlValue.rawName);
@@ -103,5 +96,4 @@ class Merger extends Transform {
   }
 }
 
-export
-default Merger;
+export default Merger;

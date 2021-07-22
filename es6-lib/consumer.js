@@ -1,10 +1,10 @@
 import stompit from 'stompit';
-import Spatial from './services/spatial';
-import logger from './util/logger';
+import Spatial from './services/spatial.js';
+import logger from './util/logger.js';
 import async from 'async';
 import _ from 'underscore';
 import EventEmitter from 'events';
-import conf from './config';
+import conf from './config/index.js';
 
 const config = conf();
 
@@ -141,5 +141,4 @@ function consumer(zookeeper, metrics) {
   return spatialConsumer;
 }
 
-export
-default consumer;
+export default consumer;

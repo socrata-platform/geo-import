@@ -1,5 +1,5 @@
-import SoQLGeom from './geom';
-import SoQLPolygon from './polygon';
+import SoQLGeom from './geom.js';
+import SoQLPolygon from './polygon.js';
 
 class SoQLMultiPolygon extends SoQLGeom {
   get _type() {
@@ -33,4 +33,4 @@ class SoQLMultiPolygon extends SoQLGeom {
   }
 }
 
-module.exports = SoQLMultiPolygon;
+export default SoQLMultiPolygon;

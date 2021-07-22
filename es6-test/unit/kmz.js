@@ -1,21 +1,11 @@
 import chai from 'chai';
 import should from 'should';
 import es from 'event-stream';
-import {
-  fixture
-}
-from '../fixture';
-import {
-  EventEmitter
-}
-from 'events';
-
-import KMZ from '../../es6-lib/decoders/kmz';
-import Disk from '../../es6-lib/decoders/disk';
-import {
-  NoopLogger
-}
-from '../util';
+import { fixture } from '../fixture.js';
+import { EventEmitter } from 'events';
+import KMZ from '../../es6-lib/decoders/kmz.js';
+import Disk from '../../es6-lib/decoders/disk.js';
+import { NoopLogger } from '../util.js';
 
 var expect = chai.expect;
 

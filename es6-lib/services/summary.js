@@ -1,13 +1,10 @@
-import {
-  getDecoderForContentType
-}
-from '../decoders';
-import Disk from '../decoders/disk';
-import Merger from '../decoders/merger';
+import { getDecoderForContentType } from '../decoders/index.js';
+import Disk from '../decoders/disk.js';
+import Merger from '../decoders/merger.js';
 import _ from 'underscore';
-import logger from '../util/logger';
-import DevNull from '../util/devnull';
-import config from '../config';
+import logger from '../util/logger.js';
+import DevNull from '../util/devnull.js';
+import config from '../config/index.js';
 const conf = config();
 
 class SummaryService {
@@ -93,5 +90,4 @@ class SummaryService {
   }
 }
 
-export
-default SummaryService;
+export default SummaryService;

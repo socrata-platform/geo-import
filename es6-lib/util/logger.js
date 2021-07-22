@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import bunyan from 'bunyan';
-import config from '../config';
+import config from '../config/index.js';
 import uuid from 'uuid';
 let logger = false;
 

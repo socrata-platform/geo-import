@@ -75,5 +75,4 @@ class BBox {
   }
 }
 
-export
-default BBox;
+export default BBox;
