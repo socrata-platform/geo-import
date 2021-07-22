@@ -1,10 +1,11 @@
 import request from 'request';
-import Layer from '../decoders/layer.js';
-import logger from '../util/logger.js';
+import Layer from '../decoders/layer';
+import logger from '../util/logger';
 import _ from 'underscore';
-import config from '../config/index.js';
-import CoreClient from './core-client.js';
+import config from '../config';
+import CoreClient from './core-client';
 import {
+  ZKError,
   CreateDatasetError,
   CreateWorkingCopyError,
   CreateColumnError,
@@ -14,7 +15,8 @@ import {
   SetBlobError,
   UpdateMetadataError,
   CleanupError
-} from '../errors.js';
+}
+from '../errors';
 
 const timeout = config().upstreamTimeoutMs;
 
@@ -125,7 +127,7 @@ class Core extends CoreClient {
 
 
   getView(fourfour, onComplete, retried) {
-    const doGetView = () => this.getView(fourfour, onComplete, true);
+    const doGetView = () => this.getView(layer, onComplete, true);
     const retry = !retried && doGetView;
 
     return this.url((err, url) => {
@@ -267,7 +269,7 @@ class Core extends CoreClient {
     const retry = !retried && doSetBlob;
 
     return this.url((err, url) => {
-      if (err) return onComplete(err);
+      if (err) return onOpened(err);
       const uri = `${url}/views/${viewId}?method=setBlob&blobId=${blobId}&blobName=${encodeURI(blobName)}`;
       this.info(`Setting blob on ${uri} ${viewId} to ${blobId}`);
       request.put({
@@ -283,4 +285,5 @@ class Core extends CoreClient {
 
 }
 
-export default Core;
+export
+default Core;

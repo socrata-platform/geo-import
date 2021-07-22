@@ -1,24 +1,22 @@
-import express from 'express';
-import bodyParser from 'body-parser';
+var express = require('express');
+var bodyParser = require('body-parser');
 import path from 'path';
 import _ from 'underscore';
 import es from 'event-stream';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-const fileName = fileURLToPath(import.meta.url);
-const dirName = path.dirname(fileName);
 
 function hasHeaders(req, res) {
   const present = _.every(['x-socrata-requestid', 'x-socrata-host'], (key) => {
     return !_.isUndefined(req.headers[key]) && (req.headers[key] !== 'null');
-  });
+  })
   if (!present) {
     res.status(400).send(JSON.stringify({
       error: 'headers'
     }));
   }
-  return present;
+  return present
 }
+
+
 
 function enforceUA(req, res, next) {
   if (req.headers['user-agent'] !== 'geo-import') {
@@ -73,7 +71,7 @@ const view = (name) => ({
     "flags": ["admin"]
   },
   "flags": ["default"]
-});
+})
 
 class CoreMock {
   constructor(port) {
@@ -95,8 +93,8 @@ class CoreMock {
       this._history.push(req);
       return res.status(200)
         .header('set-cookie', 'monster')
-        .send('ok');
-    });
+        .send('ok')
+    })
 
     app.post('/views/:uid/publication', function(req, res) {
       this._history.push(req);
@@ -278,7 +276,7 @@ class CoreMock {
     }.bind(this));
 
     app.get('/file_data/:blobId', (req, res) => {
-      const absPath = path.resolve(`${dirName}/../fixtures/${req.params.blobId}`);
+      const absPath = path.resolve(`${__dirname}/../fixtures/${req.params.blobId}`);
       res.sendFile(absPath);
     });
 
@@ -322,6 +320,11 @@ class CoreMock {
       //already closed...heh
     }
   }
+
+
 }
 
-export default CoreMock;
+
+
+export
+default CoreMock;

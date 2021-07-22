@@ -1,13 +1,23 @@
 import chai from 'chai';
 import should from 'should';
-import es from 'event-stream';
-import { fixture } from '../fixture.js';
-import Shapefile from '../../es6-lib/decoders/shapefile.js';
+import * as es from 'event-stream';
+import {
+  fixture
+}
+from '../fixture';
+import Shapefile from '../../es6-lib/decoders/shapefile';
 import srs from 'srs';
-import Disk from '../../es6-lib/decoders/disk.js';
-import { EventEmitter } from 'events';
-import DevNull from '../../es6-lib/util/devnull.js';
-import { ArityChecker, NoopLogger } from '../util.js';
+import Disk from '../../es6-lib/decoders/disk';
+import {
+  EventEmitter
+}
+from 'events';
+import DevNull from '../../es6-lib/util/devnull';
+import {
+  ArityChecker,
+  NoopLogger
+}
+from '../util';
 var expect = chai.expect;
 var res;
 

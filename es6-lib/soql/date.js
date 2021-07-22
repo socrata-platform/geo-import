@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import SoQL from './soql.js';
+import SoQL from './soql';
 
 class SoQLDate extends SoQL {
   constructor(name, value, prohibitedNames) {
@@ -14,4 +14,4 @@ class SoQLDate extends SoQL {
   }
 }
 
-export default SoQLDate;
+module.exports = SoQLDate;

@@ -6,7 +6,7 @@
 ## Building ##
 To build the image, run:
 ```
-cp -r ../lib ../package.json .
+cp -r ../lib ../scripts ../package.json ../npm-shrinkwrap.json .
 docker build -t geo-import .
 ```
 

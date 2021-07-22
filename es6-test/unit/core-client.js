@@ -1,13 +1,26 @@
-import { expect } from 'chai';
+import {
+  chai, expect
+}
+from 'chai';
 import should from 'should';
-import CoreService from '../services/mock-core.js';
-import MockZKClient from '../services/mock-zk.js';
-import AmqMock from '../services/mock-amq.js';
-import Core from '../../es6-lib/upstream/core.js';
-import Auth from '../../es6-lib/upstream/auth.js';
-import { bufferJs } from '../fixture.js';
-import { NoopLogger } from '../util.js';
-import { parseAMQMessage } from '../../es6-lib/util/hacks.js';
+import CoreService from '../services/mock-core';
+import MockZKClient from '../services/mock-zk';
+import AmqMock from '../services/mock-amq';
+import config from '../../es6-lib/config';
+import Core from '../../es6-lib/upstream/core';
+import Auth from '../../es6-lib/upstream/auth';
+import {
+  bufferJs
+}
+from '../fixture';
+import {
+  NoopLogger
+}
+from '../util';
+import {
+  parseAMQMessage
+}
+from '../../es6-lib/util/hacks';
 
 describe('core client', function() {
   var mockCore;
@@ -49,7 +62,7 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    );
+    )
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     const core = new Core(auth, mockZk, NoopLogger);
 
@@ -88,9 +101,9 @@ describe('core client', function() {
               "a_bool": true
             }
           }]
-        });
+        })
         onDone();
-      });
+      })
     });
   });
 
@@ -104,7 +117,7 @@ describe('core client', function() {
       null,
       null,
       null
-    );
+    )
 
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
@@ -125,7 +138,7 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    );
+    )
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
@@ -144,7 +157,7 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    );
+    )
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
@@ -163,17 +176,18 @@ describe('core client', function() {
       'test-token',
       'test-cookie',
       'test-reqid'
-    );
+    )
     const auth = new Auth(parseAMQMessage(message), mockZk, NoopLogger);
     var core = new Core(auth, mockZk, NoopLogger);
 
     const metadata = {
       foo: 1,
       bar: 'baz'
-    };
+    }
     const privateMetadata = {
       secret: 'metadata'
-    };
+    }
+
 
     core.updateMetadata('four-four', metadata, privateMetadata, (err, res) => {
       expect(res).to.deep.eql({
@@ -185,7 +199,7 @@ describe('core client', function() {
         privateMetadata: {
           secret: 'metadata'
         }
-      });
+      })
       onDone();
     });
   });

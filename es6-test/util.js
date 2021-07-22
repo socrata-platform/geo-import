@@ -1,5 +1,7 @@
 import chai from 'chai';
-import { Transform }
+import {
+  Transform
+}
 from 'stream';
 import _ from 'underscore';
 var res;
@@ -35,7 +37,7 @@ const NoopLogger = {
   warn: _.noop,
   error: _.noop,
   fatal: _.noop
-};
+}
 
 export {
   ArityChecker, messageDetails, NoopLogger
