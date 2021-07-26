@@ -1,8 +1,8 @@
 import chai from 'chai';
 import should from 'should';
-import es from 'event-stream';
-import { fixture } from '../fixture.js';
-import GeoJSON from '../../es6-lib/decoders/geojson.js';
+import * as es from 'event-stream';
+import {fixture} from '../fixture';
+import GeoJSON from '../../es6-lib/decoders/geojson';
 
 var expect = chai.expect;
 

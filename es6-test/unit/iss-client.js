@@ -1,8 +1,12 @@
 import _ from 'underscore';
 import chai from 'chai';
-import AmqMock from '../services/mock-amq.js';
-import ISS from '../../es6-lib/upstream/iss.js';
-import { messageDetails } from '../util.js';
+import should from 'should';
+import AmqMock from '../services/mock-amq';
+import ISS from '../../es6-lib/upstream/iss';
+import {
+  messageDetails
+}
+from '../util';
 const expect = chai.expect;
 
 describe('iss client', function() {
@@ -53,7 +57,7 @@ describe('iss client', function() {
           info: {
             english: 'something broke'
           }
-        };
+        }
       }
     });
   });

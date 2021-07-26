@@ -1,5 +1,5 @@
-import SoQLGeom from './geom.js';
-import SoQLLine from './line.js';
+import SoQLGeom from './geom';
+import SoQLLine from './line';
 
 class SoQLMultiLine extends SoQLGeom {
   get _type() {
@@ -24,4 +24,4 @@ class SoQLMultiLine extends SoQLGeom {
   }
 }
 
-export default SoQLMultiLine;
+module.exports = SoQLMultiLine;

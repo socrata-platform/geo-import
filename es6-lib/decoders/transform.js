@@ -1,7 +1,10 @@
-import { types } from '../soql/mapper.js';
+import {
+  types
+}
+from '../soql/mapper';
 import _ from 'underscore';
-import SoQLNull from '../soql/null.js';
-import logger from '../util/logger.js';
+import SoQLNull from '../soql/null';
+import logger from '../util/logger';
 
 const GEOM_NAME = 'the_geom';
 /**
@@ -21,7 +24,7 @@ function geoJsToSoQL(feature, crs) {
 
   if (feature.crs && !crs) {
     if (feature.crs.href) {
-      logger.warn(`No support for linked CRS yet. Omitting feature: ${feature}`);
+      logger.warn(`No support for linked CRS yet. Omitting feature: ${featre}`);
       return false;
     }
     crs = feature.crs.properties.name;
@@ -65,7 +68,7 @@ function geomToSoQL(geom) {
   var ctype = geom.type.toLowerCase();
   var t = types[ctype];
   if (!t) {
-    logger.warn(`Invalid geom property, ${geom} ${ctype}`);
+    logger.warn(`Invalid geom property, ${typeof value} ${value}`);
     return false;
   }
   return new t(GEOM_NAME, geom, {});
@@ -86,4 +89,6 @@ function toRow(geometry, geomToSoQL, properties, propToSoQL, crs) {
   };
 }
 
-export { toRow as toRow, geomToSoQL as geomToSoQL, propToSoQL as propToSoQL, geoJsToSoQL as geoJsToSoQL };
+export {
+  toRow as toRow, geomToSoQL as geomToSoQL, propToSoQL as propToSoQL, geoJsToSoQL as geoJsToSoQL
+};

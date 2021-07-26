@@ -1,6 +1,6 @@
 import _ from 'underscore';
-import SoQLGeom from './geom.js';
-import logger from '../util/logger.js';
+import SoQLGeom from './geom';
+import logger from '../util/logger';
 
 class SoQLPolygon extends SoQLGeom {
   get _type() {
@@ -44,4 +44,4 @@ class SoQLPolygon extends SoQLGeom {
   }
 }
 
-export default SoQLPolygon;
+module.exports = SoQLPolygon;
