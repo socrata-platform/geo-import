@@ -9,26 +9,19 @@
  */
 
 import _ from 'underscore';
+import test from './test';
 import merge from 'deepmerge';
-import baseConfig from './config.js';
-import dev from './dev.js';
-import prod from './prod.js';
-import test from './test.js';
 
 var env = process.env.GEO_IMPORT_ENV;
 if (!env) throw new Error('No GEO_IMPORT_ENV environment set! Please specify one.');
 
-let conf;
-if (env === 'prod') {
-	conf = merge(baseConfig, prod());
-} else if (env === 'test') {
-	conf = merge(baseConfig, test());
-} else {
-	conf = merge(baseConfig, dev());
-}
+var baseConfig = require('./config');
+
+const conf = merge(baseConfig, require(`./${env}`));
 
 function config() {
   return conf;
 }
 
-export default config;
+export
+default config;

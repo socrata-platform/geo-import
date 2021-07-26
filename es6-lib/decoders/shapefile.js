@@ -7,10 +7,17 @@
  * TODO: if this functionality is needed at some point,
  * need to revisit it.
  */
+import es from 'event-stream';
 import _ from 'underscore';
-import { geoJsToSoQL } from './transform.js';
-import { Duplex } from 'stream';
-import BBox from '../util/bbox.js';
+import {
+  geoJsToSoQL
+}
+from './transform';
+import {
+  Duplex
+}
+from 'stream';
+import BBox from '../util/bbox';
 import shapefile from 'shapefile';
 import concat from 'concat-stream';
 import yauzl from 'yauzl';
@@ -18,12 +25,18 @@ import path from 'path';
 import fs from 'fs';
 import srs from 'srs';
 import uuid from 'uuid';
-import { EventEmitter } from 'events';
+import {
+  EventEmitter
+}
+from 'events';
 import async from 'async';
-import logger from '../util/logger.js';
-import config from '../config/index.js';
-import DevNull from '../util/devnull.js';
-import { CorruptShapefileError, IncompleteShapefileError } from '../errors.js';
+import logger from '../util/logger';
+import config from '../config';
+import DevNull from '../util/devnull';
+import {
+  CorruptShapefileError, IncompleteShapefileError
+}
+from '../errors';
 
 const DEFAULT_PROJECTION = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
@@ -136,7 +149,7 @@ class Shapefile extends Duplex {
       //our reader has gone away, this kills the stream.
       //so end the stream with a null and flush anything
       //that's buffered into oblivion
-      if (_.isEmpty(this._readableState.pipes)) {
+      if (!this._readableState.pipes) {
         this.push(null);
         return this.pipe(new DevNull());
       }
@@ -333,4 +346,5 @@ class Shapefile extends Duplex {
 
 }
 
-export default Shapefile;
+export
+default Shapefile;

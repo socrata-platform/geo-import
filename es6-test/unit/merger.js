@@ -6,24 +6,34 @@
 
 import chai from 'chai';
 import should from 'should';
-import { EventEmitter } from 'events';
-import { fixture } from '../fixture.js';
-import { NoopLogger } from '../util.js';
+import * as es from 'event-stream';
+import {
+  EventEmitter
+}
+from 'events';
+import {
+  fixture
+}
+from '../fixture';
+import {
+  NoopLogger
+} from '../util';
 import through from 'through';
-import GeoJSON from '../../es6-lib/decoders/geojson.js';
-import Merger from '../../es6-lib/decoders/merger.js';
-import Disk from '../../es6-lib/decoders/disk.js';
-import SoQLPoint from '../../es6-lib/soql/point.js';
-import SoQLLine from '../../es6-lib/soql/line.js';
-import SoQLPolygon from '../../es6-lib/soql/polygon.js';
-import SoQLMultiPoint from '../../es6-lib/soql/multipoint.js';
-import SoQLMultiLine from '../../es6-lib/soql/multiline.js';
-import SoQLMultiPolygon from '../../es6-lib/soql/multipolygon.js';
-import SoQLText from '../../es6-lib/soql/text.js';
-import SoQLBoolean from '../../es6-lib/soql/boolean.js';
-import SoQLNumber from '../../es6-lib/soql/number.js';
-import SoQLArray from '../../es6-lib/soql/array.js';
-import config from '../../es6-lib/config/index.js';
+import GeoJSON from '../../es6-lib/decoders/geojson';
+import Merger from '../../es6-lib/decoders/merger';
+import Disk from '../../es6-lib/decoders/disk';
+
+import SoQLPoint from '../../es6-lib/soql/point';
+import SoQLLine from '../../es6-lib/soql/line';
+import SoQLPolygon from '../../es6-lib/soql/polygon';
+import SoQLMultiPoint from '../../es6-lib/soql/multipoint';
+import SoQLMultiLine from '../../es6-lib/soql/multiline';
+import SoQLMultiPolygon from '../../es6-lib/soql/multipolygon';
+import SoQLText from '../../es6-lib/soql/text';
+import SoQLBoolean from '../../es6-lib/soql/boolean';
+import SoQLNumber from '../../es6-lib/soql/number';
+import SoQLArray from '../../es6-lib/soql/array';
+import config from '../../es6-lib/config';
 
 var conf = config();
 var expect = chai.expect;
@@ -50,7 +60,7 @@ function jsbuf() {
   });
 }
 
-const FLOAT_DELTA = 0.000000001;
+const FLOAT_DELTA = .000000001;
 
 describe('merging feature streams to layers', function() {
 
@@ -131,12 +141,13 @@ describe('merging feature streams to layers', function() {
         var [epsg26915, epsg23700] = layers;
 
         epsg26915.pipe(jsbuf()).on('end', ([row]) => {
-          var [x, y] = row.the_geom.coordinates;
+          var [x, y] = row.the_geom.coordinates
           expect(x).to.be.closeTo(-97.48783007892, FLOAT_DELTA);
           expect(y).to.be.closeTo(0.00000450965,  FLOAT_DELTA);
 
           epsg23700.pipe(jsbuf()).on('end', ([row]) => {
-            var [x, y] = row.the_geom.coordinates;
+
+            var [x, y] = row.the_geom.coordinates
             expect(x).to.be.closeTo(10.7889673904, FLOAT_DELTA);
             expect(y).to.be.closeTo(45.0359670320,  FLOAT_DELTA);
             onDone();
@@ -169,12 +180,13 @@ describe('merging feature streams to layers', function() {
         var [epsg26915, crs84] = layers;
 
         epsg26915.pipe(jsbuf()).on('end', ([row]) => {
-          var [x, y] = row.the_geom.coordinates;
+
+          var [x, y] = row.the_geom.coordinates
           expect(x).to.be.closeTo(-97.48783007891072, FLOAT_DELTA);
           expect(y).to.be.closeTo(  0.00000450969282, FLOAT_DELTA);
 
           crs84.pipe(jsbuf()).on('end', ([row]) => {
-            var [x, y] = row.the_geom.coordinates;
+            var [x, y] = row.the_geom.coordinates
             expect(x).to.be.closeTo(103, FLOAT_DELTA);
             expect(y).to.be.closeTo(1.5, FLOAT_DELTA);
             onDone();

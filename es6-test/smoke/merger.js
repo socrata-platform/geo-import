@@ -1,15 +1,32 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
-import { fixture } from '../fixture.js';
-import { EventEmitter } from 'events';
-import config from '../../es6-lib/config/index.js';
-import Shapefile from '../../es6-lib/decoders/shapefile.js';
-import GeoJSON from '../../es6-lib/decoders/geojson.js';
-import Disk from '../../es6-lib/decoders/disk.js';
-import Merger from '../../es6-lib/decoders/merger.js';
-import { NoopLogger } from '../util.js';
-import DevNull from '../../es6-lib/util/devnull.js';
+import * as es from 'event-stream';
+import {
+  fixture, bufferJs
+}
+from '../fixture';
+import request from 'request';
+import CoreMock from '../services/mock-core';
+import MockZKClient from '../services/mock-zk';
+import {
+  EventEmitter
+}
+from 'events';
+import config from '../../es6-lib/config';
+import service from '../../es6-lib/service';
+import Shapefile from '../../es6-lib/decoders/shapefile';
+import KMZ from '../../es6-lib/decoders/kmz';
+import KML from '../../es6-lib/decoders/kml';
+import GeoJSON from '../../es6-lib/decoders/geojson';
+import Disk from '../../es6-lib/decoders/disk';
+import Merger from '../../es6-lib/decoders/merger';
+import {
+  NoopLogger,
+  ArityChecker
+}
+from '../util';
+import DevNull from '../../es6-lib/util/devnull';
 
 
 var res;
@@ -26,7 +43,11 @@ describe('merger', () => {
     if (res) res.emit('finish');
   });
 
+
+
+
   it('should be able to give a useful error for broken geojson', function(onDone) {
+
     const disk = new Disk(res, NoopLogger);
     const decoder = new GeoJSON(disk);
     const merger = new Merger(disk, [], false, NoopLogger);
@@ -36,6 +57,7 @@ describe('merger', () => {
       .pipe(merger)
       .on('end', (layers) => {
         const [layer] = layers;
+
         layer
           .on('error', (e) => {
             try {
@@ -54,6 +76,7 @@ describe('merger', () => {
           .pipe(new DevNull());
       });
   });
+
 
   it('should be able to handle a mostly null shp', function(onDone) {
     this.timeout(100000);
@@ -116,6 +139,8 @@ describe('merger', () => {
       });
   });
 
+
+
   it('co parcels', function(onDone) {
     this.timeout(100000);
 
@@ -135,8 +160,8 @@ describe('merger', () => {
           const dbf = _.find(cols, c => c.name === 'invalid_the_geom');
           const shp = _.find(cols, c => c.name === 'the_geom');
 
-          expect(!!dbf).to.be.true;
-          expect(!!shp).to.be.true;
+          expect(!!dbf).to.be.true
+          expect(!!shp).to.be.true
           expect(shp.dataTypeName).to.eql('multipolygon');
           expect(dbf.dataTypeName).to.eql('text');
 

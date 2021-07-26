@@ -4,13 +4,23 @@
  *
  * TODO: hierarchical CRS via geometry collections (;_;)
  */
+import es from 'event-stream';
 import _ from 'underscore';
-import { geoJsToSoQL } from './transform.js';
-import { types } from '../soql/mapper.js';
-import { Transform } from 'stream';
-import Parser from '../util/parser.js';
-import config from '../config/index.js';
-import { JSONParseError } from '../errors.js';
+import {
+  geoJsToSoQL
+}
+from './transform';
+import {
+  types
+}
+from '../soql/mapper';
+import {
+  Transform
+}
+from 'stream';
+import Parser from '../util/parser';
+import config from '../config';
+import {JSONParseError} from '../errors';
 
 class GeoJSON extends Transform {
 
@@ -29,6 +39,8 @@ class GeoJSON extends Transform {
       .on('error', err)
       .on('data', this._onCrs.bind(this));
   }
+
+
 
   static canDecode() {
     return ['application/json'];
@@ -68,4 +80,5 @@ class GeoJSON extends Transform {
   }
 }
 
-export default GeoJSON;
+export
+default GeoJSON;

@@ -1,4 +1,4 @@
-import SoQLGeom from './geom.js';
+import SoQLGeom from './geom';
 
 class SoQLPoint extends SoQLGeom {
   mapCoordinates(fn) {
@@ -18,4 +18,5 @@ class SoQLPoint extends SoQLGeom {
   }
 }
 
-export default SoQLPoint;
+
+module.exports = SoQLPoint;

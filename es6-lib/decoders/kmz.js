@@ -1,13 +1,17 @@
 import yauzl from 'yauzl';
-import KML from './kml.js';
+import KML from './kml';
 import uuid from 'uuid';
 import fs from 'fs';
 import path from 'path';
-import { Duplex } from 'stream';
-import logger from '../util/logger.js';
-import config from '../config/index.js';
-import DevNull from '../util/devnull.js';
-import { ArchiveError } from '../errors.js';
+import es from 'event-stream';
+import {
+  Duplex
+}
+from 'stream';
+import logger from '../util/logger';
+import config from '../config';
+import DevNull from '../util/devnull';
+import {ArchiveError} from '../errors';
 
 
 /**
