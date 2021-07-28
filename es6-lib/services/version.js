@@ -1,4 +1,4 @@
-var pack = require("../../package");
+var pack = require('../../package.json');
 
 var VersionService = {
   'get': function(req, res) {

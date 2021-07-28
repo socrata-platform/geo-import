@@ -237,7 +237,7 @@ class Core extends CoreClient {
       var upsertOpener = () => {
         this.info(`Upsert to core ${layer.uid}`);
         return request.post({
-          url: `${url}/id/${layer.uid}on`,
+          url: `${url}/id/${layer.uid}.json`,
           headers: this.headers()
         });
       };

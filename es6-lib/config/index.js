@@ -3,7 +3,7 @@
  * It will load the configuration corresponding to the environment
  * variable value.
  *
- * If you want to load the `dev` configuration in top of the
+ * If you want to load the `dev.js` configuration in top of the
  * base config, specify GEO_IMPORT_ENV=dev
  *
  */

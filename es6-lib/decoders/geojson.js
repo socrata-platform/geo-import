@@ -35,7 +35,7 @@ class GeoJSON extends Transform {
   }
 
   static canDecodeExtensions() {
-    return ['on', '.geojson'];
+    return ['.json', '.geojson'];
   }
 
   _onError({reason, line, column, token}) {
