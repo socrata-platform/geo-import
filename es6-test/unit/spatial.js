@@ -2,14 +2,14 @@ import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
 import request from 'request';
-import CoreMock from '../services/mock-core.js';
-import AmqMock from '../services/mock-amq.js';
-import ISS from '../../es6-lib/upstream/iss.js';
-import MockZKClient from '../services/mock-zk.js';
-import config from '../../es6-lib/config/index.js';
-import SpatialService from '../../es6-lib/services/spatial.js';
+import CoreMock from '../services/mock-core';
+import AmqMock from '../services/mock-amq';
+import ISS from '../../es6-lib/upstream/iss';
+import MockZKClient from '../services/mock-zk';
+import config from '../../es6-lib/config';
+import SpatialService from '../../es6-lib/services/spatial';
 import qs from 'querystring';
-import { messageDetails } from '../util.js';
+import { messageDetails } from '../util';
 
 const expect = chai.expect;
 

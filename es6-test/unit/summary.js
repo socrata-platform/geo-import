@@ -2,15 +2,11 @@ import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
 import fs from 'fs';
-import { fixture, bufferJs } from '../fixture.js';
+import { fixture, bufferJs } from '../fixture';
 import request from 'request';
-import MockZKClient from '../services/mock-zk.js';
-import config from '../../es6-lib/config/index.js';
-import service from '../../es6-lib/service.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-const fileName = fileURLToPath(import.meta.url);
-const dirName = path.dirname(fileName);
+import MockZKClient from '../services/mock-zk';
+import config from '../../es6-lib/config';
+import service from '../../es6-lib/service';
 
 var expect = chai.expect;
 
@@ -31,7 +27,7 @@ describe('summary service', () => {
   afterEach(() => app.close());
 
   var sizeOf = function(fname) {
-    return fs.statSync(dirName + '/../fixtures/' + fname).size;
+    return fs.statSync(__dirname + '/../fixtures/' + fname).size;
   };
 
 

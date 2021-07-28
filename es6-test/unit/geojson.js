@@ -1,9 +1,9 @@
 import chai from 'chai';
 import should from 'should';
 import es from 'event-stream';
-import { fixture } from '../fixture.js';
-import GeoJSON from '../../es6-lib/decoders/geojson.js';
-import { ArityChecker } from '../util.js';
+import { fixture } from '../fixture';
+import GeoJSON from '../../es6-lib/decoders/geojson';
+import { ArityChecker } from '../util';
 
 var expect = chai.expect;
 

@@ -1,12 +1,8 @@
 import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-const fileName = fileURLToPath(import.meta.url);
-const dirName = path.dirname(fileName);
 
 function fixture(name) {
   //ok, so in read streams, null === 'binary'
-  return fs.createReadStream(dirName + '/fixtures/' + name, {encoding: null});
+  return fs.createReadStream(__dirname + '/fixtures/' + name, {encoding: null});
 }
 
 function bufferJs(source, cb) {

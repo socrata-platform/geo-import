@@ -1,15 +1,15 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
-import { fixture } from '../fixture.js';
+import { fixture } from '../fixture';
 import { EventEmitter } from 'events';
-import config from '../../es6-lib/config/index.js';
-import Shapefile from '../../es6-lib/decoders/shapefile.js';
-import GeoJSON from '../../es6-lib/decoders/geojson.js';
-import Disk from '../../es6-lib/decoders/disk.js';
-import Merger from '../../es6-lib/decoders/merger.js';
-import { NoopLogger } from '../util.js';
-import DevNull from '../../es6-lib/util/devnull.js';
+import config from '../../es6-lib/config';
+import Shapefile from '../../es6-lib/decoders/shapefile';
+import GeoJSON from '../../es6-lib/decoders/geojson';
+import Disk from '../../es6-lib/decoders/disk';
+import Merger from '../../es6-lib/decoders/merger';
+import { NoopLogger } from '../util';
+import DevNull from '../../es6-lib/util/devnull';
 
 
 var res;

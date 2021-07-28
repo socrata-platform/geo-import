@@ -1,11 +1,11 @@
 import _ from 'underscore';
 import chai from 'chai';
-import { fixture, bufferJs } from '../fixture.js';
+import { fixture, bufferJs } from '../fixture';
 import request from 'request';
-import CoreMock from '../services/mock-core.js';
-import MockZKClient from '../services/mock-zk.js';
-import config from '../../es6-lib/config/index.js';
-import service from '../../es6-lib/service.js';
+import CoreMock from '../services/mock-core';
+import MockZKClient from '../services/mock-zk';
+import config from '../../es6-lib/config';
+import service from '../../es6-lib/service';
 
 var res;
 var expect = chai.expect;

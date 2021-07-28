@@ -1,6 +1,6 @@
 import chai from 'chai';
 import should from 'should';
-import BBox from '../../es6-lib/util/bbox.js';
+import BBox from '../../es6-lib/util/bbox';
 var expect = chai.expect;
 
 describe('bounding box', function() {

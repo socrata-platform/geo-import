@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import should from 'should';
-import conf from '../../lib/config/index.js';
-import Zookeeper from '../../lib/upstream/zookeeper.js';
-import Logger from '../../lib/util/logger.js';
+import conf from '../../lib/config';
+import Zookeeper from '../../lib/upstream/zookeeper';
+import Logger from '../../lib/util/logger';
 
 describe('zookeeper client wrapper', function() {
   it("can connect to zk", (onDone) => {

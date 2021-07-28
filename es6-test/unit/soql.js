@@ -1,7 +1,7 @@
 import chai from 'chai';
 import should from 'should';
-import Layer from '../../es6-lib/decoders/layer.js';
-import SoQLText from '../../es6-lib/soql/text.js';
+import Layer from '../../es6-lib/decoders/layer';
+import SoQLText from '../../es6-lib/soql/text';
 
 var expect = chai.expect;
 

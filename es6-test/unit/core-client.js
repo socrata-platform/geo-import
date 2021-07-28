@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import should from 'should';
-import CoreService from '../services/mock-core.js';
-import MockZKClient from '../services/mock-zk.js';
-import AmqMock from '../services/mock-amq.js';
-import Core from '../../es6-lib/upstream/core.js';
-import Auth from '../../es6-lib/upstream/auth.js';
-import { bufferJs } from '../fixture.js';
-import { NoopLogger } from '../util.js';
-import { parseAMQMessage } from '../../es6-lib/util/hacks.js';
+import CoreService from '../services/mock-core';
+import MockZKClient from '../services/mock-zk';
+import AmqMock from '../services/mock-amq';
+import Core from '../../es6-lib/upstream/core';
+import Auth from '../../es6-lib/upstream/auth';
+import { bufferJs } from '../fixture';
+import { NoopLogger } from '../util';
+import { parseAMQMessage } from '../../es6-lib/util/hacks';
 
 describe('core client', function() {
   var mockCore;

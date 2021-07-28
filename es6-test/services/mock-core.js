@@ -3,10 +3,6 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import _ from 'underscore';
 import es from 'event-stream';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
-const fileName = fileURLToPath(import.meta.url);
-const dirName = path.dirname(fileName);
 
 function hasHeaders(req, res) {
   const present = _.every(['x-socrata-requestid', 'x-socrata-host'], (key) => {
@@ -278,7 +274,7 @@ class CoreMock {
     }.bind(this));
 
     app.get('/file_data/:blobId', (req, res) => {
-      const absPath = path.resolve(`${dirName}/../fixtures/${req.params.blobId}`);
+      const absPath = path.resolve(`${__dirname}/../fixtures/${req.params.blobId}`);
       res.sendFile(absPath);
     });
 

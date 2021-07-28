@@ -1,16 +1,16 @@
 import _ from 'underscore';
 import chai from 'chai';
 import es from 'event-stream';
-import { fixture } from '../fixture.js';
+import { fixture } from '../fixture';
 import { EventEmitter } from 'events';
-import Shapefile from '../../es6-lib/decoders/shapefile.js';
-import KMZ from '../../es6-lib/decoders/kmz.js';
-import KML from '../../es6-lib/decoders/kml.js';
-import GeoJSON from '../../es6-lib/decoders/geojson.js';
-import Merger from '../../es6-lib/decoders/merger.js';
-import Disk from '../../es6-lib/decoders/disk.js';
+import Shapefile from '../../es6-lib/decoders/shapefile';
+import KMZ from '../../es6-lib/decoders/kmz';
+import KML from '../../es6-lib/decoders/kml';
+import GeoJSON from '../../es6-lib/decoders/geojson';
+import Merger from '../../es6-lib/decoders/merger';
+import Disk from '../../es6-lib/decoders/disk';
 import { Transform } from 'stream';
-import { NoopLogger } from '../util.js';
+import { NoopLogger } from '../util';
 
 var res;
 var expect = chai.expect;

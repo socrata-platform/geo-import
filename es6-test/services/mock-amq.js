@@ -1,5 +1,5 @@
 import EventEmitter from 'events';
-import config from '../../lib/config/index.js';
+import config from '../../lib/config';
 const conf = config();
 
 class AmqMock extends EventEmitter {
