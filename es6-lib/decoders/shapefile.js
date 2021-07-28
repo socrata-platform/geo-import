@@ -8,9 +8,9 @@
  * need to revisit it.
  */
 import _ from 'underscore';
-import { geoJsToSoQL } from './transform.js';
+import { geoJsToSoQL } from './transform';
 import { Duplex } from 'stream';
-import BBox from '../util/bbox.js';
+import BBox from '../util/bbox';
 import shapefile from 'shapefile';
 import concat from 'concat-stream';
 import yauzl from 'yauzl';
@@ -20,10 +20,10 @@ import srs from 'srs';
 import uuid from 'uuid';
 import { EventEmitter } from 'events';
 import async from 'async';
-import logger from '../util/logger.js';
-import config from '../config/index.js';
-import DevNull from '../util/devnull.js';
-import { CorruptShapefileError, IncompleteShapefileError } from '../errors.js';
+import logger from '../util/logger';
+import config from '../config';
+import DevNull from '../util/devnull';
+import { CorruptShapefileError, IncompleteShapefileError } from '../errors';
 
 const DEFAULT_PROJECTION = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
@@ -116,7 +116,7 @@ class Shapefile extends Duplex {
     if (!record.geometry.coordinates) record.geometry.coordinates = [];
 
     //;_:
-    //hack because https://github.com/mbostock/shapefile/blob/b4470c9a3d121bd201ca0b458d1e97b0a4d3547f/index.js#L173
+    //hack because https://github.com/mbostock/shapefile/blob/b4470c9a3d121bd201ca0b458d1e97b0a4d3547f/index#L173
     //which turns things in to Multipolygons if they have rings ಠ_ಠ
     if (record.geometry.type === 'Polygon') {
       record.geometry.type = 'MultiPolygon';

@@ -1,5 +1,5 @@
-import SoQLGeom from './geom.js';
-import SoQLPolygon from './polygon.js';
+import SoQLGeom from './geom';
+import SoQLPolygon from './polygon';
 
 class SoQLMultiPolygon extends SoQLGeom {
   get _type() {

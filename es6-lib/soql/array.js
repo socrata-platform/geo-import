@@ -1,4 +1,4 @@
-import SoQL from './soql.js';
+import SoQL from './soql';
 
 class SoQLArray extends SoQL {
   static ctype() {

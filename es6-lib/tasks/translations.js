@@ -1,4 +1,4 @@
-import errors from '../errors.js';
+import errors from '../errors';
 import _ from 'underscore';
 import yaml from 'js-yaml';
 

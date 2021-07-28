@@ -5,12 +5,12 @@
  * TODO: hierarchical CRS via geometry collections (;_;)
  */
 import _ from 'underscore';
-import { geoJsToSoQL } from './transform.js';
-import { types } from '../soql/mapper.js';
+import { geoJsToSoQL } from './transform';
+import { types } from '../soql/mapper';
 import { Transform } from 'stream';
-import Parser from '../util/parser.js';
-import config from '../config/index.js';
-import { JSONParseError } from '../errors.js';
+import Parser from '../util/parser';
+import config from '../config';
+import { JSONParseError } from '../errors';
 
 class GeoJSON extends Transform {
 
@@ -35,7 +35,7 @@ class GeoJSON extends Transform {
   }
 
   static canDecodeExtensions() {
-    return ['.json', '.geojson'];
+    return ['on', '.geojson'];
   }
 
   _onError({reason, line, column, token}) {

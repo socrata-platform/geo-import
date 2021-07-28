@@ -1,7 +1,7 @@
-import { types } from '../soql/mapper.js';
+import { types } from '../soql/mapper';
 import _ from 'underscore';
-import SoQLNull from '../soql/null.js';
-import logger from '../util/logger.js';
+import SoQLNull from '../soql/null';
+import logger from '../util/logger';
 
 const GEOM_NAME = 'the_geom';
 /**

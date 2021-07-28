@@ -1,10 +1,10 @@
 import _ from 'underscore';
 import { Transform } from 'stream';
-import config from '../config/index.js';
-import { types } from '../soql/mapper.js';
+import config from '../config';
+import { types } from '../soql/mapper';
 import srs from 'srs';
-import BBox from '../util/bbox.js';
-import { InvalidArityError } from '../errors.js';
+import BBox from '../util/bbox';
+import { InvalidArityError } from '../errors';
 
 const WGS84 = '+proj=longlat +ellps=WGS84 +no_defs';
 

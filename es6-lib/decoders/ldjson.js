@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import { Transform } from 'stream';
-import config from '../config/index.js';
+import config from '../config';
 
 class LDJson extends Transform {
 

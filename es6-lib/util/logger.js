@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import bunyan from 'bunyan';
-import config from '../config/index.js';
+import config from '../config';
 import uuid from 'uuid';
 let logger = false;
 
@@ -23,7 +23,6 @@ class LogWrapper {
       };
     });
   }
-
 }
 
 

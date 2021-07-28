@@ -11,12 +11,12 @@
  */
 
 import _ from 'underscore';
-import Layer from './layer.js';
-import { types } from '../soql/mapper.js';
+import Layer from './layer';
+import { types } from '../soql/mapper';
 import { Transform } from 'stream';
-import Disk from './disk.js';
+import Disk from './disk';
 import async from 'async';
-import config from '../config/index.js';
+import config from '../config';
 const conf = config();
 
 const DEFAULT_CRS = "urn:ogc:def:crs:OGC:1.3:CRS84";

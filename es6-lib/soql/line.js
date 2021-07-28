@@ -1,4 +1,4 @@
-import SoQLGeom from './geom.js';
+import SoQLGeom from './geom';
 
 class SoQLLine extends SoQLGeom {
   get _type() {

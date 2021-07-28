@@ -1,9 +1,9 @@
 import request from 'request';
-import Layer from '../decoders/layer.js';
-import logger from '../util/logger.js';
+import Layer from '../decoders/layer';
+import logger from '../util/logger';
 import _ from 'underscore';
-import config from '../config/index.js';
-import CoreClient from './core-client.js';
+import config from '../config';
+import CoreClient from './core-client';
 import {
   CreateDatasetError,
   CreateWorkingCopyError,
@@ -14,7 +14,7 @@ import {
   SetBlobError,
   UpdateMetadataError,
   CleanupError
-} from '../errors.js';
+} from '../errors';
 
 const timeout = config().upstreamTimeoutMs;
 
@@ -237,7 +237,7 @@ class Core extends CoreClient {
       var upsertOpener = () => {
         this.info(`Upsert to core ${layer.uid}`);
         return request.post({
-          url: `${url}/id/${layer.uid}.json`,
+          url: `${url}/id/${layer.uid}on`,
           headers: this.headers()
         });
       };

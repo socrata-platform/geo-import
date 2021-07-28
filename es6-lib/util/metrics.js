@@ -1,10 +1,10 @@
-import logger from './logger.js';
+import logger from './logger';
 import heapdump from 'heapdump';
 import fs from 'fs';
 import path from 'path';
 import gcstats from 'gc-stats';
 import _ from 'underscore';
-import config from '../config/index.js';
+import config from '../config';
 var conf = config();
 
 class Metrics {

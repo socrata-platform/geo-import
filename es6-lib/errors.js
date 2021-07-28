@@ -1,5 +1,5 @@
 import changeCase from 'change-case';
-import config from './config/index.js';
+import config from './config';
 import _ from 'underscore';
 
 const conf = config();
