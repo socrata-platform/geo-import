@@ -5,7 +5,7 @@ import Core from '../upstream/core';
 import Auth from '../upstream/auth';
 import async from 'async';
 import _ from 'underscore';
-import es from 'event-stream';
+import * as es from 'event-stream';
 import BBox from '../util/bbox';
 import { parseAMQMessage } from '../util/hacks';
 import { types } from '../soql/mapper';

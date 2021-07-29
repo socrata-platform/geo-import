@@ -7,6 +7,7 @@
  * TODO: if this functionality is needed at some point,
  * need to revisit it.
  */
+import es from 'event-stream';
 import _ from 'underscore';
 import { geoJsToSoQL } from './transform';
 import { Duplex } from 'stream';

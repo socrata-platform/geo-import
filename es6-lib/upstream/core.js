@@ -5,6 +5,7 @@ import _ from 'underscore';
 import config from '../config';
 import CoreClient from './core-client';
 import {
+  ZKError,
   CreateDatasetError,
   CreateWorkingCopyError,
   CreateColumnError,

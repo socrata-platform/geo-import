@@ -12,6 +12,7 @@
 
 import _ from 'underscore';
 import Layer from './layer';
+import * as es from 'event-stream';
 import { types } from '../soql/mapper';
 import { Transform } from 'stream';
 import Disk from './disk';

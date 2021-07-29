@@ -6,6 +6,7 @@
  */
 import _ from 'underscore';
 import expat from 'node-expat';
+import es from 'event-stream';
 import { Transform } from 'stream';
 import { types } from '../soql/mapper';
 import { toRow, geomToSoQL } from './transform';
