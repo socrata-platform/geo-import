@@ -1,25 +1,14 @@
 import _ from 'underscore';
 import chai from 'chai';
-import should from 'should';
-import * as es from 'event-stream';
-import {
-  fixture, bufferJs
-}
-from '../fixture';
+import { fixture, bufferJs } from '../fixture';
 import request from 'request';
 import CoreMock from '../services/mock-core';
 import MockZKClient from '../services/mock-zk';
-import {
-  EventEmitter
-}
-from 'events';
 import config from '../../es6-lib/config';
 import service from '../../es6-lib/service';
 
 var res;
 var expect = chai.expect;
-
-
 
 describe('shapefile ingress', () => {
   var mockZk;
@@ -83,7 +72,6 @@ describe('shapefile ingress', () => {
       });
   });
 
-
   it('missing files with garbage included SHP summary', function(onDone) {
     this.timeout(80000);
 
@@ -103,5 +91,4 @@ describe('shapefile ingress', () => {
         onDone();
       });
   });
-
 });

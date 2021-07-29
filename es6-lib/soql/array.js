@@ -6,4 +6,4 @@ class SoQLArray extends SoQL {
   }
 }
 
-module.exports = SoQLArray;
+export default SoQLArray;

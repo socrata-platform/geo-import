@@ -1,8 +1,5 @@
 import clarinet from 'clarinet';
-import {
-  Transform
-}
-from 'stream';
+import { Transform } from 'stream';
 import _ from 'underscore';
 import config from '../config';
 

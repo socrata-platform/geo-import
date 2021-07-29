@@ -24,4 +24,4 @@ class SoQLMultiLine extends SoQLGeom {
   }
 }
 
-module.exports = SoQLMultiLine;
+export default SoQLMultiLine;

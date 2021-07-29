@@ -14,4 +14,4 @@ class SoQLNull extends SoQL {
   }
 }
 
-module.exports = SoQLNull;
+export default SoQLNull;

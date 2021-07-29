@@ -23,3 +23,4 @@ export default {
     host: 'stomp://localhost:61613,stomp://localhost:61613'
   }
 };
+

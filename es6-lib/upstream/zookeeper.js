@@ -1,11 +1,8 @@
 import zookeeper from 'node-zookeeper-client';
 import _ from 'underscore';
-import {ZKError} from '../errors';
+import { ZKError } from '../errors';
 import path from 'path';
-import {
-  EventEmitter
-}
-from 'events';
+import { EventEmitter } from 'events';
 import logger from '../util/logger';
 
 const CORE_PATH = '/com.socrata/soda/services/core';

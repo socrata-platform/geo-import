@@ -1,5 +1,4 @@
-export
-default {
+export default {
   port: 4445,
 
   //gate at which the service will not read the whole file to generate

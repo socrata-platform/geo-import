@@ -1,9 +1,6 @@
 import CoreClient from './core-client';
 import request from 'request';
-import {
-  AuthenticationError
-}
-from '../errors';
+import { AuthenticationError } from '../errors';
 import config from '../config';
 const conf = config();
 const timeout = conf.upstreamTimeoutMs;

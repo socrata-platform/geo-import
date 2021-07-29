@@ -139,5 +139,4 @@ class ISS extends EventEmitter {
 
 }
 
-export
-default ISS;
+export default ISS;

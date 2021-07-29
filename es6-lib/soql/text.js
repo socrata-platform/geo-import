@@ -18,4 +18,4 @@ class SoQLText extends SoQL {
   }
 }
 
-module.exports = SoQLText;
+export default SoQLText;

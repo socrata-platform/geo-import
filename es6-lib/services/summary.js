@@ -1,7 +1,4 @@
-import {
-  getDecoderForContentType
-}
-from '../decoders';
+import { getDecoderForContentType } from '../decoders';
 import Disk from '../decoders/disk';
 import Merger from '../decoders/merger';
 import _ from 'underscore';
@@ -93,5 +90,4 @@ class SummaryService {
   }
 }
 
-export
-default SummaryService;
+export default SummaryService;

@@ -34,5 +34,4 @@ function router(app, zookeeper, metrics) {
 
 }
 
-export
-default router;
+export default router;

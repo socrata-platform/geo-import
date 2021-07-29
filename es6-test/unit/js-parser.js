@@ -1,10 +1,7 @@
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
-import {
-  fixture
-}
-from '../fixture';
+import es from 'event-stream';
+import { fixture } from '../fixture';
 import Parser from '../../es6-lib/util/parser';
 var expect = chai.expect;
 

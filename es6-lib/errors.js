@@ -317,8 +317,7 @@ class AuthenticationError extends UpstreamError {
     return 'Encountered an error while authenticating';
   }
 }
-export
-default {
+export default {
   ZKError,
   CreateDatasetError,
   CreateWorkingCopyError,

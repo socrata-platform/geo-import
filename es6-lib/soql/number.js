@@ -6,4 +6,4 @@ class SoQLNumber extends SoQL {
   }
 }
 
-module.exports = SoQLNumber;
+export default SoQLNumber;

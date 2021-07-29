@@ -141,5 +141,4 @@ function consumer(zookeeper, metrics) {
   return spatialConsumer;
 }
 
-export
-default consumer;
+export default consumer;

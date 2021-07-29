@@ -1,33 +1,19 @@
-import {
-  getDecoderForExtension
-}
-from '../decoders';
+import { getDecoderForExtension } from '../decoders';
 import Merger from '../decoders/merger';
 import Disk from '../decoders/disk';
 import Core from '../upstream/core';
 import Auth from '../upstream/auth';
 import async from 'async';
 import _ from 'underscore';
-import * as es from 'event-stream';
+import es from 'event-stream';
 import BBox from '../util/bbox';
-import {
-  parseAMQMessage
-}
-from '../util/hacks';
-import {
-  types
-}
-from '../soql/mapper';
+import { parseAMQMessage } from '../util/hacks';
+import { types } from '../soql/mapper';
 import Layer from '../decoders/layer';
 import config from '../config';
 import logger from '../util/logger';
 import ISS from '../upstream/iss';
-import {
-  UpsertError,
-  ConnectionError
-}
-from '../errors';
-
+import { ConnectionError, UpsertError } from '../errors';
 
 var conf = config();
 const MAX_PARALLEL = 4;
@@ -483,5 +469,4 @@ class SpatialService {
 
 }
 
-export
-default SpatialService;
+export default SpatialService;

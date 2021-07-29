@@ -13,4 +13,4 @@ class SoQLBoolean extends SoQL {
 
 }
 
-module.exports = SoQLBoolean;
+export default SoQLBoolean;

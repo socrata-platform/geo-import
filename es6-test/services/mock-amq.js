@@ -15,7 +15,7 @@ class AmqMock extends EventEmitter {
         filename,
         replace: false
       })
-    })
+    });
 
     return JSON.stringify({
       "source": `x-socrata-blob:${filename}`,
@@ -29,7 +29,7 @@ class AmqMock extends EventEmitter {
       "type": kind,
       "user": "kacw-u8uj",
       "view": parentFourFour
-    })
+    });
   }
 
   importFixture(fixtureName, layerNames, fourfour) {
@@ -70,7 +70,4 @@ class AmqMock extends EventEmitter {
 
 }
 
-
-
-export
-default AmqMock;
+export default AmqMock;

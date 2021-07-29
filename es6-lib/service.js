@@ -50,5 +50,4 @@ function service(zk, options, ready) {
   return this;
 }
 
-export
-default service;
+export default service;

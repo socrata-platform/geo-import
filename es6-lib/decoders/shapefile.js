@@ -7,16 +7,9 @@
  * TODO: if this functionality is needed at some point,
  * need to revisit it.
  */
-import es from 'event-stream';
 import _ from 'underscore';
-import {
-  geoJsToSoQL
-}
-from './transform';
-import {
-  Duplex
-}
-from 'stream';
+import { geoJsToSoQL } from './transform';
+import { Duplex } from 'stream';
 import BBox from '../util/bbox';
 import shapefile from 'shapefile';
 import concat from 'concat-stream';
@@ -25,18 +18,12 @@ import path from 'path';
 import fs from 'fs';
 import srs from 'srs';
 import uuid from 'uuid';
-import {
-  EventEmitter
-}
-from 'events';
+import { EventEmitter } from 'events';
 import async from 'async';
 import logger from '../util/logger';
 import config from '../config';
 import DevNull from '../util/devnull';
-import {
-  CorruptShapefileError, IncompleteShapefileError
-}
-from '../errors';
+import { CorruptShapefileError, IncompleteShapefileError } from '../errors';
 
 const DEFAULT_PROJECTION = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
 
@@ -346,5 +333,4 @@ class Shapefile extends Duplex {
 
 }
 
-export
-default Shapefile;
+export default Shapefile;

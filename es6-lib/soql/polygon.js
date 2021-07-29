@@ -44,4 +44,4 @@ class SoQLPolygon extends SoQLGeom {
   }
 }
 
-module.exports = SoQLPolygon;
+export default SoQLPolygon;

@@ -34,4 +34,4 @@ class SoQLLine extends SoQLGeom {
   }
 }
 
-module.exports = SoQLLine;
+export default SoQLLine;

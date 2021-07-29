@@ -19,4 +19,4 @@ class SoQLMultiPoint extends SoQLGeom {
   }
 }
 
-module.exports = SoQLMultiPoint;
+export default SoQLMultiPoint;

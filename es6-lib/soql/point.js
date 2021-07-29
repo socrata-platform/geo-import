@@ -18,5 +18,4 @@ class SoQLPoint extends SoQLGeom {
   }
 }
 
-
-module.exports = SoQLPoint;
+export default SoQLPoint;

@@ -1,18 +1,11 @@
 import _ from 'underscore';
 import chai from 'chai';
-import should from 'should';
-import * as es from 'event-stream';
-import {
-  fixture, bufferJs
-}
-from '../fixture';
+import es from 'event-stream';
+import { fixture } from '../fixture';
 import request from 'request';
 import CoreMock from '../services/mock-core';
 import MockZKClient from '../services/mock-zk';
-import {
-  EventEmitter
-}
-from 'events';
+import { EventEmitter } from 'events';
 import config from '../../es6-lib/config';
 import service from '../../es6-lib/service';
 import Shapefile from '../../es6-lib/decoders/shapefile';
@@ -21,11 +14,8 @@ import KML from '../../es6-lib/decoders/kml';
 import GeoJSON from '../../es6-lib/decoders/geojson';
 import Disk from '../../es6-lib/decoders/disk';
 import Merger from '../../es6-lib/decoders/merger';
-import {
-  ArityChecker,
-  NoopLogger
-}
-from '../util';
+import { ArityChecker, NoopLogger } from '../util';
+import async from 'async';
 
 var res;
 var expect = chai.expect;
@@ -363,7 +353,6 @@ describe('decoders', () => {
 
   it('weird line bug where coordinate state was not being reset between elements', function(onDone) {
     var [merger, response] = makeMerger();
-    var async = require('async');
     var theRow;
 
     fixture('line_extra_dimension.kml')

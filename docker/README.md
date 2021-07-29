@@ -6,7 +6,7 @@
 ## Building ##
 To build the image, run:
 ```
-cp -r ../lib ../scripts ../package.json ../npm-shrinkwrap.json .
+cp -r ../lib ../package.json .
 docker build -t geo-import .
 ```
 
@@ -15,7 +15,7 @@ Or, if you want to replace old versions:
 cd ..
 make appease_jenkins
 cd docker
-cp -r ../lib.tar ../scripts ../package.json ../npm-shrinkwrap.json .
+cp -r ../lib.tar ../package.json .
 docker build --rm -t geo-import .
 ```
 

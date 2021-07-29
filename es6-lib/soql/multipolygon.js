@@ -33,4 +33,4 @@ class SoQLMultiPolygon extends SoQLGeom {
   }
 }
 
-module.exports = SoQLMultiPolygon;
+export default SoQLMultiPolygon;

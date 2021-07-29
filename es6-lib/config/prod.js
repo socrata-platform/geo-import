@@ -2,7 +2,6 @@ var zkEnsemble;
 const envZk = process.env.ZOOKEEPER_ENSEMBLE;
 const amqUrl = process.env.AMQ_URL;
 
-
 try {
   zkEnsemble = JSON.parse(envZk);
 } catch (e) {

@@ -56,5 +56,4 @@ class SoQL {
   }
 }
 
-export
-default SoQL;
+export default SoQL;

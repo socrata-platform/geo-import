@@ -8,25 +8,16 @@ import _ from 'underscore';
 import fs from 'fs';
 import es from 'event-stream';
 import uuid from 'uuid';
-import {
-  EventEmitter
-}
-from 'events';
+import { EventEmitter } from 'events';
 import srs from 'srs';
 import BBox from '../util/bbox';
-import {
-  Duplex
-}
-from 'stream';
-import {
-  types
-}
-from '../soql/mapper';
+import { Duplex } from 'stream';
+import { types } from '../soql/mapper';
 import LDJson from './ldjson';
 import WGS84Reprojector from './wgs84-reprojector';
 import DevNull from '../util/devnull';
 import config from '../config';
-import {VertexTooComplexError} from '../errors';
+import { VertexTooComplexError } from '../errors';
 const conf = config();
 const scratchPrologue = "";
 const scratchSeparator = "\n";
@@ -355,5 +346,4 @@ class Layer extends Duplex {
 
 
 
-export
-default Layer;
+export default Layer;

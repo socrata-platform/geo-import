@@ -14,4 +14,4 @@ class SoQLDate extends SoQL {
   }
 }
 
-module.exports = SoQLDate;
+export default SoQLDate;

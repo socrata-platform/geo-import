@@ -1,20 +1,12 @@
 import _ from 'underscore';
 import chai from 'chai';
 import should from 'should';
-import * as es from 'event-stream';
 import fs from 'fs';
-import {
-  fixture, bufferJs
-}
-from '../fixture';
+import { fixture } from '../fixture';
 import CoreMock from '../services/mock-core';
-
 import request from 'request';
 import MockZKClient from '../services/mock-zk';
-import {
-  EventEmitter
-}
-from 'events';
+import { EventEmitter } from 'events';
 import config from '../../es6-lib/config';
 import service from '../../es6-lib/service';
 

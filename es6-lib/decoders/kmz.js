@@ -3,15 +3,11 @@ import KML from './kml';
 import uuid from 'uuid';
 import fs from 'fs';
 import path from 'path';
-import es from 'event-stream';
-import {
-  Duplex
-}
-from 'stream';
+import { Duplex } from 'stream';
 import logger from '../util/logger';
 import config from '../config';
 import DevNull from '../util/devnull';
-import {ArchiveError} from '../errors';
+import { ArchiveError } from '../errors';
 
 
 /**

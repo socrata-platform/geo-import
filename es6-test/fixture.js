@@ -10,18 +10,18 @@ function bufferJs(source, cb) {
     var buffer = '';
     r.on('data', function(chunk) {
       buffer += chunk.toString('utf-8');
-    })
+    });
     r.on('end', function() {
 
       var result;
       try {
-        result = JSON.parse(buffer)
+        result = JSON.parse(buffer);
       } catch(e) {
-        result = buffer
+        result = buffer;
       }
-      cb(r, result)
-    })
-  })
+      cb(r, result);
+    });
+  });
 }
 
-export {fixture as fixture, bufferJs as bufferJs};
+export { fixture as fixture, bufferJs as bufferJs };

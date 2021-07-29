@@ -1,20 +1,30 @@
 /* eslint-env node */
 import _ from 'underscore';
-
-var SoQLNull = require('./null');
+import SoQLNull from './null';
+import SoQLPoint from './point';
+import SoQLLine from './line';
+import SoQLPolygon from './polygon';
+import SoQLMultiPoint from './multipoint';
+import SoQLMultiLine from './multiline';
+import SoQLMultiPolygon from './multipolygon';
+import SoQLText from './text';
+import SoQLBoolean from './boolean';
+import SoQLNumber from './number';
+import SoQLArray from './array';
+import SoQLDate from './date';
 
 var soqls = [
-  require('./point'),
-  nullIfNoCoords(require('./line')),
-  nullIfNoCoords(require('./polygon')),
-  require('./multipoint'),
-  require('./multiline'),
-  require('./multipolygon'),
-  require('./text'),
-  require('./boolean'),
-  require('./number'),
-  require('./array'),
-  require('./date'),
+  SoQLPoint,
+  nullIfNoCoords(SoQLLine),
+  nullIfNoCoords(SoQLPolygon),
+  SoQLMultiPoint,
+  SoQLMultiLine,
+  SoQLMultiPolygon,
+  SoQLText,
+  SoQLBoolean,
+  SoQLNumber,
+  SoQLArray,
+  SoQLDate,
   SoQLNull
 ];
 
@@ -37,6 +47,4 @@ function nullIfNoCoords(underlying) {
 
 var types = _.object(soqls.map((soql) => [soql.ctype(), soql]));
 
-export {
-  types
-};
+export { types };
