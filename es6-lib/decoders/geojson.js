@@ -4,7 +4,7 @@
  *
  * TODO: hierarchical CRS via geometry collections (;_;)
  */
-import * as es from 'event-stream';
+import es from 'event-stream';
 import _ from 'underscore';
 import { geoJsToSoQL } from './transform';
 import { types } from '../soql/mapper';
