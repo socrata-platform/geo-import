@@ -140,6 +140,9 @@ class Shapefile extends Duplex {
         this.push(null);
         return this.pipe(new DevNull());
       }
+      logger.info("READABLE STREAM");
+      logger.info(this._readableState);
+      logger.info(this._readableState.pipes);
 
       this._readableState.pipes.once('drain', readNext);
     } else {
