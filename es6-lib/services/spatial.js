@@ -79,10 +79,14 @@ class SpatialService {
   }
 
   _destroyLayers(activity, layers, core, cb) {
+    logger.info(core.destroy);
+    logger.info(layers);
     return async.map(
       layers,
       core.destroy.bind(core),
       (err, destroyResponses) => {
+        logger.info("HERE IN _destroyLayers");
+        logger.info({err, destroyResponses});
         return cb(err, destroyResponses);
       });
   }
