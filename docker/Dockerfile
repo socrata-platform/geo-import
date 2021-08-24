@@ -1,4 +1,4 @@
-FROM socrata/runit-nodejs-bionic-10x
+FROM socrata/runit-nodejs-bionic-14x
 
 # LABEL must be last for proper base image discoverability
 LABEL repository.socrata/nodejs=""
