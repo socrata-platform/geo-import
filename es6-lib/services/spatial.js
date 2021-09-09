@@ -94,6 +94,8 @@ class SpatialService {
   _createLayers(activity, core, layers) {
     async.mapLimit(layers, MAX_PARALLEL, _.partial(core.create, activity.getParentUid()).bind(core), (err, datasetResponses) => {
       activity.appendRollback("CreateLayers", (onRollback) => {
+        console.log("in _createLayers");
+        console.log({activity, layers, core});
         this._destroyLayers(activity, layers, core, onRollback);
       });
 

@@ -66,6 +66,8 @@ class WGS84Reprojector extends Transform {
       var asString = JSON.stringify(asSoda);
       return done(false, asString);
     } catch (e) {
+      console.log("HERE IN _transform");
+      console.log({e});
       return done(e);
     }
   }
